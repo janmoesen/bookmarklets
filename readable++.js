@@ -109,14 +109,19 @@
 	location.hash && contentSelectors.unshift(location.hash);
 	for (var i = 0; i < contentSelectors.length; i++) {
 		var selector = contentSelectors[i];
-		var element = document.querySelector(selector);
-		if (element) {
-			var top = 0;
-			do {
-				top += element.offsetTop;
-			} while ((element = element.offsetParent));
-			window.scrollTo(0, top);
-			break;
+		try {
+			var element = document.querySelector(selector);
+			if (element) {
+				var top = 0;
+				do {
+					top += element.offsetTop;
+				} while ((element = element.offsetParent));
+				window.scrollTo(0, top);
+				break;
+			}
+		}
+		catch (e) {
+			window.console && console.log('Bad selector ', selector);
 		}
 	}
 })();
