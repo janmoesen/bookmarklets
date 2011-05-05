@@ -4,7 +4,7 @@
  * of the actual content so no time is wasted scrolling past initial
  * navigation etc.
  */
-(function () {
+(function read() {
 	/* The more readable stylesheet. */
 	var css = '@namespace svg "http://www.w3.org/2000/svg";
 		* {
