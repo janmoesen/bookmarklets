@@ -1,8 +1,8 @@
-javascript:
 /**
- * Make a page more readable by disabling all styling and applying a bare
- * minimum. Go to the first thing that looks like the start of the actual
- * content so no time is wasted scrolling past initial navigation etc.
+ * Make a page more readable by disabling all page styling and applying a
+ * bare minimum of our own. Go to the first thing that looks like the start
+ * of the actual content so no time is wasted scrolling past initial
+ * navigation etc.
  */
 (function () {
 	/* The more readable stylesheet. */
@@ -32,7 +32,7 @@ javascript:
 		attrs = ['style', 'face', 'font@size', 'basefont@size', 'background', 'align', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink', 'align', 'border', 'frameborder', 'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan'],
 
 		/* The selectors to try (in this order) for the first content element to scroll to. */
-		contentSelectors = ['article', '.article', '.articleContent', '.entry', '.post', '.blogpost', '#content', '.content', '#main', '.main', 'h1', 'h2', 'big'],
+		contentSelectors = ['article, .article, .articleContent', '.entry, .post, .blogpost', '#content, [id^="content"], .content, [class^="content"]', '#main, .main', 'h1', 'h2', 'big'],
 
 		/* The stylesheet ID/HTML data attribute prefix to use */
 		id = 'jan-css';
