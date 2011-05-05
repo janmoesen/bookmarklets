@@ -26,6 +26,9 @@
 		}
 		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), :not(svg|*)>svg|*:not(:hover) {
 			opacity: 0.25;
+		}
+		.post_share {
+			display: none;
 		}',
 
 		/* The attributes to disable. */
