@@ -121,7 +121,7 @@
 			}
 		}
 		catch (e) {
-			window.console && console.log('Bad selector ', selector);
+			window.console && console.log('Bad selector: ' + selector);
 		}
 	}
 })();
