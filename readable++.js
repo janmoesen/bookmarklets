@@ -3,6 +3,8 @@
  * bare minimum of our own. Go to the first thing that looks like the start
  * of the actual content so no time is wasted scrolling past initial
  * navigation etc.
+ *
+ * @title Readable++
  */
 (function read() {
 	/* The more readable stylesheet. */
