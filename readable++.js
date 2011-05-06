@@ -104,7 +104,9 @@
 	})(document);
 
 	/* Scroll to the first thing that looks like the start of the actual content. */
-	location.hash && contentSelectors.unshift(location.hash);
+	if (location.hash) {
+		contentSelectors.unshift(location.hash);
+	}
 	for (var i = 0; i < contentSelectors.length; i++) {
 		var selector = contentSelectors[i];
 		try {
