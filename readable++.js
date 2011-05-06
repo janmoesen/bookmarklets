@@ -107,9 +107,8 @@
 		contentSelectors.unshift(location.hash);
 	}
 	for (var i = 0; i < contentSelectors.length; i++) {
-		var selector = contentSelectors[i];
 		try {
-			var element = document.querySelector(selector);
+			var element = document.querySelector(contentSelectors[i]);
 			if (element) {
 				var top = 0;
 				do {
@@ -120,7 +119,7 @@
 			}
 		}
 		catch (e) {
-			window.console && console.log('Bad selector: ' + selector);
+			window.console && console.log('Bad selector: ' + contentSelectors[i]);
 		}
 	}
 })();
