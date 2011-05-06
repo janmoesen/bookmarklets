@@ -42,10 +42,10 @@
 
 	/* The main function. */
 	(function execute(document) {
-		var all = document.getElementsByTagName('*'),
+		var all = Array.prototype.slice.call(document.getElementsByTagName('*')),
 			ourStyleSheet = document.getElementById(id),
-			allStyleSheets = document.styleSheets,
-			i, matches;
+			allStyleSheets = Array.prototype.slice.call(document.styleSheets),
+			matches;
 
 		/* Add the custom stylesheet if necessary. */
 		if (!ourStyleSheet) {
@@ -58,8 +58,7 @@
 
 		/* Toggle between our readable and the page's original stylesheet(s). */
 		ourStyleSheet.disabled = !ourStyleSheet.disabled;
-		for (i = 0; i < allStyleSheets.length; i++) {
-			var styleSheet = allStyleSheets[i];
+		allStyleSheets.forEach(function (styleSheet, i) {
 			if (styleSheet.ownerNode !== ourStyleSheet)
 			{
 				/* Remember whether this stylesheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
@@ -75,25 +74,25 @@
 					styleSheet.disabled = true;
 				}
 			}
-		}
+		});
 
 		/* Process all attributes for all elements. */
-		for (i = 0; i < all.length; i++) {
-			for (k = 0; k < attrs.length; k++) {
+		all.forEach(function (elem, i) {
+			attrs.forEach(function (attr, j) {
 				/* Parse the attribute definition. Attributes can be restricted to certain elements, e.g. "table@width". */
-				if (!(matches = attrs[k].match(/([^@]+)@([^@]+)/)) || (all[i].tagName && all[i].tagName.toLowerCase() == matches[1])) {
-					var attr = matches ? matches[2] : attrs[k];
+				if (!(matches = attr.match(/([^@]+)@([^@]+)/)) || (elem.tagName && elem.tagName.toLowerCase() == matches[1])) {
+					attr = matches ? matches[2] : attr;
 					var names = { enabled: attr, disabled: id + '-' + attr };
-					if (all[i].hasAttribute(names.enabled)) {
-						all[i].setAttribute(names.disabled, all[i].getAttribute(names.enabled));
-						all[i].removeAttribute(names.enabled);
-					} else if (all[i].hasAttribute(names.disabled)) {
-						all[i].setAttribute(names.enabled, all[i].getAttribute(names.disabled));
-						all[i].removeAttribute(names.disabled);
+					if (elem.hasAttribute(names.enabled)) {
+						elem.setAttribute(names.disabled, elem.getAttribute(names.enabled));
+						elem.removeAttribute(names.enabled);
+					} else if (elem.hasAttribute(names.disabled)) {
+						elem.setAttribute(names.enabled, elem.getAttribute(names.disabled));
+						elem.removeAttribute(names.disabled);
 					}
 				}
-			}
-		}
+			});
+		});
 
 		/* Recurse for frames and iframes. */
 		try {
