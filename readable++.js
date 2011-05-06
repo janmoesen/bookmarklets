@@ -51,8 +51,7 @@
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
-			document.head.appendChild(ourStyleSheet);
-			ourStyleSheet.disabled = true;
+			document.head.appendChild(ourStyleSheet).disabled = true;
 		}
 
 		/* Toggle between our readable and the page's original stylesheet(s). */
