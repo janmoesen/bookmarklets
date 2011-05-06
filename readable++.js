@@ -119,7 +119,7 @@
 			}
 		}
 		catch (e) {
-			window.console && console.log('Bad selector: ' + contentSelectors[i]);
+			window.console && console.log('Readable++: bad selector:\n' + contentSelectors[i] + '\nException: ' + e);
 		}
 	}
 })();
