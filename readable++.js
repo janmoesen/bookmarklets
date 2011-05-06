@@ -49,8 +49,7 @@
 
 		/* Add the custom stylesheet if necessary. */
 		if (!ourStyleSheet) {
-			(ourStyleSheet = document.createElement('style')).type = 'text/css';
-			ourStyleSheet.id = id;
+			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
 			document.head.appendChild(ourStyleSheet);
 			ourStyleSheet.disabled = true;
