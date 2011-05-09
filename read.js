@@ -37,7 +37,7 @@
 		attrs = ['style', 'face', 'font@size', 'basefont@size', 'background', 'align', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink', 'align', 'border', 'frameborder', 'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan'],
 
 		/* The selectors to try (in this order) for the first content element to scroll to. */
-		contentSelectors = ['article, .article, .articleContent', '.entry, .post, .blogpost', '#content, .content, [id^="content"], [class^="content"]', '#main, .main', 'h1', 'h2', 'big'],
+		contentSelectors = ['#article', 'article, .article, .articleContent', '#entry', '.entry, .post, .blogpost', '#content', '.content', '[id^="content"], [class^="content"]', '#main', '.main', 'h1', 'h2', 'big'],
 
 		/* The stylesheet ID/HTML data attribute prefix to use */
 		id = 'jan-css';
