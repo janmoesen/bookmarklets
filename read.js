@@ -31,6 +31,9 @@
 		}
 		.post_share, #janrain-social-sharebar {
 			display: none;
+		}
+		iframe[src*="//www.facebook.com/plugins/like.php"], iframe.twitter-share-button {
+			max-height: 4ex;
 		}',
 
 		/* The attributes to disable. */
