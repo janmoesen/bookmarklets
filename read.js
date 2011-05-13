@@ -114,7 +114,7 @@
 	for (var i = 0; i < contentSelectors.length; i++) {
 		try {
 			var element = document.querySelector(contentSelectors[i]);
-			if (element) {
+			if (element && element.offsetWidth && element.offsetHeight) {
 				var top = 0;
 				do {
 					top += element.offsetTop;
