@@ -26,6 +26,15 @@
 			font-style: normal;
 			text-decoration: none
 		}
+		pre {
+			padding: 1ex;
+			border: 1px dotted;
+		}
+		code, pre, .syntaxhighlighter {
+			font-family: "Consolas", monospace;
+			font-size: small;
+			background: #ffe;
+		}
 		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), :not(svg|*) > svg|*:not(:hover) {
 			opacity: 0.25;
 		}
