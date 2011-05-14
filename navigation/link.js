@@ -6,7 +6,7 @@
 (function link() {
 	var fragroot = document.createDocumentFragment().appendChild(document.createElement('html')),
 	    title = fragroot.appendChild(document.createElement('title')),
-	    titleText = (document.title && document.title + ' [' + (document.domain || location) + ']') || location,
+	    titleText = (document.querySelector('title') && document.querySelector('title').textContent + ' [' + (document.domain || location) + ']') || location,
 	    iconLink = document.querySelector('link[rel*="icon"]') || document.createElement('link');
 
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
