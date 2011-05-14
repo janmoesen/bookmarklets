@@ -4,25 +4,25 @@
  * @title Link this
  */
 (function link() {
-	var fragroot = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    title = fragroot.appendChild(document.createElement('title')),
+	var fragmentRoot = document.createDocumentFragment().appendChild(document.createElement('html')),
+	    fragmentTitle = fragmentRoot.appendChild(document.createElement('title')),
 	    titleText = (document.querySelector('title') && document.querySelector('title').textContent + ' [' + (document.domain || location) + ']') || location,
 	    iconLink = document.querySelector('link[rel*="icon"]') || document.createElement('link');
 
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
 	iconLink.href = iconLink.href || 'http://www.google.com/s2/favicons?domain=' + document.domain;
 	iconLink.rel = 'icon';
-	fragroot.appendChild(iconLink.cloneNode(true));
+	fragmentRoot.appendChild(iconLink.cloneNode(true));
 
 	/* Also put the favicon in front of the link. */
-	fragroot.appendChild(document.createElement('img')).src = iconLink.href;
-	fragroot.appendChild(document.createTextNode(' '));
+	fragmentRoot.appendChild(document.createElement('img')).src = iconLink.href;
+	fragmentRoot.appendChild(document.createTextNode(' '));
 
 	/* Link to the current page using its title. */
-	var link = fragroot.appendChild(document.createElement('a'));
+	var link = fragmentRoot.appendChild(document.createElement('a'));
 	link.href = location;
-	link.textContent = title.textContent = titleText;
+	link.textContent = fragmentTitle.textContent = titleText;
 
 	/* Open the data: URI with existing %XX encodings intact. */
-	document.location = 'data:text/html;charset=UTF-8,' + fragroot.innerHTML.replace(/%/g, '$&' + 25);
+	document.location = 'data:text/html;charset=UTF-8,' + fragmentRoot.innerHTML.replace(/%/g, '$&' + 25);
 })();
