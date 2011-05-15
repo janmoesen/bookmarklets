@@ -10,12 +10,13 @@
 	    domain = document.domain || location.hostname;
 
 	/* Build a basic HTML document for easy element access. */
-	root.innerHTML = '<head><title></title><link rel="icon"><style>html { font-family: "Calibri", sans-serif; }</style><body><p><img> <a></a>';
+	root.innerHTML = '<head><title></title><link rel="icon"><style>html { font-family: "Calibri", sans-serif; }</style><body><p><img> <span><a></a></span><p>Link code:<br><textarea rows="10" cols="80"></textarea>';
 	var title = root.querySelector('title'),
 	    iconLink = root.querySelector('link'),
 	    styleSheet = root.querySelector('style'),
 	    iconImage = root.querySelector('img'),
-	    link = root.querySelector('a');
+	    link = root.querySelector('a'),
+	    textarea = root.querySelector('textarea');
 
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
 	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'http://www.google.com/s2/favicons?domain=' + domain;
@@ -27,6 +28,11 @@
 		link.parentNode.insertBefore(document.createTextNode(' [' + domain + ']'), link.nextSibling);
 	}
 
+	/* Show the link code in various formats. */
+	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
+	textarea.textContent += '\n\nHTML:\n' + link.parentNode.innerHTML;
+	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
+
 	/* Open the data: URI with existing %XX encodings intact. */
-	document.location = 'data:text/html;charset=UTF-8,' + root.innerHTML.replace(/%/g, '$&' + 25);
+	document.location = 'data:text/html;charset=UTF-8,' + root.innerHTML.replace(/%/g, '$&' + 25).replace(/\n/g, '%' + '0A');
 })();
