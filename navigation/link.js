@@ -4,29 +4,29 @@
  * @title Link this
  */
 (function link() {
-	var fragmentRoot = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    fragmentTitle = fragmentRoot.appendChild(document.createElement('title')),
+	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
 	    titleText = document.querySelector('title') && document.querySelector('title').textContent || document.title,
-	    iconLink = document.querySelector('link[rel*="icon"]') || document.createElement('link'),
+	    originalIconLink = document.querySelector('link[rel*="icon"]'),
 	    domain = document.domain || location.hostname;
 
-	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
-	iconLink.href = iconLink.href || 'http://www.google.com/s2/favicons?domain=' + domain;
-	iconLink.rel = 'icon';
-	fragmentRoot.appendChild(iconLink.cloneNode(true));
+	/* Build a basic HTML document for easy element access. */
+	root.innerHTML = '<head><title></title><link rel="icon"><style>html { font-family: "Calibri", sans-serif; }</style><body><p><img> <a></a>';
+	var title = root.querySelector('title'),
+	    iconLink = root.querySelector('link'),
+	    styleSheet = root.querySelector('style'),
+	    iconImage = root.querySelector('img'),
+	    link = root.querySelector('a');
 
-	/* Also put the favicon in front of the link. */
-	fragmentRoot.appendChild(document.createElement('img')).src = iconLink.href;
-	fragmentRoot.appendChild(document.createTextNode(' '));
+	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
+	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'http://www.google.com/s2/favicons?domain=' + domain;
 
 	/* Link to the current page using its title. */
-	var link = fragmentRoot.appendChild(document.createElement('a'));
 	link.href = location;
-	link.textContent = fragmentTitle.textContent = titleText ? titleText : location;
+	link.textContent = title.textContent = titleText ? titleText : location;
 	if (titleText) {
-		fragmentRoot.appendChild(document.createTextNode(' [' + domain + ']'));
+		link.parentNode.insertBefore(document.createTextNode(' [' + domain + ']'), link.nextSibling);
 	}
 
 	/* Open the data: URI with existing %XX encodings intact. */
-	document.location = 'data:text/html;charset=UTF-8,' + fragmentRoot.innerHTML.replace(/%/g, '$&' + 25);
+	document.location = 'data:text/html;charset=UTF-8,' + root.innerHTML.replace(/%/g, '$&' + 25);
 })();
