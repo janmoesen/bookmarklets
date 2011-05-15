@@ -7,10 +7,11 @@
 	var fragmentRoot = document.createDocumentFragment().appendChild(document.createElement('html')),
 	    fragmentTitle = fragmentRoot.appendChild(document.createElement('title')),
 	    titleText = document.querySelector('title') && document.querySelector('title').textContent || document.title,
-	    iconLink = document.querySelector('link[rel*="icon"]') || document.createElement('link');
+	    iconLink = document.querySelector('link[rel*="icon"]') || document.createElement('link'),
+	    domain = document.domain || location.hostname;
 
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
-	iconLink.href = iconLink.href || 'http://www.google.com/s2/favicons?domain=' + (document.domain || location.hostname);
+	iconLink.href = iconLink.href || 'http://www.google.com/s2/favicons?domain=' + domain;
 	iconLink.rel = 'icon';
 	fragmentRoot.appendChild(iconLink.cloneNode(true));
 
@@ -21,7 +22,10 @@
 	/* Link to the current page using its title. */
 	var link = fragmentRoot.appendChild(document.createElement('a'));
 	link.href = location;
-	link.textContent = fragmentTitle.textContent = titleText ? titleText + ' [' + (document.domain || location.hostname) + ']' : location,
+	link.textContent = fragmentTitle.textContent = titleText ? titleText : location;
+	if (titleText) {
+		fragmentRoot.appendChild(document.createTextNode(' [' + domain + ']'));
+	}
 
 	/* Open the data: URI with existing %XX encodings intact. */
 	document.location = 'data:text/html;charset=UTF-8,' + fragmentRoot.innerHTML.replace(/%/g, '$&' + 25);
