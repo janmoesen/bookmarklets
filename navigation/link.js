@@ -35,5 +35,5 @@ javascript:
 	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
 
 	/* Open the data: URI with existing %XX encodings intact. */
-	document.location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
+	location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
 })();
