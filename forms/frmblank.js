@@ -1,3 +1,4 @@
+javascript:
 /**
  * Make all forms open in a new window/tab.
  *

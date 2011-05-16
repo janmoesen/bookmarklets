@@ -1,3 +1,4 @@
+javascript:
 /**
  * Make a page more readable by disabling all page styling and applying a
  * bare minimum of our own. Go to the first thing that looks like the start

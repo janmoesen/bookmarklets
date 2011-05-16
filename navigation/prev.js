@@ -1,3 +1,4 @@
+javascript:
 /**
  * Go to the previous page. To do so, this bookmarklet will look:
  * - for <link rel="prev"> or <a rel="prev">

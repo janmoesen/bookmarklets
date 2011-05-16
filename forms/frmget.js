@@ -1,3 +1,4 @@
+javascript:
 /**
  * Make all forms use GET.
  *

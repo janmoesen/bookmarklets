@@ -1,3 +1,4 @@
+javascript:
 /**
  * Convert password inputs to normal text inputs and back again.
  *

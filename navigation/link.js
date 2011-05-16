@@ -1,3 +1,4 @@
+javascript:
 /**
  * Show a minimal HTML page linking to the current page.
  *

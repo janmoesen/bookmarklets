@@ -1,3 +1,4 @@
+javascript:
 /**
  * Show the length of the given string.
  *
@@ -8,4 +9,3 @@
 	var s = (<><![CDATA[%s]]></> + '') || getSelection() + '' || prompt('String?');
 	prompt('The length of "' + (s.length > maxLength ? s.substring(0, maxLength / 2) + '…' + s.substring(s.length - maxLength / 2 + 1) : s) + '" is: ', s.length);
 })();
-

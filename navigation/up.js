@@ -1,3 +1,4 @@
+javascript:
 /**
  * Go to the parent "directory". Note that this function tries to be somewhat
  * smart about it:
