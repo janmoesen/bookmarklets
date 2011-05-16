@@ -16,7 +16,7 @@ javascript:
  */
 (function prev() {
 	var symbols = '<< « ← ⇐',
-	    keywords = ('Previous previous Vorige vorige Précédent précédent ' + symbols).split(' '),
+	    keywords = ('Previous previous Older older Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
 	    symbols = symbols.split(' '),
 	    identifiers = 'prev prevArticle prevPost prevLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

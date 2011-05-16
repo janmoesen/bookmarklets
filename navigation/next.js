@@ -16,7 +16,7 @@ javascript:
  */
 (function next() {
 	var symbols = '>> » → ⇒',
-	    keywords = ('Next next Volgende volgende Prochain prochain' + symbols).split(' '),
+	    keywords = ('Next next Newer newer Volgende volgende Nieuwer nieuwer Prochain prochain' + symbols).split(' '),
 	    symbols = symbols.split(' '),
 	    identifiers = 'next nextArticle nextPost nextLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
