@@ -127,16 +127,18 @@ javascript:
 			var element = document.querySelector(contentSelectors[i]);
 			/* Make sure the element was either an anchor or something "visible". */
 			if (element && (element.tagName.toLowerCase() === 'a' || (element.offsetWidth && element.offsetHeight))) {
+				var elementSelector = element.tagName.toLowerCase() + (element.id ? '#' + element.id : '') + (element.className ? '.' + element.className.replace(/\s/g, '.') : '');
 				var top = 0;
 				do {
 					top += element.offsetTop;
 				} while ((element = element.offsetParent));
+				window.console && console.log('Readable++: matching selector: ' + contentSelectors[i] + '\nScrolling to ' + elementSelector + ' at (0, ' + top + ')');
 				window.scrollTo(0, top);
 				break;
 			}
 		}
 		catch (e) {
-			window.console && console.log('Readable++: bad selector:\n' + contentSelectors[i] + '\nException: ' + e);
+			window.console && console.log('Readable++: bad selector: ' + contentSelectors[i] + '\nException: ' + e);
 		}
 	}
 })();
