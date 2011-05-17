@@ -119,12 +119,14 @@ javascript:
 
 	/* Scroll to the first thing that looks like the start of the actual content. */
 	if (location.hash) {
+		contentSelectors.unshift('a[name="' + location.hash.substring(1) + '"]');
 		contentSelectors.unshift(location.hash);
 	}
 	for (var i = 0; i < contentSelectors.length; i++) {
 		try {
 			var element = document.querySelector(contentSelectors[i]);
-			if (element && element.offsetWidth && element.offsetHeight) {
+			/* Make sure the element was either an anchor or something "visible". */
+			if (element && (element.tagName.toLowerCase() === 'a' || (element.offsetWidth && element.offsetHeight))) {
 				var top = 0;
 				do {
 					top += element.offsetTop;
