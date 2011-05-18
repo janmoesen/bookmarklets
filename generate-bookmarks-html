@@ -4,7 +4,7 @@
 
 # Escape special HTML chars.
 escape_html () {
-	regex='s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g;';
+	regex='s/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g;';
 	if [ $# -eq 0 ]; then
 		sed "$regex";
 	else
