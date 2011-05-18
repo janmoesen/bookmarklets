@@ -42,7 +42,7 @@ javascript:
 		.post_share, #janrain-social-sharebar {
 			display: none;
 		}
-		iframe[src*="//www.facebook.com/plugins/like.php"], iframe[src*="//platform.twitter.com/widgets/tweet_button"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//www.stumbleupon.com/badge/embed/"] {
+		iframe[src*="//www.facebook.com/plugins/like.php"], iframe[src*=".twitter.com/widgets/tweet_button"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//www.stumbleupon.com/badge/embed/"] {
 			width: 12em;
 			height: 4ex;
 			border: 1px dotted;
