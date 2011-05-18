@@ -1,0 +1,124 @@
+#!/bin/bash
+
+# Generate the bookmarks.html file based on the JavaScript files.
+
+# Escape special HTML chars.
+escape_html () {
+	regex='s/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g;';
+	if [ $# -eq 0 ]; then
+		sed "$regex";
+	else
+		sed "$regex" <<< "$@";
+	fi;
+}
+
+# Loop through *.js in the given directory and recurse for its subdirectories.
+process_dir () {
+	echo "Now processing directory \"$1\"…" 1>&2;
+
+	# Start the bookmarks folder.
+	title="$([ -f "$1/README" ] && { escape_html <<< "$(head -1 "$1/README")"; } || escape_html "$(basename "$1")")";
+	description="$(escape_html "${1:2}")";
+	if [ "$1" = '.' ]; then
+		title="Jan Moesen's bookmarklets";
+		description="$(escape_html < README)"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
+	fi;
+	cat <<-EOD
+		<dt><h3>$title</h3></dt>
+		<dd>$description
+			<dl><p>
+	EOD
+
+	shopt -s nullglob;
+	for file in "$1"/*/ "$1"/*.js; do
+		# Skip JSLint. It's not a bookmarklet.
+		[ "$file" = './jslint.js' ] && continue;
+
+		# Recurse for directories, and indent the output.
+		if [ -d "$file" ]; then
+			process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</';
+			continue;
+		fi;
+
+		# Use git log to find the timestamps for the initial and last commits.
+		unset add_date last_modified;
+		while read timestamp; do
+			[ -z "$last_modified" ] && last_modified="$timestamp";
+			add_date="$timestamp";
+		done < <(git log --follow --pretty='tformat:%at' "$file");
+
+		# Get the bookmarklet's description, title and keyword
+		unset description title keyword;
+		is_in_docblock=0;
+		while read -r line; do
+			if [ "$line" = '/**' ]; then
+				is_in_docblock=1;
+				continue;
+			elif [ "$line" = '*/' ]; then
+				is_in_docblock=0;
+			elif [[ "$line" =~ ^\(function\ (.+)\( ]]; then
+				keyword="${BASH_REMATCH[1]}";
+				break;
+			fi;
+			if [[ "$line" =~ ^\*\ @([a-z]*)\ (.*) ]]; then
+				tag="${BASH_REMATCH[1]}";
+				content="${BASH_REMATCH[2]}";
+				case "$tag" in
+					'title')
+						title="$content";;
+					'keyword')
+						keyword="$content";;
+				esac;
+				continue;
+			fi;
+			if [ $is_in_docblock -eq 1 ]; then
+				description+=("${line:2}");
+			fi;
+		done < "$file";
+
+		# Trim blank lines from the start and beginning of the description.
+		if [ "${description[0]}" = '' ]; then
+			unset description[0];
+		fi;
+		for ((i = ${#description[@]} - 1; i >= 0; i--)); do
+			if [ "${description[$i]}" = '' ]; then
+				unset description[$i];
+			fi;
+		done;
+		description="$(IFS=$'\n'; echo "${description[*]}")";
+
+		# Output the current bookmarklet.
+		cat <<-EOD
+			<dt><a href="$(tr -d '\n' < "$file" | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
+			<dd>$(escape_html "$description")</dd>
+		EOD
+	done;
+
+	# End the bookmarks folder.
+	cat <<-EOD
+			</dl>
+	EOD
+}
+
+# Export our bookmarks.html.
+{
+# Output the preamble with our README.
+cat <<EOD
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Bookmarks</title>
+<h1>Bookmarks Menu</h1>
+
+<dl>
+EOD
+
+process_dir .;
+
+cat <<EOD
+	</dd>
+</dl>
+EOD
+} > bookmarks.html;
