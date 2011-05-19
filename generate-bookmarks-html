@@ -47,10 +47,10 @@ process_dir () {
 
 		# Use git log to find the timestamps for the initial and last commits.
 		unset add_date last_modified;
-		while read timestamp; do
-			[ -z "$last_modified" ] && last_modified="$timestamp";
+		while read timestamp subject; do
+			[ -z "$last_modified" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp";
 			add_date="$timestamp";
-		done < <(git log --follow --pretty='tformat:%at' "$file");
+		done < <(git log --follow --pretty='tformat:%at %s' "$file");
 
 		# Get the bookmarklet's description, title and keyword.
 		unset description title keyword;
