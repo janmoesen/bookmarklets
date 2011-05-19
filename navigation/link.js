@@ -26,7 +26,7 @@ javascript:
 	link.href = location;
 	link.textContent = title.textContent = titleText ? titleText : location;
 	if (titleText) {
-		link.parentNode.insertBefore(document.createTextNode(' [' + domain + ']'), link.nextSibling);
+		link.parentNode.insertBefore(document.createTextNode(' [' + (domain || document.location) + ']'), link.nextSibling);
 	}
 
 	/* Show the link code in various formats. */
