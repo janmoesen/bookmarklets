@@ -8,12 +8,13 @@ PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)
 
 # Copy the Google Translate bookmarklet from English to some other languages.
 copy-2en () {
+	source='language/translations/2en.js';
 	while [ $# -ge 2 ]; do
 		lang="$1";
 		name="$2";
 		shift;
 		shift;
-		perl -p -e "s/(2|\b)en\b/\$1$lang/g; s/English/$name/g" language/2en.js > "language/2$lang.js" \
+		perl -p -e "s/(2|\b)en\b/\$1$lang/g; s/English/$name/g" "$source" > "${source/en/$lang}" \
 			&& echo "Copied to $name" \
 			|| echo "Failed to copy to $name";
 	done;
