@@ -36,7 +36,7 @@ process_dir () {
 
 		# Recurse for directories, and indent the output.
 		if [ -d "$file" ]; then
-			process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</';
+			[ -L "${file%/}" ] || process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</';
 			continue;
 		fi;
 
