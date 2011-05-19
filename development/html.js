@@ -1,4 +1,3 @@
-javascript:
 /**
  * Render the specified or selected text as HTML.
  *

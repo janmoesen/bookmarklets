@@ -1,4 +1,3 @@
-javascript:
 /**
  * Translate the specified or selected text or URL to German using Google.
  *

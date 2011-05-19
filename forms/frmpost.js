@@ -1,4 +1,3 @@
-javascript:
 /**
  * Make all forms use POST.
  *

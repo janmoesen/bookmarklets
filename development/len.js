@@ -1,4 +1,3 @@
-javascript:
 /**
  * Show the length of the given string.
  *

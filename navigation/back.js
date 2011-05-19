@@ -1,4 +1,3 @@
-javascript:
 /**
  * Go back to the previous page, or, failing that, to the referring page.
  *

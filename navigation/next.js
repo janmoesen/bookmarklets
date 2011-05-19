@@ -1,4 +1,3 @@
-javascript:
 /**
  * Go to the next page. To do so, this bookmarklet will look:
  * - for <link rel="next"> or <a rel="next">
