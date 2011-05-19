@@ -94,7 +94,7 @@ process_dir () {
 
 		# Output the current bookmarklet.
 		cat <<-EOD
-			<dt><a href="$(tr -d '\n' < "$file" | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
+			<dt><a href="$(tr -d '\n\t' < "$file" | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
 			<dd>$(escape_html "$description")</dd>
 		EOD
 	done;
