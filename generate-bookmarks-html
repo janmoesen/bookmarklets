@@ -30,7 +30,7 @@ process_dir () {
 	fi;
 	cat <<-EOD
 		<dt><h3>$title</h3></dt>
-		<dd>$description
+		<dd><p>$description</p>
 			<dl><p>
 	EOD
 
@@ -95,7 +95,7 @@ process_dir () {
 		# Output the current bookmarklet.
 		cat <<-EOD
 			<dt><a href="$(tr -d '\n\t' < "$file" | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
-			<dd>$(escape_html "$description")</dd>
+			<dd><p>$(escape_html "$description")</p></dd>
 		EOD
 	done;
 
@@ -115,6 +115,24 @@ cat <<EOD
      DO NOT EDIT! -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Bookmarks</title>
+<style>
+html {
+	max-width: 60em;
+	margin: auto;
+	font-family: "Calibri", sans-serif;
+}
+dd > p {
+	margin-top: 0;
+	white-space: pre-wrap;
+	line-height: 1.5;
+}
+a[shortcuturl]::after {
+	content: " (keyword: " attr(shortcuturl) ")";
+	display: inline-block;
+	margin-left: 1em;
+	font-family: "Consolas", monospace;
+}
+</style>
 <h1>Bookmarks Menu</h1>
 
 <dl>
