@@ -17,11 +17,16 @@ process_dir () {
 	echo "Now processing directory \"$1\"…" 1>&2;
 
 	# Start the bookmarks folder.
-	title="$([ -f "$1/README" ] && { escape_html <<< "$(head -1 "$1/README")"; } || escape_html "$(basename "$1")")";
-	description="$(escape_html "${1:2}")";
+	if [ -f "$1/README" ]; then
+		title="$(escape_html <<< "$(head -n 1 "$1/README")")";
+		description="$(escape_html <<< "$(tail -n +3 "$1/README")")";
+	else
+		title="$(escape_html "$(basename "$1")")";
+		description="$(escape_html "${1:2}")";
+		[ "$title" = "$description" ] && description=;
+	fi;
 	if [ "$1" = '.' ]; then
-		title="Jan Moesen's bookmarklets";
-		description="$(escape_html < README)"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
+		description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
 	fi;
 	cat <<-EOD
 		<dt><h3>$title</h3></dt>
