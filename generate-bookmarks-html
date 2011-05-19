@@ -52,7 +52,7 @@ process_dir () {
 			add_date="$timestamp";
 		done < <(git log --follow --pretty='tformat:%at' "$file");
 
-		# Get the bookmarklet's description, title and keyword
+		# Get the bookmarklet's description, title and keyword.
 		unset description title keyword;
 		is_in_docblock=0;
 		while read -r line; do
