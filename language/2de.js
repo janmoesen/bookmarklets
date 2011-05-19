@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to German using Google.
+ * Translate the specified or selected text or URL to German using Google.
  *
  * @title Translate to German
  * @keyword 2de

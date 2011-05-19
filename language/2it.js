@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to Italian using Google.
+ * Translate the specified or selected text or URL to Italian using Google.
  *
  * @title Translate to Italian
  * @keyword 2it

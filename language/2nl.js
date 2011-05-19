@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to Dutch using Google.
+ * Translate the specified or selected text or URL to Dutch using Google.
  *
  * @title Translate to Dutch
  * @keyword 2nl

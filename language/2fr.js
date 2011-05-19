@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to French using Google.
+ * Translate the specified or selected text or URL to French using Google.
  *
  * @title Translate to French
  * @keyword 2fr

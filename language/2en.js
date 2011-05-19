@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to English using Google.
+ * Translate the specified or selected text or URL to English using Google.
  *
  * @title Translate to English
  * @keyword 2en

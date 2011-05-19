@@ -1,6 +1,6 @@
 javascript:
 /**
- * Translate the specified or selected text to Spanish using Google.
+ * Translate the specified or selected text or URL to Spanish using Google.
  *
  * @title Translate to Spanish
  * @keyword 2es
