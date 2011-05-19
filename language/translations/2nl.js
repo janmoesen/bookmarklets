@@ -5,7 +5,7 @@
  * @keyword 2nl
  */
 (function () {
-	var s = (<><![CDATA[%s]]></> + '') || getSelection() + '' || location + '';
+	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || location + '';
 	if (s) {
 		location = s.match(/^(\w+:(\/\/)?)?[^\s]+(\.[^\s])+/)
 			? 'http://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s)
