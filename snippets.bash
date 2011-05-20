@@ -20,3 +20,6 @@ copy-2en () {
 	done;
 }
 COPY_2EN=; copy-2en nl Dutch fr French de German it Italian es Spanish
+
+# Typing is hard; let's go shopping.
+alias book="git commit -m 'bookmarks.html: latest update' bookmarks.html";
