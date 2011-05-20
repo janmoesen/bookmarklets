@@ -120,7 +120,7 @@
 				try {
 					var element = document.querySelector(contentSelectors[i]);
 					/* Make sure the element was either an anchor or something "visible". */
-					if (element && (element.tagName.toLowerCase() === 'a' || (element.offsetWidth && element.offsetHeight))) {
+					if (element && (element.tagName.toLowerCase() === 'a' || element.offsetWidth || element.offsetHeight)) {
 						window.console && console.log('Readable++: matching selector: ' + contentSelectors[i] + '\nElement: ', element);
 						return element;
 					}
