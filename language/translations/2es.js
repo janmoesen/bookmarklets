@@ -5,7 +5,7 @@
  * @keyword 2es
  */
 (function () {
-	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || location + '';
+	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || (location.protocol === 'file:' ? '' : location + '') || prompt('Please enter your text:');
 	if (s) {
 		location = s.match(/^(\w+:(\/\/)?)?[^\s]+(\.[^\s])+/)
 			? 'http://translate.google.com/translate?sl=auto&tl=es&u=' + encodeURIComponent(s)
