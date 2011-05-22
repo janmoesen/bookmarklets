@@ -5,7 +5,7 @@
  */
 (function link() {
 	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    titleText = (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/^\s*(.*)\s*$/, '$1'),
+	    titleText = (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\n/g, ' ').replace(/^\s*(.*?)\s*$/g, '$1'),
 	    originalIconLink = document.querySelector('link[rel*="icon"]'),
 	    domain = document.domain || location.hostname;
 
