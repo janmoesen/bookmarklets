@@ -107,7 +107,7 @@ process_dir () {
 
 # Export our bookmarks.html.
 {
-# Output the preamble with our README.
+# Output the preamble.
 cat <<EOD
 <!DOCTYPE NETSCAPE-Bookmark-file-1>
 <!-- This is an automatically generated file.
@@ -138,8 +138,10 @@ a[shortcuturl]::after {
 <dl>
 EOD
 
+# Recursively process this directory and its subdirectories.
 process_dir .;
 
+# Wrap it up for the common good.
 cat <<EOD
 	</dd>
 </dl>
