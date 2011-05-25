@@ -14,12 +14,46 @@ copy-2en () {
 		name="$2";
 		shift;
 		shift;
-		perl -p -e "s/(2|\b)en\b/\$1$lang/g; s/English/$name/g" "$source" > "${source/en/$lang}" \
-			&& echo "Copied to $name" \
-			|| echo "Failed to copy to $name";
+		target="${source/en/$lang}";
+		perl -p -e "s/(2|\b)en\b/\$1$lang/g; s/English/$name/g" "$source" > "$target" \
+			&& echo "Copied to $target ($name)" \
+			|| echo "Failed to copy to $target ($name)";
 	done;
 }
-COPY_2EN=; copy-2en nl Dutch fr French de German it Italian es Spanish
+COPY_2EN=; copy-2en \
+	nl Dutch \
+	fr French \
+	de German \
+	it Italian \
+	es Spanish \
+;
+
+# Copy the Van Dale bookmarklet for some other dictionaries.
+copy-vd () {
+	source='language/dictionaries/vd.js';
+	while [ $# -ge 3 ]; do
+		keyword="$1";
+		name="$2";
+		url="$3";
+		shift;
+		shift;
+		shift;
+		target="${source/vd/$keyword}";
+		perl -p -e "s/\bvd\b/$keyword/g; s/Van Dale/$name/g; s|http://www.vandale.nl/[^']+|$url|" "$source" > "$target" \
+			&& echo "Copied to $target ($name)" \
+			|| echo "Failed to copy to $target ($name)";
+	done;
+}
+COPY_VD=; copy-vd \
+	mw 'Merriam-Webster' 'http://www.merriam-webster.com/wdictionary/' \
+	dict 'Dictionary.com' 'http://dictionary.reference.com/browse/' \
+	thes 'Thesaurus.com' 'http://thesaurus.reference.com/browse/' \
+	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
+	nlwikt 'Dutch Wiktionary' 'http://nl.wiktionary.org/wiki/' \
+	enwikt 'English Wiktionary' 'http://en.wiktionary.org/wiki/' \
+	frwikt 'French Wiktionary' 'http://fr.wiktionary.org/wiki/' \
+	dewikt 'German Wiktionary' 'http://de.wiktionary.org/wiki/' \
+;
 
 # Typing is hard; let's go shopping.
 alias book="git commit -m 'bookmarks.html: latest update' bookmarks.html";
