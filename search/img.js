@@ -1,5 +1,9 @@
 /**
- * Search Google Images, optionally limiting to certain sizes.
+ * Search Google Images, optionally limiting to certain sizes using:
+ * - "wallpaper" word to find images the size of your screen.
+ * - "640x480" to find images with exactly those dimensions
+ * - ">1600x1200" to find images approximately larger than 1600x1200
+ * - ">4mp" to find images approximately larger than 4 megapixels (2272x1704)
  *
  * @title Google Images
  */
@@ -9,6 +13,10 @@
 		var url = 'http://images.google.com/images?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
 		var words = s.split(' '), matches;
 		if (words.length > 1) {
+			if (words[0] === 'wallpaper') {
+				words[0] = screen.width + 'x' + screen.height;
+			}
+
 			if ((matches = words[0].match(/^=?([0-9]+)x([0-9]+)$/))) {
 				/* Exact size requested. */
 				url += '&tbs=isz:ex,iszw:' + encodeURIComponent(matches[1]) + ',iszh:' + encodeURIComponent(matches[2]);
