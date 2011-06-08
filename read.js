@@ -54,7 +54,7 @@
 		attrs = ['style', 'face', 'font@size', 'basefont@size', 'background', 'align', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink', 'align', 'border', 'frameborder', 'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan'],
 
 		/* The selectors to try (in this order) for the first content element to scroll to. */
-		contentSelectors = [':not(body)#article', 'article, :not(body).article, .articleContent', '.post-body', '.post, .blogpost, .blogPost', '[id^="post0"], [id^="post1"], [id^="post2"], [id^="post3"], [id^="post4"], [id^="post5"], [id^="post6"], [id^="post7"], [id^="post8"], [id^="post9"], [id^="post-0"], [id^="post-1"], [id^="post-2"], [id^="post-3"], [id^="post-4"], [id^="post-5"], [id^="post-6"], [id^="post-7"], [id^="post-8"], [id^="post-9"]', '#entry', '.entry', '#content', '.content', '[id^="content"], [class^="content"]', '#main', '.main', 'h1', '#header', 'header', '.header', 'h2', 'big'],
+		contentSelectors = [':not(body)#article', 'article, :not(body).article, .articleContent', '#article_top', '#article_body', '#article_main', '.post-body', '.post, .blogpost, .blogPost', '[id^="post0"], [id^="post1"], [id^="post2"], [id^="post3"], [id^="post4"], [id^="post5"], [id^="post6"], [id^="post7"], [id^="post8"], [id^="post9"], [id^="post-0"], [id^="post-1"], [id^="post-2"], [id^="post-3"], [id^="post-4"], [id^="post-5"], [id^="post-6"], [id^="post-7"], [id^="post-8"], [id^="post-9"]', '#entry', '.entry', '#content', '.content', '[id^="content"], [class^="content"]', '#main', '.main', 'h1', '#header', 'header', '.header', 'h2', 'big'],
 
 		/* The stylesheet ID/HTML data attribute prefix to use */
 		id = 'jan-css';
