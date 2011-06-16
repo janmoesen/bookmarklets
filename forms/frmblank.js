@@ -6,6 +6,9 @@
 (function frmblank(document) {
 	Array.prototype.slice.call(document.forms || document.getElementsByTagName('form')).forEach(function (form) {
 		form.target = '_blank';
+		Array.prototype.slice.call(form.querySelectorAll('input[type="submit"], input[type="image"], button:not([type]), button[type="submit"]')).forEach(function (submit) {
+			submit.parentNode.insertBefore(document.createTextNode(' [_blank]'), submit.nextSibling);
+		});
 	});
 
 	/* Recurse for frames and iframes. */

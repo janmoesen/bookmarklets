@@ -6,6 +6,9 @@
 (function frmpost(document) {
 	Array.prototype.slice.call(document.forms || document.getElementsByTagName('form')).forEach(function (form) {
 		form.method = 'post';
+		Array.prototype.slice.call(form.querySelectorAll('input[type="submit"], input[type="image"], button:not([type]), button[type="submit"]')).forEach(function (submit) {
+			submit.parentNode.insertBefore(document.createTextNode(' [POST]'), submit.nextSibling);
+		});
 	});
 
 	/* Recurse for frames and iframes. */
