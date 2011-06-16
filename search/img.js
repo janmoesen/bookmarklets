@@ -10,8 +10,16 @@
 (function img() {
 	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your query:');
 	if (s) {
-		var url = 'http://images.google.com/images?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
 		var words = s.split(' '), matches;
+
+		/* If the first parameter looks like a URL, use Google's "Search by image". */
+		if (words[0].match(/^(\w+:(\/\/)?)?[^\s]+(\.[^\s])+/))
+		{
+			location = 'http://images.google.com/searchbyimage?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight + '&image_url=' + encodeURIComponent(words[0]) + '&q=' + encodeURIComponent(words.slice(1).join(' '));
+			return;
+		}
+
+		var url = 'http://images.google.com/images?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
 		if (words.length > 1) {
 			if (words[0] === 'wallpaper') {
 				words[0] = screen.width + 'x' + screen.height;
