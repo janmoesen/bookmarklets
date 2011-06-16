@@ -4,7 +4,7 @@
  * @title Surf with referrer
  */
 (function refer() {
-	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter the destination URL:');
+	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter the destination URL:', location);
 	if (s) {
 		location = s;
 	}
