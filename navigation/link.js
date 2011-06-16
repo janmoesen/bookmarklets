@@ -4,10 +4,13 @@
  * @title Link this
  */
 (function link() {
+	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '');
+	if (s && !s.match(/^\w+:/)) {
+		s = 'http://' + s;
+	}
 	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    titleText = (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\n/g, ' ').replace(/^\s*(.*?)\s*$/g, '$1'),
-	    originalIconLink = document.querySelector('link[rel*="icon"]'),
-	    domain = document.domain || location.hostname;
+	    titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\n/g, ' ').trim(),
+	    originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
 	root.innerHTML = '<head><title></title><link rel="icon"><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; padding: 1ex; border: 1px dotted grey; }</style><body><p><img> <span><a></a></span><p>Link code:<br><textarea rows="10" cols="80"></textarea>';
@@ -18,15 +21,16 @@
 	    link = root.querySelector('a'),
 	    textarea = root.querySelector('textarea');
 
-	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
-	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'http://www.google.com/s2/favicons?domain=' + domain;
-
 	/* Link to the current page using its title. */
-	link.href = location;
-	link.textContent = title.textContent = titleText ? titleText : location;
+	link.href = s || location;
+	link.textContent = title.textContent = s || titleText;
+	var domain = (s && link.hostname) || document.domain || location.hostname;
 	if (titleText) {
-		link.parentNode.insertBefore(document.createTextNode(' [' + (domain || document.location) + ']'), link.nextSibling);
+		link.parentNode.insertBefore(document.createTextNode(' [' + (domain || link.hostname) + ']'), link.nextSibling);
 	}
+
+	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
+	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'http://www.google.com/s2/favicons?domain=' + (domain || link.hostname);
 
 	/* Show the link code in various formats. */
 	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
