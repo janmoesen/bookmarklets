@@ -81,7 +81,7 @@ process_dir () {
 			fi;
 		done < "$file";
 
-		# Trim blank lines from the start and beginning of the description.
+		# Trim blank lines from the start and end of the description.
 		if [ "${description[0]}" = '' ]; then
 			unset description[0];
 		fi;
