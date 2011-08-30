@@ -142,8 +142,6 @@ EOD
 EOD
 }
 
-# Export our bookmarks.html.
-{
 # Output the preamble.
 cat <<EOD
 <!DOCTYPE NETSCAPE-Bookmark-file-1>
@@ -186,4 +184,3 @@ cat <<EOD
     </dd>
 </dl>
 EOD
-}
