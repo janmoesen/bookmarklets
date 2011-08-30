@@ -176,7 +176,10 @@ a[shortcuturl]::after {
 EOD
 
 # Recursively process this directory and its subdirectories.
-process_dir .
+for directory
+do
+    process_dir "$directory"
+done
 
 # Wrap it up for the common good.
 cat <<EOD
