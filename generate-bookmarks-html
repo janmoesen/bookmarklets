@@ -156,7 +156,7 @@ cat <<EOD
 html {
     max-width: 60em;
     margin: auto;
-    font-family: "Calibri", sans-serif;
+    font-family: Calibri, sans-serif;
 }
 dd > p {
     margin-top: 0;
@@ -167,7 +167,7 @@ a[shortcuturl]::after {
     content: " (keyword: " attr(shortcuturl) ")";
     display: inline-block;
     margin-left: 1em;
-    font-family: "Consolas", monospace;
+    font-family: Consolas, monospace;
 }
 </style>
 <h1>Bookmarks Menu</h1>
