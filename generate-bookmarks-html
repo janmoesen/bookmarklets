@@ -72,7 +72,7 @@ EOD
 
         # Use git log to find the timestamps for the initial and last commits.
         unset add_date last_modified
-        while read timestamp subject
+        while read -r timestamp subject
         do
             [ -z "${last_modified:-}" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp"
             add_date="$timestamp"
