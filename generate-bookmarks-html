@@ -79,8 +79,7 @@ EOD
         done < <(git log --follow --pretty='tformat:%at %s' "$file")
 
         # Get the bookmarklet's description, title and keyword.
-        unset description title keyword
-        is_in_docblock=0
+        unset description title keyword is_in_docblock
         while read -r line
         do
             if [ "$line" = '/**' ]
@@ -89,7 +88,7 @@ EOD
                 continue
             elif [ "$line" = '*/' ]
             then
-                is_in_docblock=0
+                unset is_in_docblock
             elif [[ "$line" =~ ^\(function\ (.+)\( ]]
             then
                 keyword="${BASH_REMATCH[1]}"
@@ -109,7 +108,7 @@ EOD
                 esac
                 continue
             fi
-            if [ $is_in_docblock -eq 1 ]
+            if [ "${is_in_docblock+true}" = 'true' ]
             then
                 description+=("${line:2}")
             fi
