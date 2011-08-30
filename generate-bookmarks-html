@@ -2,6 +2,8 @@
 
 # Generate the bookmarks.html file based on the JavaScript files.
 
+set -o errexit -o nounset -o pipefail
+
 # Escape special HTML chars.
 escape_html() {
     regex='s/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g;'
@@ -54,7 +56,7 @@ EOD
         unset add_date last_modified
         while read timestamp subject
         do
-            [ -z "$last_modified" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp"
+            [ -z "${last_modified:-}" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp"
             add_date="$timestamp"
         done < <(git log --follow --pretty='tformat:%at %s' "$file")
 
@@ -96,23 +98,23 @@ EOD
         done < "$file"
 
         # Trim blank lines from the start and beginning of the description.
-        if [ "${description[0]}" = '' ]
+        if [ "${description[0]+defined}" = defined ]
         then
             unset description[0]
+            for ((i = ${#description[@]} - 1; i >= 0; i--))
+            do
+                if [ "${description[$i]}" = '' ]
+                then
+                    unset description[$i]
+                fi
+            done
+            description="$(IFS=$'\n'; echo "${description[*]}")"
         fi
-        for ((i = ${#description[@]} - 1; i >= 0; i--))
-        do
-            if [ "${description[$i]}" = '' ]
-            then
-                unset description[$i]
-            fi
-        done
-        description="$(IFS=$'\n'; echo "${description[*]}")"
 
         # Output the current bookmarklet.
         cat <<EOD
-            <dt><a href="javascript:$(tr -d '\n\t' < "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
-            <dd><p>$(escape_html "$description")</p></dd>
+            <dt><a href="javascript:$(tr -d '\n\t' < "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "${add_date-}")" last_modified="$(escape_html "${last_modified-}")" shortcuturl="$(escape_html "$keyword")">$(escape_html "${title-}")</a></dt>
+            <dd><p>$(escape_html "${description-}")</p></dd>
 EOD
     done
 
