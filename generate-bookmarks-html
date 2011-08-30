@@ -96,9 +96,8 @@ EOD
             fi
             if [[ "$line" =~ ^\*\ @([a-z]*)\ (.*) ]]
             then
-                tag="${BASH_REMATCH[1]}"
                 content="${BASH_REMATCH[2]}"
-                case "$tag" in
+                case "${BASH_REMATCH[1]}" in
                     'title')
                         title="$content"
                         ;;
