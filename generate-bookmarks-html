@@ -76,7 +76,7 @@ EOD
         do
             [ -z "${last_modified:-}" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp"
             add_date="$timestamp"
-        done < <(git log --follow --pretty='tformat:%at %s' "$file")
+        done < <(cd "$(dirname "$file")" && git log --follow --pretty='tformat:%at %s' "$file")
 
         # Get the bookmarklet's description, title and keyword.
         unset description title keyword is_in_docblock
