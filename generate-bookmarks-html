@@ -55,17 +55,10 @@ process_dir() {
             <dl><p>
 EOD
 
-    for file in "$1"/*/ "$1"/*.js
+    for file in "$1"/*.js
     do
         # Skip JSLint. It's not a bookmarklet.
         [ "$file" = './jslint.js' ] && continue
-
-        # Recurse for directories, and indent the output.
-        if [ -d "$file" ]
-        then
-            [ -L "${file%/}" ] || process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</'
-            continue
-        fi
 
         # Use git log to find the timestamps for the initial and last commits.
         unset add_date last_modified
@@ -129,6 +122,13 @@ EOD
             <dt><a href="javascript:$(tr -d '\n\t' < "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "${add_date-}")" last_modified="$(escape_html "${last_modified-}")" shortcuturl="$(escape_html "$keyword")">$(escape_html "${title-}")</a></dt>
             <dd><p>$(escape_html "${description-}")</p></dd>
 EOD
+    done
+
+    # Recurse for directories, and indent the output.
+    for dir in "$1"/*/
+    do
+        [ -L "${dir%/}" ] && continue
+        process_dir "${dir%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</'
     done
 
     # End the bookmarks folder.
