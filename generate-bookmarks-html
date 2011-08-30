@@ -1,6 +1,24 @@
 #!/usr/bin/env bash
-
-# Generate the bookmarks.html file based on the JavaScript files.
+#
+# NAME
+#    generate-bookmarks-html - Generate web page for bookmarklets
+#
+# SYNOPSIS
+#    generate-bookmarks-html PATH ...
+#
+# DESCRIPTION
+#    Outputs markup for a single web page presenting the bookmarklets in the
+#    given directories.
+#
+# EXAMPLES
+#    generate-bookmarks-html ~/dev/bookmarklets > bookmarklets.html
+#        Generate markup for bookmarklets in ~/dev/bookmarklets and
+#        subdirectories.
+#
+# BUGS
+#    https://github.com/janmoesen/bookmarklets/issues
+#
+################################################################################
 
 set -o errexit -o nounset -o pipefail
 
