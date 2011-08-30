@@ -21,6 +21,7 @@
 ################################################################################
 
 set -o errexit -o nounset -o pipefail
+shopt -s nullglob
 
 # Escape special HTML chars.
 escape_html() {
@@ -57,7 +58,6 @@ process_dir() {
             <dl><p>
 EOD
 
-    shopt -s nullglob
     for file in "$1"/*/ "$1"/*.js
     do
         # Skip JSLint. It's not a bookmarklet.
