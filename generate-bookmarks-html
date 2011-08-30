@@ -45,7 +45,7 @@ process_dir() {
         description="$(escape_html <<< "$(tail -n +3 "$1/README")")"
     else
         title="$(escape_html "$(basename "$1")")"
-        description="$(escape_html "${1:2}")"
+        description="$(escape_html "$1")"
         [ "$title" = "$description" ] && description=
     fi
 
