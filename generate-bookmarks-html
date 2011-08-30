@@ -48,10 +48,7 @@ process_dir() {
         description="$(escape_html "${1:2}")"
         [ "$title" = "$description" ] && description=
     fi
-    if [ "$1" = '.' ]
-    then
-        description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z')."
-    fi
+
     cat <<EOD
         <dt><h3>$title</h3></dt>
         <dd><p>$description</p>
@@ -170,6 +167,7 @@ a[shortcuturl]::after {
 
 <dl>
 EOD
+echo -n "<p>These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').</p>"
 
 # Recursively process this directory and its subdirectories.
 for directory
