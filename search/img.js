@@ -19,7 +19,7 @@
 			return;
 		}
 
-		var url = 'http://images.google.com/images?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
+		var url = 'http://www.google.com/search?tbm=isch&safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
 		if (words.length > 1) {
 			if (words[0] === 'wallpaper') {
 				words[0] = screen.width + 'x' + screen.height;
