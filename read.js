@@ -101,6 +101,9 @@
 			allStyleSheets = Array.prototype.slice.call(document.styleSheets),
 			matches;
 
+		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
+		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
+
 		/* Add the custom stylesheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
