@@ -1,108 +1,125 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Generate the bookmarks.html file based on the JavaScript files.
 
 # Escape special HTML chars.
-escape_html () {
-	regex='s/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g;';
-	if [ $# -eq 0 ]; then
-		sed "$regex";
-	else
-		sed "$regex" <<< "$@";
-	fi;
+escape_html() {
+    regex='s/&/\&amp;/g; s/"/\&quot;/g; s/</\&lt;/g; s/>/\&gt;/g;'
+    if [ $# -eq 0 ]
+    then
+        sed "$regex"
+    else
+        sed "$regex" <<< "$@"
+    fi
 }
 
 # Loop through *.js in the given directory and recurse for its subdirectories.
-process_dir () {
-	echo "Now processing directory \"$1\"…" 1>&2;
+process_dir() {
+    echo "Now processing directory \"$1\"…" 1>&2
 
-	# Start the bookmarks folder.
-	if [ -f "$1/README" ]; then
-		title="$(escape_html <<< "$(head -n 1 "$1/README")")";
-		description="$(escape_html <<< "$(tail -n +3 "$1/README")")";
-	else
-		title="$(escape_html "$(basename "$1")")";
-		description="$(escape_html "${1:2}")";
-		[ "$title" = "$description" ] && description=;
-	fi;
-	if [ "$1" = '.' ]; then
-		description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
-	fi;
-	cat <<-EOD
-		<dt><h3>$title</h3></dt>
-		<dd><p>$description</p>
-			<dl><p>
-	EOD
+    # Start the bookmarks folder.
+    if [ -f "$1/README" ]
+    then
+        title="$(escape_html <<< "$(head -n 1 "$1/README")")"
+        description="$(escape_html <<< "$(tail -n +3 "$1/README")")"
+    else
+        title="$(escape_html "$(basename "$1")")"
+        description="$(escape_html "${1:2}")"
+        [ "$title" = "$description" ] && description=
+    fi
+    if [ "$1" = '.' ]
+    then
+        description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z')."
+    fi
+    cat <<EOD
+        <dt><h3>$title</h3></dt>
+        <dd><p>$description</p>
+            <dl><p>
+EOD
 
-	shopt -s nullglob;
-	for file in "$1"/*/ "$1"/*.js; do
-		# Skip JSLint. It's not a bookmarklet.
-		[ "$file" = './jslint.js' ] && continue;
+    shopt -s nullglob
+    for file in "$1"/*/ "$1"/*.js
+    do
+        # Skip JSLint. It's not a bookmarklet.
+        [ "$file" = './jslint.js' ] && continue
 
-		# Recurse for directories, and indent the output.
-		if [ -d "$file" ]; then
-			[ -L "${file%/}" ] || process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</';
-			continue;
-		fi;
+        # Recurse for directories, and indent the output.
+        if [ -d "$file" ]
+        then
+            [ -L "${file%/}" ] || process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</'
+            continue
+        fi
 
-		# Use git log to find the timestamps for the initial and last commits.
-		unset add_date last_modified;
-		while read timestamp subject; do
-			[ -z "$last_modified" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp";
-			add_date="$timestamp";
-		done < <(git log --follow --pretty='tformat:%at %s' "$file");
+        # Use git log to find the timestamps for the initial and last commits.
+        unset add_date last_modified
+        while read timestamp subject
+        do
+            [ -z "$last_modified" -a "${subject:0:1}" != '*' ] && last_modified="$timestamp"
+            add_date="$timestamp"
+        done < <(git log --follow --pretty='tformat:%at %s' "$file")
 
-		# Get the bookmarklet's description, title and keyword.
-		unset description title keyword;
-		is_in_docblock=0;
-		while read -r line; do
-			if [ "$line" = '/**' ]; then
-				is_in_docblock=1;
-				continue;
-			elif [ "$line" = '*/' ]; then
-				is_in_docblock=0;
-			elif [[ "$line" =~ ^\(function\ (.+)\( ]]; then
-				keyword="${BASH_REMATCH[1]}";
-				break;
-			fi;
-			if [[ "$line" =~ ^\*\ @([a-z]*)\ (.*) ]]; then
-				tag="${BASH_REMATCH[1]}";
-				content="${BASH_REMATCH[2]}";
-				case "$tag" in
-					'title')
-						title="$content";;
-					'keyword')
-						keyword="$content";;
-				esac;
-				continue;
-			fi;
-			if [ $is_in_docblock -eq 1 ]; then
-				description+=("${line:2}");
-			fi;
-		done < "$file";
+        # Get the bookmarklet's description, title and keyword.
+        unset description title keyword
+        is_in_docblock=0
+        while read -r line
+        do
+            if [ "$line" = '/**' ]
+            then
+                is_in_docblock=1
+                continue
+            elif [ "$line" = '*/' ]
+            then
+                is_in_docblock=0
+            elif [[ "$line" =~ ^\(function\ (.+)\( ]]
+            then
+                keyword="${BASH_REMATCH[1]}"
+                break
+            fi
+            if [[ "$line" =~ ^\*\ @([a-z]*)\ (.*) ]]
+            then
+                tag="${BASH_REMATCH[1]}"
+                content="${BASH_REMATCH[2]}"
+                case "$tag" in
+                    'title')
+                        title="$content"
+                        ;;
+                    'keyword')
+                        keyword="$content"
+                        ;;
+                esac
+                continue
+            fi
+            if [ $is_in_docblock -eq 1 ]
+            then
+                description+=("${line:2}")
+            fi
+        done < "$file"
 
-		# Trim blank lines from the start and beginning of the description.
-		if [ "${description[0]}" = '' ]; then
-			unset description[0];
-		fi;
-		for ((i = ${#description[@]} - 1; i >= 0; i--)); do
-			if [ "${description[$i]}" = '' ]; then
-				unset description[$i];
-			fi;
-		done;
-		description="$(IFS=$'\n'; echo "${description[*]}")";
+        # Trim blank lines from the start and beginning of the description.
+        if [ "${description[0]}" = '' ]
+        then
+            unset description[0]
+        fi
+        for ((i = ${#description[@]} - 1; i >= 0; i--))
+        do
+            if [ "${description[$i]}" = '' ]
+            then
+                unset description[$i]
+            fi
+        done
+        description="$(IFS=$'\n'; echo "${description[*]}")"
 
-		# Output the current bookmarklet.
-		cat <<-EOD
-			<dt><a href="javascript:$(tr -d '\n\t' < "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
-			<dd><p>$(escape_html "$description")</p></dd>
-		EOD
-	done;
+        # Output the current bookmarklet.
+        cat <<EOD
+            <dt><a href="javascript:$(tr -d '\n\t' < "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
+            <dd><p>$(escape_html "$description")</p></dd>
+EOD
+    done
 
-	# End the bookmarks folder.
-	cat <<-EOD
-			</dl>
-	EOD
+    # End the bookmarks folder.
+    cat <<EOD
+            </dl>
+EOD
 }
 
 # Export our bookmarks.html.
@@ -117,20 +134,20 @@ cat <<EOD
 <title>Bookmarks</title>
 <style>
 html {
-	max-width: 60em;
-	margin: auto;
-	font-family: "Calibri", sans-serif;
+    max-width: 60em;
+    margin: auto;
+    font-family: "Calibri", sans-serif;
 }
 dd > p {
-	margin-top: 0;
-	white-space: pre-wrap;
-	line-height: 1.5;
+    margin-top: 0;
+    white-space: pre-wrap;
+    line-height: 1.5;
 }
 a[shortcuturl]::after {
-	content: " (keyword: " attr(shortcuturl) ")";
-	display: inline-block;
-	margin-left: 1em;
-	font-family: "Consolas", monospace;
+    content: " (keyword: " attr(shortcuturl) ")";
+    display: inline-block;
+    margin-left: 1em;
+    font-family: "Consolas", monospace;
 }
 </style>
 <h1>Bookmarks Menu</h1>
@@ -139,11 +156,11 @@ a[shortcuturl]::after {
 EOD
 
 # Recursively process this directory and its subdirectories.
-process_dir .;
+process_dir .
 
 # Wrap it up for the common good.
 cat <<EOD
-	</dd>
+    </dd>
 </dl>
 EOD
-} > bookmarks.html;
+}
