@@ -7,7 +7,7 @@
  * @title Readable++
  */
 (function read() {
-	/* The more readable stylesheet. */
+	/* The more readable stylesheet. Note that the multiline string below is invalid syntax, but it works because the bookmarklet has its newlines stripped. */
 	var css = '@namespace svg "http://www.w3.org/2000/svg";
 		* {
 			line-height: 1.5;
