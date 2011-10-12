@@ -41,8 +41,9 @@
 		.cufon-canvas canvas {
 			display: none;
 		}
-		.post_share, #janrain-social-sharebar {
+		.post_share, #janrain-social-sharebar, #sharebar {
 			display: none;
+			left: -1000px;
 		}
 		.postprofile, .signature {
 			font-size: smaller;
