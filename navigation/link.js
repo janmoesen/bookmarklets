@@ -29,6 +29,17 @@
 		link.parentNode.insertBefore(document.createTextNode(' [' + (domain || link.hostname) + ']'), link.nextSibling);
 	}
 
+	/* Link to the current page's referrer, if available. */
+	if (document.referrer) {
+		var viaLink = document.createElement('a');
+		console.log(viaLink);
+		viaLink.setAttribute('href', document.referrer);
+		viaLink.textContent = viaLink.hostname || viaLink.href;
+		link.parentNode.parentNode.appendChild(document.createTextNode(' (via '));
+		link.parentNode.parentNode.appendChild(viaLink);
+		link.parentNode.parentNode.appendChild(document.createTextNode(')'));
+	}
+
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
 	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'http://www.google.com/s2/favicons?domain=' + (domain || link.hostname);
 
