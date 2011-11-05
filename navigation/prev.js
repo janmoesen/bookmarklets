@@ -71,9 +71,9 @@
 	var yearPattern = '20[0-9][0-9]',
 	    monthPattern = monthNames.concat(['(?:0?[1-9])', '(?:1[012])']).join('|'),
 	    dayPattern = '(?:' + ['3[01]', '[12][0-9]', '0?[1-9]'].join(')|(?:') + ')',
-	    regexp = new RegExp('(.*?\\b)(' + yearPattern + ')([-/_.])(' + monthPattern + ')\\3(' + dayPattern + ')(.*)');
+	    regexp = new RegExp('(.*?\\b)(' + yearPattern + ')([-/_.]?)(' + monthPattern + ')\\3(' + dayPattern + ')([^0-9].*)?$');
 	if ((matches = uri.match(regexp))) {
-		var prefix = matches[1], year = matches[2], separator = matches[3], month = matches[4], day = matches[5], suffix = matches[6];
+		var prefix = matches[1], year = matches[2], separator = matches[3], month = matches[4], day = matches[5], suffix = matches[6] === undefined ? '' : matches[6];
 		var newDate = new Date(Date.UTC(
 			parseInt(year, 10),
 			month.length === 3 ? monthNames.indexOf(month) : parseInt(month, 10) - 1,
