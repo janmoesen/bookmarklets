@@ -108,6 +108,11 @@
 
 	selectors = [];
 
+	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
+	keywords.forEach(function (text) {
+		selectors.push('//a[@href][string(.) = ""][img[contains(@alt, "' + text + '")]]');
+	});
+
 	/* Look for tell-tale symbols next to links. */
 	symbols.forEach(function (text) {
 		selectors.push('//*[contains(text(), "' + text + '") and substring-after(text(), "' + text + '") = ""]//preceding-sibling::a');
@@ -117,6 +122,11 @@
 	identifiers.forEach(function (idOrClass) {
 		selectors.push('#' + idOrClass + ' > a');
 		selectors.push('.' + idOrClass + ' > a');
+	});
+
+	/* Look for tell-tale text content inside image source URLs for links that have no text content. */
+	keywords.forEach(function (text) {
+		selectors.push('//a[@href][string(.) = ""][img[contains(@src, "' + text + '")]]');
 	});
 
 	/* Now check the selectors we are less confident about. */
