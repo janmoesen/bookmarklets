@@ -13,7 +13,7 @@
 			line-height: 1.5;
 		}
 		body {
-			max-width: 60em;
+			max-width: 55em;
 			margin: 0 auto;
 			padding: 1em;
 			font-family: "Calibri", sans-serif;
