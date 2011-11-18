@@ -10,6 +10,7 @@
 		var displayString = s.length > maxDisplayLength
 			? s.substring(0, maxDisplayLength / 2) + '…' + s.substring(s.length - maxDisplayLength / 2 + 1)
 			: s;
+
 		/* To count the number of bytes, we replace all ASCII characters by a
 		 * URL-safe "a". If we URL-encode the resulting string, we get all
 		 * non-ASCII characters encoded as sequences of %XX. We then replace
