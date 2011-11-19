@@ -16,14 +16,14 @@
 (function next() {
 	var symbols = '>> » → ⇒',
 	    keywords = ('Next next Newer newer Volgende volgende Nieuwer nieuwer Prochain prochain' + symbols).split(' '),
-	    symbols = symbols.split(' '),
 	    identifiers = 'next nextArticle nextPost nextLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	    selectors, newUrl;
+	symbols = symbols.split(' ');
 
 	/* Try links with @rel="next". */
 	selectors = [
-		'link[rel="next"][href], a[rel="next"][href]',
+		'link[rel="next"][href], a[rel="next"][href]'
 	];
 
 	/* Look for tell-tale text content inside links. */

@@ -16,14 +16,14 @@
 (function prev() {
 	var symbols = '<< « ← ⇐',
 	    keywords = ('Previous Prev previous prev Older older Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
-	    symbols = symbols.split(' '),
 	    identifiers = 'prev previous prevArticle previousArticle prevPost previousPost prevLink previousLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	    selectors, newUrl;
+	symbols = symbols.split(' ');
 
 	/* Try links with @rel="prev". */
 	selectors = [
-		'link[rel="prev"][href], a[rel="prev"][href]',
+		'link[rel="prev"][href], a[rel="prev"][href]'
 	];
 
 	/* Look for tell-tale text content inside links. */
