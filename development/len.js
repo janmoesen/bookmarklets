@@ -55,7 +55,7 @@
 
 		displayString = numChars === numBytes
 			? 'The number of characters in the ASCII string "' + s + '" is: '
-			: 'The number of characters in the non-ASCII string "' + s + '" (' + numBytes + ' bytes) is: ';
+			: 'The number of characters in the non-ASCII string "' + s + '" (' + numBytes + ' UTF-8 bytes) is: ';
 		prompt(displayString, numChars);
 	}
 })();
