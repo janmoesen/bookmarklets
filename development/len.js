@@ -23,7 +23,7 @@
 			}
 			codePoints.push(value);
 		}
-		var realLength = codePoints.length;
+		var numChars = codePoints.length;
 
 		/* To count the number of bytes, we URL-encode the string so the
 		 * non-ASCII characters are encoded as sequences of %XX. We then
@@ -34,7 +34,7 @@
 
 		/* Shorten the string before displaying, if necessary. */
 		var maxDisplayLength = 64;
-		if (realLength > maxDisplayLength) {
+		if (numChars > maxDisplayLength) {
 			var encodeUtf16 = function (value) {
 				var output = '';
 				if ((value & 0xF800) == 0xD800) {
@@ -50,12 +50,12 @@
 			};
 			s = codePoints.slice(0, maxDisplayLength / 2).map(encodeUtf16).join('')
 				+ '…'
-				+ codePoints.slice(realLength - maxDisplayLength / 2 + 1).map(encodeUtf16).join('');
+				+ codePoints.slice(numChars - maxDisplayLength / 2 + 1).map(encodeUtf16).join('');
 		}
 
-		displayString = realLength === numBytes
+		displayString = numChars === numBytes
 			? 'The number of characters in the ASCII string "' + s + '" is: '
 			: 'The number of characters in the non-ASCII string "' + s + '" (' + numBytes + ' bytes) is: ';
-		prompt(displayString, realLength);
+		prompt(displayString, numChars);
 	}
 })();
