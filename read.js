@@ -100,6 +100,7 @@
 		var all = Array.prototype.slice.call(document.getElementsByTagName('*')),
 			ourStyleSheet = document.getElementById(id),
 			allStyleSheets = Array.prototype.slice.call(document.styleSheets),
+			prettyPrintStyleSheet,
 			matches;
 
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
@@ -110,13 +111,23 @@
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
 			document.head.appendChild(ourStyleSheet).disabled = true;
+
+			/* (Re-)add the prettify.js's CSS if necessary. ".prettyprint *" styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
+			if (document.querySelector('.prettyprint')) {
+				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet.textContent = '@import url(http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css)';
+				document.head.appendChild(prettyPrintStyleSheet);
+			}
 		}
 
 		/* Toggle between our readable and the page's original stylesheet(s). */
 		function toggleStyles() {
 			ourStyleSheet.disabled = !ourStyleSheet.disabled;
+			if (prettyPrintStyleSheet) {
+				prettyPrintStyleSheet.disabled = ourStyleSheet.disabled;
+			}
 			allStyleSheets.forEach(function (styleSheet, i) {
-				if (styleSheet.ownerNode !== ourStyleSheet)
+				if (styleSheet.ownerNode !== ourStyleSheet && !/\b((syntax(hi(ghlight|lite))?)|geshi)\./i.test(styleSheet.href))
 				{
 					/* Remember whether this stylesheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
 					if (ourStyleSheet[id + '-originally-disabled-' + i] === undefined) {
@@ -149,6 +160,13 @@
 						}
 					}
 				});
+			});
+
+			/* Restore the inline styles for certain code highlighters. */
+			var disabledStyleAttr = id + '-style';
+			Array.prototype.slice.call(document.querySelectorAll('.wp_syntax [' + disabledStyleAttr + ']')).forEach(function (elem) {
+				elem.setAttribute('style', elem.getAttribute(disabledStyleAttr));
+				elem.removeAttribute(disabledStyleAttr);
 			});
 		}
 
