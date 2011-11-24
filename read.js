@@ -33,7 +33,7 @@
 		code, pre, .syntaxhighlighter {
 			font-family: "Consolas", monospace;
 			font-size: small;
-			background: #ffe;
+			background: #fffff3;
 		}
 		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {
 			opacity: 0.25;
