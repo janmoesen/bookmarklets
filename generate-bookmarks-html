@@ -35,10 +35,8 @@ process_dir () {
 	EOD
 
 	shopt -s nullglob;
+	GLOBIGNORE='./jslint*:./.git/';
 	for file in "$1"/*/ "$1"/*.js; do
-		# Skip JSLint. It's not a bookmarklet.
-		[ "$file" = './jslint.js' ] && continue;
-
 		# Recurse for directories, and indent the output.
 		if [ -d "$file" ]; then
 			[ -L "${file%/}" ] || process_dir "${file%/}" | sed $'s/^\([[:space:]]*\)</\\1\t</';
