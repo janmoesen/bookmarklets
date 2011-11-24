@@ -173,7 +173,7 @@
 			}
 		}
 
-		/* Toggle the stylesheets and find the start of the content. */
+		/* Toggle the stylesheets and scroll to the start of the content. */
 		var contentElement;
 		if (ourStyleSheet.disabled) {
 			/* Look for the content element when our CSS is NOT active to avoid scrolling to hidden elements being unhidden by our CSS (and thus causing false positives). */
@@ -183,14 +183,7 @@
 			toggleStyles();
 			contentElement = findContentElement();
 		}
-		/* Scroll to the start of the content after the stylesheets have been toggled. */
-		if (contentElement) {
-			var top = 0;
-			do {
-				top += contentElement.offsetTop;
-			} while ((contentElement = contentElement.offsetParent));
-			window.scrollTo(0, top);
-		}
+		contentElement && contentElement.scrollIntoView();
 
 		/* Recurse for frames and iframes. */
 		try {
