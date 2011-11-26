@@ -13,7 +13,7 @@
 	    originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
-	root.innerHTML = '<head><title></title><link rel="icon"><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; padding: 1ex; border: 1px dotted grey; }</style><body><p><img> <span><a></a></span><p>Link code:<br><textarea rows="10" cols="80"></textarea>';
+	root.innerHTML = '<html><title></title><link rel="icon"/><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; padding: 1ex; border: 1px dotted grey; }</style><p><img/> <span><a></a></span></p><p>Link code:<br/><textarea rows="10" cols="80"></textarea></p></html>';
 	var title = root.querySelector('title'),
 	    iconLink = root.querySelector('link'),
 	    styleSheet = root.querySelector('style'),
