@@ -35,6 +35,10 @@
 			font-size: small;
 			background: #fffff3;
 		}
+		textarea {
+			width: 100%;
+			height: 32ex;
+		}
 		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {
 			opacity: 0.25;
 		}
