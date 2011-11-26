@@ -111,7 +111,10 @@
 			'big'
 		],
 
-		/* The stylesheet ID/HTML data attribute prefix to use */
+		/* URI pattern for syntax highlighting stylesheets. */
+		syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight|lite))?|sh(Core|Theme[^.]*)|geshi)\./i,
+
+		/* The stylesheet ID/HTML data attribute prefix to use. */
 		id = 'jan-css';
 
 	/* The main function. */
@@ -131,10 +134,15 @@
 			ourStyleSheet.innerHTML = css;
 			document.head.appendChild(ourStyleSheet).disabled = true;
 
-			/* (Re-)add the prettify.js's CSS if necessary. ".prettyprint *" styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
+			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
 			if (document.querySelector('.prettyprint')) {
 				prettyPrintStyleSheet = document.createElement('style');
 				prettyPrintStyleSheet.textContent = '@import url(http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css)';
+				document.head.appendChild(prettyPrintStyleSheet);
+			} else if (document.querySelector('.syntaxhighlighter')) {
+				prettyPrintStyleSheet = document.createElement('style');
+				/* TODO: GitHub sends this as text/plain, so it is not loaded for security reasons. Fork it on GitHub Pages, or some such. */
+				prettyPrintStyleSheet.textContent = '@import url(https://raw.github.com/alexgorbatchev/SyntaxHighlighter/master/styles/shCore.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}
 		}
@@ -146,7 +154,7 @@
 				prettyPrintStyleSheet.disabled = ourStyleSheet.disabled;
 			}
 			allStyleSheets.forEach(function (styleSheet, i) {
-				if (styleSheet.ownerNode !== ourStyleSheet && !/\b((syntax(hi(ghlight|lite))?)|geshi)\./i.test(styleSheet.href))
+				if (styleSheet.ownerNode !== ourStyleSheet && !syntaxHighlightHrefRegex.test(styleSheet.href))
 				{
 					/* Remember whether this stylesheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
 					if (ourStyleSheet[id + '-originally-disabled-' + i] === undefined) {
