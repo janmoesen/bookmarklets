@@ -39,6 +39,21 @@
 			width: 100%;
 			height: 32ex;
 		}
+		th, td {
+			vertical-align: top;
+			text-align: left;
+			padding: 0.5ex;
+		}
+		tr:hover th, tr:hover td:not(.code) {
+			background: #ffe;
+		}
+		tr th:hover, tr td:not(.code):hover {
+			background: #ffb;
+		}
+		caption {
+			font-weight: bold;
+			border-bottom: 1px dotted;
+		}
 		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {
 			opacity: 0.25;
 		}
