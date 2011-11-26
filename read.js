@@ -33,7 +33,7 @@
 		code, pre, .syntaxhighlighter {
 			font-family: "Consolas", monospace;
 			font-size: small;
-			background: #fffff3;
+			background: #ffe;
 		}
 		textarea {
 			width: 100%;
