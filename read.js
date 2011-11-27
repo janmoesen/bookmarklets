@@ -76,11 +76,14 @@
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
 	var dataTableCss = '
+		tr:nth-child(odd) th:not(.' + id + '-active-col), tr:nth-child(odd) td:not(.' + id + '-active-col) {
+			background: #eef;
+		}
 		tr:hover th, tr:hover td:not(.code), .' + id + '-active-col {
-			background: #ffd;
+			background: #ddf;
 		}
 		tr th:hover, tr td:not(.code):hover {
-			background: #ffb;
+			background: #bbf;
 		}
 	';
 
