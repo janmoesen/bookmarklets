@@ -92,13 +92,13 @@
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
 	var dataTableCss = '
-		tr:nth-child(odd) th:not(.' + id + '-active-col), tr:nth-child(odd) td:not(.' + id + '-active-col) {
+		tr:nth-child(odd) td:not(.' + id + '-active-col) {
 			background: #eef;
 		}
-		tr:hover th, tr:hover td:not(.code), .' + id + '-active-col {
+		tr:hover td:not(.code), .' + id + '-active-col {
 			background: #ddf;
 		}
-		tr th:hover, tr td:not(.code):hover {
+		th, tr td:not(.code):hover {
 			background: #bbf;
 		}
 		th code, td code {
@@ -177,7 +177,7 @@
 					}
 
 					var activeColumnClassName = id + '-active-col', activeColumnRegex = new RegExp(' ' + activeColumnClassName + ' ');
-					Array.prototype.slice.call(table.querySelectorAll('th:nth-child(' + nthChild + '), td:nth-child(' + nthChild + ')')).forEach(function (cell) {
+					Array.prototype.slice.call(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
 						if (e.type === 'mouseenter') {
 							/* Element.classList does not work in iOS < 5 */
 							cell.className = cell.className === ''
