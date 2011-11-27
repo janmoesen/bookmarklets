@@ -44,12 +44,6 @@
 			text-align: left;
 			padding: 0.5ex;
 		}
-		tr:hover th, tr:hover td:not(.code) {
-			background: #ffe;
-		}
-		tr th:hover, tr td:not(.code):hover {
-			background: #ffb;
-		}
 		caption {
 			font-weight: bold;
 			border-bottom: 1px dotted;
@@ -74,6 +68,16 @@
 			height: 4ex;
 			border: 1px dotted;
 		}',
+
+		/* Extra CSS for pages that do not appear to use tables for layout. */
+		dataTableCss = '
+		tr:hover th, tr:hover td:not(.code) {
+			background: #ffe;
+		}
+		tr th:hover, tr td:not(.code):hover {
+			background: #ffb;
+		}
+		',
 
 		/* The attributes to disable. */
 		attrs = [
@@ -132,6 +136,10 @@
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
+			/* Nested tables are considered to be used for layout. If there are none, add the CSS for more usable data tables. */
+			if (!document.querySelector('table table')) {
+				ourStyleSheet.innerHTML += dataTableCss;
+			}
 			document.head.appendChild(ourStyleSheet).disabled = true;
 
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
