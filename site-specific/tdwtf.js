@@ -4,9 +4,6 @@
  * @title TDWTF
  */
 (function tdwtf() {
-	Array.prototype.slice.call(document.querySelectorAll('.ForumPostUserArea')).forEach(function (td) {
-		td.rowSpan = 2;
-	});
 	document.head.appendChild(document.createElement('style')).textContent = '
 		.ForumPostFooterArea, .ForumPostSignature {
 			border-top: 1px dotted; font-size: smaller;
