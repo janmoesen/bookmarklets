@@ -193,8 +193,7 @@
 				prettyPrintStyleSheet.disabled = ourStyleSheet.disabled;
 			}
 			allStyleSheets.forEach(function (styleSheet, i) {
-				if (styleSheet.ownerNode !== ourStyleSheet && !syntaxHighlightHrefRegex.test(styleSheet.href))
-				{
+				if (styleSheet.ownerNode !== ourStyleSheet && !syntaxHighlightHrefRegex.test(styleSheet.href)) {
 					/* Remember whether this stylesheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
 					if (ourStyleSheet[id + '-originally-disabled-' + i] === undefined) {
 						ourStyleSheet[id + '-originally-disabled-' + i] = styleSheet.disabled;
