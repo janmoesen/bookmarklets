@@ -77,7 +77,7 @@
 	/* Extra CSS for pages that do not appear to use tables for layout. */
 	var dataTableCss = '
 		tr:hover th, tr:hover td:not(.code), .' + id + '-active-col {
-			background: #ffe;
+			background: #ffd;
 		}
 		tr th:hover, tr td:not(.code):hover {
 			background: #ffb;
