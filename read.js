@@ -85,6 +85,9 @@
 		tr th:hover, tr td:not(.code):hover {
 			background: #bbf;
 		}
+		th code, td code {
+			background: inherit;
+		}
 	';
 
 	/* The attributes to disable. */
