@@ -7,6 +7,9 @@
  * @title Readable++
  */
 (function read() {
+	/* The stylesheet ID/HTML data attribute prefix to use. */
+	var id = 'jan-css';
+
 	/* The more readable stylesheet. Note that the multiline string below is invalid syntax, but it works because the bookmarklet has its newlines stripped. */
 	var css = '
 		@namespace svg "http://www.w3.org/2000/svg";
@@ -73,7 +76,7 @@
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
 	var dataTableCss = '
-		tr:hover th, tr:hover td:not(.code) {
+		tr:hover th, tr:hover td:not(.code), .' + id + '-active-col {
 			background: #ffe;
 		}
 		tr th:hover, tr td:not(.code):hover {
@@ -120,9 +123,6 @@
 	/* URI pattern for syntax highlighting stylesheets. */
 	var syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight|lite))?|sh(Core|Theme[^.]*)|geshi)\./i;
 
-	/* The stylesheet ID/HTML data attribute prefix to use. */
-	var id = 'jan-css';
-
 	/* The main function. */
 	(function execute(document) {
 		var all = Array.prototype.slice.call(document.getElementsByTagName('*')),
@@ -138,10 +138,39 @@
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
+
 			/* Nested tables are considered to be used for layout. If there are none, add the CSS for more usable data tables. */
 			if (!document.querySelector('table table')) {
 				ourStyleSheet.innerHTML += dataTableCss;
+
+				/* For data tables, also highlight the matching column. I do not know how to do this in pure CSS without COLGROUPs. */
+				function columnMouseHandler(e) {
+					if (!/^t[dh]$/i.test('' + e.target.nodeName)) {
+						return;
+					}
+
+					var targetCell = e.target, nthChild = targetCell.cellIndex + 1, table = targetCell.parentNode;
+					while (table && table.nodeName.toLowerCase() !== 'table') {
+						table = table.parentNode;
+					}
+
+					var activeColumnClassName = id + '-active-col', activeColumnRegex = new RegExp(' ' + activeColumnClassName + ' ');
+					Array.prototype.slice.call(table.querySelectorAll('th:nth-child(' + nthChild + '), td:nth-child(' + nthChild + ')')).forEach(function (cell) {
+						if (e.type === 'mouseenter') {
+							/* Element.classList does not work in iOS < 5 */
+							cell.className = cell.className === ''
+								? activeColumnClassName
+								: cell.className + ' ' + activeColumnClassName;
+						} else {
+							cell.className = (' ' + cell.className + ' ').replace(activeColumnRegex, '');
+						}
+					});
+				}
+				document.addEventListener('mouseenter', columnMouseHandler, true);
+				document.addEventListener('mouseleave', columnMouseHandler, true);
 			}
+
+			/* Adding the stylesheet node has to happen after its contents has been set, or chaos ensues. */
 			document.head.appendChild(ourStyleSheet).disabled = true;
 
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
