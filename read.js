@@ -110,7 +110,7 @@
 	var attrs = [
 		'style',
 		'background', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink',
-		'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan',
+		'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height',
 		'border',
 		'frameborder',
 		'align',
@@ -161,11 +161,12 @@
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
 
-			/* Nested tables are considered to be used for layout. If there are none, add the CSS for more usable data tables. */
+			/* Check if there are tables for layout, which –for the purposes of this bookmarklet– are defined simply as nested tables. */
 			if (!document.querySelector('table table')) {
+				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
 				ourStyleSheet.innerHTML += dataTableCss;
 
-				/* For data tables, also highlight the matching column. I do not know how to do this in pure CSS without COLGROUPs. */
+				/* Highlight the matching column on :hover. I do not know how to do this in pure CSS without COLGROUPs. */
 				function columnMouseHandler(e) {
 					if (!/^t[dh]$/i.test('' + e.target.nodeName)) {
 						return;
