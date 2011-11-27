@@ -8,7 +8,8 @@
  */
 (function read() {
 	/* The more readable stylesheet. Note that the multiline string below is invalid syntax, but it works because the bookmarklet has its newlines stripped. */
-	var css = '@namespace svg "http://www.w3.org/2000/svg";
+	var css = '
+		@namespace svg "http://www.w3.org/2000/svg";
 		* {
 			line-height: 1.5;
 		}
@@ -67,59 +68,60 @@
 			width: 12em;
 			height: 4ex;
 			border: 1px dotted;
-		}',
+		}
+	';
 
-		/* Extra CSS for pages that do not appear to use tables for layout. */
-		dataTableCss = '
+	/* Extra CSS for pages that do not appear to use tables for layout. */
+	var dataTableCss = '
 		tr:hover th, tr:hover td:not(.code) {
 			background: #ffe;
 		}
 		tr th:hover, tr td:not(.code):hover {
 			background: #ffb;
 		}
-		',
+	';
 
-		/* The attributes to disable. */
-		attrs = [
-			'style',
-			'background', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink',
-			'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan',
-			'border',
-			'frameborder',
-			'align',
-			'face', 'font@size', 'basefont@size',
-		],
+	/* The attributes to disable. */
+	var attrs = [
+		'style',
+		'background', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink',
+		'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height', 'colspan', 'rowspan',
+		'border',
+		'frameborder',
+		'align',
+		'face', 'font@size', 'basefont@size'
+	];
 
-		/* The selectors to try (in this order) for the first content element to scroll to. */
-		contentSelectors = [
-			':not(body)#article',
-			'article, :not(#spotlight) > :not(body).article, .articleContent',
-			'#article_top',
-			'#article_body',
-			'#article_main',
-			'.post-body',
-			'.post, .blogpost, .blogPost',
-			'[id^="post0"], [id^="post1"], [id^="post2"], [id^="post3"], [id^="post4"], [id^="post5"], [id^="post6"], [id^="post7"], [id^="post8"], [id^="post9"], [id^="post-0"], [id^="post-1"], [id^="post-2"], [id^="post-3"], [id^="post-4"], [id^="post-5"], [id^="post-6"], [id^="post-7"], [id^="post-8"], [id^="post-9"]',
-			'#entry',
-			'.entry',
-			'#content',
-			'.content',
-			'[id^="content"], [class^="content"]',
-			'#main',
-			'.main',
-			'h1',
-			'#header',
-			'header',
-			'.header',
-			'h2',
-			'big'
-		],
+	/* The selectors to try (in this order) for the first content element to scroll to. */
+	var contentSelectors = [
+		':not(body)#article',
+		'article, :not(#spotlight) > :not(body).article, .articleContent',
+		'#article_top',
+		'#article_body',
+		'#article_main',
+		'.post-body',
+		'.post, .blogpost, .blogPost',
+		'[id^="post0"], [id^="post1"], [id^="post2"], [id^="post3"], [id^="post4"], [id^="post5"], [id^="post6"], [id^="post7"], [id^="post8"], [id^="post9"], [id^="post-0"], [id^="post-1"], [id^="post-2"], [id^="post-3"], [id^="post-4"], [id^="post-5"], [id^="post-6"], [id^="post-7"], [id^="post-8"], [id^="post-9"]',
+		'#entry',
+		'.entry',
+		'#content',
+		'.content',
+		'[id^="content"], [class^="content"]',
+		'#main',
+		'.main',
+		'h1',
+		'#header',
+		'header',
+		'.header',
+		'h2',
+		'big'
+	];
 
-		/* URI pattern for syntax highlighting stylesheets. */
-		syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight|lite))?|sh(Core|Theme[^.]*)|geshi)\./i,
+	/* URI pattern for syntax highlighting stylesheets. */
+	var syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight|lite))?|sh(Core|Theme[^.]*)|geshi)\./i;
 
-		/* The stylesheet ID/HTML data attribute prefix to use. */
-		id = 'jan-css';
+	/* The stylesheet ID/HTML data attribute prefix to use. */
+	var id = 'jan-css';
 
 	/* The main function. */
 	(function execute(document) {
