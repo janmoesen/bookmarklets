@@ -16,6 +16,22 @@
 		* {
 			line-height: 1.5;
 		}
+		html {
+			background: #fff;
+			color: #000;
+		}
+		:link {
+			color: #00e;
+		}
+		:visited {
+			color: #528;
+		}
+		:link:focus, :visited:focus, :link:hover, :visited:hover {
+			color: #e30;
+		}
+		:link:active, :visited:active {
+			color: #e00;
+		}
 		body {
 			max-width: 55em;
 			margin: 0 auto;
