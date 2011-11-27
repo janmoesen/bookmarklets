@@ -20,5 +20,8 @@
 		:visited, .ForumLastPost a {
 			opacity: 0.25;
 		}
+		tr:hover th, tr:hover td:not(.code), tr th:hover, tr td:not(.code):hover {
+			background: inherit;
+		}
 	';
 })();
