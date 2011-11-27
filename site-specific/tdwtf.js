@@ -8,16 +8,17 @@
 		td.rowSpan = 2;
 	});
 	document.head.appendChild(document.createElement('style')).textContent = '
-	.ForumPostFooterArea, .ForumPostSignature {
-		border-top: 1px dotted; font-size: smaller;
-	}
-	.ForumPostFooterArea li:empty {
-		display: none;
-	}
-	.ForumPostUserContent {
-		padding-right: 1em;
-	}
-	:visited, .ForumLastPost a {
-		opacity: 0.25;
-	}';
+		.ForumPostFooterArea, .ForumPostSignature {
+			border-top: 1px dotted; font-size: smaller;
+		}
+		.ForumPostFooterArea li:empty {
+			display: none;
+		}
+		.ForumPostUserContent {
+			padding-right: 1em;
+		}
+		:visited, .ForumLastPost a {
+			opacity: 0.25;
+		}
+	';
 })();
