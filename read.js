@@ -161,8 +161,32 @@
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
 
-			/* Check if there are tables for layout, which –for the purposes of this bookmarklet– are defined simply as nested tables. */
-			if (!document.querySelector('table table')) {
+			/* Check if there are tables for layout. */
+			var hasTablesForLayout =
+				/* Are there any nested tables? */
+				document.querySelector('table table') ||
+				/* Are there any tables with suspect column counts? */
+				Array.prototype.slice.call(document.querySelectorAll('table')).some(function (table) {
+					/* Do all sciencey and proclaim three rows to be the minimum sample size. */
+					if (table.rows.length < 3) {
+						return false;
+					}
+
+					var numCellsPerRow = [];
+					Array.prototype.slice.call(table.rows).forEach(function (row) {
+						if (numCellsPerRow.indexOf(row.cells.length) === -1) {
+							numCellsPerRow.push(row.cells.length);
+						}
+					});
+
+					return (
+						/* Are we in quirks mode and does this table have at least three rows with a different number of cells? */
+						(document.compatMode === 'BackCompat' && numCellsPerRow.length >= 3) ||
+						/* Does this table only have rows with just a single column? */
+						(numCellsPerRow.length === 1 && numCellsPerRow[0] === 1)
+					);
+				});
+			if (!hasTablesForLayout) {
 				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
 				ourStyleSheet.innerHTML += dataTableCss;
 
