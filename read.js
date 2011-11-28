@@ -286,7 +286,7 @@
 		function findContentElement() {
 			if (location.hash) {
 				contentSelectors.unshift('a[name="' + location.hash.substring(1) + '"]');
-				contentSelectors.unshift(location.hash);
+				contentSelectors.unshift(location.hash.replace(/\./g, '\\.'));
 			}
 			for (var i = 0; i < contentSelectors.length; i++) {
 				try {
