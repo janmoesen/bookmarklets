@@ -37,7 +37,7 @@ generated &quot;bookmarks.html&quot; file.
 
 Feel free to fork and create pull requests: http://kak.be/bookmarklets
 
-These bookmarks were exported on Mon, 2011/11/28 22:58:50 +0100.</p>
+These bookmarks were exported on Tue, 2011/11/29 22:55:46 +0100.</p>
 <dl><p>
 	<dt><h3>Development</h3></dt>
 	<dd><p>Tools to help development.</p>
@@ -142,6 +142,14 @@ These bookmarks were exported on Mon, 2011/11/28 22:58:50 +0100.</p>
 	<dd><p>Go to the specified or selected URL using the current page as the referrer.</p></dd>
 	<dt><a href="javascript:(function rmq() {location.search &amp;&amp; (location = ('' + location).replace(/\?[^#]*/, ''));})();" add_date="1320783341" last_modified="1320783341" shortcuturl="rmq">Remove query</a></dt>
 	<dd><p>Remove the query string from the current page's URL.</p></dd>
+	<dt><a href="javascript:(function () {var s = (&lt;&gt;&lt;![CDATA[%s]]&gt;&lt;/&gt; + '').replace(/\u0025s/, '').trim();var level = parseInt(s, 10);if (s !== '') {if (isNaN(level)) {return location = '/' + s;} else {level = Math.max(0, level || 0);}}var parts = document.location.pathname.split('/');var newParts = parts.slice(0, level + 1);if (newParts.length &lt; parts.length) {newParts.push('');}location = newParts.join('/');})();" add_date="1322603740" last_modified="1322603740" shortcuturl="/">Go to the root</a></dt>
+	<dd><p>Go to the root directory, or the Nth directory starting from the root.
+
+For example, when you are on &quot;http://www.example.com/foo/bar/baz&quot;:
+- executing &quot;/&quot; goes to &quot;http://www.example.com/&quot;
+- executing &quot;/ 1&quot; goes to &quot;http://www.example.com/foo/&quot;
+- executing &quot;/ 2&quot; goes to &quot;http://www.example.com/foo/bar/&quot;
+- executing &quot;/ quux&quot; goes to &quot;http://www.example.com/quux&quot;</p></dd>
 	<dt><a href="javascript:(function () {var parts = location.pathname.split('/');if (parts.length === 2) {parts[parts.length - 1] = '';} else if (parts[parts.length - 1] === '' ||           parts[parts.length - 1].match(/^(default|index)(\..*)?$/)) {parts[parts.length - 2] = parts.pop();} else {parts[parts.length - 1] = '';}location = parts.join('/');})();" add_date="1305486490" last_modified="1305486490" shortcuturl="..">Go up</a></dt>
 	<dd><p>Go to the parent &quot;directory&quot;. Note that this function tries to be somewhat
 smart about it:
