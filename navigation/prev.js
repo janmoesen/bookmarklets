@@ -15,7 +15,7 @@
  */
 (function prev() {
 	var symbols = '<< « ← ⇐',
-	    keywords = ('Previous Prev previous prev Older older Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
+	    keywords = ('Previous Prev!Preview previous prev!preview Older!Folder older!folder Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
 	    identifiers = 'prev previous prevArticle previousArticle prevPost previousPost prevLink previousLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	    selectors, newUrl;
@@ -28,7 +28,12 @@
 
 	/* Look for tell-tale text content inside links. */
 	keywords.forEach(function (text) {
-		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(substring-before(., "' + text + '")) < 8]');
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var selector = '//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + mustContain + '") and string-length(substring-before(., "' + mustContain + '")) < 8]';
+		if (mustNotContain) {
+			selector += '[not(contains(., "' + mustNotContain + '"))]';
+		}
+		selectors.push(selector);
 	});
 
 	/* Look for typical ID/class names on the links. */
@@ -110,7 +115,12 @@
 
 	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
 	keywords.forEach(function (text) {
-		selectors.push('//a[@href][string(.) = ""][img[contains(@alt, "' + text + '")]]');
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var selector = '//a[@href][string(.) = ""][img[contains(@alt, "' + mustContain + '")]]';
+		if (mustNotContain) {
+			selector += '[not(img[contains(@alt, "' + mustNotContain + '")])]';
+		}
+		selectors.push(selector);
 	});
 
 	/* Look for tell-tale symbols next to links. */
@@ -126,7 +136,12 @@
 
 	/* Look for tell-tale text content inside image source URLs for links that have no text content. */
 	keywords.forEach(function (text) {
-		selectors.push('//a[@href][string(.) = ""][img[contains(@src, "' + text + '")]]');
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var selector = '//a[@href][string(.) = ""][img[contains(@src, "' + mustContain + '")]]';
+		if (mustNotContain) {
+			selector += '[not(img[contains(@src, "' + mustNotContain + '")])]';
+		}
+		selectors.push(selector);
 	});
 
 	/* Now check the selectors we are less confident about. */
