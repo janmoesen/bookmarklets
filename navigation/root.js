@@ -22,7 +22,7 @@
 	}
 
 	var parts = document.location.pathname.split('/');
-	var newParts = parts.slice(0, level + 1);
+	var newParts = parts.slice(0, (level || 0) + 1);
 	if (newParts.length < parts.length) {
 		newParts.push('');
 	}
