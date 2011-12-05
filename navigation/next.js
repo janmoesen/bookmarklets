@@ -28,7 +28,7 @@
 
 	/* Look for tell-tale text content inside links. */
 	keywords.forEach(function (text) {
-		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(substring-before(., "' + text + '")) < 8]');
+		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(normalize-space(substring-before(., "' + text + '"))) < 8]');
 	});
 
 	/* Look for typical ID/class names on the links. */
