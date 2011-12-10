@@ -37,7 +37,12 @@
 	}
 
 	var element = all[document.janbmLinksToIndex];
-	element && element.scrollIntoView();
+	if (!element) {
+		return;
+	}
+
+	console.debug('Links to: found element: ', element);
+	element.scrollIntoView();
 
 	var left = 0, top = 0, width = element.offsetWidth, height = element.offsetHeight;
 	var tmpElement = element;
