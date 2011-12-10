@@ -4,7 +4,11 @@
  * @title Links to…
  */
 (function () {
-	var all = document.querySelectorAll('[href^="http://jan.moesen.nu"], [href^="//jan.moesen.nu"], [src^="http://jan.moesen.nu"], [src^="//jan.moesen.nu"], [src*="janmoesen"]');
+	if (!document.janbmLinksToDomain) {
+		document.janbmLinksToDomain = 'jan.moesen.nu';
+		document.janbmLinksToDomain = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your domain:', document.janbmLinksToDomain) || document.janbmLinksToDomain;
+	}
+	var all = document.querySelectorAll('[href^="http://' + document.janbmLinksToDomain + '"], [href^="//' + document.janbmLinksToDomain + '"], [src^="http://' + document.janbmLinksToDomain + '"], [src^="//' + document.janbmLinksToDomain + '"]');
 	if (!all.length) {
 		return;
 	}
