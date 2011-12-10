@@ -64,7 +64,7 @@
 	overlays[0].setAttribute('style', overlayStyle
 		.replace('{left}', 0)
 		.replace('{top}', 0)
-		.replace('{width}', document.body.scrollWidth)
+		.replace('{width}', document.documentElement.scrollWidth)
 		.replace('{height}', top)
 	);
 	overlays[1].setAttribute('style', overlayStyle
@@ -76,13 +76,13 @@
 	overlays[2].setAttribute('style', overlayStyle
 		.replace('{left}', left + width)
 		.replace('{top}', top)
-		.replace('{width}', document.body.scrollWidth - width - left)
+		.replace('{width}', document.documentElement.scrollWidth - width - left)
 		.replace('{height}', height)
 	);
 	overlays[3].setAttribute('style', overlayStyle
 		.replace('{left}', 0)
 		.replace('{top}', top + height)
-		.replace('{width}', document.body.scrollWidth)
-		.replace('{height}', document.body.scrollHeight - height - top)
+		.replace('{width}', document.documentElement.scrollWidth)
+		.replace('{height}', document.documentElement.scrollHeight - height - top)
 	);
 })()
