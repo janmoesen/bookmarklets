@@ -134,7 +134,7 @@
 		'[id^="content"], [class^="content"]',
 		'#main',
 		'.main',
-		'h1',
+		'h1:not(:empty)',
 		'#header',
 		'header',
 		'.header',
