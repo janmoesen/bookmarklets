@@ -83,6 +83,9 @@
 			border-top: 1px dotted;
 			opacity: 0.5;
 		}
+		.google-src-text {
+			display: none;
+		}
 		iframe[src*="//www.facebook.com/plugins/like.php"], iframe[src*=".twitter.com/widgets/tweet_button"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//www.stumbleupon.com/badge/embed/"] {
 			width: 12em;
 			height: 4ex;
