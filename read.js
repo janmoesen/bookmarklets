@@ -168,13 +168,18 @@
 			var hasTablesForLayout =
 				/* Are there any nested tables? */
 				document.querySelector('table table') ||
-				/* Are there any tables with suspect column counts? */
+				/* Check each table separately until a probably-for-layout table has been found. */
 				Array.prototype.slice.call(document.querySelectorAll('table')).some(function (table) {
-					/* Do all sciencey and proclaim three rows to be the minimum sample size. */
-					if (table.rows.length < 3) {
-						return false;
+					/* Does this table takes up most of the page height? */
+					if (document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
+						return true;
 					}
 
+					/* Keep track of the number of cells (columns) per row, because differing cell counts mean several td@colspan values. */
+					if (table.rows.length < 3) {
+						/* Do all sciencey and proclaim three rows to be the minimum sample size. */
+						return false;
+					}
 					var numCellsPerRow = [];
 					Array.prototype.slice.call(table.rows).forEach(function (row) {
 						if (numCellsPerRow.indexOf(row.cells.length) === -1) {
