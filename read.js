@@ -41,10 +41,13 @@
 		center, [align] {
 			text-align: left;
 		}
-		b, i, u, s, strike, blink {
+		b:not(.' + id + '-probably-structure), i, u, s, strike, blink {
 			font-weight: normal;
 			font-style: normal;
 			text-decoration: none
+		}
+		b.' + id + '-probably-structure {
+			font-size: larger;
 		}
 		pre {
 			padding: 1ex;
@@ -145,6 +148,13 @@
 		'big'
 	];
 
+	/* Layout elements incorrectly used for structure purposes ("bold means header"). */
+	var layoutElementsForStructureSelectors = [
+		/* Because there is no support for the Selectors Level 4 "subject of a selector" syntax yet (or any definite syntax, for that matter), I simply ass-u-me in the code below that the subject is a "B" element. Either the result of the selector, or the previous element sibling. */
+		'br + b + br',
+		'div > b:only-child, p > b:only-child'
+	];
+
 	/* URI pattern for syntax highlighting stylesheets. */
 	var syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight|lite))?|sh(Core|Theme[^.]*)|geshi)\./i;
 
@@ -239,6 +249,20 @@
 				prettyPrintStyleSheet.textContent = '@import url(https://raw.github.com/alexgorbatchev/SyntaxHighlighter/master/styles/shCore.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}
+
+			/* Add some classes to layout elements that have been used for structure. */
+			var probablyStructureClassName = id + '-probably-structure';
+			layoutElementsForStructureSelectors.forEach(function (selector) {
+				Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function (elem) {
+					if (elem.tagName.toLowerCase() !== 'b') {
+						elem = elem.previousElementSibling;
+					}
+
+					elem.className = elem.className === ''
+						? probablyStructureClassName
+						: elem.className + ' ' + probablyStructureClassName;
+				});
+			});
 		}
 
 		/* Toggle between our readable and the page's original stylesheet(s). */
