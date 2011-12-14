@@ -49,6 +49,9 @@
 		b.' + id + '-probably-structure {
 			font-size: larger;
 		}
+		.' + id + '-probably-layout {
+			font: inherit;
+		}
 		pre {
 			padding: 1ex;
 			border: 1px dotted;
@@ -146,6 +149,11 @@
 		'.header',
 		'h2',
 		'big'
+	];
+
+	/* Structure elements incorrectly used for layout purposes ("make it big and bold"). */
+	var structureElementsForLayoutSelectors = [
+		'//*[contains(" h1 h2 h3 h4 h5 h6 h7 ", concat(" ", local-name(), " ")) and string-length(normalize-space()) > 120]'
 	];
 
 	/* Layout elements incorrectly used for structure purposes ("bold means header"). */
@@ -249,6 +257,19 @@
 				prettyPrintStyleSheet.textContent = '@import url(https://raw.github.com/alexgorbatchev/SyntaxHighlighter/master/styles/shCore.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}
+
+			/* Add some classes to structure elements that have been used for layout. */
+			var probablyLayoutClassName = id + '-probably-layout';
+			structureElementsForLayoutSelectors.forEach(function (selector) {
+				var xpathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				for (var i = 0; i < xpathResult.snapshotLength; i++) {
+					var elem = xpathResult.snapshotItem(i);
+
+					elem.className = elem.className === ''
+						? probablyLayoutClassName
+						: elem.className + ' ' + probablyLayoutClassName;
+				}
+			});
 
 			/* Add some classes to layout elements that have been used for structure. */
 			var probablyStructureClassName = id + '-probably-structure';
