@@ -17,7 +17,7 @@
 			line-height: 1.5;
 		}
 		html {
-			background: #fffff4;
+			background: #fff;
 			color: #222;
 		}
 		:link {
