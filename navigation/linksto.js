@@ -3,7 +3,7 @@
  *
  * @title Links to…
  */
-(function () {
+(function linksto() {
 	if (!document.janbmLinksToDomain) {
 		document.janbmLinksToDomain = 'jan.moesen.nu';
 		document.janbmLinksToDomain = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your domain:', document.janbmLinksToDomain) || document.janbmLinksToDomain;
