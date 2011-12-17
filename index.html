@@ -1,84 +1,68 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset='utf-8'>
+<meta charset="UTF-8">
+<title>Jan Moesen's bookmarklets</title>
+<style type="text/css">
+	* {
+		line-height: 1.5;
+	}
+	html {
+		background: #fff;
+		color: #000;
+	}
+	body {
+		max-width: 55em;
+		margin: 0 auto;
+		padding: 1em;
+		font-family: "Calibri", sans-serif;
+	}
+	:link {
+		color: #00e;
+	}
+	:visited {
+		color: #528;
+	}
+	:link:focus, :visited:focus, :link:hover, :visited:hover {
+		color: #e30;
+	}
+	:link:active, :visited:active {
+		color: #e00;
+	}
+	pre {
+		padding: 1ex;
+		border: 1px dotted;
+		font-family: "Consolas", monospace;
+		font-size: small;
+		background: #ffe;
+	}
+</style>
 
-	<title>janmoesen/bookmarklets @ GitHub</title>
+<a href="https://github.com/janmoesen/bookmarklets"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-	<style type="text/css">
-		body {
-			margin-top: 1.0em;
-			background-color: #fff;
-			font-family: Helvetica, Arial, FreeSans, san-serif;
-			color: #000000;
-		}
-		#container {
-			margin: 0 auto;
-			width: 700px;
-		}
-		h1 { font-size: 3.8em; color: #000000; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #000000; }
-		h3 { text-align: center; color: #000000; }
-		a { color: #000000; }
-		.description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-		.download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-		hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-		.footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-</head>
+<h1><a download href="https://github.com/janmoesen/bookmarklets">Jan Moesen's bookmarklets</a></h1>
+<p>
+	Time-saving and life-enhancing (ahem) bookmarklets.
 
-<body>
-	<a href="https://github.com/janmoesen/bookmarklets"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<h2>Installation instructions</h2>
+<p>
+	Download <a href="https://raw.github.com/janmoesen/bookmarklets/master/bookmarks.html"><code>bookmarks.html</code></a>
+	and import it into your bookmarks manager.
 
-	<div id="container">
+<h2>Browser compatibility</h2>
+<p>
+	I use Firefox for work and leisure, and all bookmarklets should work in the latest stable release.
+<p>
+	Note that a lot of my bookmarklets use <a href="https://developer.mozilla.org/en/E4X">E4X</a>.
+	Because E4X is not widely supported, and <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=389123#c9">might even disappear completely</a>,
+	the bookmarklets that accept parameters (e.g. <kbd>len <var>This "len" bookmarklet shows a string's length.</var></kbd>) will only work in
+	Mozilla browsers like Firefox or SeaMonkey.
 
-		<div class="download">
-			<a href="https://github.com/janmoesen/bookmarklets/zipball/master">
-				<img border="0" width="90" src="https://github.com/images/modules/download/zip.png"></a>
-			<a href="https://github.com/janmoesen/bookmarklets/tarball/master">
-				<img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
-		</div>
+<p>
+	The bookmarklets I use the most (<q>Readable++</q>, <q>« Previous</q> and <q>Next »</q>) also work fine
+	in other browsers I use, like Google Chrome and Safari on iOS.
 
-		<h1><a href="https://github.com/janmoesen/bookmarklets">bookmarklets</a>
-			<span class="small">by <a href="https://github.com/janmoesen">janmoesen</a></span></h1>
+<h2>Source code</h2>
+<p>
+	You can clone the project with <a href="http://git-scm.com">Git</a> by running:
 
-		<div class="description">
-			Time-saving and life-enhancing (ahem) bookmarklets.
-		</div>
-
-		
-			<p>This is a placeholder page so I can safely refer to hosted syntax highlighter CSS.</p>
-		
-
-		
-
-		
-
-		
-
-		
-
-		
-
-		<h2>Download</h2>
-		<p>
-			You can download this project in either
-			<a href="https://github.com/janmoesen/bookmarklets/zipball/master">zip</a> or
-			<a href="https://github.com/janmoesen/bookmarklets/tarball/master">tar formats.
-		</p>
-		<p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-			by running:
-			<pre>$ git clone git://github.com/janmoesen/bookmarklets</pre>
-		</p>
-
-		<div class="footer">
-			get the source code on GitHub : <a href="https://github.com/janmoesen/bookmarklets">janmoesen/bookmarklets</a>
-		</div>
-
-	</div>
-
-</body>
-</html>
+<pre>$ git clone git://github.com/<a href="https://github.com/janmoesen/bookmarklets">janmoesen/bookmarklets</a></pre>
