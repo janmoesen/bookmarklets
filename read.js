@@ -20,6 +20,12 @@
 			background: #fff;
 			color: #222;
 		}
+		body {
+			max-width: 55em;
+			margin: 0 auto;
+			padding: 1em;
+			font-family: "Calibri", sans-serif;
+		}
 		:link {
 			color: #00e;
 		}
@@ -31,12 +37,6 @@
 		}
 		:link:active, :visited:active {
 			color: #e00;
-		}
-		body {
-			max-width: 55em;
-			margin: 0 auto;
-			padding: 1em;
-			font-family: "Calibri", sans-serif;
 		}
 		center, [align] {
 			text-align: left;
