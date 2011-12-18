@@ -188,8 +188,8 @@
 				document.querySelector('table table') ||
 				/* Check each table separately until a probably-for-layout table has been found. */
 				Array.prototype.slice.call(document.querySelectorAll('table')).some(function (table) {
-					/* Does this table takes up most of the page height? */
-					if (document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
+					/* Are we in quirks mode and does this table takes up most of the page height? */
+					if (document.compatMode === 'BackCompat' && document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
 						return true;
 					}
 
