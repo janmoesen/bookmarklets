@@ -10,6 +10,10 @@
 	 * @param mixed item Either a StyleSheet or a CSSRule; something with "href" and "media.mediaText".
 	 */
 	function update(item) {
+		if (item.disabled) {
+			return;
+		}
+
 		var timestamp = +new Date() + '';
 		var paramName = 'janbm-date', paramRegex = new RegExp('([?&])' + paramName + '=[0-9]{' + timestamp.length + '}\\b');
 
@@ -35,13 +39,10 @@
 		newStyleSheet.media = allMedia.join(', ');
 		newStyleSheet.href = newHref;
 		document.head.appendChild(newStyleSheet);
+		item.disabled = true;
 	}
 
 	Array.prototype.slice.call(document.styleSheets).forEach(function (styleSheet, i) {
-		if (styleSheet.disabled) {
-			return;
-		}
-
 		if (!styleSheet.href) {
 			/* Inline style sheets can still refer to external style sheets using @import rules. */
 			Array.prototype.slice.call(styleSheet.cssRules).forEach(function (cssRule) {
