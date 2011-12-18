@@ -249,12 +249,11 @@
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
 			if (document.querySelector('.prettyprint')) {
 				prettyPrintStyleSheet = document.createElement('style');
-				prettyPrintStyleSheet.textContent = '@import url(http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css)';
+				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/prettify.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.syntaxhighlighter')) {
 				prettyPrintStyleSheet = document.createElement('style');
-				/* TODO: GitHub sends this as text/plain, so it is not loaded for security reasons. Fork it on GitHub Pages, or some such. */
-				prettyPrintStyleSheet.textContent = '@import url(https://raw.github.com/alexgorbatchev/SyntaxHighlighter/master/styles/shCore.css)';
+				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/syntaxhighlighter.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}
 
