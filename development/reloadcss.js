@@ -21,10 +21,18 @@
 				: '?' + paramName + '=' + timestamp;
 		}
 
+		/* Get the full @media rule for the nested style. */
+		var tmpItem = item;
+		var allMedia = [];
+		while (tmpItem) {
+			tmpItem.media.mediaText && allMedia.unshift(tmpItem.media.mediaText);
+			tmpItem = tmpItem.parentStyleSheet;
+		}
+
 		/* Reload the style sheet by creating a new LINK element with the updated URL. */
 		var newStyleSheet = document.createElement('link');
 		newStyleSheet.rel = 'StyleSheet';
-		newStyleSheet.media = item.media.mediaText;
+		newStyleSheet.media = allMedia.join(', ');
 		newStyleSheet.href = newHref;
 		document.head.appendChild(newStyleSheet);
 	}
