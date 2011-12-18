@@ -1,0 +1,4 @@
+#!/bin/bash
+curl --silent --output css/syntaxhighlighter.css https://raw.github.com/alexgorbatchev/SyntaxHighlighter/master/styles/shCoreDefault.css;
+curl --silent --output css/prettify.css http://google-code-prettify.googlecode.com/svn/trunk/src/prettify.css;
+
