@@ -37,7 +37,7 @@ generated &quot;bookmarks.html&quot; file.
 
 Feel free to fork and create pull requests: http://kak.be/bookmarklets
 
-These bookmarks were exported on Sun, 2011/12/18 12:22:56 +0100.</p>
+These bookmarks were exported on Mon, 2011/12/19 08:10:39 +0100.</p>
 <dl><p>
 	<dt><h3>Development</h3></dt>
 	<dd><p>Tools to help development.</p>
@@ -52,6 +52,8 @@ These bookmarks were exported on Sun, 2011/12/18 12:22:56 +0100.</p>
 	<dd><p>Show the length of the given string.</p></dd>
 	<dt><a href="javascript:(function reconsole() {delete window.console;})();" add_date="1314696756" last_modified="1314696756" shortcuturl="reconsole">Re-console</a></dt>
 	<dd><p>Restore window.console to its native state.</p></dd>
+	<dt><a href="javascript:(function reloadcss() {function update(item) {if (item.disabled) {return;}var timestamp = +new Date() + '';var paramName = 'janbm-date', paramRegex = new RegExp('([?&amp;])' + paramName + '=[0-9]{' + timestamp.length + '}\\b');var newHref = item.href.replace(paramRegex, '');if(!newHref.match(paramRegex)) {newHref += ~newHref.indexOf('?')? '&amp;' + paramName + '=' + timestamp: '?' + paramName + '=' + timestamp;}var tmpItem = item;var allMedia = [];while (tmpItem) {tmpItem.media.mediaText &amp;&amp; allMedia.unshift(tmpItem.media.mediaText);tmpItem = tmpItem.parentStyleSheet;}var newStyleSheet = document.createElement('link');newStyleSheet.rel = 'StyleSheet';newStyleSheet.media = allMedia.join(', ');newStyleSheet.href = newHref;document.head.appendChild(newStyleSheet);item.disabled = true;}Array.prototype.slice.call(document.styleSheets).forEach(function (styleSheet, i) {if (!styleSheet.href) {Array.prototype.slice.call(styleSheet.cssRules).forEach(function (cssRule) {if (cssRule.type === cssRule.IMPORT_RULE) {update(cssRule);}});return;}update(styleSheet);});})();" add_date="1324213935" last_modified="1324234042" shortcuturl="reloadcss">Reload CSS</a></dt>
+	<dd><p>Reload all external style sheets.</p></dd>
 	<dt><a href="javascript:(function text() {var s = (&lt;&gt;&lt;![CDATA[%s]]&gt;&lt;/&gt; + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your text snippet:');if (s) {location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(s);}})();" add_date="1305664449" last_modified="1305664449" shortcuturl="text">View as text</a></dt>
 	<dd><p>Render the specified or selected text as plain text.</p></dd>
 	</dl>
