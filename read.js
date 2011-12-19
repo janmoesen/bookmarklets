@@ -167,7 +167,7 @@
 	];
 
 	/* URI pattern for syntax highlighting stylesheets. */
-	var syntaxHighlightHrefRegex = /\b(syntax(hi(ghlight(er)?|lite(r)?))?|sh(Core|Theme[^.]*)|geshi)\./i;
+	var syntaxHighlightHrefRegex = /\b((syntax|pygments)(hi(ghlight(er)?|lite(r)?))?|sh(Core|Theme[^.]*)|geshi)[./]/i;
 
 	/* The main function. */
 	(function execute(document) {
