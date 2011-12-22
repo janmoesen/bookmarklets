@@ -1,14 +1,14 @@
 /**
- * Highlight all links and images pointing to the given domain name.
+ * Highlight all links and images with the given text in their URL.
  *
  * @title Links to…
  */
 (function linksto() {
-	if (!document.janbmLinksToDomain) {
-		document.janbmLinksToDomain = 'jan.moesen.nu';
-		document.janbmLinksToDomain = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your domain:', document.janbmLinksToDomain) || document.janbmLinksToDomain;
+	if (!document.janbmLinksToUrlText) {
+		document.janbmLinksToUrlText = 'jan.moesen.nu';
+		document.janbmLinksToUrlText = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter the text to look for in the URLs:', document.janbmLinksToUrlText) || document.janbmLinksToUrlText;
 	}
-	var all = document.querySelectorAll('[href^="http://' + document.janbmLinksToDomain + '"], [href^="//' + document.janbmLinksToDomain + '"], [src^="http://' + document.janbmLinksToDomain + '"], [src^="//' + document.janbmLinksToDomain + '"]');
+	var all = document.querySelectorAll('[href*="' + document.janbmLinksToUrlText + '"], [src*="' + document.janbmLinksToUrlText + '"]');
 	if (!all.length) {
 		return;
 	}
