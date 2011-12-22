@@ -10,112 +10,112 @@
 	/* The stylesheet ID/HTML data attribute prefix to use. */
 	var id = 'jan-css';
 
-	/* The more readable stylesheet. Note that the multiline string below is invalid syntax, but it works because the bookmarklet has its newlines stripped. */
-	var css = '
-		@namespace svg "http://www.w3.org/2000/svg";
-		* {
-			line-height: 1.5;
-		}
-		html {
-			background: #fff;
-			color: #222;
-		}
-		body {
-			max-width: 55em;
-			margin: 0 auto;
-			padding: 1em;
-			font-family: "Calibri", sans-serif;
-		}
-		:link {
-			color: #00e;
-		}
-		:visited {
-			color: #528;
-		}
-		:link:focus, :visited:focus, :link:hover, :visited:hover {
-			color: #e30;
-		}
-		:link:active, :visited:active {
-			color: #e00;
-		}
-		center, [align] {
-			text-align: left;
-		}
-		b:not(.' + id + '-probably-structure), i, u, s, strike, blink {
-			font-weight: normal;
-			font-style: normal;
-			text-decoration: none
-		}
-		b.' + id + '-probably-structure {
-			font-size: larger;
-		}
-		.' + id + '-probably-layout {
-			font: inherit;
-		}
-		pre {
-			padding: 1ex;
-			border: 1px dotted;
-		}
-		code, pre, .syntaxhighlighter, .dp-highlighter {
-			font-family: "Consolas", monospace;
-			font-size: small;
-			background: #ffe;
-		}
-		.dp-highlighter + pre[name="code"] {
-			display: none;
-		}
-		textarea {
-			width: 100%;
-			height: 32ex;
-		}
-		th, td {
-			vertical-align: top;
-			text-align: left;
-			padding: 0.5ex;
-		}
-		caption {
-			font-weight: bold;
-			border-bottom: 1px dotted;
-		}
-		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {
-			opacity: 0.25;
-		}
-		.cufon-canvas canvas {
-			display: none;
-		}
-		.post_share, #janrain-social-sharebar, #sharebar {
-			display: none;
-			left: -1000px;
-		}
-		.postprofile, .signature {
-			font-size: smaller;
-			border-top: 1px dotted;
-			opacity: 0.5;
-		}
-		.google-src-text {
-			display: none;
-		}
-		iframe[src*="//www.facebook.com/plugins/like.php"], iframe[src*=".twitter.com/widgets/tweet_button"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//www.stumbleupon.com/badge/embed/"] {
-			width: 12em;
-			height: 4ex;
-			border: 1px dotted;
-		}
+	/* The more readable stylesheet. */
+	var css = '\
+		@namespace svg "http://www.w3.org/2000/svg";\
+		* {\
+			line-height: 1.5;\
+		}\
+		html {\
+			background: #fff;\
+			color: #222;\
+		}\
+		body {\
+			max-width: 55em;\
+			margin: 0 auto;\
+			padding: 1em;\
+			font-family: "Calibri", sans-serif;\
+		}\
+		:link {\
+			color: #00e;\
+		}\
+		:visited {\
+			color: #528;\
+		}\
+		:link:focus, :visited:focus, :link:hover, :visited:hover {\
+			color: #e30;\
+		}\
+		:link:active, :visited:active {\
+			color: #e00;\
+		}\
+		center, [align] {\
+			text-align: left;\
+		}\
+		b:not(.' + id + '-probably-structure), i, u, s, strike, blink {\
+			font-weight: normal;\
+			font-style: normal;\
+			text-decoration: none\
+		}\
+		b.' + id + '-probably-structure {\
+			font-size: larger;\
+		}\
+		.' + id + '-probably-layout {\
+			font: inherit;\
+		}\
+		pre {\
+			padding: 1ex;\
+			border: 1px dotted;\
+		}\
+		code, pre, .syntaxhighlighter, .dp-highlighter {\
+			font-family: "Consolas", monospace;\
+			font-size: small;\
+			background: #ffe;\
+		}\
+		.dp-highlighter + pre[name="code"] {\
+			display: none;\
+		}\
+		textarea {\
+			width: 100%;\
+			height: 32ex;\
+		}\
+		th, td {\
+			vertical-align: top;\
+			text-align: left;\
+			padding: 0.5ex;\
+		}\
+		caption {\
+			font-weight: bold;\
+			border-bottom: 1px dotted;\
+		}\
+		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {\
+			opacity: 0.25;\
+		}\
+		.cufon-canvas canvas {\
+			display: none;\
+		}\
+		.post_share, #janrain-social-sharebar, #sharebar {\
+			display: none;\
+			left: -1000px;\
+		}\
+		.postprofile, .signature {\
+			font-size: smaller;\
+			border-top: 1px dotted;\
+			opacity: 0.5;\
+		}\
+		.google-src-text {\
+			display: none;\
+		}\
+		iframe[src*="//www.facebook.com/plugins/like.php"], iframe[src*=".twitter.com/widgets/tweet_button"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//www.stumbleupon.com/badge/embed/"] {\
+			width: 12em;\
+			height: 4ex;\
+			border: 1px dotted;\
+		}\
 	';
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
-	var dataTableCss = '
-		tr:nth-child(odd) td:not(.' + id + '-active-col) {
-			background: #eef;
-		}
-		tr:hover td:not(.code), .' + id + '-active-col {
-			background: #ddf;
-		}
-		th, tr td:not(.code):hover {
-			background: #bbf;
-		}
-		th code, td code {
-			background: inherit;
-		}
+	var dataTableCss = '\
+		tr:nth-child(odd) td:not(.' + id + '-active-col) {\
+			background: #eef;\
+		}\
+		tr:hover td:not(.code), .' + id + '-active-col {\
+			background: #ddf;\
+		}\
+		th, tr td:not(.code):hover {\
+			background: #bbf;\
+		}\
+		th code, td code {\
+			background: inherit;\
+		}\
 	';
 
 	/* The attributes to disable. */
