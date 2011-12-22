@@ -307,6 +307,13 @@
 					} else {
 						/* Disable this stylesheet when ours is enabled. */
 						styleSheet.disabled = true;
+						try {
+							/* … unless it is a pretty-print stylesheet. */
+							if (styleSheet.cssRules[0] && styleSheet.cssRules[0].type === styleSheet.cssRules[0].IMPORT_RULE && styleSheet.cssRules[0].href) {
+								styleSheet.disabled = !styleSheet.cssRules[0].href.match(/^http:\/\/janmoesen\.github\.com\//);
+							}
+						} catch (e) {
+						}
 					}
 				}
 			});
