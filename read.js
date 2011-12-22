@@ -7,10 +7,10 @@
  * @title Readable++
  */
 (function read() {
-	/* The stylesheet ID/HTML data attribute prefix to use. */
+	/* The style sheet ID/HTML data attribute prefix to use. */
 	var id = 'jan-css';
 
-	/* The more readable stylesheet. */
+	/* The more readable style sheet. */
 	var css = '\
 		@namespace svg "http://www.w3.org/2000/svg";\
 		* {\
@@ -166,7 +166,7 @@
 		'div > b:only-child, p > b:only-child'
 	];
 
-	/* URI pattern for syntax highlighting stylesheets. */
+	/* URI pattern for syntax highlighting style sheets. */
 	var syntaxHighlightHrefRegex = /\b((syntax|pygments)(hi(ghlight(er)?|lite(r)?))?|sh(Core|Theme[^.]*)|geshi)[./]/i;
 
 	/* The main function. */
@@ -180,7 +180,7 @@
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
 		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
 
-		/* Add the custom stylesheet if necessary. */
+		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
 			ourStyleSheet.innerHTML = css;
@@ -246,7 +246,7 @@
 				document.addEventListener('mouseleave', columnMouseHandler, true);
 			}
 
-			/* Adding the stylesheet node has to happen after its contents has been set, or chaos ensues. */
+			/* Adding the style sheet node has to happen after its contents has been set, or chaos ensues. */
 			document.head.appendChild(ourStyleSheet).disabled = true;
 
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
@@ -288,7 +288,7 @@
 			});
 		}
 
-		/* Toggle between our readable and the page's original stylesheet(s). */
+		/* Toggle between our readable and the page's original style sheet(s). */
 		function toggleStyles() {
 			ourStyleSheet.disabled = !ourStyleSheet.disabled;
 			if (prettyPrintStyleSheet) {
@@ -296,19 +296,19 @@
 			}
 			allStyleSheets.forEach(function (styleSheet, i) {
 				if (styleSheet.ownerNode !== ourStyleSheet && !syntaxHighlightHrefRegex.test(styleSheet.href)) {
-					/* Remember whether this stylesheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
+					/* Remember whether this style sheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
 					if (ourStyleSheet[id + '-originally-disabled-' + i] === undefined) {
 						ourStyleSheet[id + '-originally-disabled-' + i] = styleSheet.disabled;
 					}
 
 					if (ourStyleSheet.disabled) {
-						/* Restore this stylesheet's original state. */
+						/* Restore this style sheet's original state. */
 						styleSheet.disabled = ourStyleSheet[id + '-originally-disabled-' + i];
 					} else {
-						/* Disable this stylesheet when ours is enabled. */
+						/* Disable this style sheet when ours is enabled. */
 						styleSheet.disabled = true;
 						try {
-							/* … unless it is a pretty-print stylesheet. */
+							/* … unless it is a pretty-print style sheet. */
 							if (styleSheet.cssRules[0] && styleSheet.cssRules[0].type === styleSheet.cssRules[0].IMPORT_RULE && styleSheet.cssRules[0].href) {
 								styleSheet.disabled = !styleSheet.cssRules[0].href.match(/^http:\/\/janmoesen\.github\.com\//);
 							}
@@ -365,7 +365,7 @@
 			}
 		}
 
-		/* Toggle the stylesheets and scroll to the start of the content. */
+		/* Toggle the style sheets and scroll to the start of the content. */
 		var contentElement;
 		if (ourStyleSheet.disabled) {
 			/* Look for the content element when our CSS is NOT active to avoid scrolling to hidden elements being unhidden by our CSS (and thus causing false positives). */
