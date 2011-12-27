@@ -29,9 +29,9 @@ process_dir () {
 		description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
 	fi;
 	cat <<-EOD
-		<dt><h3>$title</h3></dt>
-		<dd><p>$description</p>
-			<dl><p>
+		<DT><H3>$title</H3>
+		<DD><P>$description</P>
+			<DL><P>
 	EOD
 
 	shopt -s nullglob;
@@ -92,14 +92,14 @@ process_dir () {
 
 		# Output the current bookmarklet.
 		cat <<-EOD
-			<dt><a href="javascript:$(perl -p -e 's/\\$//g; s/[\n\t]//g' "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" add_date="$(escape_html "$add_date")" last_modified="$(escape_html "$last_modified")" shortcuturl="$(escape_html "$keyword")">$(escape_html "$title")</a></dt>
-			<dd><p>$(escape_html "$description")</p></dd>
+			<DT><A HREF="javascript:$(perl -p -e 's/\\$//g; s/[\n\t]//g' "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" ADD_DATE="$(escape_html "$add_date")" LAST_MODIFIED="$(escape_html "$last_modified")" SHORTCUTURL="$(escape_html "$keyword")">$(escape_html "$title")</A>
+			<DD><P>$(escape_html "$description")</P></DD>
 		EOD
 	done;
 
 	# End the bookmarks folder.
 	cat <<-EOD
-			</dl>
+			</DL>
 	EOD
 }
 
@@ -111,9 +111,9 @@ cat <<EOD
 <!-- This is an automatically generated file.
      It will be read and overwritten.
      DO NOT EDIT! -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Bookmarks</title>
-<style>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+<TITLE>Bookmarks</TITLE>
+<STYLE>
 html {
 	max-width: 60em;
 	margin: auto;
@@ -130,10 +130,10 @@ a[shortcuturl]::after {
 	margin-left: 1em;
 	font-family: "Consolas", monospace;
 }
-</style>
-<h1>Bookmarks Menu</h1>
+</STYLE>
+<H1>Bookmarks Menu</H1>
 
-<dl>
+<DL>
 EOD
 
 # Recursively process this directory and its subdirectories.
@@ -141,7 +141,7 @@ process_dir .;
 
 # Wrap it up for the common good.
 cat <<EOD
-	</dd>
-</dl>
+	</DD>
+</DL>
 EOD
 } > bookmarks.html;
