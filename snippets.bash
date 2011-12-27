@@ -4,7 +4,7 @@ exit 1;
 
 # Copy the last modified bookmarklet to the clipboard.
 # Cygwin/Linux users might want to use "putclip"/"xclip" or something similar.
-PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)" && echo "Copied $file to the clipboard." 1>&2 && perl -p -e 's/\n/ /g' "$file");
+PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)" && echo "Copied $file to the clipboard." 1>&2 && perl -p -e 's/\\$//g; s/\n/ /g' "$file");
 
 # Copy the Google Translate bookmarklet from English to some other languages.
 copy-2en () {
