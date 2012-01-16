@@ -1,0 +1,23 @@
+/**
+ * Change every character to its percent-encoded form (%XX), even if they are
+ * URL-safe. (This makes "URL-encode" a bit of a misnomer.)
+ *
+ * I use this mainly for pranks. If I want to reply with a link to Google
+ * Images, I will typically obfuscate the search term so as not to give it
+ * away immediately. For example:
+ * http://www.google.com/images?q=cool+story+bro
+ * http://www.google.com/images?q=%63%6F%6F%6C%20%73%74%6F%72%79%20%62%72%6F
+ *
+ * @title URL-encode
+ */
+(function urlenc() {
+	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your text:');
+	if (s) {
+		prompt(
+			'The percent-encoded form of "' + s + '" is:',
+			s.split('').map(function (c) {
+				return '%' + c.charCodeAt(0).toString(16);
+			}).join('').toUpperCase()
+		);
+	}
+})();
