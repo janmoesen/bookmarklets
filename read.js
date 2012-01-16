@@ -365,17 +365,26 @@
 			}
 		}
 
-		/* Toggle the style sheets and scroll to the start of the content. */
-		var contentElement;
+		/* Look for the start of the content element when switching from the original style sheet to ours. We can then scroll it into view when making the page more readable, so we can immediately start reading. */
+		var contentElement, shouldScrollContentIntoView = false;
 		if (ourStyleSheet.disabled) {
-			/* Look for the content element when our CSS is NOT active to avoid scrolling to hidden elements being unhidden by our CSS (and thus causing false positives). */
 			contentElement = findContentElement();
-			toggleStyles();
-		} else {
-			toggleStyles();
-			contentElement = findContentElement();
+
+			if (contentElement) {
+				var tmpElement = contentElement, contentTop = 0;
+				do {
+					contentTop += tmpElement.offsetTop;
+				} while ((tmpElement = tmpElement.offsetParent));
+
+				shouldScrollContentIntoView = !window.scrollY || window.scrollY === contentTop;
+			}
 		}
-		contentElement && contentElement.scrollIntoView();
+
+		/* Finally, toggle the style sheets. */
+		toggleStyles();
+
+		/* Scroll to the start of the content if we found it and have not scrolled yet. */
+		shouldScrollContentIntoView && contentElement.scrollIntoView();
 
 		/* Recurse for frames and iframes. */
 		try {
