@@ -14,7 +14,7 @@
  * @todo Support multiple locales and cases for URL-based months.
  */
 (function prev() {
-	var symbols = '<< « ← ⇐',
+	var symbols = '<< « ← ⇐ ⎗',
 	    keywords = ('Previous Prev!Preview previous prev!preview Older!Folder older!folder Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
 	    identifiers = 'prev previous prevArticle previousArticle prevPost previousPost prevLink previousLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
