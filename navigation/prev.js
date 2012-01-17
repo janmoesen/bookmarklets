@@ -15,7 +15,7 @@
  */
 (function prev() {
 	var symbols = '<< « ← ⇐ ⎗',
-	    keywords = ('Previous Prev!Preview previous prev!preview Older!Folder older!folder Vorige vorige Ouder ouder Précédent précédent ' + symbols).split(' '),
+	    keywords = ('PREVIOUS Previous previous PREV!PREVIEW Prev!Preview prev!preview OLDER!FOLDER Older!Folder older!folder VORIGE Vorige vorige OUDER Ouder ouder PRECEDENT PRÉCÉDENT Précédent précédent ' + symbols).split(' '),
 	    identifiers = 'prev previous prevArticle previousArticle prevPost previousPost prevLink previousLink'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	    selectors, newUrl;
