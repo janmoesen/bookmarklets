@@ -171,11 +171,15 @@
 
 	/* The main function. */
 	(function execute(document) {
-		var all = Array.prototype.slice.call(document.getElementsByTagName('*')),
-			ourStyleSheet = document.getElementById(id),
-			allStyleSheets = Array.prototype.slice.call(document.styleSheets),
-			prettyPrintStyleSheet,
-			matches;
+		function toArray(arrayLike) {
+			return Array.prototype.slice.call(arrayLike);
+		}
+
+		var all = toArray(document.getElementsByTagName('*')),
+		    ourStyleSheet = document.getElementById(id),
+		    allStyleSheets = toArray(document.styleSheets),
+		    prettyPrintStyleSheet,
+		    matches;
 
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
 		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
@@ -190,7 +194,7 @@
 				/* Are there any nested tables? */
 				document.querySelector('table table') ||
 				/* Check each table separately until a probably-for-layout table has been found. */
-				Array.prototype.slice.call(document.querySelectorAll('table')).some(function (table) {
+				toArray(document.querySelectorAll('table')).some(function (table) {
 					/* Are we in quirks mode and does this table takes up most of the page height? */
 					if (document.compatMode === 'BackCompat' && document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
 						return true;
@@ -202,7 +206,7 @@
 						return false;
 					}
 					var numCellsPerRow = [];
-					Array.prototype.slice.call(table.rows).forEach(function (row) {
+					toArray(table.rows).forEach(function (row) {
 						if (numCellsPerRow.indexOf(row.cells.length) === -1) {
 							numCellsPerRow.push(row.cells.length);
 						}
@@ -231,7 +235,7 @@
 					}
 
 					var activeColumnClassName = id + '-active-col', activeColumnRegex = new RegExp(' ' + activeColumnClassName + ' ');
-					Array.prototype.slice.call(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
+					toArray(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
 						if (e.type === 'mouseenter') {
 							/* Element.classList does not work in iOS < 5 */
 							cell.className = cell.className === ''
@@ -276,7 +280,7 @@
 			/* Add some classes to layout elements that have been used for structure. */
 			var probablyStructureClassName = id + '-probably-structure';
 			layoutElementsForStructureSelectors.forEach(function (selector) {
-				Array.prototype.slice.call(document.querySelectorAll(selector)).forEach(function (elem) {
+				toArray(document.querySelectorAll(selector)).forEach(function (elem) {
 					if (elem.tagName.toLowerCase() !== 'b') {
 						elem = elem.previousElementSibling;
 					}
@@ -338,7 +342,7 @@
 
 			/* Restore the inline styles for certain code highlighters. */
 			var disabledStyleAttr = id + '-style';
-			Array.prototype.slice.call(document.querySelectorAll('.wp_syntax [' + disabledStyleAttr + ']')).forEach(function (elem) {
+			toArray(document.querySelectorAll('.wp_syntax [' + disabledStyleAttr + ']')).forEach(function (elem) {
 				elem.setAttribute('style', elem.getAttribute(disabledStyleAttr));
 				elem.removeAttribute(disabledStyleAttr);
 			});
@@ -388,7 +392,7 @@
 
 		/* Recurse for frames and iframes. */
 		try {
-			Array.prototype.slice.call(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(function (elem) {
+			toArray(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(function (elem) {
 				execute(elem.contentDocument);
 			});
 		} catch (e) {
