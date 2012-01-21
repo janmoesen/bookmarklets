@@ -77,7 +77,13 @@
 			font-weight: bold;\
 			border-bottom: 1px dotted;\
 		}\
-		img:not(:hover), input[type="image"]:not(:hover), object:not(:hover), embed:not(:hover), iframe:not(:hover), canvas:not(:hover), :not(svg|*) > svg|*:not(:hover) {\
+		body:not(:hover) img, \
+		body:not(:hover) input[type="image"], \
+		body:not(:hover) object, \
+		body:not(:hover) embed, \
+		body:not(:hover) iframe, \
+		body:not(:hover) canvas, \
+		body:not(:hover) :not(svg|*) > svg|* {\
 			opacity: 0.25;\
 		}\
 		.cufon-canvas canvas {\
