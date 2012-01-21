@@ -21,7 +21,7 @@
 			color: #222;\
 		}\
 		body {\
-			max-width: 55em;\
+			max-width: 52em;\
 			margin: 0 auto;\
 			padding: 1em;\
 			font-family: "Calibri", sans-serif;\
