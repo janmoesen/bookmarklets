@@ -12,6 +12,15 @@ escape_html () {
 	fi;
 }
 
+# URL-encode the given string.
+url_encode () {
+	if [ $# -eq 0 ]; then
+		perl -MURI::Escape -ne 'print uri_escape($_)';
+	else
+		perl -MURI::Escape -ne 'print uri_escape($_)' <<< "$@";
+	fi;
+}
+
 # Loop through *.js in the given directory and recurse for its subdirectories.
 process_dir () {
 	echo "Now processing directory \"$1\"…" 1>&2;
@@ -92,7 +101,7 @@ process_dir () {
 
 		# Output the current bookmarklet.
 		cat <<-EOD
-			<DT><A HREF="javascript:$(perl -p -e 's/\\$//g; s/[\n\t]//g' "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | escape_html)" ADD_DATE="$(escape_html "$add_date")" LAST_MODIFIED="$(escape_html "$last_modified")" SHORTCUTURL="$(escape_html "$keyword")">$(escape_html "$title")</A>
+			<DT><A HREF="javascript:$(perl -p -e 's/\\$//g; s/[\n\t]//g' "$file" | perl -p -e 's@/\*\*? .*? \*/@@g' | url_encode)" ADD_DATE="$(escape_html "$add_date")" LAST_MODIFIED="$(escape_html "$last_modified")" SHORTCUTURL="$(escape_html "$keyword")">$(escape_html "$title")</A>
 			<DD><P>$(escape_html "$description")</P></DD>
 		EOD
 	done;
