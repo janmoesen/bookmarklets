@@ -9,7 +9,7 @@
 		s = 'http://' + s;
 	}
 	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim(),
+	    titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim() || (location + '');
 	    originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
