@@ -55,5 +55,27 @@ COPY_VD=; copy-vd \
 	dewikt 'German Wiktionary' 'http://de.wiktionary.org/wiki/' \
 ;
 
+# Copy the English Wikipedia bookmarklet to some other languages.
+copy-enw () {
+	source='search/wikipedia/enw.js';
+	while [ $# -ge 3 ]; do
+		lang="$1";
+		name="$2";
+		keyword="${lang}w";
+		shift 2;
+		target="${source/enw/$keyword}";
+		perl -p -e "s/\benw\b/$keyword/g; s/English/$name/g" "$source" > "$target" \
+			&& echo "Copied to $target ($name)" \
+			|| echo "Failed to copy to $target ($name)";
+	done;
+}
+COPY_ENW=; copy-enw \
+	nl Dutch \
+	fr French \
+	de German \
+	it Italian \
+	es Spanish \
+;
+
 # Typing is hard; let's go shopping.
 alias book="git commit -m 'bookmarks.html: latest update' bookmarks.html";
