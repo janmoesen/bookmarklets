@@ -73,6 +73,9 @@
 			text-align: left;\
 			padding: 0.5ex;\
 		}\
+		.' + id + '-has-tables-for-layout td {\
+			display: inline-block;\
+		}\
 		caption {\
 			font-weight: bold;\
 			border-bottom: 1px dotted;\
@@ -225,7 +228,12 @@
 						(numCellsPerRow.length === 1 && numCellsPerRow[0] === 1)
 					);
 				});
-			if (!hasTablesForLayout) {
+			if (hasTablesForLayout) {
+				var bodyClassName = id + '-has-tables-for-layout';
+				document.body.className = document.body.className === ''
+					? bodyClassName
+					: document.body.className + ' ' + bodyClassName;
+			} else {
 				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
 				ourStyleSheet.innerHTML += dataTableCss;
 
