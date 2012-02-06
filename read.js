@@ -138,7 +138,7 @@
 	/* The selectors to try (in this order) for the first content element to scroll to. */
 	var contentSelectors = [
 		':not(body)#article',
-		'article, :not(#spotlight) > :not(body).article, .articleContent',
+		'article:not(.p_like):not(.p_response), :not(#spotlight) > :not(body).article, .articleContent',
 		'#article_top',
 		'#article_body',
 		'#article_main',
