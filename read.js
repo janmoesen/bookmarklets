@@ -41,7 +41,7 @@
 		center, [align] {\
 			text-align: left;\
 		}\
-		b:not(.' + id + '-probably-structure), i, u, s, strike, blink {\
+		b:not(.' + id + '-probably-structure), u, s, strike, blink {\
 			font-weight: normal;\
 			font-style: normal;\
 			text-decoration: none\
