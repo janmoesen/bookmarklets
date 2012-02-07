@@ -109,6 +109,10 @@
 			height: 4ex;\
 			border: 1px dotted;\
 		}\
+		.twtr-widget.twtr-scroll {\
+			max-height: 30ex;\
+			overflow: auto;\
+		}\
 	';
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
