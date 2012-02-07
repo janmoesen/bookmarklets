@@ -184,6 +184,19 @@
 
 	/* The main function. */
 	(function execute(document) {
+		function addClass(element, classNames) {
+			/* HTMLElement.classList does not work on iOS 4's Safari, so this is a fallback. */
+			classNames.split(/\s+/).forEach(function (className) {
+				element.className = ((' ' + element.className + ' ').replace(' ' + className.trim() + ' ', '') + ' ' + className).trim();
+			});
+		}
+
+		function removeClass(element, classNames) {
+			classNames.split(/\s+/).forEach(function (className) {
+				element.className = (' ' + element.className + ' ').replace(' ' + className.trim() + ' ', '').trim();
+			});
+		}
+
 		function toArray(arrayLike) {
 			return Array.prototype.slice.call(arrayLike);
 		}
@@ -234,9 +247,7 @@
 				});
 			if (hasTablesForLayout) {
 				var bodyClassName = id + '-has-tables-for-layout';
-				document.body.className = document.body.className === ''
-					? bodyClassName
-					: document.body.className + ' ' + bodyClassName;
+				addClass(document.body, bodyClassName);
 			} else {
 				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
 				ourStyleSheet.innerHTML += dataTableCss;
@@ -252,15 +263,12 @@
 						table = table.parentNode;
 					}
 
-					var activeColumnClassName = id + '-active-col', activeColumnRegex = new RegExp(' ' + activeColumnClassName + ' ');
+					var activeColumnClassName = id + '-active-col';
 					toArray(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
 						if (e.type === 'mouseenter') {
-							/* Element.classList does not work in iOS < 5 */
-							cell.className = cell.className === ''
-								? activeColumnClassName
-								: cell.className + ' ' + activeColumnClassName;
+							addClass(cell, activeColumnClassName);
 						} else {
-							cell.className = (' ' + cell.className + ' ').replace(activeColumnRegex, '');
+							removeClass(cell, activeColumnClassName);
 						}
 					});
 				}
@@ -288,10 +296,7 @@
 				var xpathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				for (var i = 0; i < xpathResult.snapshotLength; i++) {
 					var elem = xpathResult.snapshotItem(i);
-
-					elem.className = elem.className === ''
-						? probablyLayoutClassName
-						: elem.className + ' ' + probablyLayoutClassName;
+					addClass(elem, probablyLayoutClassName);
 				}
 			});
 
@@ -303,9 +308,7 @@
 						elem = elem.previousElementSibling;
 					}
 
-					elem.className = elem.className === ''
-						? probablyStructureClassName
-						: elem.className + ' ' + probablyStructureClassName;
+					addClass(elem, probablyStructureClassName);
 				});
 			});
 		}
