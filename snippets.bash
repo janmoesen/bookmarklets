@@ -64,7 +64,7 @@ copy-enw () {
 		keyword="${lang}w";
 		shift 2;
 		target="${source/enw/$keyword}";
-		perl -p -e "s/\benw\b/$keyword/g; s/English/$name/g" "$source" > "$target" \
+		perl -p -e "s/\ben\\.wikipedia/$lang.wikipedia/g; s/\benw\b/$keyword/g; s/English/$name/g" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
 	done;
