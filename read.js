@@ -135,7 +135,7 @@
 	var attrs = [
 		'style',
 		'background', 'bgcolor', 'color', 'text', 'link', 'vlink', 'alink', 'hlink',
-		'table@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height',
+		'table@width', 'colgroup@width', 'col@width', 'tr@width', 'td@width', 'th@width', 'table@height', 'tr@height', 'td@height', 'th@height',
 		'border',
 		'frameborder',
 		'align',
