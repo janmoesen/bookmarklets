@@ -4,10 +4,24 @@
  * @title Links to…
  */
 (function linksto() {
-	if (!document.janbmLinksToUrlText) {
+	var s = ((<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection()) + '';
+	if (document.janbmLinksToUrlText === undefined) {
+		/* Default to looking for links to my domain. */
 		document.janbmLinksToUrlText = 'jan.moesen.nu';
-		document.janbmLinksToUrlText = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter the text to look for in the URLs:', document.janbmLinksToUrlText) || document.janbmLinksToUrlText;
+
+		/* If no search string was given, prompt for one. */
+		if (s === '') {
+			s = prompt('Please enter the text to look for in the URLs:', document.janbmLinksToUrlText);
+		}
+		if (s !== '') {
+			document.janbmLinksToUrlText = s;
+		}
+	} else if (s !== '' && s !== document.janbmLinksToUrlText) {
+		/* Overwrite the saved search string and restart from the first result. */
+		document.janbmLinksToUrlText = s;
+		delete document['janbmLinksToIndex'];
 	}
+
 	var all = document.querySelectorAll('[href*="' + document.janbmLinksToUrlText + '"], [src*="' + document.janbmLinksToUrlText + '"]');
 	if (!all.length) {
 		return;
