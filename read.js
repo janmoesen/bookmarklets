@@ -113,6 +113,9 @@
 			max-height: 30ex;\
 			overflow: auto;\
 		}\
+		[style*="position: fixed"], [style*="position:fixed"] {\
+			position: static !important;\
+		}\
 	';
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
