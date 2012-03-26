@@ -84,6 +84,8 @@
 		body:not(:hover) input[type="image"], \
 		body:not(:hover) object, \
 		body:not(:hover) embed, \
+		body:not(:hover) video, \
+		body:not(:hover) audio, \
 		body:not(:hover) iframe, \
 		body:not(:hover) canvas, \
 		body:not(:hover) :not(svg|*) > svg|* {\
