@@ -17,7 +17,7 @@
 		if (date !== nextDate) {
 			var totalCell = record.parentNode.insertRow(record.rowIndex).insertCell(0);
 			totalCell.setAttribute('colspan', record.cells.length);
-			totalCell.setAttribute('style', 'background: #950000; color: #fff;');
+			totalCell.setAttribute('style', 'background: #950000; color: #fff; border-bottom: 4ex solid;');
 			totalCell.textContent = ['Total for ', date, ': ', total].join('');
 			total = 0;
 		}
