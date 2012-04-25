@@ -106,7 +106,7 @@
 		.google-src-text {\
 			display: none;\
 		}\
-		iframe[src*="//www.facebook.com/plugins/"], iframe[src*=".twitter.com/widgets/"], iframe[src*="//plusone.google.com/_/+1/"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//s7.addthis.com/"], iframe[src*="//www.stumbleupon.com/badge/embed/"], iframe[src*="//widgets.bufferapp.com/"] {\
+		iframe[src*=".facebook.com/"], iframe[src*=".twitter.com/widgets/"], iframe[src*="//plusone.google.com/_/+1/"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//s7.addthis.com/"], iframe[src*="//www.stumbleupon.com/badge/embed/"], iframe[src*="//widgets.bufferapp.com/"] {\
 			width: 12em;\
 			height: 4ex;\
 			border: 1px dotted;\
