@@ -41,7 +41,7 @@
 		center, [align] {\
 			text-align: left;\
 		}\
-		b:not(.' + id + '-probably-structure), u, s, strike, blink {\
+		b:not(.' + id + '-probably-structure), u, blink {\
 			font-weight: inherit;\
 			font-style: inherit;\
 			text-decoration: inherit\
