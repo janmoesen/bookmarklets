@@ -23,7 +23,7 @@
 
 	/* Try links with @rel="prev". */
 	selectors = [
-		'link[rel="prev"][href], a[rel="prev"][href]'
+		'link[rel="prev"][href]:not([href="#"]), a[rel="prev"][href]:not([href="#"])'
 	];
 
 	/* Look for tell-tale text content inside links. */
@@ -38,8 +38,8 @@
 
 	/* Look for typical ID/class names on the links. */
 	identifiers.forEach(function (idOrClass) {
-		selectors.push('a#' + idOrClass);
-		selectors.push('a.' + idOrClass);
+		selectors.push('a#' + idOrClass + ':not([href="#"])');
+		selectors.push('a.' + idOrClass + ':not([href="#"])');
 	});
 
 	/**
