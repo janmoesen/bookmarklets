@@ -28,6 +28,7 @@
 
 	/* Look for tell-tale text content inside links. */
 	keywords.forEach(function (text) {
+		selectors.push('a[href][title*="' + text + '"]');
 		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + mustContain + '") and string-length(normalize-space(substring-before(., "' + mustContain + '"))) < 8]';
 		if (mustNotContain) {
