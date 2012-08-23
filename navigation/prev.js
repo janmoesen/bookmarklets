@@ -112,6 +112,7 @@
 		return;
 	}
 
+	/* We did not found anything using the "highly likely" selectors, so start over with "not completely improbable" selectors. */
 	selectors = [];
 
 	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
