@@ -58,10 +58,12 @@
 <p>
 	I use Firefox for work and leisure, and all bookmarklets should work in the latest stable release.
 <p>
-	Note that a lot of my bookmarklets use <a href="https://developer.mozilla.org/en/E4X">E4X</a>.
-	Because E4X is not widely supported, and <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=389123#c9">might even disappear completely</a>,
-	the bookmarklets that accept parameters (e.g. <kbd>len <var>This "len" bookmarklet shows a string's length.</var></kbd>) will only work in
-	Mozilla browsers like Firefox or SeaMonkey.
+	Note that a lot of my bookmarklets use <a href="https://developer.mozilla.org/en/E4X">E4X</a>,
+	which only worked in Gecko-based browsers like Firefox, and is now
+	<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=753542">disabled by default</a>
+	even there. Until there is a better way to make bookmarklets accept
+	parameters safely, set <code>javascript.options.xml.content</code> to
+	<code>true</code> in <code>about:config</code>.
 
 <p>
 	The bookmarklets I use the most (<q>Readable++</q>, <q>« Previous</q> and <q>Next »</q>) also work fine
