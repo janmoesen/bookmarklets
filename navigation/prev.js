@@ -43,6 +43,16 @@
 		selectors.push('a.' + idOrClass + ':not([href="#"])');
 	});
 
+	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
+	keywords.forEach(function (text) {
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var selector = '//a[@href][string(.) = ""][img[contains(@alt, "' + mustContain + '")]]';
+		if (mustNotContain) {
+			selector += '[not(img[contains(@alt, "' + mustNotContain + '")])]';
+		}
+		selectors.push(selector);
+	});
+
 	/**
 	 * Loop through the given selectors.
 	 *
@@ -114,16 +124,6 @@
 
 	/* We did not found anything using the "highly likely" selectors, so start over with "not completely improbable" selectors. */
 	selectors = [];
-
-	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
-	keywords.forEach(function (text) {
-		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
-		var selector = '//a[@href][string(.) = ""][img[contains(@alt, "' + mustContain + '")]]';
-		if (mustNotContain) {
-			selector += '[not(img[contains(@alt, "' + mustNotContain + '")])]';
-		}
-		selectors.push(selector);
-	});
 
 	/* Look for tell-tale symbols next to links. */
 	symbols.forEach(function (text) {
