@@ -53,6 +53,16 @@
 		selectors.push(selector);
 	});
 
+	/* Look for tell-tale text content inside image source URLs for links that have no text content. */
+	keywords.forEach(function (text) {
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var selector = '//a[@href][string(.) = ""][img[contains(@src, "' + mustContain + '")]]';
+		if (mustNotContain) {
+			selector += '[not(img[contains(@src, "' + mustNotContain + '")])]';
+		}
+		selectors.push(selector);
+	});
+
 	/**
 	 * Loop through the given selectors.
 	 *
@@ -134,16 +144,6 @@
 	identifiers.forEach(function (idOrClass) {
 		selectors.push('#' + idOrClass + ' > a');
 		selectors.push('.' + idOrClass + ' > a');
-	});
-
-	/* Look for tell-tale text content inside image source URLs for links that have no text content. */
-	keywords.forEach(function (text) {
-		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
-		var selector = '//a[@href][string(.) = ""][img[contains(@src, "' + mustContain + '")]]';
-		if (mustNotContain) {
-			selector += '[not(img[contains(@src, "' + mustNotContain + '")])]';
-		}
-		selectors.push(selector);
 	});
 
 	/* Now check the selectors we are less confident about. */
