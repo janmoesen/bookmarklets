@@ -293,6 +293,10 @@
 				prettyPrintStyleSheet = document.createElement('style');
 				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/syntaxhighlighter.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
+			} else if (document.querySelector('.highlight .c, .highlight .k, .highlight .m, .highlight .s, .highlight .w')) {
+				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/pygments.css)';
+				document.head.appendChild(prettyPrintStyleSheet);
 			}
 
 			/* Add some classes to structure elements that have been used for layout. */
