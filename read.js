@@ -89,6 +89,17 @@
 			font-weight: bold;\
 			border-bottom: 1px dotted;\
 		}\
+		img, \
+		input[type="image"], \
+		object, \
+		embed, \
+		video, \
+		audio, \
+		iframe, \
+		canvas, \
+		:not(svg|*) > svg|* {\
+			max-width: 100%;\
+		}\
 		body:not(:hover) img, \
 		body:not(:hover) input[type="image"], \
 		body:not(:hover) object, \
