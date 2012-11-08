@@ -38,6 +38,15 @@
 		:link:active, :visited:active {\
 			color: #e00;\
 		}\
+		h1 {\
+			border-bottom: 1px solid #888;\
+		}\
+		h2 {\
+			border-bottom: 1px solid #bbb;\
+		}\
+		h3 {\
+			border-bottom: 1px dotted #bbb;\
+		}\
 		center, [align] {\
 			text-align: left;\
 		}\
