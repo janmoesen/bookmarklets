@@ -5,7 +5,7 @@
  */
 (function link() {
 	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '');
-	if (s && !s.match(/^\w+:/)) {
+	if (s && !s.match(/^[a-zA-Z][-+.a-zA-Z0-9]*:/)) {
 		s = 'http://' + s;
 	}
 	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
