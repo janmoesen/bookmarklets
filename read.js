@@ -38,6 +38,9 @@
 		:link:active, :visited:active {\
 			color: #e00;\
 		}\
+		h1, h2, h3 {\
+			font-weight: normal;\
+		}\
 		h1 {\
 			border-bottom: 1px solid #888;\
 		}\
