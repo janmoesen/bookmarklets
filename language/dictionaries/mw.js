@@ -6,6 +6,6 @@
 (function mw() {
 	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your text:');
 	if (s) {
-		location = 'http://www.merriam-webster.com/wdictionary/' + encodeURIComponent(s);
+		location = 'http://www.merriam-webster.com/dictionary/' + encodeURIComponent(s);
 	}
 })();
