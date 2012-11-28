@@ -53,6 +53,13 @@
 		center, [align] {\
 			text-align: left;\
 		}\
+		h1 a[href]:not(:hover), h2 a[href]:not(:hover), h3 a[href]:not(:hover) {\
+			text-decoration: none;\
+		}\
+		h1 a[href]::after, h2 a[href]::after, h3 a[href]::after {\
+			font-size: 75%;\
+			content: " #";\
+		}\
 		b:not(.' + id + '-probably-structure), u, blink {\
 			font-weight: inherit;\
 			font-style: inherit;\
