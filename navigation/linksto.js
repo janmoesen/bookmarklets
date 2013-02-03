@@ -4,7 +4,18 @@
  * @title Links to…
  */
 (function linksto() {
-	var s = ((<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection()) + '';
+	/* Try to get the parameter string from the bookmarklet/search query.
+	   Fall back to the current text selection, if any. If those options
+	   both fail, prompt the user.
+	*/
+	var s = (function () { /*%s*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
+		.replace(/\u0025s/, '');
+	if (s === '') {
+		s = getSelection();
+	}
+
 	if (document.janbmLinksToUrlText === undefined) {
 		/* Default to looking for links to my domain. */
 		document.janbmLinksToUrlText = 'jan.moesen.nu';

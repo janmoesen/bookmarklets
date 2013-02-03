@@ -4,10 +4,16 @@
  * @title Link this
  */
 (function link() {
-	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '');
+	/* Try to get the parameter string from the bookmarklet/search query. */
+	var s = (function () { /*%s*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
+		.replace(/\u0025s/, '');
+
 	if (s && !s.match(/^[a-zA-Z][-+.a-zA-Z0-9]*:/)) {
 		s = 'http://' + s;
 	}
+
 	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
 	    titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim() || (location + '');
 	    originalIconLink = s || document.querySelector('link[rel*="icon"]');

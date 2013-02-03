@@ -4,7 +4,18 @@
  * @title Show length
  */
 (function len() {
-	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('String?');
+	/* Try to get the parameter string from the bookmarklet/search query.
+	   Fall back to the current text selection, if any. If those options
+	   both fail, prompt the user.
+	*/
+	var s = (function () { /*%s*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
+		.replace(/\u0025s/, '');
+	if (s === '') {
+		s = getSelection() + '' || prompt('Please enter your string to measure:');
+	}
+
 	if (s) {
 		/* To count the number of characters, we cannot rely on String.length
 		 * because of astral chars. Use this code from BestieJS to deal with

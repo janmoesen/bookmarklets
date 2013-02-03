@@ -6,7 +6,18 @@
  * @title Any Wikipedia
  */
 (function anyw() {
-	var s = (<><![CDATA[%s]]></> + '').replace(/\u0025s/, '') || getSelection() + '' || prompt('Please enter your text:');
+	/* Try to get the parameter string from the bookmarklet/search query.
+	   Fall back to the current text selection, if any. If those options
+	   both fail, prompt the user.
+	*/
+	var s = (function () { /*%s*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
+		.replace(/\u0025s/, '');
+	if (s === '') {
+		s = getSelection() + '' || prompt('Please enter your text:');
+	}
+
 	if (s) {
 		/* Pro-tip: use this as keyword.URL in Firefox (see about:config). It used to be the default, but then Google slightly tweaked it. */
 		location = 'http://www.google.com/search?btnI=&ie=utf-8&sourceid=navclient&q=' + encodeURIComponent('site:wikipedia.org ' + s);
