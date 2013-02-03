@@ -15,10 +15,10 @@ escape_html () {
 # URL-encode the given string.
 url_encode () {
 	if [ $# -eq 0 ]; then
-		perl -MURI::Escape -ne 'print uri_escape($_)';
+		cat;
 	else
-		perl -MURI::Escape -ne 'print uri_escape($_)' <<< "$@";
-	fi;
+		echo "$@";
+	fi | php -r 'echo rawurlencode(file_get_contents("php://stdin"));';
 }
 
 # Loop through *.js in the given directory and recurse for its subdirectories.
