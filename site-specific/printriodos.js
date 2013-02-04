@@ -7,6 +7,8 @@
  * It also darkens the odd row background so it stands out more when printing
  * in black and white. (Remember to check the "Print background colours and
  * images" box.)
+ *
+ * @title Triodos pretty-printer
  */
 (function printriodos() {
 	/* Add a column with the total after each movement. */
