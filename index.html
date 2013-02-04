@@ -57,18 +57,50 @@
 
 <h2>Browser compatibility</h2>
 <p>
-	I use Firefox for work and leisure, and all bookmarklets should work in the latest stable release.
+	The bookmarklets I use the most (<q>Readable++</q>, <q>« Previous</q> and
+	<q>Next »</q>) work fine in most top browsers like Firefox, Chrome, Safari
+	and Opera.
+
+<h3>Firefox</h3>
 <p>
-	Note that a lot of my bookmarklets use <a href="https://developer.mozilla.org/en/E4X">E4X</a>,
-	which only worked in Gecko-based browsers like Firefox, and is now
-	<a href="https://bugzilla.mozilla.org/show_bug.cgi?id=753542">disabled by default</a>
-	even there. Until there is a better way to make bookmarklets accept
-	parameters safely, set <code>javascript.options.xml.content</code> to
-	<code>true</code> in <code>about:config</code>.
+	I use Firefox for work and leisure, and all bookmarklets should work in
+	the latest stable release. (Firefox 18.0.1, as of this writing.)
 
 <p>
-	The bookmarklets I use the most (<q>Readable++</q>, <q>« Previous</q> and <q>Next »</q>) also work fine
-	in other browsers I use, like Google Chrome and Safari on iOS.
+	The bookmarklets work mostly fine on Firefox for Android, except that you
+	cannot always use the associated keywords. E.g., while tapping the
+	"Readable++" bookmark from the menu works fine, typing <kbd>read</kbd>
+	into the Awesomebar and then tapping the "Go" button does not.
+
+<h3>Chrome</h3>
+<p>
+	The imported bookmarklets work fine, but Chrome (I have tested Chromium
+	25.0.1330.0 (168483)) does not allow you to add keywords to them. Instead,
+	you have to add them as custom "search engines". Enter or copy the
+	bookmarklet's title and keyword into the search engine name and keyword
+	fields, and copy the location with the <code>javascript:</code> protocol
+	into the <q>URL with %s in place of query</q> field.
+
+<p>
+	This is a labour-intensive process, so if you know how to automate it,
+	please <a href="https://github.com/janmoesen/bookmarklets/issues">let me
+	know in the issue tracker</a>.
+
+<h3>Safari</h3>
+<p>
+	Like in Chrome, the imported bookmarklets work fine, but Safari (my
+	version: 5.1.7 (6534.57.2)) does not allow you to add keywords to them.
+	<a href="http://alexstaubo.github.com/keywurl/">Keywurl</a> is a plugin
+	which emulates this, but I have not tried it, and it has not been updated
+	since 2010/04/01.
+
+<h3>Opera</h3>
+<p>
+	The imported bookmarklets work fine and even keep their keywords, but
+	Opera does not allow you to combine keywords with parameters. E.g.,
+	for the Google Images search, you cannot do <kbd>img foo bar</kbd>.
+	Instead, you have to enter <kbd>img</kbd>, and then type <kbd>foo
+	bar</kbd> in the dialog box.
 
 <h2>Source code</h2>
 <p>
