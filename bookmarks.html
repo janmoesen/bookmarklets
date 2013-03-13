@@ -42,7 +42,7 @@ Feel free to fork and create pull requests: http://kak.be/bookmarklets
 
 See COPYING for licence details. Or &quot;license details&quot;, if you are so inclined.
 
-These bookmarks were exported on Thu, 2013/02/28 13:17:32 +0100.</P>
+These bookmarks were exported on Wed, 2013/03/13 16:45:23 +0100.</P>
 <DL><P>
 	<DT><H3>Development</H3>
 	<DD><P>Tools to help development.</P>
@@ -227,6 +227,11 @@ results per SERP and without Instant Search.</P></DD>
 	<DT><A HREF="javascript:%28function%20gc%28%29%20%7B%20%20var%20s%20%3D%20%28function%20%28%29%20%7B%20%2F%2A%s%2A%2F%3B%20%7D%29.toString%28%29%20.replace%28%2F%5Efunction%5Cs%2A%5C%28%5Cs%2A%5C%29%5Cs%2A%5C%7B%5Cs%2A%5C%2F%5C%2A%2F%2C%20%27%27%29%20.replace%28%2F%5C%2A%5C%2F%5Cs%2A%5C%3B%3F%5Cs%2A%5C%7D%5Cs%2A%24%2F%2C%20%27%27%29%20.replace%28%2F%5Cu0025s%2F%2C%20%27%27%29%3B%20if%20%28s%20%3D%3D%3D%20%27%27%29%20%7B%20s%20%3D%20getSelection%28%29%20%2B%20%27%27%20%7C%7C%20prompt%28%27Please%20enter%20the%20destination%20URL%3A%27%2C%20location%29%3B%20%7D%20if%20%28s%29%20%7B%20var%20url%20%3D%20%27http%3A%2F%2Fwebcache.googleusercontent.com%2Fsearch%3F%27%2C%20words%20%3D%20s.split%28%27%20%27%29%3B%20if%20%28words%5B0%5D%20%3D%3D%20%27html%27%29%20%7B%20s%20%3D%20words.slice%281%29.join%28%27%20%27%29%3B%20%7D%20else%20%7B%20url%20%2B%3D%20%27strip%3D1%26%27%3B%20%7D%20location%20%3D%20url%20%2B%20%27q%3Dcache%3A%27%20%2B%20encodeURIComponent%28s%29%3B%20%7D%20%7D%29%28%29%3B" ADD_DATE="1308257789" LAST_MODIFIED="1308257789" SHORTCUTURL="gc">Google cache</A>
 	<DD><P>View the Google cached text for the specified URL.
 Specify &quot;html&quot; as the first parameter to view the cached HTML.</P></DD>
+	<DT><A HREF="javascript:%28function%20gcshow%28%29%20%7B%20%20var%20cacheLinks%20%3D%20document.evaluate%28%27%2F%2Fa%5Bcontains%28%40href%2C%20%22q%3Dcache%3A%22%29%5D%5Btext%28%29%20%3D%20%22Cached%22%5D%27%2C%20document.body%2C%20null%2C%20XPathResult.ORDERED_NODE_SNAPSHOT_TYPE%2C%20null%29%3B%20for%20%28var%20i%20%3D%200%3B%20i%20%3C%20cacheLinks.snapshotLength%3B%20i%2B%2B%29%20%7B%20var%20cacheLink%20%3D%20cacheLinks.snapshotItem%28i%29%3B%20var%20parentNode%20%3D%20cacheLink%3B%20while%20%28%28parentNode%20%3D%20parentNode.parentNode%29%20%26%26%20parentNode.classList%29%20%7B%20%20if%20%28parentNode.classList.contains%28%27g%27%29%29%20%7B%20%20var%20urlContainer%20%3D%20parentNode.querySelector%28%27h3%20a.l%27%29%3B%20%20cacheLink.setAttribute%28%27style%27%2C%20%27margin-left%3A%201em%3B%20font-size%3A%20smaller%3B%27%29%3B%20cacheLink.textContent%20%3D%20%27%5B%27%20%2B%20cacheLink.textContent%20%2B%20%27%5D%27%3B%20urlContainer.parentNode.appendChild%28cacheLink%29%3B%20%7D%20%7D%20%7D%20%7D%29%28%29%3B" ADD_DATE="1363189447" LAST_MODIFIED="1363189447" SHORTCUTURL="gcshow">Show Google &quot;Cached&quot; links</A>
+	<DD><P>Show the Google Search &quot;Cached&quot; links after the page title.
+
+The &quot;Cached&quot; links used to be more visible, but now they are hidden in the
+expandotron popup.</P></DD>
 	<DT><A HREF="javascript:%28function%20go%28%29%20%7B%20%20var%20s%20%3D%20%28function%20%28%29%20%7B%20%2F%2A%s%2A%2F%3B%20%7D%29.toString%28%29%20.replace%28%2F%5Efunction%5Cs%2A%5C%28%5Cs%2A%5C%29%5Cs%2A%5C%7B%5Cs%2A%5C%2F%5C%2A%2F%2C%20%27%27%29%20.replace%28%2F%5C%2A%5C%2F%5Cs%2A%5C%3B%3F%5Cs%2A%5C%7D%5Cs%2A%24%2F%2C%20%27%27%29%20.replace%28%2F%5Cu0025s%2F%2C%20%27%27%29%3B%20if%20%28s%20%3D%3D%3D%20%27%27%29%20%7B%20s%20%3D%20getSelection%28%29%20%2B%20%27%27%20%7C%7C%20prompt%28%27Please%20enter%20your%20text%3A%27%29%3B%20%7D%20if%20%28s%29%20%7B%20location%20%3D%20%27https%3A%2F%2Fwww.google.com%2Fsearch%3FbtnI%26ie%3Dutf-8%26sourceid%3Dnavclient%26q%3D%27%20%2B%20encodeURIComponent%28s%29%3B%20%7D%20%7D%29%28%29%3B" ADD_DATE="1345736537" LAST_MODIFIED="1345736537" SHORTCUTURL="go">Go</A>
 	<DD><P>Go to the first Google result (&quot;I'm Feeling Lucky&quot;) for the given text.
 
