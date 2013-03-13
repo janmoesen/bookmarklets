@@ -246,6 +246,12 @@
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
 		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
 
+		/* Naively kill all registered setTimeout and setInterval callbacks. */
+		for (var i = 0; i < 1000; i++) {
+			clearTimeout(i);
+			clearInterval(i);
+		}
+
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
