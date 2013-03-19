@@ -246,11 +246,22 @@
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
 		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
 
-		/* Naively kill all registered setTimeout and setInterval callbacks. */
-		for (var i = 0; i < 1000; i++) {
-			clearTimeout(i);
-			clearInterval(i);
-		}
+		/* Kill all scheduled callbacks. Naively ass-u-me that any call to
+		 * setTimeout/setInterval returns the next ID from a monotonically
+		 * increasing function that is used for both timeout and interval
+		 * IDs. Therefore, to clear all timeouts and intervals, it suffices
+		 * to get a new timeout ID and then clear everything up to that ID.
+		 *
+		 * Though the HTML5 specification says nothing about the return value
+		 * of setTimeout/setInterval, this appears to work in Firefox 22,
+		 * Chrome 27, Opera 12 and Safari 5.
+		 */
+		var maxTimeoutId = setTimeout(function () {
+			for (var i = 1; i < maxTimeoutId; i++) {
+				clearTimeout(i);
+				clearInterval(i);
+			}
+		}, 4); /* 4 ms is the minimum timeout as per HTML5. */
 
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
