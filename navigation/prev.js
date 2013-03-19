@@ -26,15 +26,20 @@
 		'link[rel="prev"][href]:not([href="#"]), a[rel="prev"][href]:not([href="#"])'
 	];
 
-	/* Look for tell-tale text content inside links. */
+	/* Look for tell-tale text content inside links, or in their tooltips. */
 	keywords.forEach(function (text) {
-		selectors.push('a[href][title*="' + text + '"]');
 		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + mustContain + '") and string-length(normalize-space(substring-before(., "' + mustContain + '"))) < 8]';
 		if (mustNotContain) {
 			selector += '[not(contains(., "' + mustNotContain + '"))]';
 		}
 		selectors.push(selector);
+
+		var titleSelector = 'a[href][title*="' + mustContain + '"]';
+		if (mustNotContain) {
+			titleSelector += ':not([title*="' + mustNotContain + '"])';
+		}
+		selectors.push(titleSelector);
 	});
 
 	/* Look for typical ID/class names on the links. */
