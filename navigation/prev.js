@@ -50,7 +50,7 @@
 
 	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
 	keywords.forEach(function (text) {
-		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][string(.) = ""][img[contains(@alt, "' + mustContain + '")]]';
 		if (mustNotContain) {
 			selector += '[not(img[contains(@alt, "' + mustNotContain + '")])]';
@@ -60,7 +60,7 @@
 
 	/* Look for tell-tale text content inside image source URLs for links that have no text content. */
 	keywords.forEach(function (text) {
-		var mustContain = text.replace(/!.*/, ''), mustNotContain = text.replace(/.*!/, '');
+		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][string(.) = ""][img[contains(@src, "' + mustContain + '")]]';
 		if (mustNotContain) {
 			selector += '[not(img[contains(@src, "' + mustNotContain + '")])]';
