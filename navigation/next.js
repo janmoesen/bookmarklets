@@ -26,7 +26,7 @@
 		'link[rel="next"][href]:not([href="#"]), a[rel="next"][href]:not([href="#"])'
 	];
 
-	/* Look for tell-tale text content inside links. */
+	/* Look for tell-tale text content inside links, or in their tooltips. */
 	keywords.forEach(function (text) {
 		selectors.push('a[href][title*="' + text + '"]');
 		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(normalize-space(substring-before(., "' + text + '"))) < 8]');
