@@ -14,8 +14,8 @@
  * @todo Support multiple locales and cases for URL-based months.
  */
 (function next() {
-	var symbols = '>> » → ⇒ ⎘',
-	    keywords = ('NEXT Next next NEWER Newer newer VOLGENDE Volgende volgende NIEUWER Nieuwer nieuwer PROCHAIN Prochain prochain' + symbols).split(' '),
+	var symbols = '> >> » → ⇒ ⎘',
+	    keywords = ('NEXT Next next NEWER Newer newer VOLGENDE Volgende volgende NIEUWER Nieuwer nieuwer PROCHAIN Prochain prochain ' + symbols).split(' '),
 	    identifiers = 'next nextArticle nextPost nextLink navi-next'.split(' '),
 	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 	    selectors, newUrl;
