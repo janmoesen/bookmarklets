@@ -27,12 +27,12 @@
 		if ((matches = s.match(/^([-_a-zA-Z0-9]{11})( *!)?$/)) && s.match(/[A-Z][a-z]|[a-z][A-Z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]/)) {
 			if (matches[2]) {
 				location = 'data:text/html;charset=UTF-8,'
-					+ encodeURIComponent('<iframe width="854" height="510" src="http://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>');
+					+ encodeURIComponent('<iframe width="854" height="510" src="https://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>');
 			} else {
-				location = 'http://www.youtube.com/watch?v=' + encodeURIComponent(s);
+				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
 			}
 		} else {
-			location = 'http://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+			location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
 		}
 	}
 })();
