@@ -18,6 +18,6 @@
 
 	if (s) {
 		/* The Wikipedia search works like "I'm feeling lucky" on most Wikipedia instances. If there is a complete match, it will redirect us there. */
-		location = 'http://it.wikipedia.org/w/index.php?title=Special%3ASearch&search=' + encodeURIComponent(s);
+		location = 'https://it.wikipedia.org/w/index.php?title=Special%3ASearch&search=' + encodeURIComponent(s);
 	}
 })();
