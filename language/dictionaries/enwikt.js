@@ -17,6 +17,6 @@
 	}
 
 	if (s) {
-		location = 'http://en.wiktionary.org/wiki/' + encodeURIComponent(s);
+		location = 'https://en.wiktionary.org/wiki/' + encodeURIComponent(s);
 	}
 })();
