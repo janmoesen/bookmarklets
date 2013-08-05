@@ -26,11 +26,11 @@
 		/* If the first parameter looks like a URL, use Google's "Search by image". */
 		if (words[0].match(/^(\w+:(\/\/)?)?[^\s]+(\.[^\s]+)+\//))
 		{
-			location = 'http://images.google.com/searchbyimage?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight + '&image_url=' + encodeURIComponent(words[0]) + '&q=' + encodeURIComponent(words.slice(1).join(' '));
+			location = 'https://images.google.com/searchbyimage?safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight + '&image_url=' + encodeURIComponent(words[0]) + '&q=' + encodeURIComponent(words.slice(1).join(' '));
 			return;
 		}
 
-		var url = 'http://www.google.com/search?tbm=isch&safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
+		var url = 'https://www.google.com/search?tbm=isch&safe=off&biw=' + window.innerWidth + '&bih=' + window.innerHeight;
 		if (words.length > 1) {
 			if (words[0] === 'wallpaper') {
 				words[0] = screen.width + 'x' + screen.height;

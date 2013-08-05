@@ -18,7 +18,7 @@
 	}
 
 	if (s) {
-		var url = 'http://webcache.googleusercontent.com/search?', words = s.split(' ');
+		var url = 'https://webcache.googleusercontent.com/search?', words = s.split(' ');
 
 		if (words[0] == 'html') {
 			s = words.slice(1).join(' ');
