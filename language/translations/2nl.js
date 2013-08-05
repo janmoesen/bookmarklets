@@ -22,7 +22,7 @@
 
 	if (s) {
 		location = s.match(/^(\w+:(\/\/)?)?[^\s.]+(\.[^\s])+/)
-			? 'http://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s)
-			: 'http://translate.google.com/translate_t#auto|nl|' + encodeURIComponent(s);
+			? 'https://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s)
+			: 'https://translate.google.com/translate_t#auto|nl|' + encodeURIComponent(s);
 	}
 })();

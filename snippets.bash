@@ -49,10 +49,10 @@ COPY_VD=; copy-vd \
 	dict 'Dictionary.com' 'http://dictionary.reference.com/browse/' \
 	thes 'Thesaurus.com' 'http://thesaurus.reference.com/browse/' \
 	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
-	nlwikt 'Dutch Wiktionary' 'http://nl.wiktionary.org/wiki/' \
-	enwikt 'English Wiktionary' 'http://en.wiktionary.org/wiki/' \
-	frwikt 'French Wiktionary' 'http://fr.wiktionary.org/wiki/' \
-	dewikt 'German Wiktionary' 'http://de.wiktionary.org/wiki/' \
+	nlwikt 'Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \
+	enwikt 'English Wiktionary' 'https://en.wiktionary.org/wiki/' \
+	frwikt 'French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
+	dewikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
