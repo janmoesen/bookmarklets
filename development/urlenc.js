@@ -5,8 +5,8 @@
  * I use this mainly for pranks. If I want to reply with a link to Google
  * Images, I will typically obfuscate the search term so as not to give it
  * away immediately. For example:
- * http://www.google.com/images?q=cool+story+bro
- * http://www.google.com/images?q=%63%6F%6F%6C%20%73%74%6F%72%79%20%62%72%6F
+ * https://www.google.com/images?q=cool+story+bro
+ * https://www.google.com/images?q=%63%6F%6F%6C%20%73%74%6F%72%79%20%62%72%6F
  *
  * @title URL-encode
  */
