@@ -11,14 +11,17 @@
  * @title Triodos pretty-printer
  */
 (function printriodos() {
+	var table = document.querySelector('table[id$=":searchResultTable"]');
+
 	/* Add a column with the total after each movement. */
 	var total = parseFloat(
 		document.querySelector('.dataView table:first-child tr:first-child td:last-child')
 			.textContent
 			.replace('.', '')
 			.replace(',', '.')
-		);
-	Array.prototype.slice.call(document.querySelectorAll('table[id*="changeOverviewTable"] tbody td:last-child')).reverse().forEach(function (td) {
+	);
+
+	Array.prototype.slice.call(table.querySelectorAll('tbody[id$="searchResultTable:tb"] td:last-child')).reverse().forEach(function (td) {
 		td.style.textAlign = 'right';
 
 		var amount = td.textContent.replace('.', '').replace(',', '.');
@@ -30,13 +33,10 @@
 	});
 
 	/* Add a header cell for the column we just added. */
-	var th = document.querySelector('table[id*="changeOverviewTable"] thead th:last-child');
+	var th = table.querySelector('thead th:last-child');
 	var newTh = th.cloneNode();
 	newTh.textContent = 'Saldo (EUR)';
 	th.parentNode.appendChild(newTh);
-
-	/* Also take the extra column into account for the footer. */
-	document.querySelector('table[id*="changeOverviewTable"] tfoot td').colSpan++;
 
 	/* Keep the pretty background colours when printing. (This needs to be enabled in the printer options dialog, too.) */
 	Array.prototype.slice.call(document.querySelectorAll('link[rel="StyleSheet"][media="screen"]')).forEach(function (link) {
