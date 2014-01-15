@@ -33,11 +33,6 @@
 		delete document['janbmLinksToIndex'];
 	}
 
-	var all = document.querySelectorAll('[href*="' + document.janbmLinksToUrlText + '"], [src*="' + document.janbmLinksToUrlText + '"]');
-	if (!all.length) {
-		return;
-	}
-
 	/* Use four overlays to cut out a rectangular area around the element, like the opposite of the CSS clip property. */
 	var overlays = Array.prototype.slice.call(document.querySelectorAll('div[id^="janbmLinksToOverlay"]'));
 	if (!overlays.length) {
@@ -51,7 +46,9 @@
 	document.janbmLinksToIndex = 'janbmLinksToIndex' in document
 		? document.janbmLinksToIndex + 1
 		: 0;
-	if (document.janbmLinksToIndex >= all.length) {
+
+	var all = document.querySelectorAll('[href*="' + document.janbmLinksToUrlText + '"], [src*="' + document.janbmLinksToUrlText + '"]');
+	if (!all.length || document.janbmLinksToIndex >= all.length) {
 		/* Clear the spotlighting when we have done them all. */
 		overlays.forEach(function (overlay) {
 			overlay.style.display = 'none';
