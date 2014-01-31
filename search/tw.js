@@ -17,6 +17,6 @@
 	}
 
 	if (s) {
-		location = 'https://twitter.com/search?q=' + encodeURIComponent(s);
+		location = 'https://twitter.com/search?f=realtime&q=' + encodeURIComponent(s);
 	}
 })();
