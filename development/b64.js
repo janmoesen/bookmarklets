@@ -39,6 +39,6 @@
 			result = btoa(s);
 			operation = 'encoded';
 		}
-		open('data:text/plain;charset=UTF-8,' + encodeURIComponent('The Base64 ' + operation + ' string of "' + s + '" is:\n\n' + result));
+		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent('The Base64 ' + operation + ' string of "' + s + '" is:\n\n' + result);
 	}
 })();
