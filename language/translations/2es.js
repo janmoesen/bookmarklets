@@ -27,7 +27,7 @@
 				: 'http';
 			location = protocol + '://translate.google.com/translate?sl=auto&tl=es&u=' + encodeURIComponent(s);
 		} else {
-			location = 'https://translate.google.com/translate_t#auto|de|' + encodeURIComponent(s);
+			location = 'https://translate.google.com/translate_t#auto|es|' + encodeURIComponent(s);
 		}
 	}
 })();
