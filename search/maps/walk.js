@@ -23,6 +23,6 @@
 
 		s = s.replace(/^\s*from\s+/g, 'from:');
 		s = s.replace(/\s+to\s+/g, ' to:');
-		location = 'https://maps.google.com/?doflg=ptk&dirflg=w&q=' + encodeURIComponent(s);
+		location = 'https://maps.google.com/?doflg=ptk&dirflg=w&output=classic&q=' + encodeURIComponent(s);
 	}
 })();
