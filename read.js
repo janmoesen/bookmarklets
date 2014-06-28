@@ -263,6 +263,30 @@
 			}
 		}, 4); /* 4 ms is the minimum timeout as per HTML5. */
 
+		/* Now kill all the requested animation frame callbacks. Again, this
+		 * naively assumes the ID will increment one by one. MDN explicitly
+		 * advises against assumptions such as this one: https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame#Return_value
+		 */
+		var requestAnimationFrame = window.requestAnimationFrame
+			|| window.mozRequestAnimationFrame
+			|| window.webkitRequestAnimationFrame
+			|| window.msRequestAnimationFrame
+			|| function () { };
+
+		var cancelAnimationFrame = window.cancelAnimationFrame
+			|| window.mozCancelAnimationFrame
+			|| window.webkitCancelAnimationFrame
+			|| window.msCancelAnimationFrame
+			|| function () { };
+
+		var maxAnimationFrameRequestId = requestAnimationFrame(function () {
+			for (i = 1; i < maxAnimationFrameRequestId * 2; i++) {
+				cancelAnimationFrame(i);
+			}
+
+			window.requestAnimationFrame = function (callback) { console.log(new Date().toString()); console.log(callback.toSource()); };
+		});
+
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = id;
