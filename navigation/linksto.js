@@ -65,6 +65,7 @@
 
 	console.debug('Links to: found element: ', element);
 	element.scrollIntoView();
+	element.focus();
 
 	var left = 0, top = 0, width = element.offsetWidth, height = element.offsetHeight;
 	var tmpElement = element;
