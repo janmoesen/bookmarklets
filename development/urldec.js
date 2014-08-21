@@ -16,9 +16,7 @@
 		s = getSelection() + '' || prompt('Please enter your text:');
 	}
 
-	if (!location || location == 'about:blank') {
+	if (s) {
 		location = 'data:text/plain;charset=UTF-8,' + s;
-	} else {
-		window.open('data:text/plain;charset=UTF-8,' + s);
 	}
 })();

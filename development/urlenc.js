@@ -24,11 +24,10 @@
 	}
 
 	if (s) {
-		prompt(
-			'The percent-encoded form of "' + s + '" is:',
-			s.split('').map(function (c) {
-				return '%' + c.charCodeAt(0).toString(16);
-			}).join('').toUpperCase()
-		);
+		s = s.split('').map(function (c) {
+			return '%' + c.charCodeAt(0).toString(16);
+		}).join('').toUpperCase();
+
+		location = 'data:text/plain;charset=UTF-8,' + s;
 	}
 })();
