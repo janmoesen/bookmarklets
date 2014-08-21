@@ -26,16 +26,16 @@
 		'link[rel="next"][href]:not([href="#"]), a[rel="next"][href]:not([href="#"])'
 	];
 
-	/* Look for tell-tale text content inside links, or in their tooltips. */
-	keywords.forEach(function (text) {
-		selectors.push('a[href][title*="' + text + '"]');
-		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(normalize-space(substring-before(., "' + text + '"))) < 8]');
-	});
-
 	/* Look for typical ID/class names on the links. */
 	identifiers.forEach(function (idOrClass) {
 		selectors.push('a#' + idOrClass + ':not([href="#"])');
 		selectors.push('a.' + idOrClass + ':not([href="#"])');
+	});
+
+	/* Look for tell-tale text content inside links, or in their tooltips. */
+	keywords.forEach(function (text) {
+		selectors.push('a[href][title*="' + text + '"]');
+		selectors.push('//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + text + '") and string-length(normalize-space(substring-before(., "' + text + '"))) < 8]');
 	});
 
 	/* Look for tell-tale text content inside image ALT text for links that have no text content. */

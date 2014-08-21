@@ -26,6 +26,12 @@
 		'link[rel="prev"][href]:not([href="#"]), a[rel="prev"][href]:not([href="#"])'
 	];
 
+	/* Look for typical ID/class names on the links. */
+	identifiers.forEach(function (idOrClass) {
+		selectors.push('a#' + idOrClass + ':not([href="#"])');
+		selectors.push('a.' + idOrClass + ':not([href="#"])');
+	});
+
 	/* Look for tell-tale text content inside links, or in their tooltips. */
 	keywords.forEach(function (text) {
 		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
@@ -40,12 +46,6 @@
 			titleSelector += ':not([title*="' + mustNotContain + '"])';
 		}
 		selectors.push(titleSelector);
-	});
-
-	/* Look for typical ID/class names on the links. */
-	identifiers.forEach(function (idOrClass) {
-		selectors.push('a#' + idOrClass + ':not([href="#"])');
-		selectors.push('a.' + idOrClass + ':not([href="#"])');
 	});
 
 	/* Look for tell-tale text content inside image ALT text for links that have no text content. */
