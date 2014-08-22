@@ -41,7 +41,7 @@
 		}
 		selectors.push(selector);
 
-		var titleSelector = 'a[href][title*="' + mustContain + '"]';
+		var titleSelector = 'a[href]:not([href="#"]):not([href^="javascript:"])[title*="' + mustContain + '"]';
 		if (mustNotContain) {
 			titleSelector += ':not([title*="' + mustNotContain + '"])';
 		}
