@@ -5,19 +5,50 @@
  * @keyword 2it
  */
 (function () {
-	/* Try to get the parameter string from the bookmarklet/search query.
-	   Fall back to the current text selection, if any. If those options
-	   both fail, use the current location, unless it is a local file. In
-	   the case of local files, prompt the user for the text.
-	*/
+	/* Try to get the parameter string from the bookmarklet/search query. */
 	var s = (function () { /*%s*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
 		.replace(/\u0025s/, '');
+
 	if (s === '') {
-		s = getSelection() + ''
-			|| (location.protocol === 'file:' ? '' : location + '')
-			|| prompt('Please enter your text:');
+		/* If there is no parameter, see if there is text selected. */
+		s = getSelection() + '';
+
+		if (!s) {
+			/* If there is no selection, look for translation links. */
+			var interLanguageSelectors = [
+				/* Wikipedia/Mediawiki */
+				'.interlanguage-link a[href][hreflang="it"]',
+
+				/* CatenaCycling.com */
+				'#language a[href][hreflang="it"]',
+
+				/* Generic */
+				'a[href][title$="this page in Italian"]',
+				'a[href][title$="questa pagina in italiano"]'
+			];
+
+			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
+				link = document.querySelector(interLanguageSelectors[i]);
+
+				if (link) {
+					location = link.href;
+
+					return;
+				}
+			}
+
+			/* If we did not find a translation link, use the HTTP(S) location. */
+			s = (location.protocol + '').match(/^http/)
+				? location + ''
+				: '';
+
+			/* If all else fails, prompt the user for the text to translate. */
+			if (!s) {
+				s = prompt('Please enter your text:');
+			}
+		}
 	}
 
 	if (s) {

@@ -9,23 +9,26 @@ PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)
 # Copy the Google Translate bookmarklet from English to some other languages.
 copy-2en () {
 	source='language/translations/2en.js';
-	while [ $# -ge 2 ]; do
-		lang="$1";
-		name="$2";
-		shift;
-		shift;
+	while [ $# -ge 3 ]; do
+		local lang="$1"; shift;
+		local name="$1"; shift;
+		local this_page_in_xxx_text="$1"; shift;
 		target="${source/en/$lang}";
-		perl -p -e "s/(2|\b)en\b/\$1$lang/g; s/English/$name/g" "$source" > "$target" \
+		perl -p -e "
+				s/(2|\b)en\b/\$1$lang/g;
+				s/current page in English/$this_page_in_xxx_text/g;
+				s/English/$name/g;
+			" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
 	done;
 }
 COPY_2EN=; copy-2en \
-	nl Dutch \
-	fr French \
-	de German \
-	it Italian \
-	es Spanish \
+	nl Dutch 'deze pagina in het Nederlands' \
+	fr French 'cette page en français' \
+	de German 'diese Seite auf Deutsch' \
+	it Italian 'questa pagina in italiano' \
+	es Spanish 'esta página en español' \
 ;
 
 # Copy the Van Dale bookmarklet for some other dictionaries.
