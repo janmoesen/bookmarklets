@@ -28,6 +28,6 @@
 			return '%' + c.charCodeAt(0).toString(16);
 		}).join('').toUpperCase();
 
-		location = 'data:text/plain;charset=UTF-8,' + s;
+		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(s);
 	}
 })();
