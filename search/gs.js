@@ -19,6 +19,6 @@
 
 	if (s) {
 		s = 'site:' + location.host + ' ' + s;
-		location = 'https://www.google.com/search?as_qdr=all&ie=utf-8&hl=en&num=100&q=' + encodeURIComponent(s);
+		location = 'https://www.google.com/search?ie=utf-8&hl=en&num=100&q=' + encodeURIComponent(s);
 	}
 })();
