@@ -17,6 +17,9 @@
 	}
 
 	if (s) {
-		location = 'https://www.bing.com/maps/?obox=1&q=' + encodeURIComponent(s);
+		location = 'https://www.bing.com/maps/?obox=1&q=' + encodeURIComponent(s)
+			.replace(/%20/g, '+')
+			.replace(/%3A/g, ':')
+		;
 	}
 })();
