@@ -39,7 +39,14 @@
 		overlays = [];
 		for (var i = 0; i < 4; i++) {
 			overlays[i] = document.createElement('div');
-			document.body.appendChild(overlays[i]).setAttribute('id', 'janbmLinksToOverlay' + i);
+			overlays[i].setAttribute('id', 'janbmLinksToOverlay' + i);
+			/* Clear the spotlighting when the user clicks on a masking overlay. */
+			overlays[i].onclick = function () {
+				overlays.forEach(function (overlay) {
+					overlay.style.display = 'none';
+				});
+			};
+			document.body.appendChild(overlays[i]);
 		};
 	}
 
