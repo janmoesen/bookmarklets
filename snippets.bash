@@ -56,6 +56,8 @@ COPY_VD=; copy-vd \
 	enwikt 'English Wiktionary' 'https://en.wiktionary.org/wiki/' \
 	frwikt 'French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
 	dewikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
+	itwikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
+	eswikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
