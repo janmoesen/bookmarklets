@@ -48,7 +48,8 @@ copy-vd () {
 	done;
 }
 COPY_VD=; copy-vd \
-	mw 'Merriam-Webster' 'http://www.merriam-webster.com/wdictionary/' \
+	vw 'Vlaams Woordenboek' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
+	mw 'Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
 	dict 'Dictionary.com' 'http://dictionary.reference.com/browse/' \
 	thes 'Thesaurus.com' 'http://thesaurus.reference.com/browse/' \
 	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
@@ -56,8 +57,8 @@ COPY_VD=; copy-vd \
 	enwikt 'English Wiktionary' 'https://en.wiktionary.org/wiki/' \
 	frwikt 'French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
 	dewikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
-	itwikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
-	eswikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
+	itwikt 'Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
+	eswikt 'Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
