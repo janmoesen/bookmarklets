@@ -471,9 +471,17 @@
 			}
 		}
 
-		/* Look for the start of the content element when switching from the original style sheet to ours. We can then scroll it into view when making the page more readable, so we can immediately start reading. */
+		/* Check if there is an element that we should scroll into view so we can immediately start reading. */
 		var contentElement, shouldScrollContentIntoView = false;
-		if (ourStyleSheet.disabled) {
+		var selection = window.getSelection && window.getSelection();
+		if (selection && selection.anchorNode && (selection + '').length) {
+			/* If the user has created a selection, scroll the element containing that selection into view. (I often triple-click a paragraph to select it before reading.) */
+			shouldScrollContentIntoView = true;
+			contentElement = selection.anchorNode;
+			while (contentElement.nodeType !== contentElement.ELEMENT_NODE && contentElement.parentNode) {
+				contentElement = contentElement.parentNode;
+			}
+		} else if (ourStyleSheet.disabled) {
 			contentElement = findContentElement();
 
 			if (contentElement) {
