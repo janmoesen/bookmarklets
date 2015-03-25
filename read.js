@@ -477,12 +477,13 @@
 			contentElement = findContentElement();
 
 			if (contentElement) {
+				/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
 				var tmpElement = contentElement, contentTop = 0;
 				do {
 					contentTop += tmpElement.offsetTop;
 				} while ((tmpElement = tmpElement.offsetParent));
 
-				shouldScrollContentIntoView = !window.scrollY || window.scrollY === contentTop;
+				shouldScrollContentIntoView = !window.scrollY || Math.abs(window.scrollY - contentTop) < 20;
 			}
 		}
 
