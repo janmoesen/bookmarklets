@@ -481,18 +481,14 @@
 			while (contentElement.nodeType !== contentElement.ELEMENT_NODE && contentElement.parentNode) {
 				contentElement = contentElement.parentNode;
 			}
-		} else if (ourStyleSheet.disabled) {
-			contentElement = findContentElement();
+		} else if (ourStyleSheet.disabled && (contentElement = findContentElement())) {
+			/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
+			var tmpElement = contentElement, contentTop = 0;
+			do {
+				contentTop += tmpElement.offsetTop;
+			} while ((tmpElement = tmpElement.offsetParent));
 
-			if (contentElement) {
-				/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
-				var tmpElement = contentElement, contentTop = 0;
-				do {
-					contentTop += tmpElement.offsetTop;
-				} while ((tmpElement = tmpElement.offsetParent));
-
-				shouldScrollContentIntoView = !window.scrollY || Math.abs(window.scrollY - contentTop) < 20;
-			}
+			shouldScrollContentIntoView = !window.scrollY || Math.abs(window.scrollY - contentTop) < 20;
 		}
 
 		/* Finally, toggle the style sheets. */
