@@ -284,7 +284,18 @@
 				cancelAnimationFrame(i);
 			}
 
-			window.requestAnimationFrame = function (callback) { console.log(new Date().toString()); console.log(callback.toSource()); };
+			/* Log requests to the original requestAnimationFrame. */
+			window.requestAnimationFrame = function (callback) {
+				if (!window.console) {
+					return;
+				}
+
+				var callbackSource = callback.toSource && callback.toSource();
+				if (callbackSource && callbackSource.indexOf('Readable++ requestAnimationFrame interceptor') === -1) {
+					console.log('Intercepted call to requestAnimationFrame at ' + new Date());
+					console.log('Callback for requestAnimationFrame: ' + callbackSource);
+				}
+			};
 		});
 
 		/* Add the custom style sheet if necessary. */
