@@ -481,6 +481,8 @@
 			while (contentElement.nodeType !== contentElement.ELEMENT_NODE && contentElement.parentNode) {
 				contentElement = contentElement.parentNode;
 			}
+
+			window.console && console.log('Readable++: selected element: ', contentElement);
 		} else if (ourStyleSheet.disabled && (contentElement = findContentElement())) {
 			/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
 			var tmpElement = contentElement, contentTop = 0;
