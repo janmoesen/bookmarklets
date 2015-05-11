@@ -24,7 +24,7 @@
 			s = 'from:' + s;
 		}
 
-		location = 'https://maps.google.com/?doflg=ptk&output=classic&q=' + encodeURIComponent(s)
+		location = 'https://maps.google.com/lochp?doflg=ptk&q=' + encodeURIComponent(s)
 			.replace(/%20/g, '+')
 			.replace(/%3A/g, ':')
 		;
