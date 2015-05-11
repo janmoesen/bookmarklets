@@ -50,14 +50,14 @@ pre::before {
 <p>
 	Download <a download href="https://raw.github.com/janmoesen/bookmarklets/master/bookmarks.html"><code>bookmarks.html</code></a>
 	and import it into your bookmarks manager. (Follow the instructions for your browser(s) of choice:
-	<a href="http://support.mozilla.org/en-US/kb/import-bookmarks-html">Mozilla Firefox</a>,
-	<a href="http://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=96816">Google Chrome</a>,
-	<a href="http://docs.info.apple.com/article.html?path=Safari/3.0/en/9263.html">Safari</a>,
-	<a href="http://help.opera.com/Mac/12.00/en/importexport.html#importff">Opera</a>.)
+	<a href="https://support.mozilla.org/en-US/kb/import-bookmarks-html-file">Mozilla Firefox</a>,
+	<a href="https://support.google.com/chrome/bin/answer.py?hl=en&amp;answer=96816">Google Chrome</a>,
+	<a href="https://support.apple.com/kb/PH17154">Safari</a>,
+	<a href="https://www.google.com/search?ie=utf-8&hl=en&num=100&q=site%3Aopera.com+import+bookmarks.html">Opera</a>.)
 
 <h2>Source code</h2>
 <p>
-	You can clone the project with <a href="http://git-scm.com">Git</a> by running:
+	You can clone the project with <a href="http://git-scm.com/">Git</a> by running:
 
 <pre>git clone git://github.com/<a href="https://github.com/janmoesen/bookmarklets">janmoesen/bookmarklets</a></pre>
 
@@ -70,7 +70,7 @@ pre::before {
 <h3>Firefox</h3>
 <p>
 	I use Firefox for work and leisure, and all bookmarklets should work in
-	the latest stable release. (Firefox 18.0.1, as of this writing.)
+	the latest stable release. (Firefox 37, as of this writing.)
 
 <p>
 	The bookmarklets work mostly fine on Firefox for Android, except that you
@@ -81,8 +81,8 @@ pre::before {
 <h3>Chrome</h3>
 <p>
 	The imported bookmarklets work fine, but Chrome (I have tested Chromium
-	25.0.1330.0 (168483)) does not allow you to add keywords to them. Instead,
-	<a href="http://support.google.com/chrome/bin/answer.py?hl=en&answer=95653">add
+	44.0.2398.0) does not allow you to add keywords to them. Instead,
+	<a href="https://support.google.com/chrome/bin/answer.py?hl=en&answer=95653">add
 	them as custom "search engines"</a> to enable keywords and parameters.
 	Enter or copy the bookmarklet's title and keyword into the search engine
 	name and keyword fields, and copy the location with the
@@ -97,15 +97,19 @@ pre::before {
 <h3>Safari</h3>
 <p>
 	Like in Chrome, the imported bookmarklets work fine, but Safari (my
-	version: 5.1.7 (6534.57.2)) does not allow you to add keywords to them.
-	<a href="http://alexstaubo.github.com/keywurl/">Keywurl</a> is a plugin
-	which emulates this, but I have not tried it, and it has not been updated
-	since 2010/04/01.
+	version: 7.1.6 (9537.85.15.3)) does not allow you to add keywords to them.
+	<a href="http://safarikeywordsearch.aurlien.net/">Safari Keyword Search</a>
+	is an extension which emulates this, but I have not tried it.
 
 <h3>Opera</h3>
+<h4>"Old" Opera (up to and including Opera 12)</h4>
 <p>
 	The imported bookmarklets work fine and even keep their keywords, but
 	Opera does not allow you to combine keywords with parameters. E.g.,
 	for the Google Images search, you cannot do <kbd>img foo bar</kbd>.
 	Instead, you have to enter <kbd>img</kbd>, and then type <kbd>foo
 	bar</kbd> in the dialog box.
+
+<h4>"New" Opera (based on Blink)</h4>
+<p>
+	I have not tried this yet. Feel free to do so and let me know.
