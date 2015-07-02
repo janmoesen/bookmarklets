@@ -24,8 +24,31 @@
 			s = 'from:' + s;
 		}
 
-		location = 'https://maps.google.com/lochp?doflg=ptk&q=' + encodeURIComponent(s)
+		var locations = s.split(/\s+to\s*:\s*/);
+
+		var url = 'https://www.google.com/maps/';
+
+		if (locations.length === 1) {
+			/* If there is just one location, show the normal search results. */
+			url += 'search/' + locations.map(encodeURIComponent);
+		} else {
+			/* If there are several locations, show the directions. See
+			   https://mstickles.wordpress.com/2015/06/12/gmaps-urls-options/
+			   for more information on what these "data" options mean.
+			   Basically: 3e0 = driving, 4e0 = show in km.
+			*/
+			url += 'dir/data=!4m3!4m2!3e0!4e0/';
+			url += locations.map(function (str) {
+				return encodeURIComponent(
+					str.replace(/^\s*(from|to)\s*:\s*/, '')
+				);
+			}).join('/');
+		}
+
+		/* Make the final URL more readable. */
+		location = url
 			.replace(/%20/g, '+')
+			.replace(/%2C/g, ',')
 			.replace(/%3A/g, ':')
 		;
 	}
