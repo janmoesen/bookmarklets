@@ -148,6 +148,9 @@
 		[style*="position: fixed"], [style*="position:fixed"] {\
 			position: static !important;\
 		}\
+		.instapaper_ignore {\
+			opacity: 0.25;\
+		}\
 	';
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
