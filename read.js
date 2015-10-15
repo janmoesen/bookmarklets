@@ -151,6 +151,10 @@
 		.instapaper_ignore {\
 			opacity: 0.25;\
 		}\
+		svg.svg-icon, svg.icon {\
+			max-width: 1.4em;\
+			max-height: 1.4em;\
+		}\
 	';
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
