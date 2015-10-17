@@ -10,177 +10,287 @@
 	/* The style sheet ID/HTML data attribute prefix to use. */
 	var id = 'jan-css';
 
-	/* The more readable style sheet. */
-	var css = '\
-		@namespace svg "http://www.w3.org/2000/svg";\
-		* {\
-			line-height: 1.5;\
-		}\
-		html {\
-			background: #fff;\
-			color: #222;\
-		}\
-		body {\
-			max-width: 52em;\
-			margin: 0 auto;\
-			padding: 1em;\
-			font-family: "Calibri", sans-serif;\
-		}\
-		:link {\
-			color: #00e;\
-		}\
-		:visited {\
-			color: #528;\
-		}\
-		:link:focus, :visited:focus, :link:hover, :visited:hover {\
-			color: #e30;\
-		}\
-		:link:active, :visited:active {\
-			color: #e00;\
-		}\
-		h1, h2, h3 {\
-			font-weight: normal;\
-		}\
-		h1 {\
-			border-bottom: 1px solid #888;\
-		}\
-		h2 {\
-			border-bottom: 1px solid #bbb;\
-		}\
-		h3 {\
-			border-bottom: 1px dotted #bbb;\
-		}\
-		center, [align] {\
-			text-align: left;\
-		}\
-		h1 a[href]:not(:hover), h2 a[href]:not(:hover), h3 a[href]:not(:hover) {\
-			text-decoration: none;\
-		}\
-		h1 a[href]::after, h2 a[href]::after, h3 a[href]::after {\
-			font-size: 75%;\
-			content: " #";\
-		}\
-		b:not(.' + id + '-probably-structure), u, blink {\
-			font-weight: inherit;\
-			font-style: inherit;\
-			text-decoration: inherit\
-		}\
-		b.' + id + '-probably-structure {\
-			font-size: larger;\
-		}\
-		.' + id + '-probably-layout {\
-			font: inherit;\
-		}\
-		pre {\
-			padding: 1ex;\
-			border: 1px dotted;\
-		}\
-		code, pre, .syntaxhighlighter, .dp-highlighter {\
-			font-family: "Consolas", monospace;\
-			font-size: small;\
-			background: #ffe;\
-		}\
-		.dp-highlighter + pre[name="code"] {\
-			display: none;\
-		}\
-		textarea {\
-			width: 100%;\
-			height: 32ex;\
-		}\
-		th, td {\
-			vertical-align: top;\
-			text-align: left;\
-			padding: 0.5ex;\
-		}\
-		.' + id + '-has-tables-for-layout td {\
-			display: inline-block;\
-		}\
-		caption {\
-			font-weight: bold;\
-			border-bottom: 1px dotted;\
-		}\
-		img, \
-		input[type="image"], \
-		object, \
-		embed, \
-		video, \
-		audio, \
-		iframe, \
-		canvas, \
-		:not(svg|*) > svg|* {\
-			max-width: 100%;\
-		}\
-		body:not(:hover) img, \
-		body:not(:hover) input[type="image"], \
-		body:not(:hover) object, \
-		body:not(:hover) embed, \
-		body:not(:hover) video, \
-		body:not(:hover) audio, \
-		body:not(:hover) iframe, \
-		body:not(:hover) canvas, \
-		body:not(:hover) :not(svg|*) > svg|* {\
-			opacity: 0.25;\
-		}\
-		.cufon-canvas canvas {\
-			display: none;\
-		}\
-		.post_share, #janrain-social-sharebar, #sharebar {\
-			display: none;\
-			left: -1000px;\
-		}\
-		.postprofile, .signature {\
-			font-size: smaller;\
-			border-top: 1px dotted;\
-			opacity: 0.5;\
-		}\
-		.google-src-text {\
-			display: none;\
-		}\
-		iframe[src*=".facebook.com/"], iframe[src*=".twitter.com/widgets/"], iframe[src*="//plusone.google.com/_/+1/"], iframe[src*="//www.reddit.com/static/button/"], iframe[src*="//s7.addthis.com/"], iframe[src*="//www.stumbleupon.com/badge/embed/"], iframe[src*="//widgets.bufferapp.com/"] {\
-			width: 12em;\
-			height: 4ex;\
-			border: 1px dotted;\
-		}\
-		.twtr-widget.twtr-scroll {\
-			max-height: 30ex;\
-			overflow: auto;\
-		}\
-		[style*="position: fixed"], [style*="position:fixed"] {\
-			position: static !important;\
-		}\
-		:-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
-			display: none;\
-		}\
-		:-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
-			display: none;\
-		}\
-		:any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
-			display: none;\
-		}\
-		.instapaper_ignore {\
-			opacity: 0.25;\
-		}\
-		svg.svg-icon, svg.icon {\
-			max-width: 1.4em;\
-			max-height: 1.4em;\
-		}\
-	';
+	/* The style sheet for more readable content. */
+	var css = (function () { /*
+		@namespace svg "http://www.w3.org/2000/svg";
+
+		-jan-comment { content:
+			"General styles -------------------------------------------";
+		}
+
+		* {
+			line-height: 1.5;
+		}
+
+		html {
+			background: #fff;
+			color: #222;
+		}
+
+		body {
+			max-width: 52em;
+			margin: 0 auto;
+			padding: 1em;
+			font-family: "Calibri", sans-serif;
+		}
+
+		:link {
+			color: #00e;
+		}
+
+		:visited {
+			color: #528;
+		}
+
+		:link:focus, :visited:focus, :link:hover, :visited:hover {
+			color: #e30;
+		}
+
+		:link:active, :visited:active {
+			color: #e00;
+		}
+
+		center, [align] {
+			text-align: left;
+		}
+
+		b:not(.jan-css-probably-structure), u, blink {
+			font-weight: inherit;
+			font-style: inherit;
+			text-decoration: inherit
+		}
+
+		b.jan-css-probably-structure {
+			font-size: larger;
+		}
+
+		.jan-css-probably-layout {
+			font: inherit;
+		}
+
+		-jan-comment { content:
+			"Headers --------------------------------------------------";
+		}
+
+		h1, h2, h3 {
+			font-weight: normal;
+		}
+
+		h1 {
+			border-bottom: 1px solid #888;
+		}
+
+		h2 {
+			border-bottom: 1px solid #bbb;
+		}
+
+		h3 {
+			border-bottom: 1px dotted #bbb;
+		}
+
+		-jan-comment { content:
+			"Links in headers (probably permalinks) -------------------";
+		}
+
+		h1 a[href]:not(:hover), h2 a[href]:not(:hover), h3 a[href]:not(:hover) {
+			text-decoration: none;
+		}
+
+		h1 a[href]::after, h2 a[href]::after, h3 a[href]::after {
+			font-size: 75%;
+			content: " #";
+		}
+
+		-jan-comment { content:
+			"Pre-formatted text and source code -----------------------";
+		}
+
+		pre {
+			padding: 1ex;
+			border: 1px dotted;
+		}
+
+		code, pre, .syntaxhighlighter, .dp-highlighter {
+			font-family: "Consolas", monospace;
+			font-size: small;
+			background: #ffe;
+		}
+
+		.dp-highlighter + pre[name="code"] {
+			display: none;
+		}
+
+		-jan-comment { content:
+			"Forms ----------------------------------------------------";
+		}
+
+		textarea {
+			width: 100%;
+			height: 32ex;
+		}
+
+		-jan-comment { content:
+			"Tables ---------------------------------------------------";
+		}
+
+		th, td {
+			vertical-align: top;
+			text-align: left;
+			padding: 0.5ex;
+		}
+
+		.jan-css-has-tables-for-layout td {
+			display: inline-block;
+		}
+
+		caption {
+			font-weight: bold;
+			border-bottom: 1px dotted;
+		}
+
+		-jan-comment { content:
+			"Dim images and media until :hover ------------------------";
+		}
+
+		img,
+		input[type="image"],
+		object,
+		embed,
+		video,
+		audio,
+		iframe,
+		canvas,
+		:not(svg|*) > svg|* {
+			max-width: 100%;
+		}
+
+		body:not(:hover) img,
+		body:not(:hover) input[type="image"],
+		body:not(:hover) object,
+		body:not(:hover) embed,
+		body:not(:hover) video,
+		body:not(:hover) audio,
+		body:not(:hover) iframe,
+		body:not(:hover) canvas,
+		body:not(:hover) :not(svg|*) > svg|* {
+			opacity: 0.25;
+		}
+
+		-jan-comment { content:
+			"Limit SVG icon dimensions --------------------------------";
+		}
+
+		svg.svg-icon, svg.icon {
+			max-width: 1.4em;
+			max-height: 1.4em;
+		}
+
+		-jan-comment { content:
+			"Make everything scrollable -------------------------------";
+		}
+
+		[style*="position: fixed"], [style*="position:fixed"] {
+			position: static !important;
+		}
+
+		-jan-comment { content:
+			"Decrease common forum and metadata font size -------------";
+		}
+
+		.postprofile, .signature {
+			font-size: smaller;
+			border-top: 1px dotted;
+			opacity: 0.5;
+		}
+
+		-jan-comment { content:
+			"Hide common social media elements ------------------------";
+		}
+
+		iframe[src*=".facebook.com/"],
+		iframe[src*=".twitter.com/widgets/"],
+		iframe[src*="//plusone.google.com/_/+1/"],
+		iframe[src*="//www.reddit.com/static/button/"],
+		iframe[src*="//s7.addthis.com/"],
+		iframe[src*="//www.stumbleupon.com/badge/embed/"],
+		iframe[src*="//widgets.bufferapp.com/"] {
+			width: 12em;
+			height: 4ex;
+			border: 1px dotted;
+		}
+
+		.twtr-widget.twtr-scroll {
+			max-height: 30ex;
+			overflow: auto;
+		}
+
+		.post_share, #janrain-social-sharebar, #sharebar {
+			display: none;
+			left: -1000px;
+		}
+
+		:-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+			display: none;
+		}
+
+		:-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+			display: none;
+		}
+
+		:any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+			display: none;
+		}
+
+		-jan-comment { content:
+			"Hide old cufón text replacement --------------------------";
+		}
+
+		.cufon-canvas canvas {
+			display: none;
+		}
+
+		-jan-comment { content:
+			"Make notes on decorrespondent.nl less conspicuous --------";
+		}
+
+		.instapaper_ignore {
+			opacity: 0.25;
+		}
+
+		-jan-comment { content:
+			"Hide the source text on Google Translate-d pages ---------";
+		}
+
+		.google-src-text {
+			display: none;
+		}
+
+	*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
-	var dataTableCss = '\
-		tr:nth-child(odd) td:not(.' + id + '-active-col) {\
-			background: #eef;\
-		}\
-		tr:hover td:not(.code), .' + id + '-active-col {\
-			background: #ddf;\
-		}\
-		th, tr td:not(.code):hover {\
-			background: #bbf;\
-		}\
-		th code, td code {\
-			background: inherit;\
-		}\
+	var dataTableCss = (function () { /*
+		tr:nth-child(odd) td:not(.jan-css-active-col) {
+			background: #eef;
+		}
+
+		tr:hover td:not(.code), .jan-css-active-col {
+			background: #ddf;
+		}
+
+		th, tr td:not(.code):hover {
+			background: #bbf;
+		}
+
+		th code, td code {
+			background: inherit;
+		}
+
 	';
+	*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
 
 	/* The attributes to disable. */
 	var attrs = [
