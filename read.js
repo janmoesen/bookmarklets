@@ -148,6 +148,15 @@
 		[style*="position: fixed"], [style*="position:fixed"] {\
 			position: static !important;\
 		}\
+		:-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
+			display: none;\
+		}\
+		:-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
+			display: none;\
+		}\
+		:any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {\
+			display: none;\
+		}\
 		.instapaper_ignore {\
 			opacity: 0.25;\
 		}\
