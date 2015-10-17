@@ -242,6 +242,49 @@
 		}
 
 		-jan-comment { content:
+			"Make common navigation elements more compact -------------";
+		}
+
+		:-moz-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
+
+		:-webkit-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
+
+		:any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+			display: inline;
+			margin: 0;
+			padding: 0;
+		}
+
+		:-moz-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+			display: inline;
+			margin: 0;
+			padding: 0 .5em;
+			border-right: 1px dotted;
+		}
+
+		:-webkit-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+			display: inline;
+			margin: 0;
+			padding: 0 .5em;
+			border-right: 1px dotted;
+		}
+
+		:any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+			display: inline;
+			margin: 0;
+			padding: 0 .5em;
+			border-right: 1px dotted;
+		}
+
+		-jan-comment { content:
 			"Hide old cufón text replacement --------------------------";
 		}
 
