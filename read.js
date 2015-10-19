@@ -11,7 +11,7 @@
 	var id = 'jan-css';
 
 	/* The style sheet for more readable content. */
-	var css = (function () { /*
+	var css = (function () { /*do_not_strip
 		@namespace svg "http://www.w3.org/2000/svg";
 
 		-jan-comment { content:
@@ -313,7 +313,7 @@
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
-	var dataTableCss = (function () { /*
+	var dataTableCss = (function () { /*do_not_strip
 		tr:nth-child(odd) td:not(.jan-css-active-col) {
 			background: #eef;
 		}
@@ -330,7 +330,6 @@
 			background: inherit;
 		}
 
-	';
 	*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
