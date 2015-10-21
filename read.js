@@ -11,7 +11,7 @@
 	var id = 'jan-css';
 
 	/* The style sheet for more readable content. */
-	var css = (function () { /*do_not_strip
+	var css = (function () { /*@charset "utf-8";
 		@namespace svg "http://www.w3.org/2000/svg";
 
 		-jan-comment { content:
