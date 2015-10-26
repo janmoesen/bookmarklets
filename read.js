@@ -177,10 +177,10 @@
 		}
 
 		-jan-comment { content:
-			"Limit SVG icon dimensions --------------------------------";
+			"Limit icon dimensions --------------------------------";
 		}
 
-		svg.svg-icon, svg.icon {
+		svg.icon, [class*="icon"] svg, .svg-icon, .inline-icon, .wp-smiley, .smiley, .emoticon, .emoji {
 			max-width: 1.4em;
 			max-height: 1.4em;
 		}
