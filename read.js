@@ -229,15 +229,15 @@
 			left: -1000px;
 		}
 
-		:not(html, body, article, section):-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+		:-moz-any(div, ul, li):-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]) {
 			display: none;
 		}
 
-		:not(html, body, article, section):-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+		:-webkit-any(div, ul, li):-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]) {
 			display: none;
 		}
 
-		:not(html, body, article, section):any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"]) {
+		:any(div, ul, li):any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]) {
 			display: none;
 		}
 
