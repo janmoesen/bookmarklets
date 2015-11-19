@@ -7,9 +7,6 @@
  * @title Readable++
  */
 (function read() {
-	/* The style sheet ID/HTML data attribute prefix to use. */
-	var id = 'jan-css';
-
 	/* The style sheet for more readable content. */
 	var css = (function () { /*@charset "utf-8";
 		@namespace svg "http://www.w3.org/2000/svg";
@@ -54,17 +51,17 @@
 			text-align: left;
 		}
 
-		b:not(.jan-css-probably-structure), u, blink {
+		b:not(.jancss-probably-structure), u, blink {
 			font-weight: inherit;
 			font-style: inherit;
 			text-decoration: inherit
 		}
 
-		b.jan-css-probably-structure {
+		b.jancss-probably-structure {
 			font-size: larger;
 		}
 
-		.jan-css-probably-layout {
+		.jancss-probably-layout {
 			font: inherit;
 		}
 
@@ -139,7 +136,7 @@
 			padding: 0.5ex;
 		}
 
-		.jan-css-has-tables-for-layout td {
+		.jancss-has-tables-for-layout td {
 			display: inline-block;
 		}
 
@@ -314,11 +311,11 @@
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
 	var dataTableCss = (function () { /*do_not_strip
-		tr:nth-child(odd) td:not(.jan-css-active-col) {
+		tr:nth-child(odd) td:not(.jancss-active-col) {
 			background: #eef;
 		}
 
-		tr:hover td:not(.code), .jan-css-active-col {
+		tr:hover td:not(.code), .jancss-active-col {
 			background: #ddf;
 		}
 
@@ -407,7 +404,7 @@
 		}
 
 		var all = toArray(document.getElementsByTagName('*')),
-		    ourStyleSheet = document.getElementById(id),
+		    ourStyleSheet = document.getElementById('jancss'),
 		    allStyleSheets = toArray(document.styleSheets),
 		    prettyPrintStyleSheet,
 		    matches;
@@ -469,7 +466,7 @@
 
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
-			(ourStyleSheet = document.createElement('style')).id = id;
+			(ourStyleSheet = document.createElement('style')).id = 'jancss';
 			ourStyleSheet.innerHTML = css;
 
 			/* Check if there are tables for layout. */
@@ -503,7 +500,7 @@
 					);
 				});
 			if (hasTablesForLayout) {
-				var bodyClassName = id + '-has-tables-for-layout';
+				var bodyClassName = 'jancss-has-tables-for-layout';
 				addClass(document.body, bodyClassName);
 			} else {
 				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
@@ -520,7 +517,7 @@
 						table = table.parentNode;
 					}
 
-					var activeColumnClassName = id + '-active-col';
+					var activeColumnClassName = 'jancss-active-col';
 					toArray(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
 						if (e.type === 'mouseenter') {
 							addClass(cell, activeColumnClassName);
@@ -552,7 +549,7 @@
 			}
 
 			/* Add some classes to structure elements that have been used for layout. */
-			var probablyLayoutClassName = id + '-probably-layout';
+			var probablyLayoutClassName = 'jancss-probably-layout';
 			structureElementsForLayoutSelectors.forEach(function (selector) {
 				var xpathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				for (var i = 0; i < xpathResult.snapshotLength; i++) {
@@ -562,7 +559,7 @@
 			});
 
 			/* Add some classes to layout elements that have been used for structure. */
-			var probablyStructureClassName = id + '-probably-structure';
+			var probablyStructureClassName = 'jancss-probably-structure';
 			layoutElementsForStructureSelectors.forEach(function (selector) {
 				toArray(document.querySelectorAll(selector)).forEach(function (elem) {
 					if (elem.tagName.toLowerCase() !== 'b') {
@@ -583,13 +580,13 @@
 			allStyleSheets.forEach(function (styleSheet, i) {
 				if (styleSheet.ownerNode !== ourStyleSheet && !syntaxHighlightHrefRegex.test(styleSheet.href)) {
 					/* Remember whether this style sheet was originally disabled or not. We can't store on the CSSStyleSheet object, so use our DOM node. */
-					if (ourStyleSheet[id + '-originally-disabled-' + i] === undefined) {
-						ourStyleSheet[id + '-originally-disabled-' + i] = styleSheet.disabled;
+					if (ourStyleSheet['jancss-originally-disabled-' + i] === undefined) {
+						ourStyleSheet['jancss-originally-disabled-' + i] = styleSheet.disabled;
 					}
 
 					if (ourStyleSheet.disabled) {
 						/* Restore this style sheet's original state. */
-						styleSheet.disabled = ourStyleSheet[id + '-originally-disabled-' + i];
+						styleSheet.disabled = ourStyleSheet['jancss-originally-disabled-' + i];
 					} else {
 						/* Disable this style sheet when ours is enabled. */
 						styleSheet.disabled = true;
@@ -610,7 +607,7 @@
 					/* Parse the attribute definition. Attributes can be restricted to certain elements, e.g. "table@width". */
 					if (!(matches = attr.match(/([^@]+)@([^@]+)/)) || (elem.tagName && elem.tagName.toLowerCase() == matches[1])) {
 						attr = matches ? matches[2] : attr;
-						var names = { enabled: attr, disabled: id + '-' + attr };
+						var names = { enabled: attr, disabled: 'jancss-' + attr };
 						if (elem.hasAttribute(names.enabled)) {
 							elem.setAttribute(names.disabled, elem.getAttribute(names.enabled));
 							elem.removeAttribute(names.enabled);
@@ -623,7 +620,7 @@
 			});
 
 			/* Restore the inline styles for certain code highlighters. */
-			var disabledStyleAttr = id + '-style';
+			var disabledStyleAttr = 'jancss-style';
 			toArray(document.querySelectorAll('.wp_syntax [' + disabledStyleAttr + ']')).forEach(function (elem) {
 				elem.setAttribute('style', elem.getAttribute(disabledStyleAttr));
 				elem.removeAttribute(disabledStyleAttr);
