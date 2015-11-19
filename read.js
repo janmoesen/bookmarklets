@@ -458,8 +458,8 @@
 
 				var callbackSource = callback.toSource && callback.toSource();
 				if (callbackSource && callbackSource.indexOf('Readable++ requestAnimationFrame interceptor') === -1) {
-					console.log('Intercepted call to requestAnimationFrame at ' + new Date());
-					console.log('Callback for requestAnimationFrame: ' + callbackSource);
+					console.log('Readable++: intercepted call to requestAnimationFrame at ' + new Date());
+					console.log('Readable++: callback for requestAnimationFrame: ' + callbackSource);
 				}
 			};
 		});
@@ -638,12 +638,12 @@
 					var element = document.querySelector(contentSelectors[i]);
 					/* Make sure the element was either an anchor or something "visible". */
 					if (element && (element.tagName.toLowerCase() === 'a' || element.offsetWidth || element.offsetHeight)) {
-						window.console && console.log('Readable++: matching selector: ' + contentSelectors[i] + '\nElement: ', element);
+						window.console && console.log('Readable++: found matching selector for content element: ' + contentSelectors[i] + '\nElement: ', element);
 						return element;
 					}
 				}
 				catch (e) {
-					window.console && console.log('Readable++: bad selector: ' + contentSelectors[i] + '\nException: ' + e);
+					window.console && console.log('Readable++: bad selector for content element: ' + contentSelectors[i] + '\nException: ' + e);
 				}
 			}
 		}
@@ -659,7 +659,7 @@
 				contentElement = contentElement.parentNode;
 			}
 
-			window.console && console.log('Readable++: selected element: ', contentElement);
+			window.console && console.log('Readable++: found selected element to scroll into view: ', contentElement);
 		} else if (ourStyleSheet.disabled && (contentElement = findContentElement())) {
 			/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
 			var tmpElement = contentElement, contentTop = 0;
