@@ -384,6 +384,11 @@
 	/* URI pattern for syntax highlighting style sheets. */
 	var syntaxHighlightHrefRegex = /\b((syntax|pygments)(hi(ghlight(er)?|lite(r)?))?|sh(Core|Theme[^.]*)|geshi|codecolorer)[./]/i;
 
+	/* Keep track of which elements have had their event handlers
+	 * disabled/re-enabled.
+	 */
+	var elementsWithToggledEventHandlers = {};
+
 	/* The main function. */
 	(function execute(document) {
 		function addClass(element, classNames) {
@@ -463,6 +468,57 @@
 				}
 			};
 		});
+
+		/* While in Readable++ mode, disable some elements' event handlers
+		 * that have been added with jQuery. This prevents hijacking events
+		 * like scroll and resize.
+		 */
+		if (typeof jQuery === 'function') {
+			[window, document, document.documentElement, document.body].forEach(function (elem) {
+				/* Because the window for IFRAMEs is the same as the outer
+				 * document's window, we need to keep track of wether we
+				 * have toggled the event handlers. Otherwise, they might
+				 * get disabled and re-enabled immediately after.
+				 */
+				if (elementsWithToggledEventHandlers[elem]) {
+					return;
+				}
+
+				elementsWithToggledEventHandlers[elem] = true;
+
+				/* Since jQuery 1.7. */
+				if (typeof jQuery.hasData === 'function' && jQuery.hasData(elem)) {
+					var data = jQuery._data(elem);
+					if (data.jancssEvents) {
+						data.events = data.jancssEvents;
+						delete data.jancssEvents;
+
+						jQuery._data(elem, data);
+
+						return;
+					} else if (data.events) {
+						data.jancssEvents = data.events;
+						delete data.events;
+
+						jQuery._data(elem, data);
+
+						return;
+					}
+				}
+
+				/* Before jQuery 1.7. */
+				var $elem = jQuery(elem);
+				var eventsData = $elem.data('events');
+				var jancssEventsData = $elem.data('jancssEvents');
+				if (jancssEventsData) {
+					$elem.data('events', jancssEventsData);
+					$elem.removeData('jancssEvents');
+				} else if (eventsData) {
+					$elem.data('jancssEvents', eventsData);
+					$elem.removeData('events');
+				}
+			})
+		}
 
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
