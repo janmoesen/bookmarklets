@@ -605,24 +605,22 @@
 			}
 
 			/* Add some classes to structure elements that have been used for layout. */
-			var probablyLayoutClassName = 'jancss-probably-layout';
 			structureElementsForLayoutSelectors.forEach(function (selector) {
 				var xpathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				for (var i = 0; i < xpathResult.snapshotLength; i++) {
 					var elem = xpathResult.snapshotItem(i);
-					addClass(elem, probablyLayoutClassName);
+					addClass(elem, 'jancss-probably-layout');
 				}
 			});
 
 			/* Add some classes to layout elements that have been used for structure. */
-			var probablyStructureClassName = 'jancss-probably-structure';
 			layoutElementsForStructureSelectors.forEach(function (selector) {
 				toArray(document.querySelectorAll(selector)).forEach(function (elem) {
 					if (elem.tagName.toLowerCase() !== 'b') {
 						elem = elem.previousElementSibling;
 					}
 
-					addClass(elem, probablyStructureClassName);
+					addClass(elem, 'jancss-probably-structure');
 				});
 			});
 		}
