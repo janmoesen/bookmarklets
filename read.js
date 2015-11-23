@@ -177,7 +177,7 @@
 			"Limit icon dimensions --------------------------------";
 		}
 
-		svg.icon, [class*="icon"] svg, .svg-icon, .inline-icon, .wp-smiley, .smiley, .emoticon, .emoji {
+		svg.icon, [class*="icon"] svg, [class*="Icon"] svg, .svg-icon, .inline-icon, .wp-smiley, .smiley, .emoticon, .emoji {
 			max-width: 1.4em;
 			max-height: 1.4em;
 		}
