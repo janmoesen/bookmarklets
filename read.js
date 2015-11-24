@@ -520,6 +520,11 @@
 			})
 		}
 
+		/* Load images that are supposed to be loaded lazily. */
+		[].forEach.call(document.querySelectorAll('img[data-original]'), function (img) {
+			img.src = img.getAttribute('data-original');
+		});
+
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = 'jancss';
