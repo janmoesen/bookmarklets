@@ -191,6 +191,14 @@
 		}
 
 		-jan-comment { content:
+			"Make side notes and pull quotes less conspicuous ---------";
+		}
+
+		aside, .pullquote, .pullQuote, .pull-quote {
+			opacity: 0.25;
+		}
+
+		-jan-comment { content:
 			"Decrease common forum and metadata font size -------------";
 		}
 
