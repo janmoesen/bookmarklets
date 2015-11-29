@@ -397,6 +397,33 @@
 	 */
 	var elementsWithToggledEventHandlers = {};
 
+	var eventHandlerAttributesToToggle = [
+		'oncontextmenu',
+		'onshow',
+
+		'oninput',
+		'onkeydown',
+		'onkeyup',
+		'onkeypress',
+
+		'onmousedown',
+		'onmouseup',
+		'onmouseenter',
+		'onmouseleave',
+		'onmouseover',
+		'onmouseout',
+		'onmousemove',
+
+		'onresize',
+
+		'onscroll',
+		'onwheel',
+
+		'onselect',
+		'onselectstart',
+		'onselectionchange'
+	];
+
 	/* The main function. */
 	(function execute(document) {
 		function addClass(element, classNames) {
@@ -477,23 +504,40 @@
 			};
 		});
 
-		/* While in Readable++ mode, disable some elements' event handlers
-		 * that have been added with jQuery. This prevents hijacking events
-		 * like scroll and resize.
+		/* While in Readable++ mode, disable some elements' event handlers.
+		 * This prevents hijacking events like "scroll" and "resize", which
+		 * can be abused to annoy me with visual effects and whatnot, and
+		 * "contextmenu" and "selectstart", which are clearly defined as
+		 * universal and inalienable human rights. Look it up at your local
+		 * Wikipedia office.
 		 */
-		if (typeof jQuery === 'function') {
-			[window, document, document.documentElement, document.body].forEach(function (elem) {
-				/* Because the window for IFRAMEs is the same as the outer
-				 * document's window, we need to keep track of wether we
-				 * have toggled the event handlers. Otherwise, they might
-				 * get disabled and re-enabled immediately after.
-				 */
-				if (elementsWithToggledEventHandlers[elem]) {
-					return;
+		[window, document, document.documentElement, document.body].forEach(function (elem) {
+			/* Because the window for IFRAMEs is the same as the outer
+			 * document's window, we need to keep track of wether we
+			 * have toggled the event handlers. Otherwise, they might
+			 * get disabled and re-enabled immediately after.
+			 */
+			if (elementsWithToggledEventHandlers[elem]) {
+				return;
+			}
+
+			elementsWithToggledEventHandlers[elem] = true;
+
+			/* Toggle selected event handlers that have been set using
+			 * "elem.oneventx = function () { … };"
+			 */
+			eventHandlerAttributesToToggle.forEach(function (attrib) {
+				if (elem['jancss-' + attrib]) {
+					elem[attrib] = elem['jancss-' + attrib];
+					delete elem['jancss-' + attrib];
+				} else if (elem[attrib]) {
+					elem['jancss-' + attrib] = elem[attrib];
+					elem[attrib] = function () { };
 				}
+			});
 
-				elementsWithToggledEventHandlers[elem] = true;
-
+			/* Toggle all event handlers that have been set using jQuery. */
+			if (typeof jQuery === 'function') {
 				/* Since jQuery 1.7. */
 				if (typeof jQuery.hasData === 'function' && jQuery.hasData(elem)) {
 					var data = jQuery._data(elem);
@@ -525,8 +569,8 @@
 					$elem.data('jancssEvents', eventsData);
 					$elem.removeData('events');
 				}
-			})
-		}
+			};
+		});
 
 		/* Load images that are supposed to be loaded lazily. */
 		[].forEach.call(document.querySelectorAll('img[data-original]'), function (img) {
