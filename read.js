@@ -384,8 +384,15 @@
 
 	/* Layout elements incorrectly used for structure purposes ("bold means header"). */
 	var layoutElementsForStructureSelectors = [
-		/* Because there is no support for the Selectors Level 4 "subject of a selector" syntax yet (or any definite syntax, for that matter), I simply ass-u-me in the code below that the subject is a "B" element. Either the result of the selector, or the previous element sibling. */
-		'br + b + br',
+		/* Because there is no support for the Selectors Level 4 "subject of
+		 * a selector" syntax yet (or any definite syntax, for that matter),
+		 * I simply ass-u-me in the code below that the subject is a "B"
+		 * element. Either the result of the selector, or the previous
+		 * element sibling.
+		 */
+		'b:first-child + :empty',
+		':empty + b + :empty',
+		':empty + b:last-child',
 		'div > b:only-child, p > b:only-child'
 	];
 
