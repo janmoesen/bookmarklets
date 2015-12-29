@@ -39,19 +39,26 @@
 			color: #528;
 		}
 
-		:link:focus, :visited:focus, :link:hover, :visited:hover {
+		:link:focus,
+		:visited:focus,
+		:link:hover,
+		:visited:hover {
 			color: #e30;
 		}
 
-		:link:active, :visited:active {
+		:link:active,
+		:visited:active {
 			color: #e00;
 		}
 
-		center, [align] {
+		center,
+		[align] {
 			text-align: left;
 		}
 
-		b:not(.jancss-probably-structure), u, blink {
+		b:not(.jancss-probably-structure),
+		u,
+		blink {
 			font-weight: inherit;
 			font-style: inherit;
 			text-decoration: inherit
@@ -89,11 +96,15 @@
 			"Links in headers (probably permalinks) -------------------";
 		}
 
-		h1 a[href]:not(:hover), h2 a[href]:not(:hover), h3 a[href]:not(:hover) {
+		h1 a[href]:not(:hover),
+		h2 a[href]:not(:hover),
+		h3 a[href]:not(:hover) {
 			text-decoration: none;
 		}
 
-		h1 a[href]::after, h2 a[href]::after, h3 a[href]::after {
+		h1 a[href]::after,
+		h2 a[href]::after,
+		h3 a[href]::after {
 			font-size: 75%;
 			content: " #";
 		}
@@ -107,7 +118,10 @@
 			border: 1px dotted;
 		}
 
-		code, pre, .syntaxhighlighter, .dp-highlighter {
+		code,
+		pre,
+		.syntaxhighlighter,
+		.dp-highlighter {
 			font-family: "Consolas", monospace;
 			font-size: small;
 			background: #ffe;
@@ -130,7 +144,8 @@
 			"Tables ---------------------------------------------------";
 		}
 
-		th, td {
+		th,
+		td {
 			vertical-align: top;
 			text-align: left;
 			padding: 0.5ex;
@@ -177,7 +192,15 @@
 			"Limit icon dimensions --------------------------------";
 		}
 
-		svg.icon, [class*="icon"] svg, [class*="Icon"] svg, .svg-icon, .inline-icon, .wp-smiley, .smiley, .emoticon, .emoji {
+		svg.icon,
+		[class*="icon"] svg,
+		[class*="Icon"] svg,
+		.svg-icon,
+		.inline-icon,
+		.wp-smiley,
+		.smiley,
+		.emoticon,
+		.emoji {
 			max-width: 1.4em;
 			max-height: 1.4em;
 		}
@@ -186,7 +209,8 @@
 			"Make everything scrollable -------------------------------";
 		}
 
-		[style*="position: fixed"], [style*="position:fixed"] {
+		[style*="position: fixed"],
+		[style*="position:fixed"] {
 			position: static !important;
 		}
 
@@ -194,7 +218,11 @@
 			"Make side notes and pull quotes less conspicuous ---------";
 		}
 
-		aside, .pullquote, .pullQuote, .pull-quote {
+		aside:not(:hover),
+		blockquote[class*="quote"]:not(:hover),
+		.pullquote:not(:hover),
+		.pullQuote:not(:hover),
+		.pull-quote:not(:hover) {
 			opacity: 0.25;
 		}
 
@@ -202,7 +230,8 @@
 			"Decrease common forum and metadata font size -------------";
 		}
 
-		.postprofile, .signature {
+		.postprofile,
+		.signature {
 			font-size: smaller;
 			border-top: 1px dotted;
 			opacity: 0.5;
@@ -229,20 +258,118 @@
 			overflow: auto;
 		}
 
-		.post_share, #janrain-social-sharebar, #sharebar {
+		.post_share,
+		#janrain-social-sharebar,
+		#sharebar {
 			display: none;
 			left: -1000px;
 		}
 
-		:-moz-any(div, ul, li):-moz-any([class*="social"], [class*="share"], [class*="sharing"]):-moz-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]):not(article):not([id*="article]):not([class*="article"]) {
+		:-moz-any(
+			div,
+			ul,
+			li
+		):-moz-any(
+			[class*="social"],
+			[class*="share"],
+			[class*="sharing"]
+		):-moz-any(
+			[class*="media"],
+			[class*="Media"],
+			[class*="utton"],
+			[class*="idget"],
+			[class*="ontainer"],
+			[class*="tool"],
+			[class*="Tool"],
+			[class*="meta"]
+			[class*="Meta"]
+		):not(
+			article
+		):not(
+			[id*="article]
+		):not(
+			[id*="Article]
+		):not(
+			[class*="article"]
+		):not(
+			[class*="Article"]
+		):not(
+			[id*="main]
+		):not(
+			[id*="Main]
+		) {
 			display: none;
 		}
 
-		:-webkit-any(div, ul, li):-webkit-any([class*="social"], [class*="share"], [class*="sharing"]):-webkit-any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]):not(article):not([id*="article]):not([class*="article"]) {
+		:-webkit-any(
+			div,
+			ul,
+			li
+		):-webkit-any(
+			[class*="social"],
+			[class*="share"],
+			[class*="sharing"]
+		):-webkit-any(
+			[class*="media"],
+			[class*="Media"],
+			[class*="utton"],
+			[class*="idget"],
+			[class*="ontainer"],
+			[class*="tool"],
+			[class*="Tool"],
+			[class*="meta"]
+			[class*="Meta"]
+		):not(
+			article
+		):not(
+			[id*="article]
+		):not(
+			[id*="Article]
+		):not(
+			[class*="article"]
+		):not(
+			[class*="Article"]
+		):not(
+			[id*="main]
+		):not(
+			[id*="Main]
+		) {
 			display: none;
 		}
 
-		:any(div, ul, li):any([class*="social"], [class*="share"], [class*="sharing"]):any([class*="edia"], [class*="utton"], [class*="idget"], [class*="ontainer"], [class*="ool"], [class*="meta"]):not(article):not([id*="article]):not([class*="article"]) {
+		:any(
+			div,
+			ul,
+			li
+		):any(
+			[class*="social"],
+			[class*="share"],
+			[class*="sharing"]
+		):any(
+			[class*="media"],
+			[class*="Media"],
+			[class*="utton"],
+			[class*="idget"],
+			[class*="ontainer"],
+			[class*="tool"],
+			[class*="Tool"],
+			[class*="meta"]
+			[class*="Meta"]
+		):not(
+			article
+		):not(
+			[id*="article]
+		):not(
+			[id*="Article]
+		):not(
+			[class*="article"]
+		):not(
+			[class*="Article"]
+		):not(
+			[id*="main]
+		):not(
+			[id*="Main]
+		) {
 			display: none;
 		}
 
@@ -250,39 +377,105 @@
 			"Make common navigation elements more compact -------------";
 		}
 
-		:-moz-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+		:-moz-any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) ul {
 			display: inline;
 			margin: 0;
 			padding: 0;
 		}
 
-		:-webkit-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+		:-webkit-any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) ul {
 			display: inline;
 			margin: 0;
 			padding: 0;
 		}
 
-		:any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) ul {
+		:any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) ul {
 			display: inline;
 			margin: 0;
 			padding: 0;
 		}
 
-		:-moz-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+		:-moz-any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) li {
 			display: inline;
 			margin: 0;
 			padding: 0 .5em;
 			border-right: 1px dotted;
 		}
 
-		:-webkit-any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+		:-webkit-any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) li {
 			display: inline;
 			margin: 0;
 			padding: 0 .5em;
 			border-right: 1px dotted;
 		}
 
-		:any(nav, [class*="avigat"], [id*="avigat"], [class*="-nav-"], [class*="nav-"], [class$="-nav"], [id*="-nav-"], [id*="nav-"], [id$="-nav"], [role="navigation"]) li {
+		:any(
+			nav,
+			[class*="avigat"],
+			[id*="avigat"],
+			[class*="-nav-"],
+			[class*="nav-"],
+			[class$="-nav"],
+			[id*="-nav-"],
+			[id*="nav-"],
+			[id$="-nav"],
+			[role="navigation"]
+		) li {
 			display: inline;
 			margin: 0;
 			padding: 0 .5em;
