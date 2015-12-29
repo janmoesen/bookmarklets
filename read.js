@@ -584,6 +584,10 @@
 			img.src = img.getAttribute('data-original');
 		});
 
+		[].forEach.call(document.querySelectorAll('img[data-full-src]'), function (img) {
+			img.src = img.getAttribute('data-full-src');
+		});
+
 		/* Add the custom style sheet if necessary. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = 'jancss';
