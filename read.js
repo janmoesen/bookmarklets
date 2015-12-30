@@ -259,13 +259,6 @@
 			overflow: auto;
 		}
 
-		.post_share,
-		#janrain-social-sharebar,
-		#sharebar {
-			display: none;
-			left: -1000px;
-		}
-
 		:-moz-any(
 			div,
 			ul,
@@ -275,6 +268,8 @@
 			[class*="share"],
 			[class*="sharing"]
 		):-moz-any(
+			[class*="post"],
+			[class*="Post"],
 			[class*="media"],
 			[class*="Media"],
 			[class*="utton"],
@@ -282,6 +277,8 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
+			[class*="bar"],
+			[class*="Bar"],
 			[class*="meta"],
 			[class*="Meta"]
 		):not(
@@ -311,6 +308,8 @@
 			[class*="share"],
 			[class*="sharing"]
 		):-webkit-any(
+			[class*="post"],
+			[class*="Post"],
 			[class*="media"],
 			[class*="Media"],
 			[class*="utton"],
@@ -318,6 +317,8 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
+			[class*="bar"],
+			[class*="Bar"],
 			[class*="meta"],
 			[class*="Meta"]
 		):not(
@@ -347,6 +348,8 @@
 			[class*="share"],
 			[class*="sharing"]
 		):any(
+			[class*="post"],
+			[class*="Post"],
 			[class*="media"],
 			[class*="Media"],
 			[class*="utton"],
@@ -354,6 +357,8 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
+			[class*="bar"],
+			[class*="Bar"],
 			[class*="meta"],
 			[class*="Meta"]
 		):not(
