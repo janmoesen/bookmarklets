@@ -11,7 +11,7 @@
 	var css = (function () { /*@charset "utf-8";
 		@namespace svg "http://www.w3.org/2000/svg";
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"General styles -------------------------------------------";
 		}
 
@@ -72,7 +72,7 @@
 			font: inherit;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Headers --------------------------------------------------";
 		}
 
@@ -92,7 +92,7 @@
 			border-bottom: 1px dotted #bbb;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Links in headers (probably permalinks) -------------------";
 		}
 
@@ -109,7 +109,7 @@
 			content: " #";
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Pre-formatted text and source code -----------------------";
 		}
 
@@ -131,7 +131,7 @@
 			display: none;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Forms ----------------------------------------------------";
 		}
 
@@ -140,7 +140,7 @@
 			height: 32ex;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Tables ---------------------------------------------------";
 		}
 
@@ -160,7 +160,7 @@
 			border-bottom: 1px dotted;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Dim images and media until :hover ------------------------";
 		}
 
@@ -206,7 +206,7 @@
 			max-height: 1.4em;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Make everything scrollable -------------------------------";
 		}
 
@@ -215,7 +215,7 @@
 			position: static !important;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Make side notes and pull quotes less conspicuous ---------";
 		}
 
@@ -227,7 +227,7 @@
 			opacity: 0.25;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Decrease common forum and metadata font size -------------";
 		}
 
@@ -238,7 +238,7 @@
 			opacity: 0.5;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Hide common social media elements ------------------------";
 		}
 
@@ -374,7 +374,7 @@
 			display: none;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Make common navigation elements more compact -------------";
 		}
 
@@ -483,7 +483,7 @@
 			border-right: 1px dotted;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Hide old cufón text replacement --------------------------";
 		}
 
@@ -491,7 +491,7 @@
 			display: none;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Make notes on decorrespondent.nl less conspicuous --------";
 		}
 
@@ -499,7 +499,7 @@
 			opacity: 0.25;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Hide the source text on Google Translate-d pages ---------";
 		}
 
@@ -512,7 +512,7 @@
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
 
 	/* Extra CSS for pages that do not appear to use tables for layout. */
-	var dataTableCss = (function () { /*do_not_strip
+	var dataTableCss = (function () { /*-jancss-comment {}
 		tr:nth-child(odd) td:not(.jancss-active-col) {
 			background: #eef;
 		}
