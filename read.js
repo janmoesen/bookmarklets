@@ -188,11 +188,12 @@
 			opacity: 0.25;
 		}
 
-		-jan-comment { content:
+		-jancss-comment { content:
 			"Limit icon dimensions --------------------------------";
 		}
 
-		svg.icon,
+		svg[id*="icon"],
+		svg[class*="icon"],
 		[class*="icon"] svg,
 		[class*="Icon"] svg,
 		.svg-icon,
