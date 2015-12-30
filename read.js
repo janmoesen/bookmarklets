@@ -281,22 +281,22 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
-			[class*="meta"]
+			[class*="meta"],
 			[class*="Meta"]
 		):not(
 			article
 		):not(
-			[id*="article]
+			[id*="article"]
 		):not(
-			[id*="Article]
+			[id*="Article"]
 		):not(
 			[class*="article"]
 		):not(
 			[class*="Article"]
 		):not(
-			[id*="main]
+			[id*="main"]
 		):not(
-			[id*="Main]
+			[id*="Main"]
 		) {
 			display: none;
 		}
@@ -317,22 +317,22 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
-			[class*="meta"]
+			[class*="meta"],
 			[class*="Meta"]
 		):not(
 			article
 		):not(
-			[id*="article]
+			[id*="article"]
 		):not(
-			[id*="Article]
+			[id*="Article"]
 		):not(
 			[class*="article"]
 		):not(
 			[class*="Article"]
 		):not(
-			[id*="main]
+			[id*="main"]
 		):not(
-			[id*="Main]
+			[id*="Main"]
 		) {
 			display: none;
 		}
@@ -353,22 +353,22 @@
 			[class*="ontainer"],
 			[class*="tool"],
 			[class*="Tool"],
-			[class*="meta"]
+			[class*="meta"],
 			[class*="Meta"]
 		):not(
 			article
 		):not(
-			[id*="article]
+			[id*="article"]
 		):not(
-			[id*="Article]
+			[id*="Article"]
 		):not(
 			[class*="article"]
 		):not(
 			[class*="Article"]
 		):not(
-			[id*="main]
+			[id*="main"]
 		):not(
-			[id*="Main]
+			[id*="Main"]
 		) {
 			display: none;
 		}
