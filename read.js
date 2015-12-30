@@ -779,12 +779,17 @@
 		});
 
 		/* Load images that are supposed to be loaded lazily. */
-		[].forEach.call(document.querySelectorAll('img[data-original]'), function (img) {
-			img.src = img.getAttribute('data-original');
-		});
-
-		[].forEach.call(document.querySelectorAll('img[data-full-src]'), function (img) {
-			img.src = img.getAttribute('data-full-src');
+		[
+			'data-original',
+			'data-lazyload',
+			'data-lazy-src',
+			'data-full-src',
+			'data-src'
+		].forEach(function (attribute) {
+			toArray(document.querySelectorAll('img[' + attribute + ']')).forEach(function (img) {
+				img.src = img.getAttribute(attribute);
+				img.removeAttribute(attribute);
+			});
 		});
 
 		/* Add the custom style sheet if necessary. */
