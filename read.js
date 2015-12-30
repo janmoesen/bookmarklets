@@ -380,6 +380,14 @@
 		}
 
 		-jancss-comment { content:
+			"Hide empty list items ------------------------------------";
+		}
+
+		li:empty, li.jancss-emptyish {
+			display: none;
+		}
+
+		-jancss-comment { content:
 			"Make common navigation elements more compact -------------";
 		}
 
@@ -790,6 +798,22 @@
 				img.src = img.getAttribute(attribute);
 				img.removeAttribute(attribute);
 			});
+		});
+
+		/* Hide empty list items that are not ":empty" as per CSS. So,
+		 * "empty" as in "containing text-less placeholders typically used
+		 * for social sharing by showing an icon or logo or whatnot"
+		 * (e.g. <li><a href="#"><span class="icon-fb"></span></a></li>).
+		 */
+		toArray(document.querySelectorAll('li :only-child:empty:not(img):not(input)')).forEach(function (elem) {
+			while (elem.nodeName && elem.nodeName.toUpperCase() !== 'LI') {
+				elem = elem.parentNode;
+			}
+
+			if (elem.textContent.trim() === '' && !elem.querySelector('img, input'))
+			{
+				addClass(elem, 'jancss-emptyish');
+			}
 		});
 
 		/* Add the custom style sheet if necessary. */
