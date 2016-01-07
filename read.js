@@ -805,7 +805,7 @@
 		 * for social sharing by showing an icon or logo or whatnot"
 		 * (e.g. <li><a href="#"><span class="icon-fb"></span></a></li>).
 		 */
-		toArray(document.querySelectorAll('li :only-child:empty:not(img):not(input)')).forEach(function (elem) {
+		toArray(document.querySelectorAll('li :empty:not(img):not(input)')).forEach(function (elem) {
 			while (elem.nodeName && elem.nodeName.toUpperCase() !== 'LI') {
 				elem = elem.parentNode;
 			}
