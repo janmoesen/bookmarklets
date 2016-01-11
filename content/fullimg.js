@@ -3,6 +3,7 @@
  * attribute, or their containing link's "href" attribute.
  *
  * @title Load full images
+ * @keyword full-img
  */
 (function fullimg() {
 	/* Get rid of "width=", "height=" etc. in IMG@src query strings. */
