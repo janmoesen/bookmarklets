@@ -2,8 +2,9 @@
  * Get rid of common overlays, such as full-page ads.
  *
  * @title Kill overlays
+ * @keyword kill-overlays
  */
-(function killoverlays() {
+(function killOverlays() {
 	/* Remove "suspicious" elements. */
 	var selectors = [
 		'body [class*="modal"]',
