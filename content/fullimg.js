@@ -5,11 +5,13 @@
  * @title Load full images
  * @keyword full-img
  */
-(function fullimg() {
+(function loadFullSizeImages() {
 	/* Get rid of "width=", "height=" etc. in IMG@src query strings. */
 	var selectors = [
-		'img[src*="?"][src*="w="][src*="h="]',
-		'img[src*="?"][src*="width="][src*="height="]'
+		'img[src*="?"][src*="maxWidth="][src*="maxHeight="]',
+		'img[src*="?"][src*="maxwidth="][src*="maxheight="]',
+		'img[src*="?"][src*="width="][src*="height="]',
+		'img[src*="?"][src*="w="][src*="h="]'
 	];
 
 	[].forEach.call(
@@ -18,7 +20,7 @@
 			var queryParts = img.src.replace(/.*\?/, '').split('&');
 
 			var newParts = queryParts.filter(function (s) {
-				return s.length && !s.match(/^(w|width|h|height)=/);
+				return s.length && !s.match(/^(w|width|maxwidth|maxWidth|h|height|maxheight|maxHeight)=/);
 			});
 
 			var newSrc = img.src.replace(/\?.*/, '');
