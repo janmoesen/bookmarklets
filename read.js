@@ -786,6 +786,17 @@
 			};
 		});
 
+		/* Load bLazy.js "retina" images. This is more specific than the
+		 * generic lazy-loading attributes below, and needs special handling
+		 * because it specifies multiple sources in one attribute.
+		 */
+		toArray(document.querySelectorAll('img.b-lazy[data-src*="|"]')).forEach(function (img) {
+			var attribute = 'data-src';
+			var sources = img.getAttribute(attribute).split('|');
+			img.src = sources.pop();
+			img.removeAttribute(attribute);
+		});
+
 		/* Load images that are supposed to be loaded lazily. */
 		[
 			'data-original',
