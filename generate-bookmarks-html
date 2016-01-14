@@ -69,7 +69,7 @@ process_dir () {
 			elif [ "$line" = '*/' ]; then
 				is_in_docblock=0;
 			elif [[ "$line" =~ ^\(function\ (.+)\( ]]; then
-				keyword="${BASH_REMATCH[1]}";
+				[ -z "$keyword" ] && keyword="${BASH_REMATCH[1]}";
 				break;
 			fi;
 			if [[ "$line" =~ ^\*\ @([a-z]*)\ (.*) ]]; then
