@@ -11,6 +11,7 @@
 		'body [class*="overlay"]',
 		'body [class*="popup"]',
 		'body [style*="width"][style*="height"][style*="100%"]',
+		'body [class^="nyroModal"]',
 		'.frame-container',
 		'.optimonk-holder',
 		'iframe[style]',
