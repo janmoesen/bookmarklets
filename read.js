@@ -899,15 +899,15 @@
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
 			if (document.querySelector('.prettyprint')) {
 				prettyPrintStyleSheet = document.createElement('style');
-				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/prettify.css)';
+				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prettify.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.syntaxhighlighter')) {
 				prettyPrintStyleSheet = document.createElement('style');
-				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/syntaxhighlighter.css)';
+				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/syntaxhighlighter.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.highlight .c, .highlight .k, .highlight .m, .highlight .s, .highlight .w')) {
 				prettyPrintStyleSheet = document.createElement('style');
-				prettyPrintStyleSheet.textContent = '@import url(http://janmoesen.github.com/bookmarklets/css/pygments.css)';
+				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/pygments.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}
 
@@ -954,7 +954,7 @@
 						try {
 							/* … unless it is a pretty-print style sheet. */
 							if (styleSheet.cssRules[0] && styleSheet.cssRules[0].type === styleSheet.cssRules[0].IMPORT_RULE && styleSheet.cssRules[0].href) {
-								styleSheet.disabled = !styleSheet.cssRules[0].href.match(/^http:\/\/janmoesen\.github\.com\//);
+								styleSheet.disabled = !styleSheet.cssRules[0].href.match(/^https:\/\/janmoesen\.github\.io\//);
 							}
 						} catch (e) {
 						}
