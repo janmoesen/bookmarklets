@@ -5,17 +5,28 @@
  * @keyword kill-overlays
  */
 (function killOverlays() {
+	/* Remove known overlays. */
+	var selectors = [
+		'body [class^="nyroModal"]',
+		'.optimonk-holder',
+		'#spout-friendly-iframe',
+	];
+
+	[].forEach.call(
+		document.querySelectorAll(selectors.join(', ')),
+		function (elem) {
+			elem.parentNode.removeChild(elem);
+		}
+	);
+
 	/* Remove "suspicious" elements. */
 	var selectors = [
 		'body [class*="modal"]',
 		'body [class*="overlay"]',
 		'body [class*="popup"]',
 		'body [style*="width"][style*="height"][style*="100%"]',
-		'body [class^="nyroModal"]',
 		'.frame-container',
-		'.optimonk-holder',
 		'iframe[style]',
-		'#spout-friendly-iframe',
 	];
 
 	[].forEach.call(
