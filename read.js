@@ -201,7 +201,7 @@
 		.wp-smiley,
 		.smiley,
 		.emoticon,
-		.emoji {
+		:not(html).emoji {
 			max-width: 1.4em;
 			max-height: 1.4em;
 		}
