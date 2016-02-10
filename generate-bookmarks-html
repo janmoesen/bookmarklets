@@ -170,3 +170,9 @@ cat <<EOD
 </DL>
 EOD
 } > bookmarks.html;
+
+# I keep a symlink to bookmarks.html in my Downloads directory so I can quickly
+# import it from Firefox's bookmarks manager. My Downloads directory is set to
+# display the most recently modified files first, so if I update the symlink's
+# timestamp, it will be at the top of the list.
+[ -h ~/Downloads/_bookmarks.html ] && touch -h ~/Downloads/_bookmarks.html;
