@@ -10,6 +10,8 @@
 		'body [class^="nyroModal"]',
 		'.optimonk-holder',
 		'#spout-friendly-iframe',
+		'.reveal-modal',
+		'.reveal-modal-bg',
 	];
 
 	[].forEach.call(
