@@ -1,5 +1,13 @@
 /**
- * Translate the specified or selected text or URL to French using Google.
+ * Translate the specified or selected text or URL to French.
+ *
+ * It determines what and how to translate using the following logic:
+ * - If a parameter has been specified, translate that using Google Translate.
+ * - If text has been selected, translate that using Google Translate.
+ * - If the page appears to link to the French version of itself (e.g. in a
+ *   language selector menu), follow that link.
+ * - If the page is accessible via HTTP(S), use its URL with Google Translate.
+ * - Otherwise, prompt the user for text to translate with Google Translate.
  *
  * @title Translate to French
  * @keyword 2fr
@@ -25,6 +33,8 @@
 				'#language a[href][hreflang="fr"]',
 
 				/* Generic */
+				'[id*="lang"][id*="elect"] a[hreflang="fr"]',
+				'[class*="lang"][class*="elect"] a[hreflang="fr"]',
 				'a[href][title$="this page in French"]',
 				'a[href][title$="cette page en français"]'
 			];
@@ -39,7 +49,7 @@
 				}
 			}
 
-			/* If we did not find a translation link, use the HTTP(S) location. */
+			/* If we did not find a translation link, use the current URL if it is HTTP(S). (No point in sending data: or file: URLs to Google Translate.) */
 			s = (location.protocol + '').match(/^http/)
 				? location + ''
 				: '';
