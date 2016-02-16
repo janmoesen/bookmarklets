@@ -12,6 +12,8 @@
 		'#spout-friendly-iframe',
 		'.reveal-modal',
 		'.reveal-modal-bg',
+		'#colorbox',
+		'.colorbox',
 	];
 
 	[].forEach.call(
