@@ -196,6 +196,8 @@
 		svg[class*="icon"],
 		[class*="icon"] svg,
 		[class*="Icon"] svg,
+		img[class*="icon"][src*=".svg"],
+		img[class*="Icon"][src*=".svg"],
 		.svg-icon,
 		.inline-icon,
 		.wp-smiley,
