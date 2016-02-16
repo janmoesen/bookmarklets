@@ -25,10 +25,21 @@
 
 	/* Remove "suspicious" elements. */
 	var selectors = [
+		'body [id*="modal"]',
+		'body [id*="Modal"]',
 		'body [class*="modal"]',
+		'body [class*="Modal"]',
+		'body [id*="overlay"]',
+		'body [id*="Overlay"]',
 		'body [class*="overlay"]',
+		'body [class*="Overlay"]',
+		'body [id*="popup"]',
+		'body [id*="Popup"]',
 		'body [class*="popup"]',
+		'body [class*="Popup"]',
 		'body [style*="width"][style*="height"][style*="100%"]',
+		'body [style*="position"][style*="absolute"][style*="left"]',
+		'body [style*="position"][style*="fixed"][style*="left"]',
 		'.frame-container',
 		'iframe[style]',
 	];
