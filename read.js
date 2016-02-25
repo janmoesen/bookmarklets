@@ -573,7 +573,7 @@
 		'.post-body:not(.field-item)',
 		':not(input):not(textarea).post, :not(input):not(textarea).blogpost, :not(input):not(textarea).blogPost',
 		'[id^="post0"], [id^="post1"], [id^="post2"], [id^="post3"], [id^="post4"], [id^="post5"], [id^="post6"], [id^="post7"], [id^="post8"], [id^="post9"], [id^="post-0"], [id^="post-1"], [id^="post-2"], [id^="post-3"], [id^="post-4"], [id^="post-5"], [id^="post-6"], [id^="post-7"], [id^="post-8"], [id^="post-9"]',
-		'#entry',
+		'#entry:not(body)',
 		'.entry',
 		'#content',
 		'.content',
