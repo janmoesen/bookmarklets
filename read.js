@@ -801,6 +801,24 @@
 			img.removeAttribute(attribute);
 		});
 
+		/* Load Riloadr "<noscript>" images. This is more specific than the
+		 * generic lazy-loading attributes below, and needs special handling
+		 * because it would reset the images to blank when scrolling after
+		 * Readable++ has been applied.
+		 */
+		toArray(document.querySelectorAll('img[data-src] + noscript')).forEach(function (noscript) {
+			var img = noscript.previousElementSibling;
+
+			var placeholder = img.previousElementSibling;
+			if (placeholder && placeholder.tagName.toUpperCase() === 'SVG') {
+				placeholder.parentNode.removeChild(placeholder);
+			}
+
+			img.outerHTML = noscript.textContent;
+
+			noscript.parentNode.removeChild(noscript);
+		});
+
 		/* Load images that are supposed to be loaded lazily. */
 		[
 			'data-original',
