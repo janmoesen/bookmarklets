@@ -991,6 +991,10 @@
 				prettyPrintStyleSheet = document.createElement('style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/pygments.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
+			} else if (document.querySelector('code[class*="language-"] .token.punctuation')) {
+				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prism.css)';
+				document.head.appendChild(prettyPrintStyleSheet);
 			}
 
 			/* Add some classes to structure elements that have been used for layout. */
