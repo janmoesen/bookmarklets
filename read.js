@@ -569,15 +569,19 @@
 		 */
 		'main h1',
 		'main header',
+		'main h2',
 		'main',
 		'body [role="main"] h1',
 		'body [role="main"] header',
+		'body [role="main"] h2',
 		'body [role="main"]',
 		'body [role="document"] h1',
 		'body [role="document"] header',
+		'body [role="document"] h2',
 		'body [role="document"]',
 		'body [role="article"] h1',
 		'body [role="article"] header',
+		'body [role="article"] h2',
 		'body [role="article"]',
 
 		/* <article> is also "semantically rich", but there are several sites
