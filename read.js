@@ -567,7 +567,18 @@
 		/* The most semantically rich elements should be used correctly so we
 		 * can ass-u-me them to be the main content element, right?
 		 */
+		'main h1',
+		'main header',
 		'main',
+		'body [role="main"] h1',
+		'body [role="main"] header',
+		'body [role="main"]',
+		'body [role="document"] h1',
+		'body [role="document"] header',
+		'body [role="document"]',
+		'body [role="article"] h1',
+		'body [role="article"] header',
+		'body [role="article"]',
 
 		/* <article> is also "semantically rich", but there are several sites
 		 * that have a list of related articles, each in its own <article>. A
