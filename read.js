@@ -564,9 +564,21 @@
 
 	/* The selectors to try (in this order) for the first content element to scroll to. */
 	var contentSelectors = [
+		/* The most semantically rich elements should be used correctly so we
+		 * can ass-u-me them to be the main content element, right?
+		 */
 		'main',
-		'body #article',
+
+		/* <article> is also "semantically rich", but there are several sites
+		 * that have a list of related articles, each in its own <article>. A
+		 * "real" article would not have any <article> siblings.
+		 */
 		'article:only-of-type',
+
+		/* Common IDs and classes for the main content element (e.g. weblog
+		 * post IDs, newspaper articles, …)
+		 */
+		'body #article',
 		'body :not(#spotlight) > .article',
 		'body .articleContent',
 		'body #article_top',
@@ -604,11 +616,19 @@
 		'body [class^="content"]',
 		'body #main',
 		'body .main',
+
+		/* Consider the first header (in DOM order) to be the most important
+		 * one and ass-u-me it is the start of the main content.
+		 */
 		'h1:not(:empty)',
 		'body #header',
 		'header',
 		'body .header',
 		'h2',
+
+		/* When all else fails, just look for bigger text, which would
+		 * probably be used instead of the appropriate header elements.
+		 */
 		'big'
 	];
 
