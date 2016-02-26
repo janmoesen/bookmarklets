@@ -566,7 +566,7 @@
 	var contentSelectors = [
 		'main',
 		'body #article',
-		'article:not(.p_like):not(.p_response)',
+		'article:only-of-type',
 		'body :not(#spotlight) > .article',
 		'body .articleContent',
 		'body #article_top',
