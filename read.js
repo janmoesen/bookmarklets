@@ -584,7 +584,7 @@
 		 * that have a list of related articles, each in its own <article>. A
 		 * "real" article would not have any <article> siblings.
 		 */
-		'article:only-of-type',
+		':not(li) > article:only-of-type',
 
 		/* Common IDs and classes for the main content element (e.g. weblog
 		 * post IDs, newspaper articles, …)
