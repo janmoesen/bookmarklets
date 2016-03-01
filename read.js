@@ -572,6 +572,10 @@
 		'main header',
 		'main h2',
 		'main',
+		'body [itemprop="blogPost"] h1',
+		'body [itemprop="blogPost"] header',
+		'body [itemprop="blogPost"] h2',
+		'body [itemprop="blogPost"]',
 		'body [role="main"] h1',
 		'body [role="main"] header',
 		'body [role="main"] h2',
@@ -584,6 +588,10 @@
 		'body [role="article"] header',
 		'body [role="article"] h2',
 		'body [role="article"]',
+		'body #main h1',
+		'body #main header',
+		'body #main h2',
+		'body #main',
 
 		/* <article> is also "semantically rich", but there are several sites
 		 * that have a list of related articles, each in its own <article>. A
