@@ -198,6 +198,7 @@
 		[class*="Icon"] svg,
 		img[class*="icon"][src*=".svg"],
 		img[class*="Icon"][src*=".svg"],
+		[class*="button"] svg,
 		.controls-wrapper svg,
 		.svg-icon,
 		.inline-icon,
