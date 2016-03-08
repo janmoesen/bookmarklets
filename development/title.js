@@ -14,6 +14,8 @@
 		.replace(/\u0025s/, '');
 	if (s === '') {
 		s = getSelection() + '' || prompt('Please enter the title:', document.title);
+	} else {
+		s = s.replace(/(^|\s)~(\s|$)/g, '$1' + getSelection() + '$2');
 	}
 
 	if (s !== null) {
