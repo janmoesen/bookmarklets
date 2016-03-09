@@ -1,5 +1,4 @@
 .highlight .hll, .syntax .hll { background-color: #ffffcc }
-.highlight , .syntax  { background: #f0f0f0; }
 .highlight .c, .syntax .c { color: #60a0b0; font-style: italic } /* Comment */
 .highlight .err, .syntax .err { border: 1px solid #FF0000 } /* Error */
 .highlight .k, .syntax .k { color: #007020; font-weight: bold } /* Keyword */
@@ -7,7 +6,7 @@
 .highlight .cm, .syntax .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
 .highlight .cp, .syntax .cp { color: #007020 } /* Comment.Preproc */
 .highlight .c1, .syntax .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
-.highlight .cs, .syntax .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+.highlight .cs, .syntax .cs { color: #60a0b0; } /* Comment.Special */
 .highlight .gd, .syntax .gd { color: #A00000 } /* Generic.Deleted */
 .highlight .ge, .syntax .ge { font-style: italic } /* Generic.Emph */
 .highlight .gr, .syntax .gr { color: #FF0000 } /* Generic.Error */
