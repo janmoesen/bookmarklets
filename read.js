@@ -569,29 +569,29 @@
 		/* The most semantically rich elements should be used correctly so we
 		 * can ass-u-me them to be the main content element, right?
 		 */
-		'main h1',
+		'main h1:not(:empty)',
 		'main header',
-		'main h2',
+		'main h2:not(:empty)',
 		'main',
-		'body [itemprop="blogPost"] h1',
+		'body [itemprop="blogPost"] h1:not(:empty)',
 		'body [itemprop="blogPost"] header',
-		'body [itemprop="blogPost"] h2',
+		'body [itemprop="blogPost"] h2:not(:empty)',
 		'body [itemprop="blogPost"]',
-		'body [role="main"] h1',
+		'body [role="main"] h1:not(:empty)',
 		'body [role="main"] header',
-		'body [role="main"] h2',
+		'body [role="main"] h2:not(:empty)',
 		'body [role="main"]',
-		'body [role="document"] h1',
+		'body [role="document"] h1:not(:empty)',
 		'body [role="document"] header',
-		'body [role="document"] h2',
+		'body [role="document"] h2:not(:empty)',
 		'body [role="document"]',
-		'body [role="article"] h1',
+		'body [role="article"] h1:not(:empty)',
 		'body [role="article"] header',
-		'body [role="article"] h2',
+		'body [role="article"] h2:not(:empty)',
 		'body [role="article"]',
-		'body #main h1',
+		'body #main h1:not(:empty)',
 		'body #main header',
-		'body #main h2',
+		'body #main h2:not(:empty)',
 		'body #main',
 
 		/* <article> is also "semantically rich", but there are several sites
@@ -649,7 +649,7 @@
 		'body #header',
 		'header',
 		'body .header',
-		'h2',
+		'h2:not(:empty)',
 
 		/* When all else fails, just look for bigger text, which would
 		 * probably be used instead of the appropriate header elements.
