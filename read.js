@@ -76,20 +76,28 @@
 			"Headers --------------------------------------------------";
 		}
 
-		h1, h2, h3 {
+		h1, h1.jancss-probably-layout {
+			border-bottom: 1px solid #888;
+			font-size: 200%;
 			font-weight: 100;
 		}
 
-		h1 {
-			border-bottom: 1px solid #888;
-		}
-
-		h2 {
+		h2, h2.jancss-probably-layout * {
 			border-bottom: 1px solid #bbb;
+			font-size: 150%;
+			font-weight: 100;
 		}
 
-		h3 {
+		h3, h3.jancss-probably-layout {
 			border-bottom: 1px dotted #bbb;
+			font-size: 117%;
+			font-weight: 100;
+		}
+
+		h1.jancss-probably-layout *,
+		h2.jancss-probably-layout *,
+		h3.jancss-probably-layout * {
+			font-size: 1rem;
 		}
 
 		-jancss-comment { content:
