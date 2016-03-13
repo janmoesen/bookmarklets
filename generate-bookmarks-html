@@ -44,7 +44,6 @@ process_dir () {
 	EOD
 
 	shopt -s nullglob;
-	GLOBIGNORE='./jslint*:./.git/';
 	for file in "$1"/*/ "$1"/*.js; do
 		# Recurse for directories, and indent the output.
 		if [ -d "$file" ]; then
