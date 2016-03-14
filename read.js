@@ -1146,7 +1146,7 @@
 							return;
 						}
 
-						/* Make sure the element has text. */
+						/* Make sure the element is visible. */
 						var boundingRect = element.getBoundingClientRect();
 						if (!boundingRect.width || !boundingRect.height) {
 							return;
