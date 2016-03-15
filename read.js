@@ -273,6 +273,10 @@
 			overflow: auto;
 		}
 
+		.article__share {
+			display: none;
+		}
+
 		:-moz-any(
 			div,
 			ul,
