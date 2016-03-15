@@ -1207,8 +1207,10 @@
 							return;
 						}
 
-						/* Make sure the element is "above the fold". Some sites use bigger headings for a footer section than for the actual content. */
-						if (boundingRect.top + window.scrollY > window.innerHeight) {
+						/* Make sure the element is "above the fold" (or near it). Some sites use
+						 * bigger headings for a footer section than for the actual content, but in
+						 * general, the real header should be visible within the first screenful. */
+						if (boundingRect.top + window.scrollY > window.innerHeight * 1.5) {
 							return;
 						}
 
