@@ -631,9 +631,7 @@
 		'[id*="head"]:not(:empty)',
 		'[id*="Head"]:not(:empty)',
 		'[role="heading"]',
-		'h1:not(:empty)',
-		'h2:not(:empty)',
-		'h3:not(:empty)'
+		'h1:not(:empty), h2:not(:empty), h3:not(:empty)'
 	];
 
 	/* The selectors to try (in this order) for the first content element to scroll to when no suitable header was found. */
