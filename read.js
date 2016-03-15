@@ -1187,8 +1187,9 @@
 					.trim();
 			}
 
-			var metaTitle = document.querySelector('meta[property="og:title"], meta[name="title"]');
-			var normalizedPageTitle = normalizeText(metaTitle && metaTitle.content || document.title);
+			var metaTitleElement = document.querySelector('meta[property="og:title"], meta[name="title"]');
+			var normalizedMetaTitle = metaTitleElement && normalizeText(metaTitleElement.content);
+			var normalizedPageTitle = normalizeText(document.title);
 
 			headerSelectors.forEach(function (selector) {
 				[].forEach.call(
@@ -1215,12 +1216,19 @@
 						}
 
 						/* Make sure the title can contain the element's text. */
-						if (normalizedPageTitle.length < normalizedText.length) {
+						if (
+							normalizedPageTitle.length < normalizedText.length
+							&& (!metaTitleElement || normalizedMetaTitle.length < normalizedText.length)
+						) {
 							return;
 						}
 
 						/* Finally, see if the element's text appears in the page title. */
 						var substringIndex = normalizedPageTitle.indexOf(normalizedText);
+
+						if (substringIndex === -1 && metaTitleElement) {
+							substringIndex = normalizedMetaTitle.indexOf(normalizedText);
+						}
 
 						if (substringIndex > -1) {
 							headerInPageTitle = element;
