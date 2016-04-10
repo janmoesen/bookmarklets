@@ -22,7 +22,19 @@
 		s = s.replace(/^\s*(van|from)\s+/g, '');
 		s = s.replace(/\s+(naar|to|–)\s+/g, ' to:');
 
-		var locations = s.split(/\s+to\s*:\s*/);
+		var date;
+		s = s.replace(/(^|\s)(?:op|on)\s+([0-9]+(?:[/-][0-9]+){1,2})(\s|$)/, function (str, leadingSpace, dateMatch, trailingSpace) {
+				date = dateMatch;
+				return leadingSpace + trailingSpace;
+		});
+
+		var time;
+		s = s.replace(/(^|\s)(?:om|at)\s+((?:(?:[01]?[0-9])|(?:2[0123])):(?:[0-5][0-9]))(\s|$)/, function (str, leadingSpace, timeMatch, trailingSpace) {
+				time = timeMatch;
+				return leadingSpace + trailingSpace;
+		});
+
+		var locations = s.trim().split(/\s+to\s*:\s*/);
 
 		if (locations.length > 2) {
 			window.console && console.log('NMBS: "via" stations not supported yet. Expected 2 locations, got ' + locations.length + '.');
@@ -32,6 +44,14 @@
 			+ encodeURIComponent(locations[0])
 			+ '&REQ0JourneyStopsZ0G='
 			+ encodeURIComponent(locations[locations.length - 1]);
+
+		if (date) {
+			url += '&REQ0JourneyDate=' + encodeURIComponent(date);
+		}
+
+		if (time) {
+			url += '&REQ0JourneyTime=' + encodeURIComponent(time);
+		}
 
 		/* Make the final URL more readable. */
 		location = url
