@@ -19,7 +19,7 @@
 	if (s === '') {
 		s = getSelection() + '' || prompt('Please enter your query:');
 	} else {
-		s = s.replace(/(^|\s)~(\s|$)/g, '$1' + getSelection() + '$2');
+		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getSelection() + '$2');
 	}
 
 	if (s) {
