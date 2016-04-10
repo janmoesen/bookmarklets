@@ -949,7 +949,7 @@
 			var img = noscript.previousElementSibling;
 
 			var placeholder = img.previousElementSibling;
-			if (placeholder && placeholder.tagName.toUpperCase() === 'SVG') {
+			if (placeholder && placeholder.tagName.toLowerCase() === 'svg') {
 				placeholder.parentNode.removeChild(placeholder);
 			}
 
@@ -978,7 +978,7 @@
 		 * (e.g. <li><a href="#"><span class="icon-fb"></span></a></li>).
 		 */
 		toArray(document.querySelectorAll('li :empty:not(img):not(input)')).forEach(function (elem) {
-			while (elem.nodeName && elem.nodeName.toUpperCase() !== 'LI') {
+			while (elem.tagName && elem.tagName.toLowerCase() !== 'li') {
 				elem = elem.parentNode;
 			}
 
@@ -1032,12 +1032,12 @@
 
 				/* Highlight the matching column on :hover. I do not know how to do this in pure CSS without COLGROUPs. */
 				function columnMouseHandler(e) {
-					if (!/^t[dh]$/i.test('' + e.target.nodeName)) {
+					if (!/^t[dh]$/i.test('' + e.target.tagName)) {
 						return;
 					}
 
 					var targetCell = e.target, nthChild = targetCell.cellIndex + 1, table = targetCell.parentNode;
-					while (table && table.nodeName.toLowerCase() !== 'table') {
+					while (table && table.tagName.toLowerCase() !== 'table') {
 						table = table.parentNode;
 					}
 
