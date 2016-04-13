@@ -653,6 +653,8 @@
 		'[id*="head"]:not(:empty)',
 		'[id*="Head"]:not(:empty)',
 		'[role="heading"]',
+		'[class*="title"]:not(:empty)',
+		'[class*="Title"]:not(:empty)',
 		'h1:not(:empty), h2:not(:empty), h3:not(:empty)'
 	];
 
