@@ -6,39 +6,73 @@
  * @keyword fullimg
  */
 (function loadFullSizeImages() {
-	/* Get rid of "width=", "height=" etc. in IMG@src query strings. */
-	var selectors = [
-		'img[src*="?"][src*="maxWidth="][src*="maxHeight="]',
-		'img[src*="?"][src*="maxwidth="][src*="maxheight="]',
-		'img[src*="?"][src*="width="][src*="height="]',
-		'img[src*="?"][src*="w="][src*="h="]'
+	/* Get rid of "width=", "height=" etc. followed by numbers or number pairs
+	 * in IMG@src query strings. */
+	var parameterNames = [
+		'width',
+		'Width',
+
+		'height',
+		'Height',
+
+		'maxwidth',
+		'maxWidth',
+		'MaxWidth',
+
+		'maxheight',
+		'maxHeight',
+		'MaxHeight',
+
+		'w',
+		'W',
+
+		'h',
+		'H',
+
+		'resize',
+		'reSize',
+		'Resize',
+
+		'size',
+		'Size'
 	];
 
-	[].forEach.call(
-		document.querySelectorAll(selectors.join(', ')),
-		function (img) {
-			var queryParts = img.src.replace(/.*\?/, '').split('&');
+	parameterNames.forEach(function (parameterName) {
+		var selector = 'img[src*="?' + parameterName + '="]'
+			+ ', img[src*="?"][src*="&' + parameterName + '="]';
 
-			var newParts = queryParts.filter(function (s) {
-				return s.length && !s.match(/^(w|width|maxwidth|maxWidth|h|height|maxheight|maxHeight)=/);
-			});
+		/* Match query string parameters (?[…&]name=value[&…]) where the value is
+		 * a number (e.g. "width=1200") or a pair of numbers (e.g. * "resize=640x480"). */
+		var parameterReplacementRegexp = new RegExp('(\\?[^#]*&)?' + parameterName + '=[1-9][0-9]+(?:(?:[xX,*]|%2[CcAa])[1-9][0-9]+)?([^&#]*)');
 
-			var newSrc = img.src.replace(/\?.*/, '');
+		[].forEach.call(document.querySelectorAll(selector), function (img) {
+			var newSrc = img.src
+				 /* Remove the parameter "name=value" pair from the query string. */
+				.replace(parameterReplacementRegexp, '$1$2')
 
-			if (newParts.length) {
-				newSrc += '?' + newParts.join('&');
-			}
+				/* Remove trailing "&" from the query string. */
+				.replace(/(\?[^#]*)&(#.*)?$/, '$1$2')
+
+				/* Remove empty query strings ("?" not followed by
+				 * anything) from the query string. */
+				.replace(/\?(#.*)?$/, '$1')
+
+				/* Remove empty fragment identifiers from the URL. */
+				.replace(/#$/, '')
+			;
 
 			if (img.src === newSrc) {
 				return;
 			}
 
 			if (window.console && console.log) {
-				console.log('Load full images: found matching query string; old img.src: ', img.src);
-				console.log('Load full images: found matching query string; new img.src: ', newSrc);
+				console.log('Load full images: found image with matching query string:', img)
+				console.log('→ Old img.src: ' + img.src);
+				console.log('→ New img.src: ' + newSrc);
 			}
 
 			img.src = newSrc;
+		});
 	});
 
 	/* Change the IMG@src of linked images to their link's A@href if they look
@@ -63,8 +97,9 @@
 
 			if (similarity > 0.66) {
 				if (window.console && console.log) {
-					console.log('Load full images: found linked image with ', Math.round(similarity * 100), '% similarity; old img.src: ', img.src);
-					console.log('Load full images: found linked image with ', Math.round(similarity * 100), '% similarity; new img.src: ', a.href);
+					console.log('Load full images: found linked image with ' + Math.round(similarity * 100) + '% similarity:', img);
+					console.log('→ Old img.src: ' + img.src);
+					console.log('→ New img.src: ' + a.href);
 				}
 
 				img.src = a.href;
