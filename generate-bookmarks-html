@@ -23,6 +23,11 @@ url_encode () {
 
 # Loop through *.js in the given directory and recurse for its subdirectories.
 process_dir () {
+	# Skip certain directories.
+	if [ "$(basename "$1")" = 'tests' ]; then
+		return;
+	fi;
+
 	echo "Now processing directory \"$1\"…" 1>&2;
 
 	# Start the bookmarks folder.
