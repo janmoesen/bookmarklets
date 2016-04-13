@@ -29,6 +29,9 @@
 		'h',
 		'H',
 
+		'fit',
+		'Fit',
+
 		'resize',
 		'reSize',
 		'Resize',
