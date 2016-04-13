@@ -1,0 +1,290 @@
+.add_social_icons {
+	top: 35%;
+	right: -50px;
+	position: absolute;
+	z-index: 99999;
+}
+
+.thumbs-fluid-layout {
+	width: 99%;
+	margin-top: 1%;
+	*zoom: 1;
+}
+
+.thumbs-fluid-layout:before,
+.thumbs-fluid-layout:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+
+.thumbs-fluid-layout:after {
+	clear: both;
+}
+
+div.gallery-bank-hover-details {
+	display: inline-block !important;
+	display: -webkit-inline-box !important;
+	overflow: hidden;
+	position: relative;
+	transition: all 1s;
+	-moz-transition: all 1s;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+}
+
+div.gallery-bank-hover-details:hover {
+	-webkit-box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, 0.3);
+}
+
+div.gallery-bank-hover-details > div {
+	transition: all 1s;
+	-moz-transition: all 1s;
+	-webkit-transition: all 1s;
+	-o-transition: all 1s;
+}
+
+div.gallery-bank-hover-details:hover > div {
+	transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-o-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+}
+
+div.gallery-bank-hover-details .gallery-bank-image-details {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3);
+	transition: all .5s;
+	-moz-transition: all .5s;
+	-webkit-transition: all .5s;
+	-o-transition: all .5s;
+	cursor: pointer;
+}
+
+div.gallery-bank-hover-details .gallery-bank-album-detail {
+	opacity: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(../images/icons/more.png) no-repeat center rgba(24, 24, 24, 0.3);
+	background-color: rgba(0, 0, 0, 0.4);
+	transition: all .5s;
+	-moz-transition: all .5s;
+	-webkit-transition: all .5s;
+	-o-transition: all .5s;
+	cursor: pointer;
+}
+
+div.gallery-bank-hover-details:hover .gallery-bank-album-detail {
+	opacity: 1;
+}
+
+.gb-album-title {
+	font-family: "Open Sans", Helvetica, Arial, Verdana, sans-serif;
+	font-size: 18px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+}
+
+div.gallery-bank-hover-details:hover .gallery-bank-image-details {
+	opacity: 1;
+}
+
+.gallery-bank-image-details h2 {
+	margin: 0 auto 0 auto;
+	color: #FFF;
+	padding: 0;
+}
+
+.gallery-bank-image-details p {
+	display: table;
+	margin: 0 auto 0 auto;
+	color: #FFF;
+	padding: 0;
+}
+
+/**************************Shutter for Images**********************************/
+.shutter-gb-img-wrap {
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+	padding: 0px 5px 0px 0px;
+}
+
+/*********************NEW SHUTTER CSS********************/
+.gb_overlay {
+	position: relative;
+		/* Modify the width and the height according to your images sizes */
+	overflow: hidden;
+	display: inline-block;
+}
+
+.gb_overlay div {
+	border: none;
+}
+
+.gb_overlay .overlay_text {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+		/* Opacity */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+		/* Opacity Transition */
+	-webkit-transition: opacity .4s ease-in;
+	-moz-transition: opacity .4s ease-in;
+	-o-transition: opacity .4s ease-in;
+	-ms-transition: opacity .4s ease-in;
+	transition: opacity .4s ease-in;
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.gb_overlay:hover .overlay_text {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+.gb_overlay .overlay_zoom {
+	position: absolute;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-image: url("../images/icons/zoom.png");
+	background-position: center center;
+		/* Opacity */
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+		/* Opacity Transition */
+	-webkit-transition: opacity .4s ease-in;
+	-moz-transition: opacity .4s ease-in;
+	-o-transition: opacity .4s ease-in;
+	-ms-transition: opacity .4s ease-in;
+	transition: opacity .4s ease-in;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+
+.gb_overlay:hover .overlay_zoom {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+/* # Tooltips & popovers
+================================================== */
+
+.tooltip_tip {
+	position: absolute;
+	z-index: 10300;
+	display: block;
+	visibility: visible;
+	padding: 5px;
+	font-size: 11px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.tooltip_tip.in {
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+
+.tooltip_tip.top {
+	margin-top: -3px;
+}
+
+.tooltip_tip.right {
+	margin-left: 3px;
+}
+
+.tooltip_tip.bottom {
+	margin-top: 3px;
+}
+
+.tooltip_tip.left {
+	margin-left: -3px;
+}
+
+.tooltip_tip-inner {
+	max-width: 200px;
+	padding: 3px 8px;
+	color: #ffffff;
+	text-align: center;
+	text-decoration: none;
+	background-color: #202020;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.tooltip_tip-arrow {
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+}
+
+.tooltip_tip.top .tooltip_tip-arrow {
+	bottom: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px 5px 0;
+	border-top-color: #000000;
+}
+
+.tooltip_tip.right .tooltip_tip-arrow {
+	top: 50%;
+	left: 0;
+	margin-top: -5px;
+	border-width: 5px 5px 5px 0;
+	border-right-color: #000000;
+}
+
+.tooltip_tip.left .tooltip_tip-arrow {
+	top: 50%;
+	right: 0;
+	margin-top: -5px;
+	border-width: 5px 0 5px 5px;
+	border-left-color: #000000;
+}
+
+.tooltip_tip.bottom .tooltip_tip-arrow {
+	top: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 0 5px 5px;
+	border-bottom-color: #000000;
+}
+
+.separator-doubled {
+	padding: 0;
+	height: 0;
+	border: none;
+	border-top: medium double #d5d5d5;
+	color: #333;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	clear: both;
+}
+
+.jp-hidden {
+	display: none !important;
+}

@@ -1,0 +1,27 @@
+.column-group {
+	width: 100%;
+	overflow: hidden;
+}
+
+.column {
+	float: left;
+	margin-right: 5%;
+	width: 100%;
+}
+
+.column-group > br,
+.column-group > p {
+	display: none;
+}
+
+.column.last {
+	margin-right: 0;
+}
+
+.columns-2 .column { width: 47.5%; } /* ( 100 - $margin * ( $num_cols - 1 ) ) / $num_cols */
+.columns-3 .column { width: 30%; }
+.columns-4 .column { width: 21.25%; }
+
+.columns-3 .column-span-2 { width: 65%; } /* $width * $span + $margin * ( $span - 1 ) */
+.columns-4 .column-span-2 { width: 47.5%; }
+.columns-4 .column-span-3 { width: 73.75%; }
