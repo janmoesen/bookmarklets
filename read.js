@@ -1214,49 +1214,46 @@
 			var normalizedPageTitle = normalizeText(document.title);
 
 			headerSelectors.forEach(function (selector) {
-				[].forEach.call(
-					document.querySelectorAll(selector),
-					function (element) {
-						var normalizedText = normalizeText(element.textContent);
+				toArray(document.querySelectorAll(selector)).forEach(function (element) {
+					var normalizedText = normalizeText(element.textContent);
 
-						/* Make sure the element has text. */
-						if (!normalizedText.length) {
-							return;
-						}
-
-						/* Make sure the element is visible. */
-						var boundingRect = element.getBoundingClientRect();
-						if (!boundingRect.width || !boundingRect.height) {
-							return;
-						}
-
-						/* Make sure the element is "above the fold" (or near it). Some sites use
-						 * bigger headings for a footer section than for the actual content, but in
-						 * general, the real header should be visible within the first screenful. */
-						if (boundingRect.top + window.scrollY > window.innerHeight * 1.5) {
-							return;
-						}
-
-						/* Make sure the title can contain the element's text. */
-						if (
-							normalizedPageTitle.length < normalizedText.length
-							&& (!metaTitleElement || normalizedMetaTitle.length < normalizedText.length)
-						) {
-							return;
-						}
-
-						/* Finally, see if the element's text appears in the page title. */
-						var substringIndex = normalizedPageTitle.indexOf(normalizedText);
-
-						if (substringIndex === -1 && metaTitleElement) {
-							substringIndex = normalizedMetaTitle.indexOf(normalizedText);
-						}
-
-						if (substringIndex > -1) {
-							headerInPageTitle = element;
-						}
+					/* Make sure the element has text. */
+					if (!normalizedText.length) {
+						return;
 					}
-				)
+
+					/* Make sure the element is visible. */
+					var boundingRect = element.getBoundingClientRect();
+					if (!boundingRect.width || !boundingRect.height) {
+						return;
+					}
+
+					/* Make sure the element is "above the fold" (or near it). Some sites use
+					 * bigger headings for a footer section than for the actual content, but in
+					 * general, the real header should be visible within the first screenful. */
+					if (boundingRect.top + window.scrollY > window.innerHeight * 1.5) {
+						return;
+					}
+
+					/* Make sure the title can contain the element's text. */
+					if (
+						normalizedPageTitle.length < normalizedText.length
+						&& (!metaTitleElement || normalizedMetaTitle.length < normalizedText.length)
+					) {
+						return;
+					}
+
+					/* Finally, see if the element's text appears in the page title. */
+					var substringIndex = normalizedPageTitle.indexOf(normalizedText);
+
+					if (substringIndex === -1 && metaTitleElement) {
+						substringIndex = normalizedMetaTitle.indexOf(normalizedText);
+					}
+
+					if (substringIndex > -1) {
+						headerInPageTitle = element;
+					}
+				});
 			});
 
 			if (headerInPageTitle) {
