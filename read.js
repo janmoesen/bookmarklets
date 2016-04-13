@@ -449,6 +449,24 @@
 			display: none;
 		}
 
+		@-moz-document domain(bicycling.com) {
+			.sharebar-wrapper {
+				display: block !important;
+			}
+		}
+
+		@-webkit-document domain(bicycling.com) {
+			.sharebar-wrapper {
+				display: block !important;
+			}
+		}
+
+		@document domain(bicycling.com) {
+			.sharebar-wrapper {
+				display: block !important;
+			}
+		}
+
 		-jancss-comment { content:
 			"Hide empty list items ------------------------------------";
 		}
