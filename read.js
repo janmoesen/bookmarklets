@@ -277,6 +277,10 @@
 			display: none;
 		}
 
+		.taboola {
+			display: none;
+		}
+
 		:-moz-any(
 			div,
 			ul,
