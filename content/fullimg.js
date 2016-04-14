@@ -69,7 +69,7 @@
 			}
 
 			if (window.console && console.log) {
-				console.log('Load full images: found image with matching query string:', img)
+				console.log('Load full images: found image with matching query string:', img);
 				console.log('→ Old img.src: ' + img.src);
 				console.log('→ New img.src: ' + newSrc);
 			}
