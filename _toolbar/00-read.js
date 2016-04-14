@@ -1,1 +1,1 @@
-../read.js
+../content/read.js
