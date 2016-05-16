@@ -20,6 +20,6 @@
 
 	if (s) {
 		/* The Wikipedia search works like "I'm feeling lucky" on most Wikipedia instances. If there is a complete match, it will redirect us there. */
-		location = 'https://de.wikipedia.org/w/index.php?title=Special%3ASearch&search=' + encodeURIComponent(s);
+		location = 'https://de.wikipedia.org/w/index.php?searchToken=&title=Special%3ASearch&search=' + encodeURIComponent(s);
 	}
 })();
