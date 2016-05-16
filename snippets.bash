@@ -64,7 +64,7 @@ COPY_VD=; copy-vd \
 # Copy the English Wikipedia bookmarklet to some other languages.
 copy-enw () {
 	source='search/wikipedia/enw.js';
-	while [ $# -ge 3 ]; do
+	while [ $# -ge 2 ]; do
 		lang="$1";
 		name="$2";
 		keyword="${lang}w";
