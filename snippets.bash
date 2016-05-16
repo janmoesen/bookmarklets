@@ -10,10 +10,14 @@ PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)
 copy-2en () {
 	source='language/translations/2en.js';
 	while [ $# -ge 3 ]; do
-		local lang="$1"; shift;
-		local name="$1"; shift;
-		local this_page_in_xxx_text="$1"; shift;
+		local lang="$1";
+		shift;
+		local name="$1";
+		shift;
+		local this_page_in_xxx_text="$1";
+		shift;
 		target="${source/en/$lang}";
+
 		perl -p -e "
 				s/(2|\b)en\b/\$1$lang/g;
 				s/current page in English/$this_page_in_xxx_text/g;
@@ -23,6 +27,7 @@ copy-2en () {
 			|| echo "Failed to copy to $target ($name)";
 	done;
 }
+
 COPY_2EN=; copy-2en \
 	nl Dutch 'deze pagina in het Nederlands' \
 	fr French 'cette page en français' \
@@ -33,20 +38,22 @@ COPY_2EN=; copy-2en \
 
 # Copy the Van Dale bookmarklet for some other dictionaries.
 copy-vd () {
-	source='language/dictionaries/vd.js';
+	local source='language/dictionaries/vd.js';
 	while [ $# -ge 3 ]; do
-		keyword="$1";
-		name="$2";
-		url="$3";
+		local keyword="$1";
 		shift;
+		local name="$1";
 		shift;
+		local url="$1";
 		shift;
-		target="${source/vd/$keyword}";
+		local target="${source/vd/$keyword}";
+
 		perl -p -e "s/\bvd\b/$keyword/g; s/Van Dale/$name/g; s|http://www.vandale.nl/[^']+|$url|" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
 	done;
 }
+
 COPY_VD=; copy-vd \
 	vw 'Vlaams Woordenboek' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
 	mw 'Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
@@ -63,13 +70,14 @@ COPY_VD=; copy-vd \
 
 # Copy the English Wikipedia bookmarklet to some other languages.
 copy-enw () {
-	source='search/wikipedia/enw.js';
+	local source='search/wikipedia/enw.js';
 	while [ $# -ge 2 ]; do
-		lang="$1";
-		name="$2";
-		keyword="${lang}w";
-		shift 2;
-		target="${source/enw/$keyword}";
+		local lang="$1";
+		shift;
+		local name="$1";
+		shift;
+		local keyword="${lang}w";
+		local target="${source/enw/$keyword}";
 		perl -p -e "s/\ben\\.wikipedia/$lang.wikipedia/g; s/\benw\b/$keyword/g; s/English/$name/g" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
