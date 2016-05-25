@@ -7,6 +7,28 @@
  * @title Readable++
  */
 (function read() {
+	/* Make sure we can talk to the native browser console. */
+	var console;
+	function hasNativeConsole(window) {
+		return typeof window === 'object'
+			&& typeof window.console === 'object'
+			&& typeof window.console.log === 'function'
+			&& typeof window.console.log.prototype === 'undefined';
+	}
+
+	if (hasNativeConsole(window)) {
+		console = window.console;
+	} else {
+		var dummyIFrame = document.createElement('iframe');
+		dummyIFrame.style.display = 'none';
+		document.body.appendChild(dummyIFrame);
+		if (hasNativeConsole(dummyIFrame.contentWindow)) {
+			console = dummyIFrame.contentWindow.console;
+		} else {
+			console = { log: function () { } };
+		}
+	}
+
 	/* The style sheet for more readable content. */
 	var css = (function () { /*@charset "utf-8";
 		@namespace svg "http://www.w3.org/2000/svg";
@@ -873,10 +895,6 @@
 
 			/* Log requests to the original requestAnimationFrame. */
 			window.requestAnimationFrame = function (callback) {
-				if (!window.console) {
-					return;
-				}
-
 				var callbackSource = callback.toSource && callback.toSource();
 				if (callbackSource && callbackSource.indexOf('Readable++ requestAnimationFrame interceptor') === -1) {
 					console.log('Readable++: intercepted call to requestAnimationFrame at ' + new Date());
@@ -1189,7 +1207,7 @@
 				for (var i = 0; i < inPageAnchorSelectors.length; i++) {
 					try {
 						if ((inPageAnchor = document.querySelector(inPageAnchorSelectors[i]))) {
-							window.console && console.log('Readable++: found in-page anchor based on location.hash: ', inPageAnchor);
+							console.log('Readable++: found in-page anchor based on location.hash: ', inPageAnchor);
 							return inPageAnchor;
 						}
 					} catch (e) {
@@ -1257,7 +1275,7 @@
 			});
 
 			if (headerInPageTitle) {
-				window.console && console.log('Readable++: found suitable header element whose text appears in the page title: ', headerInPageTitle);
+				console.log('Readable++: found suitable header element whose text appears in the page title: ', headerInPageTitle);
 				return headerInPageTitle;
 			}
 
@@ -1268,12 +1286,12 @@
 
 					/* Make sure the element was either an anchor or something "visible". */
 					if (element && (element.tagName.toLowerCase() === 'a' || element.offsetWidth || element.offsetHeight)) {
-						window.console && console.log('Readable++: found matching selector for content element: ' + contentSelectors[i] + '\nElement: ', element);
+						console.log('Readable++: found matching selector for content element: ' + contentSelectors[i] + '\nElement: ', element);
 						return element;
 					}
 				}
 				catch (e) {
-					window.console && console.log('Readable++: bad selector for content element: ' + contentSelectors[i] + '\nException: ' + e);
+					console.log('Readable++: bad selector for content element: ' + contentSelectors[i] + '\nException: ' + e);
 				}
 			}
 		}
@@ -1289,7 +1307,7 @@
 				contentElement = contentElement.parentNode;
 			}
 
-			window.console && console.log('Readable++: found selected element to scroll into view: ', contentElement);
+			console.log('Readable++: found selected element to scroll into view: ', contentElement);
 		} else if (ourStyleSheet.disabled && (contentElement = findContentElement())) {
 			/* When switching from the original style sheet to ours, scroll to the start of the content, unless the user had scrolled already. */
 			var tmpElement = contentElement, contentTop = 0;
