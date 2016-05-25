@@ -677,7 +677,9 @@
 		'[role="heading"]',
 		'[class*="title"]:not(:empty)',
 		'[class*="Title"]:not(:empty)',
-		'h1:not(:empty), h2:not(:empty), h3:not(:empty)'
+		'h1:not(:empty), h2:not(:empty), h3:not(:empty)',
+		'h1:not(:empty)[itemprop~="name"], h2:not(:empty)[itemprop~="name"], h3:not(:empty)[itemprop~="name"]',
+		'h1:not(:empty)[itemprop~="headline"], h2:not(:empty)[itemprop~="headline"], h3:not(:empty)[itemprop~="headline"]'
 	];
 
 	/* The selectors to try (in this order) for the first content element to scroll to when no suitable header was found. */
