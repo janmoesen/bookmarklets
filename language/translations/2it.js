@@ -32,6 +32,10 @@
 				/* CatenaCycling.com */
 				'#language a[href][hreflang="it"]',
 
+				/* developer.mozilla.org */
+				'#translations a[rel="internal"][href^="/it/"]',
+				'#translations a[rel="internal"][href^="/it-"]',
+
 				/* Generic */
 				'[id*="lang"][id*="elect"] a[hreflang="it"]',
 				'[class*="lang"][class*="elect"] a[hreflang="it"]',
