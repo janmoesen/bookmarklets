@@ -96,6 +96,48 @@
 		}
 	);
 
+	/* Try to load the originals for images whose source URLs look like
+	 * thumbnail/resized versions.
+	 * Example:
+	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
+	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
+	 */
+	[].forEach.call(
+		document.images,
+		function (img) {
+			var oldSrc = img.src;
+			var matches = oldSrc.match(/(.*)[-_.@]\d+x\d+(\.[^\/.]+)/);
+			if (matches && matches[1] && matches[2]) {
+				var newSrc = matches[1] + matches[2];
+
+				console.log('Load full images: found image whose URL looks like a thumbnail/resized version:', img);
+				console.log('→ Old img.src: ' + oldSrc);
+				console.log('→ New img.src: ' + newSrc);
+
+				if (img.hasAttribute('srcset')) {
+					img.setAttribute('data-srcset', img.getAttribute('srcset'));
+					img.removeAttribute('srcset');
+				}
+
+				img.addEventListener('error', function restoreOldSrc () {
+					img.src = oldSrc;
+					img.removeEventListener('error', restoreOldSrc);
+
+					if (img.hasAttribute('data-srcset')) {
+						img.setAttribute('srcset', img.getAttribute('data-srcset'));
+						img.removeAttribute('data-srcset');
+					}
+
+					console.log('Load full images: error while loading new source for:', img);
+					console.log('→ Good old img.src: ' + oldSrc);
+					console.log('→ Bad new img.src:  ' + newSrc);
+				});
+
+				img.src = newSrc;
+			}
+		}
+	);
+
 	/* Change the IMG@src of linked images to their link's A@href if they look
 	 * similar, assuming that the linked version is larger. */
 	[].forEach.call(
