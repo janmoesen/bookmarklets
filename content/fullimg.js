@@ -57,7 +57,7 @@
 				.replace(/(\?[^#]*)&(#.*)?$/, '$1$2')
 
 				/* Remove empty query strings ("?" not followed by
-				 * anything) from the query string. */
+				 * anything) from the URL. */
 				.replace(/\?(#.*)?$/, '$1')
 
 				/* Remove empty fragment identifiers from the URL. */
@@ -77,6 +77,24 @@
 			img.src = newSrc;
 		});
 	});
+
+	/* Show the original image for Polopoly CMS "generated derivatives".
+	 * Example:
+	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg_gen/derivatives/landscape670/1706320883.jpg
+	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg
+	 */
+	[].forEach.call(
+		document.querySelectorAll('img[src*="_gen/derivatives/"]'),
+		function (img) {
+			var matches = img.src.match(/(.*([^/]+\.(jpe?g|png|gif)))_gen.*\2/);
+			if (matches && matches[1]) {
+				console.log('Load full images: found Polopoly CMS generated derivative image:', img);
+				console.log('→ Old img.src: ' + img.src);
+				console.log('→ New img.src: ' + matches[1]);
+				img.src = matches[1];
+			}
+		}
+	);
 
 	/* Change the IMG@src of linked images to their link's A@href if they look
 	 * similar, assuming that the linked version is larger. */
