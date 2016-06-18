@@ -1122,9 +1122,9 @@
 
 			/* Add some classes to structure elements that have been used for layout. */
 			structureElementsForLayoutSelectors.forEach(function (selector) {
-				var xpathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
-				for (var i = 0; i < xpathResult.snapshotLength; i++) {
-					var elem = xpathResult.snapshotItem(i);
+				var xPathResult = document.evaluate(selector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				for (var i = 0; i < xPathResult.snapshotLength; i++) {
+					var elem = xPathResult.snapshotItem(i);
 					addClass(elem, 'jancss-probably-layout');
 				}
 			});
