@@ -99,14 +99,13 @@ pre::before {
 
 <h2>Browser compatibility</h2>
 <p>
-	The bookmarklets I use the most (<q>Readable++</q>, <q>« Previous</q> and
-	<q>Next »</q>) work fine in most top browsers like Firefox, Chrome, Safari
-	and Opera.
+	The bookmarklets I use the most (“Readable++”, “« Previous” and “Next »”)
+	work fine in most top browsers like Firefox, Chrome, Safari and Opera.
 
 <h3>Firefox</h3>
 <p>
 	I use Firefox for work and leisure, and all bookmarklets should work in
-	the latest stable release. (Firefox 37, as of this writing.)
+	the latest stable release. (Firefox 50, as of this writing.)
 
 <p>
 	The bookmarklets work mostly fine on Firefox for Android, except that you
@@ -116,26 +115,32 @@ pre::before {
 
 <h3>Chrome</h3>
 <p>
-	The imported bookmarklets work fine, but Chrome (I have tested Chromium
-	44.0.2398.0) does not allow you to add keywords to them. Instead,
-	<a href="https://support.google.com/chrome/bin/answer.py?hl=en&answer=95653">add
-	them as custom "search engines"</a> to enable keywords and parameters.
-	Enter or copy the bookmarklet's title and keyword into the search engine
-	name and keyword fields, and copy the location with the
-	<code>javascript:</code> protocol into the <q>URL with %s in place of
-	query</q> field.
+	The imported bookmarklets mostly work fine, but Chrome (I have tested
+	Chromium 51.0.2683.0) does something weird with the keywords. When the
+	bookmarklet code contains a <code>%s</code> placeholder, Chrom{e,ium} does
+	not add it as a normal bookmark, but converts it into a
+	<a href="https://support.google.com/chrome/bin/answer.py?hl=en&answer=95653">custom “search engine”</a>.
 
 <p>
-	This is a labour-intensive process, so if you know how to automate it,
-	please <a href="https://github.com/janmoesen/bookmarklets/issues">let me
-	know in the issue tracker</a>.
+	When you type e.g. “<kbd>map</kbd>” in the location bar, followed by
+	<kbd>Google HQ</kbd>, it will run the Google Maps bookmarklet with the
+	parameter set to <code>Google HQ</code>. However, when you do not specify
+	a parameter, e.g. when you simply type “<kbd>2nl</kbd>” (for “Translate to
+	Dutch”), the bookmarklet will not be executed.
+
+<p>
+	<em>Howeverer</em>, when the bookmarklet code does not contain a
+	<code>%s</code> placeholder, as is the case with “Readable++” and several
+	others, a normal bookmark <em>will</em> be created, which you can then add
+	to your Bookmarks toolbar.
 
 <h3>Safari</h3>
 <p>
-	Like in Chrome, the imported bookmarklets work fine, but Safari (my
-	version: 7.1.6 (9537.85.15.3)) does not allow you to add keywords to them.
-	<a href="http://safarikeywordsearch.aurlien.net/">Safari Keyword Search</a>
-	is an extension which emulates this, but I have not tried it.
+	Safari (my version: 9.1.1 (9537.86.6.17)) does not allow you to add
+	keywords to bookmark(let)s. Furthermore, several bookmarklets do not seem
+	to work at all. Probably some unsupported JavaScript syntax and/or APIs. I
+	hardly ever use Safari, so I'm just happy that “Readable++”, “« Previous”
+	and “Next »” work.
 
 <h3>Opera</h3>
 <h4>"Old" Opera (up to and including Opera 12)</h4>
