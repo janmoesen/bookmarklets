@@ -35,22 +35,39 @@ body {
 	color: #e00;
 }
 
-h1, h1.jancss-probably-layout {
+h1 {
+	margin-bottom: 0;
 	border-bottom: 1px solid #888;
 	font-size: 200%;
 	font-weight: 100;
 }
 
-h2, h2.jancss-probably-layout * {
+h2 {
+	margin-bottom: 0;
 	border-bottom: 1px solid #bbb;
 	font-size: 150%;
 	font-weight: 100;
 }
 
-h3, h3.jancss-probably-layout {
+h3 {
+	margin-bottom: 0;
 	border-bottom: 1px dotted #bbb;
 	font-size: 117%;
 	font-weight: 100;
+}
+
+h4 {
+	margin-bottom: 0;
+	border-bottom: 1px dotted #ccc;
+	font-size: 106%;
+	font-weight: 100;
+}
+
+h1 + *,
+h2 + *,
+h3 + *,
+h4 + * {
+	margin-top: 1ex;
 }
 
 h1 a[href]:not(:hover), h2 a[href]:not(:hover), h3 a[href]:not(:hover) {
