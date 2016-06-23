@@ -32,7 +32,7 @@
 			return;
 		}
 
-		var url = 'https://www.google.com/search?tbm=isch&safe=off';
+		var url = 'https://www.google.com/search?tbm=isch&safe=off&gws_rd=cr&ei=';
 		if (words.length > 1) {
 			if (words[0] === 'wallpaper') {
 				words[0] = screen.width + 'x' + screen.height;
