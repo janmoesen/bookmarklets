@@ -47,7 +47,30 @@
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
+					if (window.console && console.log) {
+						console.log('Translate to English: found link for selector ', interLanguageSelectors[i], ': ', link);
+					}
+
 					location = link.href;
+
+					return;
+				}
+			}
+
+			var interLanguageXPathSelectors = [
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "en"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "english"]',
+				'//a[@href][contains(., "page in English")]',
+			];
+
+			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
+				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+				if (xPathResult.snapshotLength) {
+					if (window.console && console.log) {
+						console.log('Translate to English: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
+					}
+
+					location = xPathResult.snapshotItem(0).href;
 
 					return;
 				}

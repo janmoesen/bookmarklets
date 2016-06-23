@@ -9,32 +9,55 @@ PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)
 # Copy the Google Translate bookmarklet from English to some other languages.
 copy-2en () {
 	source='language/translations/2en.js';
-	while [ $# -ge 3 ]; do
-		local lang="$1";
+	while [ $# -ge 4 ]; do
+		local lang_code="$1";
 		shift;
-		local name="$1";
+		local lang_name_in_english="$1";
+		shift;
+		local lang_name_in_other_lowercase="$1";
 		shift;
 		local this_page_in_xxx_text="$1";
 		shift;
-		target="${source/en/$lang}";
+		target="${source/en/$lang_code}";
 
 		perl -p -e "
-				s/(2|\b)en\b/\$1$lang/g;
+				s/(2|\b)en\b/\$1$lang_code/g;
 				s/current page in English/$this_page_in_xxx_text/g;
-				s/English/$name/g;
+				s/English/$lang_name_in_english/g;
+				s/english/$lang_name_in_other_lowercase/g;
 			" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
 	done;
 }
 
-COPY_2EN=; copy-2en \
-	nl Dutch 'deze pagina in het Nederlands' \
-	fr French 'cette page en français' \
-	de German 'diese Seite auf Deutsch' \
-	it Italian 'questa pagina in italiano' \
-	es Spanish 'esta página en español' \
-;
+copy_2en_parameters=(
+	nl
+	Dutch
+	nederlands
+	'deze pagina in het Nederlands'
+
+	fr
+	French
+	français
+	'cette page en français'
+
+	de
+	German
+	deutsch
+	'diese Seite auf Deutsch'
+
+	it
+	Italian
+	italiano
+	'questa pagina in italiano'
+
+	es
+	Spanish
+	español
+	'esta página en español'
+);
+COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
 # Copy the Van Dale bookmarklet for some other dictionaries.
 copy-vd () {
