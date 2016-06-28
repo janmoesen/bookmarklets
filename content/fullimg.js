@@ -74,6 +74,10 @@
 				console.log('→ New img.src: ' + newSrc);
 			}
 
+			if (img.hasAttribute('srcset')) {
+				img.removeAttribute('srcset');
+			}
+
 			img.src = newSrc;
 		});
 	});
@@ -88,9 +92,16 @@
 		function (img) {
 			var matches = img.src.match(/(.*([^/]+\.(jpe?g|png|gif)))_gen.*\2/);
 			if (matches && matches[1]) {
-				console.log('Load full images: found Polopoly CMS generated derivative image:', img);
-				console.log('→ Old img.src: ' + img.src);
-				console.log('→ New img.src: ' + matches[1]);
+				if (window.console && console.log) {
+					console.log('Load full images: found Polopoly CMS generated derivative image:', img);
+					console.log('→ Old img.src: ' + img.src);
+					console.log('→ New img.src: ' + matches[1]);
+				}
+
+				if (img.hasAttribute('srcset')) {
+					img.removeAttribute('srcset');
+				}
+
 				img.src = matches[1];
 			}
 		}
@@ -163,6 +174,10 @@
 					console.log('Load full images: found linked image with ' + Math.round(similarity * 100) + '% similarity:', img);
 					console.log('→ Old img.src: ' + img.src);
 					console.log('→ New img.src: ' + a.href);
+				}
+
+				if (img.hasAttribute('srcset')) {
+					img.removeAttribute('srcset');
 				}
 
 				img.src = a.href;
