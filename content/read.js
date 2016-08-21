@@ -513,15 +513,15 @@
 
 		:-moz-any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) ul {
 			display: inline;
 			margin: 0;
@@ -530,15 +530,15 @@
 
 		:-webkit-any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) ul {
 			display: inline;
 			margin: 0;
@@ -547,15 +547,15 @@
 
 		:any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) ul {
 			display: inline;
 			margin: 0;
@@ -564,15 +564,15 @@
 
 		:-moz-any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) li {
 			display: inline;
 			margin: 0;
@@ -582,15 +582,15 @@
 
 		:-webkit-any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) li {
 			display: inline;
 			margin: 0;
@@ -600,15 +600,15 @@
 
 		:any(
 			nav,
-			[class*="avigat"],
-			[id*="avigat"],
-			[class*="-nav-"],
-			[class*="nav-"],
-			[class$="-nav"],
-			[id*="-nav-"],
-			[id*="nav-"],
-			[id$="-nav"],
-			[role="navigation"]
+			body [class*="avigat"],
+			body [id*="avigat"],
+			body [class*="-nav-"],
+			body [class*="nav-"],
+			body [class$="-nav"],
+			body [id*="-nav-"],
+			body [id*="nav-"],
+			body [id$="-nav"],
+			body [role="navigation"]
 		) li {
 			display: inline;
 			margin: 0;
