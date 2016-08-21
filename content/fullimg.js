@@ -78,7 +78,7 @@
 	[].forEach.call(
 		document.querySelectorAll('img[src*="_gen/derivatives/"]'),
 		function (img) {
-			var matches = img.src.match(/(.*([^/]+\.(jpe?g|png|gif)))_gen.*\2/);
+			var matches = img.src.match(/(.*\.(jpe?g|png|gif))_gen.*\.\2(\?.*)?$/);
 			if (matches && matches[1]) {
 				changeSrc(img, matches[1], 'found image with Polopoly CMS "generated derivative" URL');
 			}
