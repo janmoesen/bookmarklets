@@ -1,6 +1,8 @@
 /**
  * Load the full-size versions of resized images based on their "src"
- * attribute, or their containing link's "href" attribute.
+ * attribute, or their containing link's "href" attribute. Also, make IFRAMEs
+ * take up the entire width of their offset parent (useful for embedded videos
+ * and whatnot).
  *
  * @title Load full images
  * @keyword fullimg
@@ -126,6 +128,21 @@
 				changeSrc(img, a.href, 'found linked image with ' + Math.round(similarity * 100) + '% similarity');
 			}
 
+		}
+	);
+
+	/* Make video IFRAMEs take up the entire width of their offset parent. */
+	var iframesToEnlargeSelectors = [
+		'iframe[src*="//www.youtube.com/embed/"]',
+		'iframe[src*="//player.vimeo.com/video/"]'
+	];
+
+	[].forEach.call(
+		document.querySelectorAll(iframesToEnlargeSelectors.join(', ')),
+		function (iframe) {
+			var scale = iframe.offsetParent.offsetWidth / iframe.offsetWidth;
+			iframe.style.width = (iframe.offsetWidth * scale) + 'px';
+			iframe.style.height = (iframe.offsetHeight * scale) + 'px';
 		}
 	);
 
