@@ -191,7 +191,7 @@
 		}
 
 		-jancss-comment { content:
-			"Dim images and media until :hover ------------------------";
+			"Make images use the full page width ----------------------";
 		}
 
 		img,
@@ -204,6 +204,14 @@
 		canvas,
 		:not(svg|*) > svg|* {
 			max-width: 100%;
+		}
+
+		figure {
+			margin: 0;
+		}
+
+		-jancss-comment { content:
+			"Dim images and media until :hover ------------------------";
 		}
 
 		body:not(:hover) img,
