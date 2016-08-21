@@ -155,17 +155,13 @@
 	function getSimilarity(strA, strB) {
 		var result = 0, i = Math.min(strA.length, strB.length);
 		while (--i) {
-			if (strA[i] === strB[i])
-			{
+			if (strA[i] === strB[i]) {
 				continue;
 			}
 
-			if (strA[i].toLowerCase() === strB[i].toLowerCase())
-			{
+			if (strA[i].toLowerCase() === strB[i].toLowerCase()) {
 				result++;
-			}
-			else
-			{
+			} else {
 				result += 4;
 			}
 		}
