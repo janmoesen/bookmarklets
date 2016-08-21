@@ -64,21 +64,7 @@
 				.replace(/#$/, '')
 			;
 
-			if (img.src === newSrc) {
-				return;
-			}
-
-			if (window.console && console.log) {
-				console.log('Load full images: found image with matching query string:', img);
-				console.log('→ Old img.src: ' + img.src);
-				console.log('→ New img.src: ' + newSrc);
-			}
-
-			if (img.hasAttribute('srcset')) {
-				img.removeAttribute('srcset');
-			}
-
-			img.src = newSrc;
+			changeSrc(img, newSrc, 'found image with parameter "' + parameterName + '" in query string');
 		});
 	});
 
@@ -92,17 +78,7 @@
 		function (img) {
 			var matches = img.src.match(/(.*([^/]+\.(jpe?g|png|gif)))_gen.*\2/);
 			if (matches && matches[1]) {
-				if (window.console && console.log) {
-					console.log('Load full images: found Polopoly CMS generated derivative image:', img);
-					console.log('→ Old img.src: ' + img.src);
-					console.log('→ New img.src: ' + matches[1]);
-				}
-
-				if (img.hasAttribute('srcset')) {
-					img.removeAttribute('srcset');
-				}
-
-				img.src = matches[1];
+				changeSrc(img, matches[1], 'found image with Polopoly CMS "generated derivative" URL');
 			}
 		}
 	);
@@ -121,30 +97,7 @@
 			if (matches && matches[1] && matches[2]) {
 				var newSrc = matches[1] + matches[2];
 
-				console.log('Load full images: found image whose URL looks like a thumbnail/resized version:', img);
-				console.log('→ Old img.src: ' + oldSrc);
-				console.log('→ New img.src: ' + newSrc);
-
-				if (img.hasAttribute('srcset')) {
-					img.setAttribute('data-srcset', img.getAttribute('srcset'));
-					img.removeAttribute('srcset');
-				}
-
-				img.addEventListener('error', function restoreOldSrc () {
-					img.src = oldSrc;
-					img.removeEventListener('error', restoreOldSrc);
-
-					if (img.hasAttribute('data-srcset')) {
-						img.setAttribute('srcset', img.getAttribute('data-srcset'));
-						img.removeAttribute('data-srcset');
-					}
-
-					console.log('Load full images: error while loading new source for:', img);
-					console.log('→ Good old img.src: ' + oldSrc);
-					console.log('→ Bad new img.src:  ' + newSrc);
-				});
-
-				img.src = newSrc;
+				changeSrc(img, newSrc, 'found image whose URL looks like a thumbnail/resized version');
 			}
 		}
 	);
@@ -170,17 +123,7 @@
 			var similarity = getSimilarity('' + img.src, '' + a.href);
 
 			if (similarity > 0.66) {
-				if (window.console && console.log) {
-					console.log('Load full images: found linked image with ' + Math.round(similarity * 100) + '% similarity:', img);
-					console.log('→ Old img.src: ' + img.src);
-					console.log('→ New img.src: ' + a.href);
-				}
-
-				if (img.hasAttribute('srcset')) {
-					img.removeAttribute('srcset');
-				}
-
-				img.src = a.href;
+				changeSrc(img, a.href, 'found linked image with ' + Math.round(similarity * 100) + '% similarity');
 			}
 
 		}
@@ -211,5 +154,50 @@
 		}
 
 		return 1 - (result + 4 * Math.abs(strA.length - strB.length)) / (2 * (strA.length + strB.length));
+	}
+
+	/**
+	 * Change the IMG@src and fall back to the original source if the new
+	 * source triggers an error.
+	 */
+	function changeSrc(img, newSrc, reason)
+	{
+		if (img.src === newSrc) {
+			return;
+		}
+
+		if (window.console && console.log) {
+			console.log('Load full images: ' + reason + ': ', img);
+			console.log('→ Old img.src: ' + img.src);
+			console.log('→ New img.src: ' + newSrc);
+		}
+
+		if (!img.hasAttribute('data-original-src')) {
+			img.setAttribute('data-original-src', img.src);
+		}
+
+		if (img.hasAttribute('srcset')) {
+			img.setAttribute('data-original-srcset', img.getAttribute('srcset'));
+			img.removeAttribute('srcset');
+		}
+
+		img.addEventListener('error', function restoreOriginalSrc() {
+			if (window.console && console.log) {
+				console.log('Load full images: error while loading new source for image: ', img);
+				console.log('→ Unable to load new img.src:    ' + newSrc);
+				console.log('→ Resetting to original img.src: ' + img.getAttribute('data-original-src'));
+			}
+
+			img.removeEventListener('error', restoreOriginalSrc);
+
+			img.src = img.getAttribute('data-original-src');
+
+			if (img.hasAttribute('data-original-srcset')) {
+				img.setAttribute('srcset', img.getAttribute('data-original-srcset'));
+				img.removeAttribute('data-original-srcset');
+			}
+		});
+
+		img.src = newSrc;
 	}
 })();
