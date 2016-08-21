@@ -138,14 +138,25 @@
 	}
 
 	/* Alert the user by flashing the title bar. */
-	var numCycles = 0, originalTitle = document.title, icons = '◻ ◼'.split(' ');
+	var numCycles = 0;
+
+	var icons = [
+		'◻',
+		'◼'
+	];
+
+	if (typeof document.janOriginalTitle === 'undefined') {
+		document.janOriginalTitle = document.title;
+	}
+
 	(function flash() {
 		if (numCycles < 6) {
 			document.title = icons[numCycles % icons.length] + ' No next page? ' + icons[(numCycles + 1) % icons.length];
 			window.setTimeout(flash, 500);
 		} else {
-			document.title = originalTitle;
+			document.title = document.janOriginalTitle;
 		}
+
 		numCycles++;
 	})();
 })();
