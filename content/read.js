@@ -692,6 +692,13 @@
 		'h1:not(:empty)[itemprop~="headline"], h2:not(:empty)[itemprop~="headline"], h3:not(:empty)[itemprop~="headline"]'
 	];
 
+	var ancestorsForHeadersToIgnoreSelectors = [
+		'aside',
+		'.related-posts',
+		'.article-slider',
+		'.article-drawer'
+	];
+
 	/* The selectors to try (in this order) for the first content element to scroll to when no suitable header was found. */
 	var contentSelectors = [
 		/* The most semantically rich elements should be used correctly so we
@@ -1273,16 +1280,23 @@
 						return;
 					}
 
-					/* Finally, see if the element's text appears in the page title. */
+					/* See if the element's text appears in the page title. */
 					var substringIndex = normalizedPageTitle.indexOf(normalizedText);
 
 					if (substringIndex === -1 && metaTitleElement) {
 						substringIndex = normalizedMetaTitle.indexOf(normalizedText);
 					}
 
-					if (substringIndex > -1) {
-						headerInPageTitle = element;
+					if (substringIndex === -1) {
+						return;
 					}
+
+					/* Make sure the element is not contained in an ASIDE or a sidebar (e.g. in a list of articles). */
+					if (typeof element.closest === 'function' && element.closest(ancestorsForHeadersToIgnoreSelectors.join(', '))) {
+						return;
+					}
+
+					headerInPageTitle = element;
 				});
 			});
 
