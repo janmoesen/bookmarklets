@@ -14,12 +14,66 @@
  * @todo Support multiple locales and cases for URL-based months.
  */
 (function prev() {
-	var symbols = '< << « ← ⇐ ⎗',
-	    keywords = ('PREVIOUS Previous previous PREV!PREVIEW Prev!Preview prev!preview OLDER!FOLDER Older!Folder older!folder VORIGE Vorige vorige OUDER Ouder ouder PRECEDENT PRÉCÉDENT Précédent précédent ' + symbols).split(' '),
-	    identifiers = 'prev previous prevArticle previousArticle prevPost previousPost prevLink previousLink navi-prev'.split(' '),
-	    monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-	    selectors, newUrl;
-	symbols = symbols.split(' ');
+	var symbols = [
+		'<',
+		'<<',
+		'«',
+		'←',
+		'⇐',
+		'⎗'
+	];
+
+	var keywords = symbols.concat([
+		'PREVIOUS',
+		'Previous',
+		'previous',
+		'PREV!PREVIEW',
+		'Prev!Preview',
+		'prev!preview',
+		'OLDER!FOLDER',
+		'Older!Folder',
+		'older!folder',
+		'VORIGE',
+		'Vorige',
+		'vorige',
+		'OUDER',
+		'Ouder',
+		'ouder',
+		'PRECEDENT',
+		'PRÉCÉDENT',
+		'Précédent',
+		'précédent',
+	]);
+
+	var identifiers = [
+		'prev',
+		'previous',
+		'prevArticle',
+		'previousArticle',
+		'prevPost',
+		'previousPost',
+		'prevLink',
+		'previousLink',
+		'navi-prev'
+	];
+
+	var monthNames = [
+		'Jan',
+		'Feb',
+		'Mar',
+		'Apr',
+		'May',
+		'Jun',
+		'Jul',
+		'Aug',
+		'Sep',
+		'Oct',
+		'Nov',
+		'Dec'
+	];
+
+	var selectors;
+	var newUrl;
 
 	/* Try links with @rel="prev". */
 	selectors = [
@@ -34,17 +88,22 @@
 
 	/* Look for tell-tale text content inside links, or in their tooltips. */
 	keywords.forEach(function (text) {
-		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
+		var mustContain = text.replace(/!.*/, '');
+		var mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][@href != "#"][not(starts-with(@href, "javascript:"))][contains(., "' + mustContain + '") and string-length(normalize-space(substring-before(., "' + mustContain + '"))) < 8]';
+
 		if (mustNotContain) {
 			selector += '[not(contains(., "' + mustNotContain + '"))]';
 		}
+
 		selectors.push(selector);
 
 		var titleSelector = 'a[href]:not([href="#"]):not([href^="javascript:"])[title*="' + mustContain + '"]';
+
 		if (mustNotContain) {
 			titleSelector += ':not([title*="' + mustNotContain + '"])';
 		}
+
 		selectors.push(titleSelector);
 	});
 
@@ -52,9 +111,11 @@
 	keywords.forEach(function (text) {
 		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][string(.) = ""][img[contains(@alt, "' + mustContain + '")]]';
+
 		if (mustNotContain) {
 			selector += '[not(img[contains(@alt, "' + mustNotContain + '")])]';
 		}
+
 		selectors.push(selector);
 	});
 
@@ -62,9 +123,11 @@
 	keywords.forEach(function (text) {
 		var mustContain = text.replace(/!.*/, ''), mustNotContain = mustContain !== text && text.replace(/.*!/, '');
 		var selector = '//a[@href][string(.) = ""][img[contains(@src, "' + mustContain + '")]]';
+
 		if (mustNotContain) {
 			selector += '[not(img[contains(@src, "' + mustNotContain + '")])]';
 		}
+
 		selectors.push(selector);
 	});
 
@@ -84,6 +147,7 @@
 			link = selectors[i].substring(0, 2) === '//'
 				? getLastXPathResult(document.evaluate(selectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null))
 				: Array.prototype.slice.call(document.querySelectorAll(selectors[i])).pop();
+
 			if (link) {
 				window.console && console.log('« Previous: Matching selector: ' + selectors[i] + '\nFound link: ', link);
 				return link.href;
@@ -98,27 +162,46 @@
 	}
 
 	/* Check for a date in the URL. */
-	var uri = location.pathname + location.search + location.hash, matches;
-	var yearPattern = '20[0-9][0-9]',
-	    monthPattern = monthNames.concat(['(?:0?[1-9])', '(?:1[012])']).join('|'),
-	    dayPattern = '(?:' + ['3[01]', '[12][0-9]', '0?[1-9]'].join(')|(?:') + ')',
-	    regexp = new RegExp('(.*?\\b)(' + yearPattern + ')([-/_.]?)(' + monthPattern + ')\\3(' + dayPattern + ')([^0-9].*)?$');
+	var uri = location.pathname + location.search + location.hash;
+	var yearPattern = '20[0-9][0-9]';
+	var monthPattern = monthNames.concat(['(?:0?[1-9])', '(?:1[012])']).join('|');
+	var dayPattern = '(?:' + ['3[01]', '[12][0-9]', '0?[1-9]'].join(')|(?:') + ')';
+	var regexp = new RegExp('(.*?\\b)(' + yearPattern + ')([-/_.]?)(' + monthPattern + ')\\3(' + dayPattern + ')([^0-9].*)?$');
+
+	var matches;
+
 	if ((matches = uri.match(regexp))) {
-		var prefix = matches[1], year = matches[2], separator = matches[3], month = matches[4], day = matches[5], suffix = matches[6] === undefined ? '' : matches[6];
+		var prefix = matches[1];
+		var year = matches[2];
+		var separator = matches[3];
+		var month = matches[4];
+		var day = matches[5];
+		var suffix = typeof matches[6] === 'undefined'
+			? ''
+			: matches[6];
+
 		var newDate = new Date(Date.UTC(
 			parseInt(year, 10),
-			month.length === 3 ? monthNames.indexOf(month) : parseInt(month, 10) - 1,
+			month.length === 3
+				? monthNames.indexOf(month)
+				: parseInt(month, 10) - 1,
 			parseInt(day, 10)
 		) - 24 * 60 * 60 * 1000);
-		var newYear = newDate.getUTCFullYear(),
-		    newMonth = month.length === 3 ? monthNames[newDate.getUTCMonth()] : newDate.getUTCMonth() + 1,
-		    newDay = newDate.getUTCDate();
+
+		var newYear = newDate.getUTCFullYear();
+		var newMonth = month.length === 3
+			? monthNames[newDate.getUTCMonth()]
+			: newDate.getUTCMonth() + 1;
+		var newDay = newDate.getUTCDate();
+
 		if (newMonth < 10 && month.length === 2) {
 			newMonth = '0' + newMonth;
 		}
+
 		if (newDay < 10 && day.length === 2) {
 			newDay = '0' + newDay;
 		}
+
 		newUrl = prefix + newYear + separator + newMonth + separator + newDay + suffix;
 		window.console && console.log('« Previous: Matching date in URL: ', [year, month, day], '\nCalculated URL: ', newUrl);
 		location = newUrl;
@@ -127,10 +210,13 @@
 
 	/* Check for a number in the URL. */
 	if ((matches = uri.match(/(.*?)([0-9]+)([^0-9]*)$/))) {
-		var number = parseInt(matches[2], 10), newNumber = number - 1;
+		var number = parseInt(matches[2], 10);
+		var newNumber = number - 1;
+
 		if (matches[2].substring(0, 1) === '0' && (newNumber + '').length < matches[2].length) {
 			newNumber = (Math.pow(10, matches[2].length) + '').substring(1 + (newNumber + '').length) + newNumber;
 		}
+
 		newUrl = matches[1] + newNumber + matches[3];
 		window.console && console.log('« Previous: Matching number in URL; going from ', matches[2], ' to ', newNumber, '\nCalculated URL: ', newUrl);
 		location = newUrl;
