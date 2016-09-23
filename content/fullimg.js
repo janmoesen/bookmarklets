@@ -106,6 +106,40 @@
 		}
 	);
 
+	/* Try to load the originals for images whose source URLs look like
+	 * thumbnail/resized versions with a text label.
+	 *
+	 * Example:
+	 * https://www.crazyguyonabike.com/pics/docs/00/01/27/84/small/DSCF3555.JPG
+	 * https://www.crazyguyonabike.com/pics/docs/00/01/27/84/large/DSCF3555.JPG
+	 */
+	var thumbnailPathRegexp = /(.*[/.-])(small|thumb|thumbnail|resized|preview|medium)([/.-].*)/;
+
+	var fullSizePathParts = [
+		'large',
+		'original',
+		'source',
+		'normal',
+		'xlarge',
+	];
+
+	[].forEach.call(
+		document.images,
+		function (img) {
+			var oldSrc = img.src;
+			var matches = oldSrc.match(thumbnailPathRegexp);
+			if (matches) {
+				var newSources = [];
+
+				fullSizePathParts.forEach(function (part) {
+					newSources.push(matches[1] + part + matches[3]);
+				});
+
+				changeSrc(img, newSources, 'found image whose URL looks like a thumbnail/resized version');
+			}
+		}
+	);
+
 	/* Change the IMG@src of linked images to their link's A@href if they look
 	 * similar, assuming that the linked version is larger. */
 	[].forEach.call(
