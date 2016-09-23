@@ -48,7 +48,7 @@
 
 		/* Match query string parameters (?[…&]name=value[&…]) where the value is
 		 * a number (e.g. "width=1200") or a pair of numbers (e.g. * "resize=640x480"). */
-		var parameterReplacementRegexp = new RegExp('(\\?[^#]*&)?' + parameterName + '=[1-9][0-9]+(?:(?:[xX,*]|%2[CcAa])[1-9][0-9]+)?([^&#]*)');
+		var parameterReplacementRegexp = new RegExp('(\\?[^#]*&)?' + parameterName + '=[1-9][0-9]+(?:(?:[xX,*:]|%2[CcAa]|%3[Aa])[1-9][0-9]+)?([^&#]*)');
 
 		[].forEach.call(document.querySelectorAll(selector), function (img) {
 			var newSrc = img.src
