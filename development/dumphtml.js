@@ -1,5 +1,5 @@
 /**
- * Dump the generated HTML of the current page as a view-source: document in a
+ * Dump the generated HTML of the current page as a plain-text document in a
  * new tab or window.
  *
  * @title Dump HTML
@@ -123,5 +123,5 @@
 	}
 
 	/* Show the result in a new tab or window. */
-	window.open('view-source:data:text/html;charset=UTF-8,' + encodeURIComponent(htmlParts.join('\n')));
+	window.open('data:text/plain;charset=UTF-8,' + encodeURIComponent(htmlParts.join('\n')));
 })();
