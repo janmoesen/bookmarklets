@@ -120,14 +120,21 @@
 				return;
 			}
 
-			if (a.href === img.src) {
+			var aHref = a.href;
+
+			if (a.hostname.match(/\.blogspot\.com$/)) {
+				/* Get rid of Blogspot's links to useless HTML wrappers. */
+				aHref = aHref.replace(/\/(s\d+)-h\/([^\/]+)$/, '/$1/$2');
+			}
+
+			if (aHref === img.src) {
 				return;
 			}
 
-			var similarity = getSimilarity('' + img.src, '' + a.href);
+			var similarity = getSimilarity('' + img.src, '' + aHref);
 
 			if (similarity > 0.66) {
-				changeSrc(img, a.href, 'found linked image with ' + Math.round(similarity * 100) + '% similarity');
+				changeSrc(img, aHref, 'found linked image with ' + Math.round(similarity * 100) + '% similarity');
 			}
 
 		}
