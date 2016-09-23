@@ -166,6 +166,10 @@
 
 		var i = Math.min(strA.length, strB.length);
 
+		if (i === 0) {
+			return;
+		}
+
 		while (--i) {
 			if (strA[i] === strB[i]) {
 				continue;
