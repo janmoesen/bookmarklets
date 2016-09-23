@@ -111,6 +111,10 @@
 	[].forEach.call(
 		document.querySelectorAll('a img'),
 		function (img) {
+			if (!img.src) {
+				return;
+			}
+
 			var a = img.parentNode;
 			while (a && a.tagName && a.tagName.toLowerCase() !== 'a') {
 				a = a.parentNode;
