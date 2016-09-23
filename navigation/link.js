@@ -14,18 +14,18 @@
 		s = 'http://' + s;
 	}
 
-	var root = document.createDocumentFragment().appendChild(document.createElement('html')),
-	    titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim() || (location + '');
-	    originalIconLink = s || document.querySelector('link[rel*="icon"]');
+	var root = document.createDocumentFragment().appendChild(document.createElement('html'));
+	var titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim() || (location + '');
+	var originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
 	root.innerHTML = '<html><title></title><link rel="icon"/><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; padding: 1ex; border: 1px dotted grey; }</style><p><img/> <span><a></a></span></p><p>Link code:<br/><textarea rows="10" cols="80"></textarea></p></html>';
-	var title = root.querySelector('title'),
-	    iconLink = root.querySelector('link'),
-	    styleSheet = root.querySelector('style'),
-	    iconImage = root.querySelector('img'),
-	    link = root.querySelector('a'),
-	    textarea = root.querySelector('textarea');
+	var title = root.querySelector('title');
+	var iconLink = root.querySelector('link');
+	var styleSheet = root.querySelector('style');
+	var iconImage = root.querySelector('img');
+	var link = root.querySelector('a');
+	var textarea = root.querySelector('textarea');
 
 	/* Link to the current page using its title. */
 	link.href = s || location;
