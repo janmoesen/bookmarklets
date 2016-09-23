@@ -71,6 +71,7 @@
 	});
 
 	/* Show the original image for Polopoly CMS "generated derivatives".
+	 *
 	 * Example:
 	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg_gen/derivatives/landscape670/1706320883.jpg
 	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg
@@ -86,7 +87,8 @@
 	);
 
 	/* Try to load the originals for images whose source URLs look like
-	 * thumbnail/resized versions.
+	 * thumbnail/resized versions with dimensions.
+	 *
 	 * Example:
 	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
 	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
