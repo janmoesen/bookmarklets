@@ -2,7 +2,7 @@
  * Get rid of common overlays, such as full-page ads.
  *
  * @title Kill overlays
- * @keyword kill-overlays
+ * @keyword killoverlays
  */
 (function killOverlays() {
 	/* Remove known overlays. */
