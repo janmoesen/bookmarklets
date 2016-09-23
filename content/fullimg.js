@@ -191,11 +191,23 @@
 
 	/**
 	 * Change the IMG@src and fall back to the original source if the new
-	 * source triggers an error.
+	 * source triggers an error. You can specify an array of new sources that
+	 * will be tried in order. When all of the new sources fail, the original
+	 * source will be used.
 	 */
 	function changeSrc(img, newSrc, reason)
 	{
-		if (img.src === newSrc) {
+		var newSources = Array.isArray(newSrc)
+			? newSrc
+			: [ newSrc ];
+
+		while ((newSrc = newSources.shift())) {
+			if (newSrc && img.src !== newSrc) {
+				break;
+			}
+		}
+
+		if (!newSrc) {
 			return;
 		}
 
@@ -205,32 +217,67 @@
 			console.log('→ New img.src: ' + newSrc);
 		}
 
-		if (!img.hasAttribute('data-original-src')) {
-			img.setAttribute('data-original-src', img.src);
+		if (!img.originalSrc) {
+			img.originalSrc = img.src;
+		}
+
+		if (!img.originalNaturalWidth) {
+			img.originalNaturalWidth = img.naturalWidth;
+		}
+
+		if (!img.originalNaturalHeight) {
+			img.originalNaturalHeight = img.naturalHeight;
 		}
 
 		if (img.hasAttribute('srcset')) {
-			img.setAttribute('data-original-srcset', img.getAttribute('srcset'));
+			img.originalSrcset = img.getAttribute('srcset');
 			img.removeAttribute('srcset');
 		}
 
-		img.addEventListener('error', function restoreOriginalSrc() {
-			if (window.console && console.log) {
-				console.log('Load full images: error while loading new source for image: ', img);
-				console.log('→ Unable to load new img.src:    ' + newSrc);
-				console.log('→ Resetting to original img.src: ' + img.getAttribute('data-original-src'));
-			}
+		/* When the new source has failed to load, load the next one from the
+		 * list of possible new sources. If there are no more left, revert to
+		 * the original source. */
+		var errorHandler;
 
-			img.removeEventListener('error', restoreOriginalSrc);
+		if (newSources.length) {
+			errorHandler = function loadNextNewSrc() {
+				img.removeEventListener('error', loadNextNewSrc);
+				changeSrc(img, newSources, reason);
+			};
+		} else {
+			errorHandler = function restoreOriginalSrc() {
+				if (window.console && console.log) {
+					console.log('Load full images: error while loading new source for image: ', img);
+					console.log('→ Unable to load new img.src:    ' + newSrc);
+					console.log('→ Resetting to original img.src: ' + img.originalSrc);
+				}
 
-			img.src = img.getAttribute('data-original-src');
+				img.removeEventListener('error', restoreOriginalSrc);
 
-			if (img.hasAttribute('data-original-srcset')) {
-				img.setAttribute('srcset', img.getAttribute('data-original-srcset'));
-				img.removeAttribute('data-original-srcset');
+				img.src = img.originalSrc;
+
+				if (img.originalSrcset) {
+					img.setAttribute('srcset', img.originalSrcset);
+					delete img.originalSrcset;
+				}
+			};
+		}
+
+		img.addEventListener('error', errorHandler);
+
+		/* When the new source image is smaller than the original image,
+		 * treat that as an error, too. */
+		img.addEventListener('load', function () {
+			if (img.naturalWidth * img.naturalHeight < img.originalNaturalWidth * img.originalNaturalHeight) {
+				if (window.console && console.log) {
+					console.log('Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
+				}
+
+				errorHandler();
 			}
 		});
 
+		/* Finally, actually try to load the image. */
 		img.src = newSrc;
 	}
 })();
