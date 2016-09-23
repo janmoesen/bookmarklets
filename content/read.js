@@ -352,6 +352,8 @@
 			[class*="meta"],
 			[class*="Meta"]
 		):not(
+			[class*="shareable"]
+		):not(
 			article
 		):not(
 			[id*="article"]
@@ -408,6 +410,8 @@
 			[class*="meta"],
 			[class*="Meta"]
 		):not(
+			[class*="shareable"]
+		):not(
 			article
 		):not(
 			[id*="article"]
@@ -463,6 +467,8 @@
 			[class*="Bar"],
 			[class*="meta"],
 			[class*="Meta"]
+		):not(
+			[class*="shareable"]
 		):not(
 			article
 		):not(
