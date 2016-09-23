@@ -162,7 +162,10 @@
 	 * http://andrew.hedges.name/experiments/levenshtein/
 	 */
 	function getSimilarity(strA, strB) {
-		var result = 0, i = Math.min(strA.length, strB.length);
+		var result = 0;
+
+		var i = Math.min(strA.length, strB.length);
+
 		while (--i) {
 			if (strA[i] === strB[i]) {
 				continue;
