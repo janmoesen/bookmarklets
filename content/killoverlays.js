@@ -14,6 +14,7 @@
 		'.reveal-modal-bg',
 		'#colorbox',
 		'.colorbox',
+		'.ad.ad--wallpaper'
 	];
 
 	[].forEach.call(
