@@ -178,6 +178,21 @@
 		}
 	);
 
+	/* Get rid of all IMG@srcset attributes that have not been removed in the
+	 * previous steps.
+	 */
+	[].forEach.call(
+		document.querySelectorAll('img[srcset]'),
+		function (img) {
+			if (window.console && console.log) {
+				console.log('Load full images: removing srcset attribute: ', img);
+			}
+
+			img.originalSrcset = img.getAttribute('srcset');
+			img.removeAttribute('srcset');
+		}
+	);
+
 	/* Make video IFRAMEs take up the entire width of their offset parent. */
 	var iframesToEnlargeSelectors = [
 		'iframe[src*="//e.infogr.am/"]',
