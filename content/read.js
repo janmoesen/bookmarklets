@@ -42,8 +42,8 @@
 		}
 
 		html {
-			background: #fff;
-			color: #222;
+			background: rgb(255, 255, 225);
+			color: rgb(0, 0, 30);
 		}
 
 		body {
