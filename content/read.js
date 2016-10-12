@@ -98,6 +98,12 @@
 			"Headers --------------------------------------------------";
 		}
 
+		h1:not(.jancss-probably-layout),
+		h1:not(.jancss-probably-layout),
+		h1:not(.jancss-probably-layout) {
+			font-family: "Cambria", serif;
+		}
+
 		h1, h1.jancss-probably-layout {
 			border-bottom: 1px solid #888;
 			font-size: 200%;
