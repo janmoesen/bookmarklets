@@ -10,6 +10,8 @@ PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)
 copy-2en () {
 	source='language/translations/2en.js';
 	while [ $# -ge 4 ]; do
+		local bookmarklet_name="$1";
+		shift;
 		local lang_code="$1";
 		shift;
 		local lang_name_in_english="$1";
@@ -18,13 +20,14 @@ copy-2en () {
 		shift;
 		local this_page_in_xxx_text="$1";
 		shift;
-		target="${source/en/$lang_code}";
+		target="${source/2en/$bookmarklet_name}";
 
 		perl -p -e "
-				s/(2|\b)en\b/\$1$lang_code/g;
-				s/current page in English/$this_page_in_xxx_text/g;
-				s/English/$lang_name_in_english/g;
-				s/english/$lang_name_in_other_lowercase/g;
+				s/\b2en\b/$bookmarklet_name/g;
+				s/\ben\b/$lang_code/g;
+				s/\bcurrent page in English\b/$this_page_in_xxx_text/g;
+				s/\bEnglish\b/$lang_name_in_english/g;
+				s/\benglish\b/$lang_name_in_other_lowercase/g;
 			" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
@@ -32,30 +35,41 @@ copy-2en () {
 }
 
 copy_2en_parameters=(
+	2nl
 	nl
 	Dutch
 	nederlands
 	'deze pagina in het Nederlands'
 
+	2fr
 	fr
 	French
 	français
 	'cette page en français'
 
+	2de
 	de
 	German
 	deutsch
 	'diese Seite auf Deutsch'
 
+	2it
 	it
 	Italian
 	italiano
 	'questa pagina in italiano'
 
+	2es
 	es
 	Spanish
 	español
 	'esta página en español'
+
+	2zh
+	zh-CN
+	'Simplified Chinese'
+	中文
+	'this page in Chinese'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
@@ -89,6 +103,7 @@ COPY_VD=; copy-vd \
 	dewikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
 	itwikt 'Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
 	eswikt 'Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
+	zhwikt 'Simplified Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
@@ -112,6 +127,7 @@ COPY_ENW=; copy-enw \
 	de German \
 	it Italian \
 	es Spanish \
+	zh 'Simplified Chinese' \
 ;
 
 # Typing is hard; let's go shopping.
