@@ -15,7 +15,7 @@ dd > p {
 	white-space: pre-wrap;
 	line-height: 1.5;
 }
-a[shortcuturl]::after {
+a[shortcuturl]:not([shortcuturl=""])::after {
 	content: " (keyword: " attr(shortcuturl) ")";
 	display: inline-block;
 	margin-left: 1em;

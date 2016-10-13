@@ -92,6 +92,12 @@ process_dir () {
 			fi;
 		done < "$file";
 
+		# Avoid duplicate keywords for the bookmarklets in the Bookmarks
+		# toolbar, which are just symlinks to the "real" bookmarklets.
+		if [ -L "$file" ]; then
+			keyword='';
+		fi;
+
 		# Trim blank lines from the start and end of the description.
 		if [ "${description[0]}" = '' ]; then
 			unset description[0];
@@ -153,7 +159,7 @@ dd > p {
 	white-space: pre-wrap;
 	line-height: 1.5;
 }
-a[shortcuturl]::after {
+a[shortcuturl]:not([shortcuturl=""])::after {
 	content: " (keyword: " attr(shortcuturl) ")";
 	display: inline-block;
 	margin-left: 1em;
