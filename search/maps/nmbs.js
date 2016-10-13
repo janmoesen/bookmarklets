@@ -4,6 +4,26 @@
  * @title NMBS / SNCB / B-Rail / Belgian Railways
  */
 (function nmbs() {
+	/* Create a new IFRAME to get a "clean" Window object, so we can use its
+	 * console. Sometimes sites (e.g. Twitter) override console.log and even
+	 * the entire console object. "delete console.log" or "delete console"
+	 * does not always work, and messing with the prototype seemed more
+	 * brittle than this. */
+	var console = (function () {
+		var iframe = document.getElementById('xxxJanConsole');
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.id = 'xxxJanConsole';
+			iframe.style.display = 'none';
+
+			document.body.appendChild(iframe);
+		}
+
+		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
+			log: function () { }
+		};
+	})();
+
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
@@ -37,7 +57,7 @@
 		var locations = s.trim().split(/\s+to\s*:\s*/);
 
 		if (locations.length > 2) {
-			window.console && console.log('NMBS: "via" stations not supported yet. Expected 2 locations, got ' + locations.length + '.');
+			console.log('NMBS: "via" stations not supported yet. Expected 2 locations, got ' + locations.length + '.');
 		}
 
 		var url = 'http://www.belgianrail.be/jpm/sncb-nmbs-routeplanner/query.exe/nox?start=1&REQ0JourneyStopsS0A=1%26fromTypeStation%3Dselect%26REQ0JourneyStopsS0F%3DselectStationAttribute%3BGA&REQ0JourneyStopsZ0A=1%26toTypeStation%3Dselect%26REQ0JourneyStopsZ0F%3DselectStationAttribute%3BGA&REQ0JourneyStopsS0G='

@@ -13,6 +13,26 @@
  * @keyword 2nl
  */
 (function () {
+	/* Create a new IFRAME to get a "clean" Window object, so we can use its
+	 * console. Sometimes sites (e.g. Twitter) override console.log and even
+	 * the entire console object. "delete console.log" or "delete console"
+	 * does not always work, and messing with the prototype seemed more
+	 * brittle than this. */
+	var console = (function () {
+		var iframe = document.getElementById('xxxJanConsole');
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.id = 'xxxJanConsole';
+			iframe.style.display = 'none';
+
+			document.body.appendChild(iframe);
+		}
+
+		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
+			log: function () { }
+		};
+	})();
+
 	/* Try to get the parameter string from the bookmarklet/search query. */
 	var s = (function () { /*%s*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
@@ -47,9 +67,7 @@
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
-					if (window.console && console.log) {
-						console.log('Translate to Dutch: found link for selector ', interLanguageSelectors[i], ': ', link);
-					}
+					console.log('Translate to Dutch: found link for selector ', interLanguageSelectors[i], ': ', link);
 
 					location = link.href;
 
@@ -66,9 +84,7 @@
 			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
 				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				if (xPathResult.snapshotLength) {
-					if (window.console && console.log) {
-						console.log('Translate to Dutch: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
-					}
+					console.log('Translate to Dutch: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
 
 					location = xPathResult.snapshotItem(0).href;
 

@@ -38,7 +38,6 @@
 	/* Link to the current page's referrer, if available. */
 	if (document.referrer) {
 		var viaLink = document.createElement('a');
-		console.log(viaLink);
 		viaLink.setAttribute('href', document.referrer);
 		viaLink.textContent = viaLink.hostname || viaLink.href;
 		link.parentNode.parentNode.appendChild(document.createTextNode(' (via '));

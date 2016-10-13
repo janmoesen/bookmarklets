@@ -14,6 +14,26 @@
  * @todo Support multiple locales and cases for URL-based months.
  */
 (function next() {
+	/* Create a new IFRAME to get a "clean" Window object, so we can use its
+	 * console. Sometimes sites (e.g. Twitter) override console.log and even
+	 * the entire console object. "delete console.log" or "delete console"
+	 * does not always work, and messing with the prototype seemed more
+	 * brittle than this. */
+	var console = (function () {
+		var iframe = document.getElementById('xxxJanConsole');
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.id = 'xxxJanConsole';
+			iframe.style.display = 'none';
+
+			document.body.appendChild(iframe);
+		}
+
+		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
+			log: function () { }
+		};
+	})();
+
 	var symbols = [
 		'>>',
 		'»',
@@ -21,6 +41,7 @@
 		'⇒',
 		'⎘'
 	];
+
 	var keywords = symbols.concat([
 		'NEXT',
 		'Next',
@@ -61,7 +82,6 @@
 		'Nov',
 		'Dec'
 	];
-
 
 	var selectors;
 	var newUrl;
@@ -111,7 +131,7 @@
 				: Array.prototype.slice.call(document.querySelectorAll(selectors[i])).pop();
 
 			if (link) {
-				window.console && console.log('Next »: Matching selector: ' + selectors[i] + '\nFound link: ', link);
+				console.log('Next »: Matching selector: ' + selectors[i] + '\nFound link: ', link);
 				return link.href;
 			}
 		}
@@ -165,7 +185,7 @@
 		}
 
 		newUrl = prefix + newYear + separator + newMonth + separator + newDay + suffix;
-		window.console && console.log('Next »: Matching date in URL: ', [year, month, day], '\nCalculated URL: ', newUrl);
+		console.log('Next »: Matching date in URL: ', [year, month, day], '\nCalculated URL: ', newUrl);
 		location = newUrl;
 		return;
 	}
@@ -180,7 +200,7 @@
 		}
 
 		newUrl = matches[1] + newNumber + matches[3];
-		window.console && console.log('Next »: Matching number in URL; going from ', matches[2], ' to ', newNumber, '\nCalculated URL: ', newUrl);
+		console.log('Next »: Matching number in URL; going from ', matches[2], ' to ', newNumber, '\nCalculated URL: ', newUrl);
 		location = newUrl;
 		return;
 	}

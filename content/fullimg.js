@@ -8,6 +8,26 @@
  * @keyword fullimg
  */
 (function loadFullSizeImages() {
+	/* Create a new IFRAME to get a "clean" Window object, so we can use its
+	 * console. Sometimes sites (e.g. Twitter) override console.log and even
+	 * the entire console object. "delete console.log" or "delete console"
+	 * does not always work, and messing with the prototype seemed more
+	 * brittle than this. */
+	var console = (function () {
+		var iframe = document.getElementById('xxxJanConsole');
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.id = 'xxxJanConsole';
+			iframe.style.display = 'none';
+
+			document.body.appendChild(iframe);
+		}
+
+		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
+			log: function () { }
+		};
+	})();
+
 	/* Get rid of "width=", "height=" etc. followed by numbers or number pairs
 	 * in IMG@src query strings. */
 	var parameterNames = [
@@ -184,9 +204,7 @@
 	[].forEach.call(
 		document.querySelectorAll('img[srcset]'),
 		function (img) {
-			if (window.console && console.log) {
-				console.log('Load full images: removing srcset attribute: ', img);
-			}
+			console.log('Load full images: removing srcset attribute: ', img);
 
 			img.originalSrcset = img.getAttribute('srcset');
 			img.removeAttribute('srcset');
@@ -262,11 +280,9 @@
 			return;
 		}
 
-		if (window.console && console.log) {
-			console.log('Load full images: ' + reason + ': ', img);
-			console.log('→ Old img.src: ' + img.src);
-			console.log('→ New img.src: ' + newSrc);
-		}
+		console.log('Load full images: ' + reason + ': ', img);
+		console.log('→ Old img.src: ' + img.src);
+		console.log('→ New img.src: ' + newSrc);
 
 		if (!img.originalSrc) {
 			img.originalSrc = img.src;
@@ -297,11 +313,9 @@
 			};
 		} else {
 			errorHandler = function restoreOriginalSrc() {
-				if (window.console && console.log) {
-					console.log('Load full images: error while loading new source for image: ', img);
-					console.log('→ Unable to load new img.src:    ' + newSrc);
-					console.log('→ Resetting to original img.src: ' + img.originalSrc);
-				}
+				console.log('Load full images: error while loading new source for image: ', img);
+				console.log('→ Unable to load new img.src:    ' + newSrc);
+				console.log('→ Resetting to original img.src: ' + img.originalSrc);
 
 				img.removeEventListener('error', restoreOriginalSrc);
 
@@ -320,9 +334,7 @@
 		 * treat that as an error, too. */
 		img.addEventListener('load', function () {
 			if (img.naturalWidth * img.naturalHeight < img.originalNaturalWidth * img.originalNaturalHeight) {
-				if (window.console && console.log) {
-					console.log('Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
-				}
+				console.log('Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
 
 				errorHandler();
 			}

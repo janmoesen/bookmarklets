@@ -7,27 +7,25 @@
  * @title Readable++
  */
 (function read() {
-	/* Make sure we can talk to the native browser console. */
-	var console;
-	function hasNativeConsole(window) {
-		return typeof window === 'object'
-			&& typeof window.console === 'object'
-			&& typeof window.console.log === 'function'
-			&& typeof window.console.log.prototype === 'undefined';
-	}
+	/* Create a new IFRAME to get a "clean" Window object, so we can use its
+	 * console. Sometimes sites (e.g. Twitter) override console.log and even
+	 * the entire console object. "delete console.log" or "delete console"
+	 * does not always work, and messing with the prototype seemed more
+	 * brittle than this. */
+	var console = (function () {
+		var iframe = document.getElementById('xxxJanConsole');
+		if (!iframe) {
+			iframe = document.createElement('iframe');
+			iframe.id = 'xxxJanConsole';
+			iframe.style.display = 'none';
 
-	if (hasNativeConsole(window)) {
-		console = window.console;
-	} else {
-		var dummyIFrame = document.createElement('iframe');
-		dummyIFrame.style.display = 'none';
-		document.body.appendChild(dummyIFrame);
-		if (hasNativeConsole(dummyIFrame.contentWindow)) {
-			console = dummyIFrame.contentWindow.console;
-		} else {
-			console = { log: function () { } };
+			document.body.appendChild(iframe);
 		}
-	}
+
+		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
+			log: function () { }
+		};
+	})();
 
 	/* The style sheet for more readable content. */
 	var css = (function () { /*@charset "utf-8";
