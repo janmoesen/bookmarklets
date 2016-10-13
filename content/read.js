@@ -99,8 +99,8 @@
 		}
 
 		h1:not(.jancss-probably-layout),
-		h1:not(.jancss-probably-layout),
-		h1:not(.jancss-probably-layout) {
+		h2:not(.jancss-probably-layout),
+		h3:not(.jancss-probably-layout) {
 			font-family: "Cambria", serif;
 		}
 
