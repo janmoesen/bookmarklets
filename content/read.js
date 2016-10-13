@@ -1334,7 +1334,7 @@
 
 		/* Check if there is an element that we should scroll into view so we can immediately start reading. */
 		var contentElement, shouldScrollContentIntoView = false;
-		var selection = window.getSelection && window.getSelection();
+		var selection = document.getSelection && document.getSelection();
 		if (selection && selection.anchorNode && (selection + '').length) {
 			/* If the user has created a selection, scroll the element containing that selection into view. (I often triple-click a paragraph to select it before reading.) */
 			shouldScrollContentIntoView = true;
