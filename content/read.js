@@ -650,6 +650,14 @@
 			display: none;
 		}
 
+		-jancss-comment { content:
+			"Hide big ScrollMagic spacers, e.g. on Co.Design ----------";
+		}
+
+		.scrollmagic-pin-spacer {
+			display: none;
+		}
+
 	*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
