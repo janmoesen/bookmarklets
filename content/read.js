@@ -178,20 +178,39 @@
 			"Tables ---------------------------------------------------";
 		}
 
-		th,
-		td {
+		table.jancss-probably-for-data th,
+		table.jancss-probably-for-data td {
 			vertical-align: top;
 			text-align: left;
 			padding: 0.5ex;
 		}
 
-		.jancss-has-tables-for-layout td {
+		table.jancss-probably-for-data caption {
+			font-weight: bold;
+			border-bottom: 1px dotted;
+		}
+
+		table.jancss-probably-for-layout td {
 			display: inline-block;
 		}
 
-		caption {
-			font-weight: bold;
-			border-bottom: 1px dotted;
+		table.jancss-probably-for-data tr:nth-child(odd) td:not(.jancss-active-col) {
+			background: #ffe;
+		}
+
+		table.jancss-probably-for-data tr:hover td:not(.code),
+		table.jancss-probably-for-data .jancss-active-col {
+			background: #ffc;
+		}
+
+		table.jancss-probably-for-data th,
+		table.jancss-probably-for-data tr td:not(.code):hover {
+			background: #ff9;
+		}
+
+		table.jancss-probably-for-data th code,
+		table.jancss-probably-for-data td code {
+			background: inherit;
 		}
 
 		-jancss-comment { content:
@@ -268,7 +287,7 @@
 		aside:not(:hover),
 		[id^="footnote_plugin_tooltip_text_"],
 		blockquote[class*="quote"]:not(:hover),
-		blockquote > :only-child,
+		blockquote > :not(table):only-child,
 		.quote-box:not(:hover),
 		.su-pullquote:not(:hover),
 		.pullquote:not(:hover),
@@ -662,28 +681,6 @@
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
 
-	/* Extra CSS for pages that do not appear to use tables for layout. */
-	var dataTableCss = (function () { /*-jancss-comment {}
-		tr:nth-child(odd) td:not(.jancss-active-col) {
-			background: #eef;
-		}
-
-		tr:hover td:not(.code), .jancss-active-col {
-			background: #ddf;
-		}
-
-		th, tr td:not(.code):hover {
-			background: #bbf;
-		}
-
-		th code, td code {
-			background: inherit;
-		}
-
-	*/; }).toString()
-		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
-		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
-
 	/* The attributes to disable. */
 	var attrs = [
 		'style',
@@ -1067,27 +1064,57 @@
 			}
 		});
 
-		/* Add the custom style sheet if necessary. */
+		/* The first time this bookmarklet is called, add our style sheet and
+		 * check for layout elements. */
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = 'jancss';
 			ourStyleSheet.innerHTML = css;
+			document.head.appendChild(ourStyleSheet);
+			ourStyleSheet.disabled = true;
 
-			/* Check if there are tables for layout. */
-			var hasTablesForLayout =
+			/* Highlight matching data table columns on :hover. I do not
+			 * know how to do this in pure CSS without COLGROUPs. */
+			function columnMouseHandler(e) {
+				if (!/^t[dh]$/i.test('' + e.target.tagName)) {
+					return;
+				}
+
+				var targetCell = e.target, nthChild = targetCell.cellIndex + 1, table = targetCell.parentNode;
+				while (table && table.tagName.toLowerCase() !== 'table') {
+					table = table.parentNode;
+				}
+
+				var activeColumnClassName = 'jancss-active-col';
+				toArray(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
+					if (e.type === 'mouseenter') {
+						addClass(cell, activeColumnClassName);
+					} else {
+						removeClass(cell, activeColumnClassName);
+					}
+				});
+			}
+
+			/* Check which tables are used for data instead of layout. */
+			toArray(document.querySelectorAll('table')).forEach(function (table) {
+				var isTableForData = true;
+
 				/* Are there any nested tables? */
-				document.querySelector('table table') ||
-				/* Check each table separately until a probably-for-layout table has been found. */
-				toArray(document.querySelectorAll('table')).some(function (table) {
-					/* Are we in quirks mode and does this table takes up most of the page height? */
-					if (document.compatMode === 'BackCompat' && document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
-						return true;
+				if (table.querySelector('table')) {
+					var isWikipediaInfobox = (' ' + table.className + ' ').match(/infobox/);
+					if (!isWikipediaInfobox) {
+						console.log('Readable++: TABLE contains other TABLEs, so probably for layout: ', table);
+						isTableForData = false;
 					}
+				}
 
-					/* Keep track of the number of cells (columns) per row, because differing cell counts mean several td@colspan values. */
-					if (table.rows.length < 3) {
-						/* Do all sciencey and proclaim three rows to be the minimum sample size. */
-						return false;
-					}
+				/* Are we in quirks mode and does this table takes up most of the page height? */
+				else if (document.compatMode === 'BackCompat' && document.documentElement.scrollHeight > window.innerHeight && table.scrollHeight > 3/4 * document.documentElement.scrollHeight) {
+					console.log('Readable++: TABLE seems pretty high in this document in quirks mode, so probably for layout: ', table);
+					isTableForData = false;
+				}
+
+				/* If the table has several rows, look whether they are consistent in their number of cells. */
+				else if (table.rows.length > 3) {
 					var numCellsPerRow = [];
 					toArray(table.rows).forEach(function (row) {
 						if (numCellsPerRow.indexOf(row.cells.length) === -1) {
@@ -1095,46 +1122,27 @@
 						}
 					});
 
-					return (
-						/* Are we in quirks mode and does this table have at least three rows with a different number of cells? */
-						(document.compatMode === 'BackCompat' && numCellsPerRow.length >= 3) ||
-						/* Does this table only have rows with just a single column? */
-						(numCellsPerRow.length === 1 && numCellsPerRow[0] === 1)
-					);
-				});
-			if (hasTablesForLayout) {
-				var bodyClassName = 'jancss-has-tables-for-layout';
-				addClass(document.body, bodyClassName);
-			} else {
-				/* If tables are likely to be used properly (i.e., for actual data), add the relevant CSS. */
-				ourStyleSheet.innerHTML += dataTableCss;
-
-				/* Highlight the matching column on :hover. I do not know how to do this in pure CSS without COLGROUPs. */
-				function columnMouseHandler(e) {
-					if (!/^t[dh]$/i.test('' + e.target.tagName)) {
-						return;
+					/* Are we in quirks mode and does this table have at least three rows with a different number of cells? */
+					if (document.compatMode === 'BackCompat' && numCellsPerRow.length >= 3) {
+						console.log('Readable++: TABLE has a lot of differing cell counts in this document in quirks mode, so probably for layout: ', table);
+						isTableForData = false;
 					}
 
-					var targetCell = e.target, nthChild = targetCell.cellIndex + 1, table = targetCell.parentNode;
-					while (table && table.tagName.toLowerCase() !== 'table') {
-						table = table.parentNode;
+					/* Does this table only have rows with just a single column? */
+					else if (numCellsPerRow.length === 1 && numCellsPerRow[0] === 1) {
+						console.log('Readable++: TABLE has only rows of one cell each, so probably for layout: ', table);
+						isTableForData = false;
 					}
-
-					var activeColumnClassName = 'jancss-active-col';
-					toArray(table.querySelectorAll('td:nth-child(' + nthChild + ')')).forEach(function (cell) {
-						if (e.type === 'mouseenter') {
-							addClass(cell, activeColumnClassName);
-						} else {
-							removeClass(cell, activeColumnClassName);
-						}
-					});
 				}
-				document.addEventListener('mouseenter', columnMouseHandler, true);
-				document.addEventListener('mouseleave', columnMouseHandler, true);
-			}
 
-			/* Adding the style sheet node has to happen after its contents has been set, or chaos ensues. */
-			document.head.appendChild(ourStyleSheet).disabled = true;
+				if (isTableForData) {
+					addClass(table, 'jancss-probably-for-data');
+					document.addEventListener('mouseenter', columnMouseHandler, true);
+					document.addEventListener('mouseleave', columnMouseHandler, true);
+				} else {
+					addClass(table, 'jancss-probably-for-layout');
+				}
+			});
 
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
 			if (document.querySelector('.prettyprint')) {
