@@ -157,17 +157,23 @@
 		input.value = s;
 
 		if (input.form && input.form.tagName && input.form.tagName.toLowerCase() === 'form') {
+			/* Call the FORM's submit() method, but avoid conflicts with
+			 * INPUTs with name="submit". */
 			HTMLFormElement.prototype.submit.call(input.form);
 		} else {
-			var isUnloading = false;
+			/* Simulate pressing the Enter key using a variety of events. */
+			var eventTypes = ['keypress', 'keyup', 'keydown'];
 
+			/* Stop trying other event types as soon as the submission seems
+			 * to be in progress. */
+			var isUnloading = false;
 			window.addEventListener('unload', function (event) {
 				console.log('Caught unload event!');
 				isUnloading = true;
 			});
 
-			var eventTypes = ['keypress', 'keyup', 'eydown'];
-
+			/* Create and dispatch an event of the next type in the
+			 * "eventTypes" array. */
 			function dispatchNextEvent() {
 				if (isUnloading) {
 					return;
@@ -179,13 +185,12 @@
 					return;
 				}
 
-				var event = new KeyboardEvent(eventType, {
+				/* Simulate pressing the Enter key. */
+				input.dispatchEvent(new KeyboardEvent(eventType, {
 					keyCode: 13,
 					charCode: 13,
 					which: 13
-				});
-
-				var result = input.dispatchEvent(event);
+				}));
 
 				setTimeout(dispatchNextEvent, 1500);
 			}
