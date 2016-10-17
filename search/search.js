@@ -198,7 +198,7 @@
 					which: 13
 				}));
 
-				setTimeout(dispatchNextEvent, 1500);
+				setTimeout(dispatchNextEvent, 250);
 			}
 
 			dispatchNextEvent();
