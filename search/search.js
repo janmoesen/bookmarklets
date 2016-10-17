@@ -60,7 +60,7 @@
 	}
 
 	var searchControlRegexps = [
-		/(^|[_ -])(search|q(uery)?|filter)(\S*(string|terms?|box|field))?([_ -]|$)/i,
+		/(^|[_ -])(search|q(uery)?|filter|keywords?)(\S*(string|terms?|box|field))?([_ -]|$)/i,
 	];
 
 	/* Look for typical patterns in the INPUT attributes. */
