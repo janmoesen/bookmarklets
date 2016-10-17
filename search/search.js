@@ -185,7 +185,13 @@
 					return;
 				}
 
+				/* Make certain Angular sites like Wikiwand update their
+				 * internal copy of the search string. */
+				console.log('Search site: dispatching synthetic input event');
+				input.dispatchEvent(new Event('input', {}));
+
 				/* Simulate pressing the Enter key. */
+				console.log('Search site: dispatching synthetic ' + eventType + ' event');
 				input.dispatchEvent(new KeyboardEvent(eventType, {
 					keyCode: 13,
 					charCode: 13,
