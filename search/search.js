@@ -156,6 +156,41 @@
 	if (s) {
 		input.value = s;
 
-		HTMLFormElement.prototype.submit.call(input.form);
+		if (input.form && input.form.tagName && input.form.tagName.toLowerCase() === 'form') {
+			HTMLFormElement.prototype.submit.call(input.form);
+		} else {
+			var isUnloading = false;
+
+			window.addEventListener('unload', function (event) {
+				console.log('Caught unload event!');
+				isUnloading = true;
+			});
+
+			var eventTypes = ['keypress', 'keyup', 'eydown'];
+
+			function dispatchNextEvent() {
+				if (isUnloading) {
+					return;
+				}
+
+				var eventType = eventTypes.shift();
+
+				if (!eventType) {
+					return;
+				}
+
+				var event = new KeyboardEvent(eventType, {
+					keyCode: 13,
+					charCode: 13,
+					which: 13
+				});
+
+				var result = input.dispatchEvent(event);
+
+				setTimeout(dispatchNextEvent, 1500);
+			}
+
+			dispatchNextEvent();
+		}
 	}
 })();
