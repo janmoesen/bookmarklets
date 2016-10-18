@@ -973,6 +973,11 @@
 			if (typeof jQuery === 'function') {
 				/* Since jQuery 1.7. */
 				if (typeof jQuery.hasData === 'function' && jQuery.hasData(elem)) {
+					/* Spotted in the wild: "jQuery._data is undefined". */
+					if (typeof jQuery._data !== 'function') {
+						return;
+					}
+
 					var data = jQuery._data(elem);
 					if (data.jancssEvents) {
 						data.events = data.jancssEvents;
