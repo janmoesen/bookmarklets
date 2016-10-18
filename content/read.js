@@ -40,7 +40,7 @@
 		}
 
 		html {
-			background: rgb(255, 255, 225);
+			background: rgb(245, 245, 225);
 			color: rgb(0, 0, 30);
 		}
 
