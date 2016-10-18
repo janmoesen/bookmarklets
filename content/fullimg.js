@@ -5,9 +5,8 @@
  * and whatnot).
  *
  * @title Load full images
- * @keyword fullimg
  */
-(function loadFullSizeImages() {
+(function fullimg() {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
 	 * console. Sometimes sites (e.g. Twitter) override console.log and even
 	 * the entire console object. "delete console.log" or "delete console"

@@ -2,9 +2,8 @@
  * Get rid of common overlays, such as full-page ads.
  *
  * @title Kill overlays
- * @keyword killoverlays
  */
-(function killOverlays() {
+(function killoverlays() {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
 	 * console. Sometimes sites (e.g. Twitter) override console.log and even
 	 * the entire console object. "delete console.log" or "delete console"
