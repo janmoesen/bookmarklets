@@ -677,6 +677,14 @@
 			display: none;
 		}
 
+		-jancss-comment { content:
+			"Always hide our IFRAME used to restore console.log -------";
+		}
+
+		#xxxJanConsole {
+			display: none;
+		}
+
 	*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
@@ -1024,7 +1032,7 @@
 				}
 
 				mutations.forEach(function(mutation) {
-					if (!mutation.target.hasAttribute('style')) {
+					if (!mutation.target.hasAttribute('style') || mutation.target.id === 'xxxJanConsole') {
 						return;
 					}
 
