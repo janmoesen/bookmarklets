@@ -1142,8 +1142,8 @@
 
 				if (isTableForData) {
 					addClass(table, 'jancss-probably-for-data');
-					document.addEventListener('mouseenter', columnMouseHandler, true);
-					document.addEventListener('mouseleave', columnMouseHandler, true);
+					table.addEventListener('mouseenter', columnMouseHandler, true);
+					table.addEventListener('mouseleave', columnMouseHandler, true);
 				} else {
 					addClass(table, 'jancss-probably-for-layout');
 				}
