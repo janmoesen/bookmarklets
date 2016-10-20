@@ -1007,8 +1007,38 @@
 					$elem.data('jancssEvents', eventsData);
 					$elem.removeData('events');
 				}
-			};
+			}
 		});
+
+		/* The code above does not work for event listeners added using
+		 * addEventListener. Some sites listen for the "resize" event and
+		 * then reposition elements by setting their style directly. To
+		 * counteract this, simply delete all "style" attributes that get set
+		 * while our style sheet is enabled. That'll show 'em!
+		 */
+		if (typeof MutationObserver === 'function' && !document.jancssHasMutationObserver) {
+			document.jancssHasMutationObserver = true;
+			var observer = new MutationObserver(function (mutations) {
+				if (ourStyleSheet.disabled) {
+					return;
+				}
+
+				mutations.forEach(function(mutation) {
+					if (!mutation.target.hasAttribute('style')) {
+						return;
+					}
+
+					console.log('Readable++: removing "style" attribute set while in Readable++ mode on element ', mutation.target);
+					mutation.target.removeAttribute(mutation.attributeName);
+				});
+			});
+
+			observer.observe(document, {
+				attributes: true,
+				attributeFilter: ['style'],
+				subtree: true
+			});
+		}
 
 		/* Load bLazy.js "retina" images. This is more specific than the
 		 * generic lazy-loading attributes below, and needs special handling
