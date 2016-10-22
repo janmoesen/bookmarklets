@@ -231,6 +231,7 @@
 				+ ' to ' + newWidth + 'x' + newHeight
 			);
 
+			iframe.xxxJanReadableAllowStyle = true;
 			iframe.style.width = newWidth + 'px';
 			iframe.style.height = newHeight + 'px';
 		}
