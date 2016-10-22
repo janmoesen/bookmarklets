@@ -1032,7 +1032,7 @@
 				}
 
 				mutations.forEach(function(mutation) {
-					if (!mutation.target.hasAttribute('style') || mutation.target.id === 'xxxJanConsole') {
+					if (!mutation.target.hasAttribute('style') || mutation.target.id === 'xxxJanConsole' || mutation.target.xxxJanReadableAllowStyle) {
 						return;
 					}
 
