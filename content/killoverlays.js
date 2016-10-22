@@ -33,6 +33,7 @@
 		'.reveal-modal-bg',
 		'#colorbox',
 		'.colorbox',
+		'body [class*="interstitial"]',
 		'.ad.ad--wallpaper'
 	];
 
