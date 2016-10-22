@@ -222,8 +222,17 @@
 		document.querySelectorAll(iframesToEnlargeSelectors.join(', ')),
 		function (iframe) {
 			var scale = iframe.offsetParent.offsetWidth / iframe.offsetWidth;
-			iframe.style.width = (iframe.offsetWidth * scale) + 'px';
-			iframe.style.height = (iframe.offsetHeight * scale) + 'px';
+			var newWidth = Math.round(iframe.offsetWidth * scale);
+			var newHeight = Math.round(iframe.offsetHeight * scale);
+
+			console.log(
+				'Load full images: resizing IFRAME ', iframe,
+				' from ' + iframe.offsetWidth + 'x' + iframe.offsetHeight
+				+ ' to ' + newWidth + 'x' + newHeight
+			);
+
+			iframe.style.width = newWidth + 'px';
+			iframe.style.height = newHeight + 'px';
 		}
 	);
 
