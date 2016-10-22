@@ -213,6 +213,7 @@
 	/* Make video IFRAMEs take up the entire width of their offset parent. */
 	var iframesToEnlargeSelectors = [
 		'iframe[src*="//e.infogr.am/"]',
+		'iframe[src*="//www.kickstarter.com/projects/"]',
 		'iframe[src*="//www.vier.be/video/partner/embed/"]',
 		'iframe[src*="//www.youtube.com/embed/"]',
 		'iframe[src*="//player.vimeo.com/video/"]'
