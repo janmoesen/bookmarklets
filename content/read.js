@@ -657,6 +657,8 @@
 			"Make notes on decorrespondent.nl less conspicuous --------";
 		}
 
+		.contentitem-sidenote > :not(.contentitem-sidenote-snippet),
+		.contentitem-infocard-toggle-container + .contentitem-infocard-contents,
 		.instapaper_ignore {
 			opacity: 0.25;
 		}
