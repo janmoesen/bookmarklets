@@ -34,6 +34,7 @@
 		'#colorbox',
 		'.colorbox',
 		'body [class*="interstitial"]',
+		'.jqmWindow',
 		'.ad.ad--wallpaper'
 	];
 
