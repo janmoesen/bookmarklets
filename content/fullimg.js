@@ -2,7 +2,7 @@
  * Load the full-size versions of resized images based on their "src"
  * attribute, or their containing link's "href" attribute. Also, make IFRAMEs
  * take up the entire width of their offset parent (useful for embedded videos
- * and whatnot).
+ * and whatnot). Same goes for the VIDEO elements.
  *
  * @title Load full images
  */
@@ -210,8 +210,10 @@
 		}
 	);
 
-	/* Make video IFRAMEs take up the entire width of their offset parent. */
-	var iframesToEnlargeSelectors = [
+	/* Make native VIDEO elements and video IFRAMEs take up the entire width
+	 * of their offset parent. */
+	var elementsToEnlargeSelectors = [
+		'video',
 		'iframe[src*="//e.infogr.am/"]',
 		'iframe[src*="//www.kickstarter.com/projects/"]',
 		'iframe[src*="//www.vier.be/video/partner/embed/"]',
@@ -220,21 +222,21 @@
 	];
 
 	[].forEach.call(
-		document.querySelectorAll(iframesToEnlargeSelectors.join(', ')),
-		function (iframe) {
-			var scale = iframe.offsetParent.offsetWidth / iframe.offsetWidth;
-			var newWidth = Math.round(iframe.offsetWidth * scale);
-			var newHeight = Math.round(iframe.offsetHeight * scale);
+		document.querySelectorAll(elementsToEnlargeSelectors.join(', ')),
+		function (element) {
+			var scale = element.offsetParent.offsetWidth / element.offsetWidth;
+			var newWidth = Math.round(element.offsetWidth * scale);
+			var newHeight = Math.round(element.offsetHeight * scale);
 
 			console.log(
-				'Load full images: resizing IFRAME ', iframe,
-				' from ' + iframe.offsetWidth + 'x' + iframe.offsetHeight
+				'Load full images: resizing element ', element,
+				' from ' + element.offsetWidth + 'x' + element.offsetHeight
 				+ ' to ' + newWidth + 'x' + newHeight
 			);
 
-			iframe.xxxJanReadableAllowStyle = true;
-			iframe.style.width = newWidth + 'px';
-			iframe.style.height = newHeight + 'px';
+			element.xxxJanReadableAllowStyle = true;
+			element.style.width = newWidth + 'px';
+			element.style.height = newHeight + 'px';
 		}
 	);
 
