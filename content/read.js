@@ -285,9 +285,9 @@
 		}
 
 		aside:not(:hover),
-		[id^="footnote_plugin_tooltip_text_"],
+		[id^="footnote_plugin_tooltip_text_"]:not(:hover),
 		blockquote[class*="quote"]:not(:hover),
-		blockquote > :not(table):only-child,
+		blockquote > :only-child:not(table):not(:hover),
 		.quote-box:not(:hover),
 		.su-pullquote:not(:hover),
 		.pullquote:not(:hover),
@@ -657,10 +657,14 @@
 			"Make notes on decorrespondent.nl less conspicuous --------";
 		}
 
-		.contentitem-sidenote > :not(.contentitem-sidenote-snippet),
-		.contentitem-infocard-toggle-container + .contentitem-infocard-contents,
-		.instapaper_ignore {
+		.contentitem-sidenote:not(:hover) > :not(.contentitem-sidenote-snippet),
+		.contentitem-infocard-toggle-container + .contentitem-infocard-contents:not(:hover) {
 			opacity: 0.25;
+		}
+
+		.contentitem-sidenote:hover > :not(.contentitem-sidenote-snippet),
+		.contentitem-infocard-toggle-container + .contentitem-infocard-contents:hover {
+			background: #ffc;
 		}
 
 		-jancss-comment { content:
