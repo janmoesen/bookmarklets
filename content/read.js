@@ -45,10 +45,15 @@
 		}
 
 		body {
-			max-width: 52em;
+			max-width: 48em;
 			margin: 0 auto;
 			padding: 1em;
 			font-family: "Calibri", sans-serif;
+			font-size: 1.05rem;
+		}
+
+		p {
+			line-height: 1.7;
 		}
 
 		:link {
