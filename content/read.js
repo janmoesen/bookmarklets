@@ -1015,16 +1015,19 @@
 					}
 				}
 
-				/* Before jQuery 1.7. */
-				var $elem = jQuery(elem);
-				var eventsData = $elem.data('events');
-				var jancssEventsData = $elem.data('jancssEvents');
-				if (jancssEventsData) {
-					$elem.data('events', jancssEventsData);
-					$elem.removeData('jancssEvents');
-				} else if (eventsData) {
-					$elem.data('jancssEvents', eventsData);
-					$elem.removeData('events');
+
+				/* Before jQuery 1.7 and after jQuery 1.2.3 */
+				if (jQuery.fn.data) {
+					var $elem = jQuery(elem);
+					var eventsData = $elem.data('events');
+					var jancssEventsData = $elem.data('jancssEvents');
+					if (jancssEventsData) {
+						$elem.data('events', jancssEventsData);
+						$elem.removeData('jancssEvents');
+					} else if (eventsData) {
+						$elem.data('jancssEvents', eventsData);
+						$elem.removeData('events');
+					}
 				}
 			}
 		});
