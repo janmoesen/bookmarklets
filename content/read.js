@@ -337,6 +337,10 @@
 			display: none;
 		}
 
+		#social_btns {
+			display: none;
+		}
+
 		.taboola {
 			display: none;
 		}
