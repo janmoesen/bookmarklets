@@ -333,6 +333,11 @@
 
 		console.log('[' + basename + '] Load full images: ' + reason + ': ', img);
 
+		if (img.hasNewSource) {
+			console.log('[' + basename + '] Image already has a new source: ', img);
+			return;
+		}
+
 		var newSources = Array.isArray(newSrc)
 			? newSrc
 			: [ newSrc ];
@@ -404,7 +409,12 @@
 			if (img.naturalWidth * img.naturalHeight < img.originalNaturalWidth * img.originalNaturalHeight) {
 				console.log('[' + basename + '] Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
 
-				errorHandler();
+				return errorHandler();
+			}
+
+			if (img.src !== img.originalSrc) {
+				console.log('[' + basename + '] → Success:     ' + img.src);
+				img.hasNewSource = true;
 			}
 		});
 
