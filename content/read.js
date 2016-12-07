@@ -1109,6 +1109,11 @@
 			});
 		});
 
+		/* Show controls on AUDIO and VIDEO elements. */
+		[].forEach.call(document.querySelectorAll('audio, video'), function (element) {
+			element.controls = true;
+		});
+
 		/* Hide empty list items that are not ":empty" as per CSS. So,
 		 * "empty" as in "containing text-less placeholders typically used
 		 * for social sharing by showing an icon or logo or whatnot"
