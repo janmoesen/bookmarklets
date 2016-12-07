@@ -214,6 +214,7 @@
 	 * of their offset parent. */
 	var elementsToEnlargeSelectors = [
 		'video',
+		'iframe.twitter-tweet-rendered',
 		'iframe[src*="//e.infogr.am/"]',
 		'iframe[src*="//www.kickstarter.com/projects/"]',
 		'iframe[src*="//www.vier.be/video/partner/embed/"]',
