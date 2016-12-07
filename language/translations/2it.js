@@ -52,13 +52,13 @@
 				/* CatenaCycling.com */
 				'#language a[href][hreflang="it"]',
 
-				/* developer.mozilla.org */
-				'#translations a[rel="internal"][href^="/it/"]',
-				'#translations a[rel="internal"][href^="/it-"]',
-
 				/* Generic */
+				'link[rel="alternate"][hreflang="it"]',
+				'link[rel="alternate"][hreflang^="it-"]',
 				'[id*="lang"][id*="elect"] a[hreflang="it"]',
+				'[id*="lang"][id*="elect"] a[hreflang^="it-"]',
 				'[class*="lang"][class*="elect"] a[hreflang="it"]',
+				'[class*="lang"][class*="elect"] a[hreflang^="it-"]',
 				'a[href][title$="this page in Italian"]',
 				'a[href][title$="questa pagina in italiano"]'
 			];
