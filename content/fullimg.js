@@ -242,6 +242,14 @@
 		}
 	);
 
+	/* Show controls on AUDIO and VIDEO elements. */
+	[].forEach.call(
+		document.querySelectorAll('audio, video'),
+		function (element) {
+			element.controls = true;
+		}
+	);
+
 	/**
 	 * Crudely calculate the similarity between two strings. Taken from
 	 * http://stackoverflow.com/a/10473855. An alternative would be the
