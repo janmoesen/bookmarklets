@@ -329,6 +329,10 @@
 	 */
 	function changeSrc(img, newSrc, reason)
 	{
+		var basename = img.src.replace(/[?#].*/, '').replace(/.*?([^\/]*)\/*$/, '$1');
+
+		console.log('[' + basename + '] Load full images: ' + reason + ': ', img);
+
 		var newSources = Array.isArray(newSrc)
 			? newSrc
 			: [ newSrc ];
@@ -343,9 +347,8 @@
 			return;
 		}
 
-		console.log('Load full images: ' + reason + ': ', img);
-		console.log('→ Old img.src: ' + img.src);
-		console.log('→ New img.src: ' + newSrc);
+		console.log('[' + basename + '] → Old img.src: ' + img.src);
+		console.log('[' + basename + '] → Try img.src: ' + newSrc);
 
 		if (!img.originalSrc) {
 			img.originalSrc = img.src;
@@ -370,15 +373,17 @@
 		var errorHandler;
 
 		if (newSources.length) {
+			console.log('[' + basename + '] Setting errorHandler to loadNextNewSrc for ', img, '; newSources: "' + newSources.join('", "') + '"; reason:', reason);
 			errorHandler = function loadNextNewSrc() {
 				img.removeEventListener('error', loadNextNewSrc);
 				changeSrc(img, newSources, reason);
 			};
 		} else {
+			console.log('[' + basename + '] Setting errorHandler to restoreOriginalSrc for ', img, '; originalSrc: "' + img.originalSrc + '"; reason:', reason);
 			errorHandler = function restoreOriginalSrc() {
-				console.log('Load full images: error while loading new source for image: ', img);
-				console.log('→ Unable to load new img.src:    ' + newSrc);
-				console.log('→ Resetting to original img.src: ' + img.originalSrc);
+				console.log('[' + basename + '] Load full images: error while loading new source for image: ', img);
+				console.log('[' + basename + '] → Unable to load new img.src:    ' + newSrc);
+				console.log('[' + basename + '] → Resetting to original img.src: ' + img.originalSrc);
 
 				img.removeEventListener('error', restoreOriginalSrc);
 
@@ -397,7 +402,7 @@
 		 * treat that as an error, too. */
 		img.addEventListener('load', function () {
 			if (img.naturalWidth * img.naturalHeight < img.originalNaturalWidth * img.originalNaturalHeight) {
-				console.log('Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
+				console.log('[' + basename + '] Load full images: new image (', img.naturalWidth, 'x', img.naturalHeight, ') is smaller than old image (', img.originalNaturalWidth, 'x', img.originalNaturalHeight, '): ', img);
 
 				errorHandler();
 			}
