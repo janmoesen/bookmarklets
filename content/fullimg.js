@@ -250,6 +250,47 @@
 		}
 	);
 
+	/* Show controls on YouTube embeds. */
+	[].forEach.call(
+		document.querySelectorAll('iframe[src^="https://www.youtube.com/embed/"][src*="?"][src*="=0"]'),
+		function (iframe) {
+			var beforeAndAfterHash = iframe.src.split('#');
+			var beforeAndAfterQuery = beforeAndAfterHash[0].split('?');
+
+
+			var newPrefix = beforeAndAfterQuery[0];
+
+			var newQueryString = '';
+			if (beforeAndAfterQuery.length > 1) {
+				beforeAndAfterQuery.shift();
+
+				var newQueryParts = beforeAndAfterQuery
+					.join('?')
+					.split('&')
+					.filter(function (keyValuePair) {
+						return !keyValuePair.match(/^(controls|showinfo|rel)=0$/);
+					}
+				);
+
+				if (newQueryParts.length) {
+					newQueryString = '?' + newQueryParts.join('&');
+				}
+			}
+
+			var newHash = '';
+			if (beforeAndAfterHash.length > 1) {
+				beforeAndAfterHash.shift();
+				newHash = '#' + beforeAndAfterHash.join('#');
+			}
+
+			var newSrc = newPrefix + newQueryString + newHash;
+
+			if (newSrc !== iframe.src) {
+				iframe.src = newSrc;
+			}
+		}
+	);
+
 	/**
 	 * Crudely calculate the similarity between two strings. Taken from
 	 * http://stackoverflow.com/a/10473855. An alternative would be the
