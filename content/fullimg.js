@@ -107,21 +107,33 @@
 
 	/* Try to load the originals for images whose source URLs look like
 	 * thumbnail/resized versions with dimensions.
-	 *
-	 * Example:
-	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
-	 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
 	 */
 	[].forEach.call(
 		document.images,
 		function (img) {
 			var oldSrc = img.src;
+			/* Example:
+			 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
+			 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
+			 */
 			var matches = oldSrc.match(/(.*)[-_.@]\d+x\d+(\.[^\/.]+)/);
 			if (matches && matches[1] && matches[2]) {
 				var newSrc = matches[1] + matches[2];
 
-				changeSrc(img, newSrc, 'found image whose URL looks like a thumbnail/resized version');
+				return changeSrc(img, newSrc, 'found image whose URL looks like a thumbnail/resized version');
 			}
+
+			/* Example:
+			 * https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Kowloon-Walled-City-1898.jpg/220px-Kowloon-Walled-City-1898.jpg
+			 * https://upload.wikimedia.org/wikipedia/commons/8/83/Kowloon-Walled-City-1898.jpg
+			 */
+			matches = oldSrc.match(/(.*\/)thumb\/(.*)\/[^\/]+$/);
+			if (matches) {
+				var newSrc = matches[1] + matches[2];
+
+				return changeSrc(img, newSrc, 'found image whose URL looks like a MediaWiki thumbnail/resized version');
+			}
+
 		}
 	);
 
