@@ -292,7 +292,6 @@
 		aside:not(:hover),
 		[id^="footnote_plugin_tooltip_text_"]:not(:hover),
 		blockquote[class*="quote"]:not(:hover),
-		blockquote > :only-child:not(table):not(ol):not(ul):not(:hover),
 		.quote-box:not(:hover),
 		.su-pullquote:not(:hover),
 		.pullquote:not(:hover),
