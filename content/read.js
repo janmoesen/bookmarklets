@@ -290,6 +290,7 @@
 		}
 
 		aside:not(:hover),
+		[data-expander-id],
 		[id^="footnote_plugin_tooltip_text_"]:not(:hover),
 		blockquote[class*="quote"]:not(:hover),
 		.quote-box:not(:hover),
