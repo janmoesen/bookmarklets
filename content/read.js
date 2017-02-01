@@ -457,6 +457,8 @@
 			[id*="main"]
 		):not(
 			[id*="Main"]
+		):not(
+			[itemprop="articleBody"]
 		) {
 			display: none;
 		}
