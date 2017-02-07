@@ -34,7 +34,7 @@
 				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
 			}
 		} else {
-			location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+			location = 'https://www.youtube.com/results?sp=EgIQAQ==&search_query=' + encodeURIComponent(s);
 		}
 	}
 })();
