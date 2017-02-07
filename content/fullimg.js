@@ -227,11 +227,14 @@
 	var elementsToEnlargeSelectors = [
 		'video',
 		'iframe.twitter-tweet-rendered',
+		'iframe[src*="embed"]',
+		'iframe[src*="video"]',
+		'iframe[src*="syndication"]',
+		'iframe[class*="altura"]',
+		'iframe[id*="altura"]',
 		'iframe[src*="//e.infogr.am/"]',
 		'iframe[src*="//www.kickstarter.com/projects/"]',
-		'iframe[src*="//www.vier.be/video/partner/embed/"]',
 		'iframe[src*="//media-service.vara.nl/player.php"]',
-		'iframe[src*="//www.youtube.com/embed/"]',
 		'iframe[src*="//player.vimeo.com/video/"]'
 	];
 
