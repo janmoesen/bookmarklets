@@ -200,12 +200,18 @@
 				return;
 			}
 
-			var similarity = getSimilarity('' + img.src, '' + aHref);
+			/* Simplify a URL for similarity calculation. */
+			function simplifyUrl(url) {
+				return ('' + url)
+					.replace(/\d+/g, '0')
+					.replace(/^https?:/, '');
+			}
+
+			var similarity = getSimilarity(simplifyUrl(img.src), simplifyUrl(a.href));
 
 			if (similarity > 0.66) {
 				changeSrc(img, aHref, 'found linked image with ' + Math.round(similarity * 100) + '% similarity');
 			}
-
 		}
 	);
 
