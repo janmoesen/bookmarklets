@@ -355,198 +355,126 @@
 			display: none;
 		}
 
+		.social-media > .share {
+			display: none;
+		}
+
 		:-moz-any(
 			div,
 			ul,
 			li
 		):-moz-any(
-			[id*="social"],
-			[id*="share"],
-			[id*="sharing"],
-			[class*="social"],
-			[class*="share"],
-			[class*="sharing"]
-		):-moz-any(
-			[id*="post"],
-			[id*="Post"],
-			[id*="media"],
-			[id*="Media"],
-			[id*="utton"],
-			[id*="idget"],
-			[id*="ontainer"],
-			[id*="tool"],
-			[id*="Tool"],
-			[id*="bar"],
-			[id*="Bar"],
-			[id*="meta"],
-			[id*="Meta"],
-			[class*="post"],
-			[class*="Post"],
-			[class*="media"],
-			[class*="Media"],
-			[class*="utton"],
-			[class*="idget"],
-			[class*="ontainer"],
-			[class*="tool"],
-			[class*="Tool"],
-			[class*="bar"],
-			[class*="Bar"],
-			[class*="meta"],
-			[class*="Meta"]
-		):not(
-			[class*="shareable"]
-		):not(
-			article
-		):not(
-			[id*="article"]
-		):not(
-			[id*="Article"]
-		):not(
-			[class*="article"]
-		):not(
-			[class*="Article"]
-		):not(
-			[id*="main"]
-		):not(
-			[id*="Main"]
+			:-moz-any(
+				[id*="social"],
+				[id*="Social"]
+			):-moz-any(
+				[id*="media],
+				[id*="Media]
+			):-moz-any(
+				[id*="share],
+				[id*="Share],
+				[id*="sharing],
+				[id*="Sharing]
+			),
+			:-moz-any(
+				[id*="social"],
+				[id*="Social"]
+				[id*="share],
+				[id*="Share],
+				[id*="sharing],
+				[id*="Sharing]
+			):-moz-any(
+				[id*="toolbar"],
+				[id*="Toolbar"],
+				[id*="buttons"],
+				[id*="Buttons"],
+			),
+			:-moz-any(
+				[class*="social"],
+				[class*="Social"]
+			):-moz-any(
+				[class*="media],
+				[class*="Media]
+			):-moz-any(
+				[class*="share],
+				[class*="Share],
+				[class*="sharing],
+				[class*="Sharing]
+			),
+			:-moz-any(
+				[class*="social"],
+				[class*="Social"]
+				[class*="share],
+				[class*="Share],
+				[class*="sharing],
+				[class*="Sharing]
+			):-moz-any(
+				[class*="toolbar"],
+				[class*="Toolbar"],
+				[class*="buttons"],
+				[class*="Buttons"],
+			)
 		) {
 			display: none;
 		}
 
-		:-webkit-any(
+		:matches(
 			div,
 			ul,
 			li
-		):-webkit-any(
-			[id*="social"],
-			[id*="share"],
-			[id*="sharing"],
-			[class*="social"],
-			[class*="share"],
-			[class*="sharing"]
-		):-webkit-any(
-			[id*="post"],
-			[id*="Post"],
-			[id*="media"],
-			[id*="Media"],
-			[id*="utton"],
-			[id*="idget"],
-			[id*="ontainer"],
-			[id*="tool"],
-			[id*="Tool"],
-			[id*="bar"],
-			[id*="Bar"],
-			[id*="meta"],
-			[id*="Meta"],
-			[class*="post"],
-			[class*="Post"],
-			[class*="media"],
-			[class*="Media"],
-			[class*="utton"],
-			[class*="idget"],
-			[class*="ontainer"],
-			[class*="tool"],
-			[class*="Tool"],
-			[class*="bar"],
-			[class*="Bar"],
-			[class*="meta"],
-			[class*="Meta"]
-		):not(
-			[class*="shareable"]
-		):not(
-			article
-		):not(
-			[id*="article"]
-		):not(
-			[id*="Article"]
-		):not(
-			[class*="article"]
-		):not(
-			[class*="Article"]
-		):not(
-			[id*="main"]
-		):not(
-			[id*="Main"]
-		):not(
-			[itemprop="articleBody"]
+		):matches(
+			:matches(
+				[id*="social"],
+				[id*="Social"]
+			):matches(
+				[id*="media],
+				[id*="Media]
+			):matches(
+				[id*="share],
+				[id*="Share],
+				[id*="sharing],
+				[id*="Sharing]
+			),
+			:matches(
+				[id*="social"],
+				[id*="Social"]
+				[id*="share],
+				[id*="Share],
+				[id*="sharing],
+				[id*="Sharing]
+			):matches(
+				[id*="toolbar"],
+				[id*="Toolbar"],
+				[id*="buttons"],
+				[id*="Buttons"],
+			),
+			:matches(
+				[class*="social"],
+				[class*="Social"]
+			):matches(
+				[class*="media],
+				[class*="Media]
+			):matches(
+				[class*="share],
+				[class*="Share],
+				[class*="sharing],
+				[class*="Sharing]
+			),
+			:matches(
+				[class*="social"],
+				[class*="Social"]
+				[class*="share],
+				[class*="Share],
+				[class*="sharing],
+				[class*="Sharing]
+			):matches(
+				[class*="toolbar"],
+				[class*="Toolbar"],
+				[class*="buttons"],
+				[class*="Buttons"],
+			)
 		) {
 			display: none;
-		}
-
-		:any(
-			div,
-			ul,
-			li
-		):any(
-			[id*="social"],
-			[id*="share"],
-			[id*="sharing"],
-			[class*="social"],
-			[class*="share"],
-			[class*="sharing"]
-		):any(
-			[id*="post"],
-			[id*="Post"],
-			[id*="media"],
-			[id*="Media"],
-			[id*="utton"],
-			[id*="idget"],
-			[id*="ontainer"],
-			[id*="tool"],
-			[id*="Tool"],
-			[id*="bar"],
-			[id*="Bar"],
-			[id*="meta"],
-			[id*="Meta"],
-			[class*="post"],
-			[class*="Post"],
-			[class*="media"],
-			[class*="Media"],
-			[class*="utton"],
-			[class*="idget"],
-			[class*="ontainer"],
-			[class*="tool"],
-			[class*="Tool"],
-			[class*="bar"],
-			[class*="Bar"],
-			[class*="meta"],
-			[class*="Meta"]
-		):not(
-			[class*="shareable"]
-		):not(
-			article
-		):not(
-			[id*="article"]
-		):not(
-			[id*="Article"]
-		):not(
-			[class*="article"]
-		):not(
-			[class*="Article"]
-		):not(
-			[id*="main"]
-		):not(
-			[id*="Main"]
-		) {
-			display: none;
-		}
-
-		@-moz-document domain(bicycling.com) {
-			.sharebar-wrapper {
-				display: block !important;
-			}
-		}
-
-		@-webkit-document domain(bicycling.com) {
-			.sharebar-wrapper {
-				display: block !important;
-			}
-		}
-
-		@document domain(bicycling.com) {
-			.sharebar-wrapper {
-				display: block !important;
-			}
 		}
 
 		-jancss-comment { content:
