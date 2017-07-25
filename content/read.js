@@ -238,6 +238,14 @@
 			margin: 0;
 		}
 
+		iframe {
+			width: 100%;
+		}
+
+		iframe[class*="twitter"] {
+			min-height: 15em;
+		}
+
 		-jancss-comment { content:
 			"Dim images and media until :hover ------------------------";
 		}
