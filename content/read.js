@@ -301,6 +301,8 @@
 		[data-expander-id],
 		[id^="footnote_plugin_tooltip_text_"]:not(:hover),
 		blockquote[class*="quote"]:not(:hover),
+		q[class*="pull"]:not(:hover),
+		blockquote[class*="pull"]:not(:hover),
 		.quote-box:not(:hover),
 		.su-pullquote:not(:hover),
 		.pullquote:not(:hover),
