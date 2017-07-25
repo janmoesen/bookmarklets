@@ -97,6 +97,7 @@ COPY_VD=; copy-vd \
 	dict 'Dictionary.com' 'http://dictionary.reference.com/browse/' \
 	thes 'Thesaurus.com' 'http://thesaurus.reference.com/browse/' \
 	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
+	ac 'Arch Chinese' 'http://www.archchinese.com/chinese_english_dictionary.html?find=' \
 	nlwikt 'Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \
 	enwikt 'English Wiktionary' 'https://en.wiktionary.org/wiki/' \
 	frwikt 'French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
