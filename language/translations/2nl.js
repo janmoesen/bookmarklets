@@ -107,11 +107,8 @@
 	}
 
 	if (s) {
-		if (s.match(/^(\w+:(\/\/)?)?[^\s.]+(\.[^\s])+/)) {
-			var protocol = (s.match(/^https:/))
-				? 'https'
-				: 'http';
-			location = protocol + '://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s);
+    if (s.match(/^(https?:\/\/)?([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
+			location = 'https://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s);
 		} else {
 			location = 'https://translate.google.com/translate_t#auto|nl|' + encodeURIComponent(s);
 		}
