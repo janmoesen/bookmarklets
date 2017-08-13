@@ -19,6 +19,6 @@
 	}
 
 	if (s) {
-		location = 'http://dictionary.reference.com/browse/' + encodeURIComponent(s);
+		location = 'http://dictionary.com/browse/' + encodeURIComponent(s);
 	}
 })();

@@ -94,8 +94,8 @@ copy-vd () {
 COPY_VD=; copy-vd \
 	vw 'Vlaams Woordenboek' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
 	mw 'Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
-	dict 'Dictionary.com' 'http://dictionary.reference.com/browse/' \
-	thes 'Thesaurus.com' 'http://thesaurus.reference.com/browse/' \
+	dict 'Dictionary.com' 'http://dictionary.com/browse/' \
+	thes 'Thesaurus.com' 'http://thesaurus.com/browse/' \
 	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
 	ac 'Arch Chinese' 'http://www.archchinese.com/chinese_english_dictionary.html?find=' \
 	nlwikt 'Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \

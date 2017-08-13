@@ -19,6 +19,6 @@
 	}
 
 	if (s) {
-		location = 'http://thesaurus.reference.com/browse/' + encodeURIComponent(s);
+		location = 'http://thesaurus.com/browse/' + encodeURIComponent(s);
 	}
 })();
