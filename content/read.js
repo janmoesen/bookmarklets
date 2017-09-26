@@ -1278,7 +1278,7 @@
 					.trim();
 			}
 
-			var metaTitleElement = document.querySelector('meta[property="og:title"], meta[name="title"]');
+			var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
 			var normalizedMetaTitle = metaTitleElement && normalizeText(metaTitleElement.content);
 			var normalizedPageTitle = normalizeText(document.title);
 

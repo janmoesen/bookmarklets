@@ -15,7 +15,12 @@
 	}
 
 	var root = document.createDocumentFragment().appendChild(document.createElement('html'));
-	var titleText = s || (document.querySelector('title') && document.querySelector('title').textContent || document.title).replace(/\s\s+/g, ' ').trim() || (location + '');
+
+	var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
+	var titleElement = document.querySelector('title');
+	var titleText = s || (metaTitleElement && metaTitleElement.content) || (titleElement && titleElement.textContent) || document.title;
+	titleText = titleText.replace(/\s\s+/g, ' ').trim() || (location + '');
+
 	var originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
