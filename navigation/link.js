@@ -58,6 +58,13 @@
 	textarea.textContent += '\n\nHTML:\n' + link.parentNode.innerHTML;
 	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
 
-	/* Open the data: URI with existing %XX encodings intact. */
+	/* Try to open a data: URI. Firefox 57 and up (and probably other
+	 * browsers) disallows scripts to open data: URIs, so as a fall-back,
+	 * replace the original document's HTML with our generated HTML. */
 	location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
+	setTimeout(function () {
+		document.open();
+		document.write(root.outerHTML);
+		document.close();
+	}, 250);
 })();

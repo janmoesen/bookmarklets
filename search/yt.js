@@ -28,8 +28,18 @@
 		var matches;
 		if ((matches = s.match(/^([-_a-zA-Z0-9]{11})( *!)?$/)) && s.match(/[A-Z][a-z]|[a-z][A-Z]|[0-9][a-zA-Z]|[a-zA-Z][0-9]/)) {
 			if (matches[2]) {
-				location = 'data:text/html;charset=UTF-8,'
-					+ encodeURIComponent('<iframe width="854" height="510" src="https://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>');
+				var html = '<iframe width="854" height="510" src="https://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
+
+				/* Try to open a data: URI. Firefox 57 and up (and probably
+				 * other browsers) disallows scripts to open data: URIs, so
+				 * as a fall-back, replace the original document's HTML
+				 * with our generated HTML. */
+				location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(html);
+				setTimeout(function () {
+					document.open();
+					document.write(html);
+					document.close();
+				}, 250);
 			} else {
 				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
 			}

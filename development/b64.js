@@ -41,6 +41,17 @@
 			result = btoa(s);
 			operation = 'encoded';
 		}
-		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent('The Base64 ' + operation + ' string of "' + s + '" is:\n\n' + result);
+
+		var text = 'The Base64 ' + operation + ' string of "' + s + '" is:\n\n' + result;
+
+		/* Try to open a data: URI. Firefox 57 and up (and probably other
+		 * browsers) disallows scripts to open data: URIs, so as a fall-back,
+		 * replace the original document's HTML with our generated text. */
+		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(text);
+		setTimeout(function () {
+			document.open();
+			document.write('<plaintext>' + text);
+			document.close();
+		}, 250);
 	}
 })();

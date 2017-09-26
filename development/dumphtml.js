@@ -122,6 +122,16 @@
 		baseHref.parentNode.removeChild(baseHref);
 	}
 
-	/* Show the result in a new tab or window. */
-	window.open('data:text/plain;charset=UTF-8,' + encodeURIComponent(htmlParts.join('\n')));
+	var html = htmlParts.join('\n');
+
+	/* Try to open a data: URI in a new tab or window. Firefox 57 and up
+	 * (and probably other browsers) disallows scripts to open data: URIs, so
+	 * as a fall-back, replace the original document's HTML with our generated
+	 * HTML. */
+	window.open('data:text/plain;charset=UTF-8,' + encodeURIComponent(html));
+	setTimeout(function () {
+		document.open();
+		document.write('<plaintext>' + html);
+		document.close();
+	}, 250);
 })();
