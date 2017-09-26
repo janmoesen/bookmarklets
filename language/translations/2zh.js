@@ -107,7 +107,7 @@
 	}
 
 	if (s) {
-    if (s.match(/^(https?:\/\/)?([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
+		if (s.match(/^(https?:\/\/)([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
 			location = 'https://translate.google.com/translate?sl=auto&tl=zh-CN&u=' + encodeURIComponent(s);
 		} else {
 			location = 'https://translate.google.com/translate_t#auto|zh-CN|' + encodeURIComponent(s);
