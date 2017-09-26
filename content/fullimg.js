@@ -376,6 +376,7 @@
 		console.log('[' + basename + '] → Old img.src: ' + img.src);
 		console.log('[' + basename + '] → Try img.src: ' + newSrc);
 
+		/* Save the original source. */
 		if (!img.originalSrc) {
 			img.originalSrc = img.src;
 		}
@@ -388,9 +389,21 @@
 			img.originalNaturalHeight = img.naturalHeight;
 		}
 
+		/* Save and disable the srcset on the IMG element. */
 		if (img.hasAttribute('srcset')) {
 			img.originalSrcset = img.getAttribute('srcset');
 			img.removeAttribute('srcset');
+		}
+
+		/* Save and disable the srcset in the container PICTURE element's SOURCE descendants. */
+		if (img.parentNode.tagName.toLowerCase() === 'picture') {
+			[].forEach.call(
+				img.parentNode.querySelectorAll('source[srcset]'),
+				function (source) {
+					source.originalSrcset = source.getAttribute('srcset');
+					source.removeAttribute('srcset');
+				}
+			);
 		}
 
 		/* When the new source has failed to load, load the next one from the
@@ -413,12 +426,28 @@
 
 				img.removeEventListener('error', restoreOriginalSrc);
 
+				/* Restore the original source. */
 				img.src = img.originalSrc;
 
+				/* Re-enable the original srcset on the IMG element. */
 				if (img.originalSrcset) {
 					img.setAttribute('srcset', img.originalSrcset);
 					delete img.originalSrcset;
 				}
+
+				/* Re-enable the original srcset in the container PICTURE element's SOURCE descendants. */
+				if (img.parentNode.tagName.toLowerCase() === 'picture') {
+					[].forEach.call(
+						img.parentNode.querySelectorAll('source'),
+						function (source) {
+							if (source.originalSrcset) {
+								source.setAttribute('srcset', source.originalSrcset);
+								delete source.originalSrcset;
+							}
+						}
+					);
+				}
+
 			};
 		}
 
