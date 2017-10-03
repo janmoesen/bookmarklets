@@ -36,9 +36,9 @@
 				 * with our generated HTML. */
 				location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(html);
 				setTimeout(function () {
-					document.open();
-					document.write(html);
-					document.close();
+					HTMLDocument.prototype.open.call(document);
+					HTMLDocument.prototype.write.call(document, html);
+					HTMLDocument.prototype.close.call(document);
 				}, 250);
 			} else {
 				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);

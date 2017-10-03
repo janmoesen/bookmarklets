@@ -63,8 +63,8 @@
 	 * replace the original document's HTML with our generated HTML. */
 	location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
 	setTimeout(function () {
-		document.open();
-		document.write(root.outerHTML);
-		document.close();
+		HTMLDocument.prototype.open.call(document);
+		HTMLDocument.prototype.write.call(document, root.outerHTML);
+		HTMLDocument.prototype.close.call(document);
 	}, 250);
 })();

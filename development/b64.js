@@ -49,9 +49,9 @@
 		 * replace the original document's HTML with our generated text. */
 		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(text);
 		setTimeout(function () {
-			document.open();
-			document.write('<plaintext>' + text);
-			document.close();
+			HTMLDocument.prototype.open.call(document);
+			HTMLDocument.prototype.write.call(document, '<plaintext>' + text);
+			HTMLDocument.prototype.close.call(document);
 		}, 250);
 	}
 })();

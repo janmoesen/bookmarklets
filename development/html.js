@@ -24,9 +24,9 @@
 		 * replace the original document's HTML with our generated HTML. */
 		location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(s);
 		setTimeout(function () {
-			document.open();
-			document.write(s);
-			document.close();
+			HTMLDocument.prototype.open.call(document);
+			HTMLDocument.prototype.write.call(document, s);
+			HTMLDocument.prototype.close.call(document);
 		}, 250);
 	}
 })();
