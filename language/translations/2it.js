@@ -59,6 +59,7 @@
 				'[id*="lang"][id*="elect"] a[hreflang^="it-"]',
 				'[class*="lang"][class*="elect"] a[hreflang="it"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="it-"]',
+				'a.language[href*="/it/"]',
 				'a[href][title$="this page in Italian"]',
 				'a[href][title$="questa pagina in italiano"]'
 			];

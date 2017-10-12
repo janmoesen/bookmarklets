@@ -59,6 +59,7 @@
 				'[id*="lang"][id*="elect"] a[hreflang^="zh-CN-"]',
 				'[class*="lang"][class*="elect"] a[hreflang="zh-CN"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="zh-CN-"]',
+				'a.language[href*="/zh-CN/"]',
 				'a[href][title$="this page in Simplified Chinese"]',
 				'a[href][title$="this page in Chinese"]'
 			];

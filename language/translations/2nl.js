@@ -59,6 +59,7 @@
 				'[id*="lang"][id*="elect"] a[hreflang^="nl-"]',
 				'[class*="lang"][class*="elect"] a[hreflang="nl"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="nl-"]',
+				'a.language[href*="/nl/"]',
 				'a[href][title$="this page in Dutch"]',
 				'a[href][title$="deze pagina in het Nederlands"]'
 			];
