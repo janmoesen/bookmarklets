@@ -1,15 +1,15 @@
 /**
- * Translate the specified or selected text or URL to Simplified Chinese.
+ * Translate the specified or selected text or URL to Mandarin Chinese.
  *
  * It determines what and how to translate using the following logic:
  * - If a parameter has been specified, translate that using Google Translate.
  * - If text has been selected, translate that using Google Translate.
- * - If the page appears to link to the Simplified Chinese version of itself (e.g. in a
+ * - If the page appears to link to the Mandarin Chinese version of itself (e.g. in a
  *   language selector menu), follow that link.
  * - If the page is accessible via HTTP(S), use its URL with Google Translate.
  * - Otherwise, prompt the user for text to translate with Google Translate.
  *
- * @title Translate to Simplified Chinese
+ * @title Translate to Mandarin Chinese
  * @keyword 2zh
  */
 (function () {
@@ -40,8 +40,50 @@
 		.replace(/\u0025s/, '');
 
 	if (s === '') {
-		/* If there is no parameter, see if there is text selected. */
-		s = getSelection() + '';
+		/**
+		 * Get the active text selection, diving into frames and
+		 * text controls when necessary and possible.
+		 */
+		function getActiveSelection(doc) {
+			if (arguments.length === 0) {
+				doc = document;
+			}
+
+			if (!doc || typeof doc.getSelection !== 'function') {
+				return '';
+			}
+
+			if (!doc.activeElement) {
+				return doc.getSelection() + '';
+			}
+
+			var activeElement = doc.activeElement;
+
+			/* Recurse for FRAMEs and IFRAMEs. */
+			try {
+				if (
+					typeof activeElement.contentDocument === 'object'
+					&& activeElement.contentDocument !== null
+				) {
+					return getActiveSelection(activeElement.contentDocument);
+				}
+			} catch (e) {
+				return doc.getSelection() + '';
+			}
+
+			/* Get the selection from inside a text control. */
+			if (
+				typeof activeElement.value === 'string'
+				&& activeElement.selectionStart !== activeElement.selectionEnd
+			) {
+				return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+			}
+
+			/* Get the normal selection. */
+			return doc.getSelection() + '';
+		}
+
+		s = getActiveSelection();
 
 		if (!s) {
 			/* If there is no selection, look for translation links. */
@@ -60,7 +102,7 @@
 				'[class*="lang"][class*="elect"] a[hreflang="zh-CN"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="zh-CN-"]',
 				'a.language[href*="/zh-CN/"]',
-				'a[href][title$="this page in Simplified Chinese"]',
+				'a[href][title$="this page in Mandarin Chinese"]',
 				'a[href][title$="this page in Chinese"]'
 			];
 
@@ -68,7 +110,7 @@
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
-					console.log('Translate to Simplified Chinese: found link for selector ', interLanguageSelectors[i], ': ', link);
+					console.log('Translate to Mandarin Chinese: found link for selector ', interLanguageSelectors[i], ': ', link);
 
 					location = link.href;
 
@@ -79,13 +121,13 @@
 			var interLanguageXPathSelectors = [
 				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "zh-CN"]',
 				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "中文"]',
-				'//a[@href][contains(., "page in Simplified Chinese")]',
+				'//a[@href][contains(., "page in Mandarin Chinese")]',
 			];
 
 			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
 				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				if (xPathResult.snapshotLength) {
-					console.log('Translate to Simplified Chinese: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
+					console.log('Translate to Mandarin Chinese: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
 
 					location = xPathResult.snapshotItem(0).href;
 
@@ -100,7 +142,7 @@
 
 			/* If all else fails, prompt the user for the text to translate. */
 			if (!s) {
-				s = prompt('Please enter your text:');
+				s = prompt('Please enter your text to translate to Mandarin Chinese:');
 			}
 		}
 	} else {

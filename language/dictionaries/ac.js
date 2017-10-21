@@ -1,5 +1,5 @@
 /**
- * Look up the specified or selected text using Arch Chinese.
+ * Look up the specified or selected text in the Arch Chinese dictionary.
  *
  * @title Arch Chinese
  */
@@ -12,10 +12,54 @@
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
 		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
 		.replace(/\u0025s/, '');
+
+	/**
+	 * Get the active text selection, diving into frames and
+	 * text controls when necessary and possible.
+	 */
+	function getActiveSelection(doc) {
+		if (arguments.length === 0) {
+			doc = document;
+		}
+
+		if (!doc || typeof doc.getSelection !== 'function') {
+			return '';
+		}
+
+		if (!doc.activeElement) {
+			return doc.getSelection() + '';
+		}
+
+		var activeElement = doc.activeElement;
+
+		/* Recurse for FRAMEs and IFRAMEs. */
+		try {
+			if (
+				typeof activeElement.contentDocument === 'object'
+				&& activeElement.contentDocument !== null
+			) {
+				return getActiveSelection(activeElement.contentDocument);
+			}
+		} catch (e) {
+			return doc.getSelection() + '';
+		}
+
+		/* Get the selection from inside a text control. */
+		if (
+			typeof activeElement.value === 'string'
+			&& activeElement.selectionStart !== activeElement.selectionEnd
+		) {
+			return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+		}
+
+		/* Get the normal selection. */
+		return doc.getSelection() + '';
+	}
+
 	if (s === '') {
-		s = getSelection() + '' || prompt('Please enter your text:');
+		s = getActiveSelection() || prompt('Please enter the word(s) to look up in the Arch Chinese dictionary:');
 	} else {
-		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getSelection() + '$2');
+		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
 
 	if (s) {

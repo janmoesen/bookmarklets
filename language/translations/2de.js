@@ -40,8 +40,50 @@
 		.replace(/\u0025s/, '');
 
 	if (s === '') {
-		/* If there is no parameter, see if there is text selected. */
-		s = getSelection() + '';
+		/**
+		 * Get the active text selection, diving into frames and
+		 * text controls when necessary and possible.
+		 */
+		function getActiveSelection(doc) {
+			if (arguments.length === 0) {
+				doc = document;
+			}
+
+			if (!doc || typeof doc.getSelection !== 'function') {
+				return '';
+			}
+
+			if (!doc.activeElement) {
+				return doc.getSelection() + '';
+			}
+
+			var activeElement = doc.activeElement;
+
+			/* Recurse for FRAMEs and IFRAMEs. */
+			try {
+				if (
+					typeof activeElement.contentDocument === 'object'
+					&& activeElement.contentDocument !== null
+				) {
+					return getActiveSelection(activeElement.contentDocument);
+				}
+			} catch (e) {
+				return doc.getSelection() + '';
+			}
+
+			/* Get the selection from inside a text control. */
+			if (
+				typeof activeElement.value === 'string'
+				&& activeElement.selectionStart !== activeElement.selectionEnd
+			) {
+				return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+			}
+
+			/* Get the normal selection. */
+			return doc.getSelection() + '';
+		}
+
+		s = getActiveSelection();
 
 		if (!s) {
 			/* If there is no selection, look for translation links. */
@@ -100,7 +142,7 @@
 
 			/* If all else fails, prompt the user for the text to translate. */
 			if (!s) {
-				s = prompt('Please enter your text:');
+				s = prompt('Please enter your text to translate to German:');
 			}
 		}
 	} else {
