@@ -33,10 +33,22 @@
 	})();
 
 	/* Look for a dedicated search field. */
-	var input = document.querySelector('input[type="search"]');
+	var input;
+	var invisibleInputs = [];
+	var allSearchInputs = document.querySelectorAll('input[type="search"]');
+	for (var i = 0; i < allSearchInputs.length; i++) {
+		if (!allSearchInputs[i].offsetHeight) {
+			console.log('Search site: found invisible dedicated search input: ', input);
+			invisibleInputs.push(allSearchInputs[i]);
+			continue;
+		}
+
+		input = allSearchInputs[i];
+		break;
+	}
 
 	if (input) {
-		console.log('Search site: found dedicated search input: ', input);
+		console.log('Search site: found visible dedicated search input: ', input);
 	}
 
 	/* Look for common search field names. */
@@ -53,7 +65,13 @@
 			input = document.querySelector('input[type="text"][name="' + controlNames[i] + '"]');
 
 			if (input) {
-				console.log('Search site: found search input with name "' + controlNames[i] + '": ', input);
+				if (!input.offsetHeight) {
+					console.log('Search site: found invisible search input with name "' + controlNames[i] + '": ', input);
+					invisibleInputs.push(currInput);
+					continue;
+				}
+
+				console.log('Search site: found visible search input with name "' + controlNames[i] + '": ', input);
 				break;
 			}
 		}
@@ -87,9 +105,15 @@
 					var attributeValue = currInput.getAttribute(attributeToCheck) || '';
 
 					if (attributeValue.match(regexp)) {
+						if (!currInput.offsetHeight) {
+							console.log('Search site: found invisible input with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+							invisibleInputs.push(currInput);
+							continue;
+						}
+
 						input = currInput;
 
-						console.log('Search site: found input with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+						console.log('Search site: found visible input with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
 						break;
 					}
 				}
@@ -119,14 +143,28 @@
 					var attributeValue = currForm.getAttribute(attributeToCheck) || '';
 
 					if (attributeValue.match(regexp)) {
-						input = currForm.querySelector('input:not([type]), input[type="text"]');
+						var currInput = currForm.querySelector('input:not([type]), input[type="text"]');
 
-						console.log('Search site: found input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
-						break;
+						if (currInput) {
+							if (!currInput.offsetHeight) {
+								console.log('Search site: found invisible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+								invisibleInputs.push(currInput);
+								continue;
+							}
+
+							console.log('Search site: found visible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+							break;
+						}
 					}
 				}
 			}
 		}
+	}
+
+	/* If no visible search field was found, settle for an invisible one. */
+	if (!input && invisibleInputs.length) {
+		input = invisibleInputs[0];
+		console.log('Search site: defaulting to first invisible input found: ', input);
 	}
 
 	/* Bail out if no search field was found. */
