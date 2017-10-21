@@ -67,44 +67,46 @@ copy_2en_parameters=(
 
 	2zh
 	zh-CN
-	'Simplified Chinese'
+	'Mandarin Chinese'
 	中文
 	'this page in Chinese'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
-# Copy the Van Dale bookmarklet for some other dictionaries.
-copy-vd () {
-	local source='language/dictionaries/vd.js';
+# Copy the English Wiktionary bookmarklet for some other dictionaries.
+copy-enwikt () {
+	local source='language/dictionaries/enwikt.js';
 	while [ $# -ge 3 ]; do
 		local keyword="$1";
 		shift;
 		local name="$1";
 		shift;
+		local in_the_dictionary="$1";
+		shift;
 		local url="$1";
 		shift;
-		local target="${source/vd/$keyword}";
+		local target="${source/enwikt/$keyword}";
 
-		perl -p -e "s/\bvd\b/$keyword/g; s/Van Dale/$name/g; s|http://www.vandale.nl/[^']+|$url|" "$source" > "$target" \
+		perl -p -e "s/\benwikt\b/$keyword/g; s/in the English Wiktionary/$in_the_dictionary/g; s/English Wiktionary/$name/g; s|https://en\.wiktionary\.org/[^']+|$url|" "$source" > "$target" \
 			&& echo "Copied to $target ($name)" \
 			|| echo "Failed to copy to $target ($name)";
 	done;
 }
 
-COPY_VD=; copy-vd \
-	vw 'Vlaams Woordenboek' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
-	mw 'Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
-	dict 'Dictionary.com' 'http://dictionary.com/browse/' \
-	thes 'Thesaurus.com' 'http://thesaurus.com/browse/' \
-	ud 'Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
-	ac 'Arch Chinese' 'http://www.archchinese.com/chinese_english_dictionary.html?find=' \
-	nlwikt 'Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \
-	enwikt 'English Wiktionary' 'https://en.wiktionary.org/wiki/' \
-	frwikt 'French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
-	dewikt 'German Wiktionary' 'https://de.wiktionary.org/wiki/' \
-	itwikt 'Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
-	eswikt 'Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
-	zhwikt 'Simplified Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
+COPY_ENWIKT=; copy-enwikt \
+	nlwikt 'Dutch Wiktionary' 'in the Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \
+	frwikt 'French Wiktionary' 'in the French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
+	dewikt 'German Wiktionary' 'in the German Wiktionary' 'https://de.wiktionary.org/wiki/' \
+	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
+	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
+	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
+	vw 'Van Dale' 'using the Van Dale (Dutch) dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
+	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
+	mw 'Merriam-Webster' 'using Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
+	dict 'Dictionary.com' 'on Dictionary.com' 'http://dictionary.com/browse/' \
+	thes 'Thesaurus.com' 'on Thesaurus.com' 'http://thesaurus.com/browse/' \
+	ud 'Urban Dictionary' 'in the Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
+	ac 'Arch Chinese' 'in the Arch Chinese dictionary' 'http://www.archchinese.com/chinese_english_dictionary.html?find=' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
@@ -128,7 +130,7 @@ COPY_ENW=; copy-enw \
 	de German \
 	it Italian \
 	es Spanish \
-	zh 'Simplified Chinese' \
+	zh 'Mandarin Chinese' \
 ;
 
 # Typing is hard; let's go shopping.
