@@ -100,7 +100,7 @@ COPY_ENWIKT=; copy-enwikt \
 	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
 	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
 	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
-	vw 'Van Dale' 'using the Van Dale (Dutch) dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
+	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'http://www.vandale.nl/opzoeken?lang=nn&pattern=' \
 	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
 	mw 'Merriam-Webster' 'using Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
 	dict 'Dictionary.com' 'on Dictionary.com' 'http://dictionary.com/browse/' \
