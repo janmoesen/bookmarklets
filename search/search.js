@@ -149,8 +149,12 @@
 	}
 
 	/* Focus the search field. */
-	input.scrollIntoView();
-	input.focus();
+	input.scrollIntoView({
+		behavior: 'smooth',
+		block: 'center',
+		inline: 'center'
+	});
+	setTimeout(function () { input.focus(); }, 250);
 
 	/* Fill the search field and submit the form, if a search term was given. */
 	if (s) {
