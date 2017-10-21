@@ -131,7 +131,7 @@
 
 	/* Bail out if no search field was found. */
 	if (!input) {
-		console.log('Search site: could not find search form on the current page.');
+		alert('Search site: could not find search form on the current page.');
 		return;
 	}
 
