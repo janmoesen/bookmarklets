@@ -186,16 +186,16 @@
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getSelection() + '$2');
 	}
 
-	/* Focus the search field. */
-	input.scrollIntoView({
-		behavior: 'smooth',
-		block: 'center',
-		inline: 'center'
-	});
-	setTimeout(function () { input.focus(); }, 250);
-
 	/* Fill the search field and submit the form, if a search term was given. */
 	if (s) {
+		/* Focus the search field. */
+		input.scrollIntoView({
+			behavior: 'smooth',
+			block: 'center',
+			inline: 'center'
+		});
+		setTimeout(function () { input.focus(); }, 250);
+
 		input.value = s;
 
 		if (input.form && input.form.tagName && input.form.tagName.toLowerCase() === 'form') {
