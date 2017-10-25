@@ -63,6 +63,6 @@
 	}
 
 	if (s) {
-		location = 'https://www.strava.com/activities/search?utf8=%E2%9C%93&text=' + encodeURIComponent(s);
+		location = 'https://www.strava.com/activities/search?utf8=%E2%9C%93&keywords=' + encodeURIComponent(s);
 	}
 })();
