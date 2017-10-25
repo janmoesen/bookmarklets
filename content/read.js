@@ -852,7 +852,7 @@
 		/* Special hack for The Guardian (and possibly others), which re-enables the CSS because it detects a change in font size. */
 		window.TextResizeDetector && TextResizeDetector.stopDetector && TextResizeDetector.stopDetector();
 
-		/* Kill all scheduled callbacks. Naively ass-u-me that any call to
+		/* Clear all scheduled callbacks. Naively ass-u-me that any call to
 		 * setTimeout/setInterval returns the next ID from a monotonically
 		 * increasing function that is used for both timeout and interval
 		 * IDs. Therefore, to clear all timeouts and intervals, it suffices
@@ -869,7 +869,7 @@
 			}
 		}, 4); /* 4 ms is the minimum timeout as per HTML5. */
 
-		/* Now kill all the requested animation frame callbacks. Again, this
+		/* Now clear all the requested animation frame callbacks. Again, this
 		 * naively assumes the ID will increment one by one. MDN explicitly
 		 * advises against assumptions such as this one: https://developer.mozilla.org/en-US/docs/Web/API/window.requestAnimationFrame#Return_value
 		 */
