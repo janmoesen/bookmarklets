@@ -656,6 +656,11 @@
 		'face', 'font@size', 'basefont@size'
 	];
 
+	/* Elements to remove completely. */
+	var elementsToRemoveSelectors = [
+		'.bt-popin' /* Used on standaard.be. */
+	];
+
 	/* The selectors to try for the header elements, whose text content will be compared to the page title. The last match wins. */
 	var headerSelectors = [
 		'[class*="head"]:not(:empty)',
@@ -1068,6 +1073,11 @@
 			{
 				addClass(elem, 'jancss-emptyish');
 			}
+		});
+
+		/* Remove known-bad elements. */
+		toArray(document.querySelectorAll(elementsToRemoveSelectors.join(', '))).forEach(function (element) {
+			element.parentNode.removeChild(element);
 		});
 
 		/* The first time this bookmarklet is called, add our style sheet and
