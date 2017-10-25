@@ -829,6 +829,10 @@
 		'onselectionchange'
 	];
 
+	/* All main content elements (the one in the main document and those
+	 * nested in any IFRAMEs etc.) */
+	var contentElements = [];
+
 	/* The main function. */
 	(function execute(document) {
 		function addClass(element, classNames) {
@@ -1390,11 +1394,7 @@
 		toggleStyles();
 
 		/* Scroll to the start of the content if we found it and have not scrolled yet. */
-		shouldScrollContentIntoView && contentElement.scrollIntoView({
-			behavior: 'smooth',
-			block: 'start',
-			inline: 'start'
-		});
+		shouldScrollContentIntoView && contentElements.push(contentElement);
 
 		/* Recurse for frames and iframes. */
 		try {
@@ -1405,4 +1405,19 @@
 			/* Catch exceptions for out-of-domain access, but do not do anything with them. */
 		}
 	})(document);
+
+	/* When there are IFRAMEs etc. with their own main content element,
+	 * scrolling them into view as soon as they are found would override the
+	 * main document’s scroll position. By scrolling the nested elements into
+	 * view *first*, and the main document’s main content element *last*,
+	 * things behave more as expected.
+	 */
+	var contentElement;
+	while ((contentElement = contentElements.pop())) {
+		contentElement.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+			inline: 'start'
+		});
+	};
 })();
