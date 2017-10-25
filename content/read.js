@@ -368,21 +368,21 @@
 				[id*="social"],
 				[id*="Social"]
 			):-moz-any(
-				[id*="media],
-				[id*="Media]
+				[id*="media"],
+				[id*="Media"]
 			):-moz-any(
-				[id*="share],
-				[id*="Share],
-				[id*="sharing],
-				[id*="Sharing]
+				[id*="share"],
+				[id*="Share"],
+				[id*="sharing"],
+				[id*="Sharing"]
 			),
 			:-moz-any(
 				[id*="social"],
 				[id*="Social"]
-				[id*="share],
-				[id*="Share],
-				[id*="sharing],
-				[id*="Sharing]
+				[id*="share"],
+				[id*="Share"],
+				[id*="sharing"],
+				[id*="Sharing"]
 			):-moz-any(
 				[id*="toolbar"],
 				[id*="Toolbar"],
@@ -393,21 +393,21 @@
 				[class*="social"],
 				[class*="Social"]
 			):-moz-any(
-				[class*="media],
-				[class*="Media]
+				[class*="media"],
+				[class*="Media"]
 			):-moz-any(
-				[class*="share],
-				[class*="Share],
-				[class*="sharing],
-				[class*="Sharing]
+				[class*="share"],
+				[class*="Share"],
+				[class*="sharing"],
+				[class*="Sharing"]
 			),
 			:-moz-any(
 				[class*="social"],
 				[class*="Social"]
-				[class*="share],
-				[class*="Share],
-				[class*="sharing],
-				[class*="Sharing]
+				[class*="share"],
+				[class*="Share"],
+				[class*="sharing"],
+				[class*="Sharing"]
 			):-moz-any(
 				[class*="toolbar"],
 				[class*="Toolbar"],
@@ -427,21 +427,21 @@
 				[id*="social"],
 				[id*="Social"]
 			):matches(
-				[id*="media],
-				[id*="Media]
+				[id*="media"],
+				[id*="Media"]
 			):matches(
-				[id*="share],
-				[id*="Share],
-				[id*="sharing],
-				[id*="Sharing]
+				[id*="share"],
+				[id*="Share"],
+				[id*="sharing"],
+				[id*="Sharing"]
 			),
 			:matches(
 				[id*="social"],
 				[id*="Social"]
-				[id*="share],
-				[id*="Share],
-				[id*="sharing],
-				[id*="Sharing]
+				[id*="share"],
+				[id*="Share"],
+				[id*="sharing"],
+				[id*="Sharing"]
 			):matches(
 				[id*="toolbar"],
 				[id*="Toolbar"],
@@ -452,21 +452,21 @@
 				[class*="social"],
 				[class*="Social"]
 			):matches(
-				[class*="media],
-				[class*="Media]
+				[class*="media"],
+				[class*="Media"]
 			):matches(
-				[class*="share],
-				[class*="Share],
-				[class*="sharing],
-				[class*="Sharing]
+				[class*="share"],
+				[class*="Share"],
+				[class*="sharing"],
+				[class*="Sharing"]
 			),
 			:matches(
 				[class*="social"],
 				[class*="Social"]
-				[class*="share],
-				[class*="Share],
-				[class*="sharing],
-				[class*="Sharing]
+				[class*="share"],
+				[class*="Share"],
+				[class*="sharing"],
+				[class*="Sharing"]
 			):matches(
 				[class*="toolbar"],
 				[class*="Toolbar"],
