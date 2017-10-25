@@ -1390,7 +1390,11 @@
 		toggleStyles();
 
 		/* Scroll to the start of the content if we found it and have not scrolled yet. */
-		shouldScrollContentIntoView && contentElement.scrollIntoView();
+		shouldScrollContentIntoView && contentElement.scrollIntoView({
+			behavior: 'smooth',
+			block: 'start',
+			inline: 'start'
+		});
 
 		/* Recurse for frames and iframes. */
 		try {
