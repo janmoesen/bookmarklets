@@ -14,6 +14,49 @@
 		s = 'http://' + s;
 	}
 
+	/**
+	 * Get the active text selection, diving into frames and
+	 * text controls when necessary and possible.
+	 */
+	function getActiveSelection(doc) {
+		if (arguments.length === 0) {
+			doc = document;
+		}
+
+		if (!doc || typeof doc.getSelection !== 'function') {
+			return '';
+		}
+
+		if (!doc.activeElement) {
+			return doc.getSelection() + '';
+		}
+
+		var activeElement = doc.activeElement;
+
+		/* Recurse for FRAMEs and IFRAMEs. */
+		try {
+			if (
+				typeof activeElement.contentDocument === 'object'
+				&& activeElement.contentDocument !== null
+			) {
+				return getActiveSelection(activeElement.contentDocument);
+			}
+		} catch (e) {
+			return doc.getSelection() + '';
+		}
+
+		/* Get the selection from inside a text control. */
+		if (
+			typeof activeElement.value === 'string'
+			&& activeElement.selectionStart !== activeElement.selectionEnd
+		) {
+			return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+		}
+
+		/* Get the normal selection. */
+		return doc.getSelection() + '';
+	}
+
 	var root = document.createDocumentFragment().appendChild(document.createElement('html'));
 
 	var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
@@ -55,7 +98,13 @@
 
 	/* Show the link code in various formats. */
 	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
+	var selectedText = getActiveSelection();
+	if (selectedText) {
+		textarea.textContent += '\n“' + selectedText + '”';
+	}
+
 	textarea.textContent += '\n\nHTML:\n' + link.parentNode.innerHTML;
+
 	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
 
 	/* Try to open a data: URI. Firefox 57 and up (and probably other
