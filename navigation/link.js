@@ -67,7 +67,7 @@
 	var originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
-	root.innerHTML = '<html><title></title><link rel="icon"/><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; min-height: 30ex; padding: 1ex; border: 1px dotted grey; }</style><p><img/> <span><a></a></span></p><p>Link code:<br/><textarea rows="10" cols="80"></textarea></p></html>';
+	root.innerHTML = '<html><title></title><link rel="icon"/><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; min-height: 30ex; padding: 1ex; border: 1px dotted grey; }</style><p><img/> <span><a></a></span></p><p>Link code:<br/><textarea rows="10" cols="80"></textarea></p><script>var textarea = document.querySelector("textarea"); if (textarea) { textarea.style.height = textarea.scrollHeight + "px"; }</script></html>';
 	var title = root.querySelector('title');
 	var iconLink = root.querySelector('link');
 	var styleSheet = root.querySelector('style');
