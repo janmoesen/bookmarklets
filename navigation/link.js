@@ -100,7 +100,7 @@
 	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
 	var selectedText = getActiveSelection();
 	if (selectedText) {
-		textarea.textContent += '\n“' + selectedText + '”';
+		textarea.textContent += '\n“' + selectedText.trim() + '”';
 	}
 
 	textarea.textContent += '\n\nHTML:\n' + link.parentNode.innerHTML;
