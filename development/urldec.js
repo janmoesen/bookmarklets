@@ -63,14 +63,9 @@
 	}
 
 	if (s) {
-		/* Try to open a data: URI. Firefox 57 and up (and probably other
-		 * browsers) disallows scripts to open data: URIs, so as a fall-back,
-		 * replace the original document's HTML with our generated text. */
-		location = 'data:text/plain;charset=UTF-8,' + s;
-		setTimeout(function () {
-			HTMLDocument.prototype.open.call(document);
-			HTMLDocument.prototype.write.call(document, '<plaintext>' + decodeURIComponent(s));
-			HTMLDocument.prototype.close.call(document);
-		}, 250);
+		/* Replace the original document's HTML with our generated text. */
+		HTMLDocument.prototype.open.call(document, 'text/plain; charset=UTF-8');
+		HTMLDocument.prototype.write.call(document, decodeURIComponent(s));
+		HTMLDocument.prototype.close.call(document);
 	}
 })();

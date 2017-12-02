@@ -88,14 +88,9 @@
 
 		var text = 'The Base64 ' + operation + ' string of "' + s + '" is:\n\n' + result;
 
-		/* Try to open a data: URI. Firefox 57 and up (and probably other
-		 * browsers) disallows scripts to open data: URIs, so as a fall-back,
-		 * replace the original document's HTML with our generated text. */
-		location = 'data:text/plain;charset=UTF-8,' + encodeURIComponent(text);
-		setTimeout(function () {
-			HTMLDocument.prototype.open.call(document);
-			HTMLDocument.prototype.write.call(document, '<plaintext>' + text);
-			HTMLDocument.prototype.close.call(document);
-		}, 250);
+		/* Replace the original document's HTML with our result. */
+		HTMLDocument.prototype.open.call(document, 'text/plain; charset=UTF-8');
+		HTMLDocument.prototype.write.call(document, text);
+		HTMLDocument.prototype.close.call(document);
 	}
 })();

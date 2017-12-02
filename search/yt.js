@@ -74,16 +74,10 @@
 			if (matches[2]) {
 				var html = '<iframe width="854" height="510" src="https://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
 
-				/* Try to open a data: URI. Firefox 57 and up (and probably
-				 * other browsers) disallows scripts to open data: URIs, so
-				 * as a fall-back, replace the original document's HTML
-				 * with our generated HTML. */
-				location = 'data:text/html;charset=UTF-8,' + encodeURIComponent(html);
-				setTimeout(function () {
-					HTMLDocument.prototype.open.call(document);
-					HTMLDocument.prototype.write.call(document, html);
-					HTMLDocument.prototype.close.call(document);
-				}, 250);
+				/* Replace the original document's HTML with our generated HTML. */
+				HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
+				HTMLDocument.prototype.write.call(document, html);
+				HTMLDocument.prototype.close.call(document);
 			} else {
 				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
 			}

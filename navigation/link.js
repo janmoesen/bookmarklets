@@ -107,16 +107,11 @@
 
 	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
 
-	/* Try to open a data: URI. Firefox 57 and up (and probably other
-	 * browsers) disallows scripts to open data: URIs, so as a fall-back,
-	 * replace the original document's HTML with our generated HTML. */
 	var dataUri = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
-	location = dataUri;
-	setTimeout(function () {
-		textarea.textContent += '\n\nData URI for this link page:\n' + dataUri;
+	textarea.textContent += '\n\nData URI for this link page:\n' + dataUri;
 
-		HTMLDocument.prototype.open.call(document);
-		HTMLDocument.prototype.write.call(document, root.outerHTML);
-		HTMLDocument.prototype.close.call(document);
-	}, 250);
+	/* Replace the original document's HTML with our generated HTML. */
+	HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
+	HTMLDocument.prototype.write.call(document, root.outerHTML);
+	HTMLDocument.prototype.close.call(document);
 })();
