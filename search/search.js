@@ -242,52 +242,58 @@
 
 		input.value = s;
 
-		if (input.form && input.form.tagName && input.form.tagName.toLowerCase() === 'form') {
-			/* Call the FORM's submit() method, but avoid conflicts with
-			 * INPUTs with name="submit". */
-			HTMLFormElement.prototype.submit.call(input.form);
-		} else {
-			/* Simulate pressing the Enter key using a variety of events. */
-			var eventTypes = ['keypress', 'keyup', 'keydown'];
+		/* Simulate pressing the Enter key using a variety of events. */
+		var eventTypes = ['keypress', 'keyup', 'keydown'];
 
-			/* Stop trying other event types as soon as the submission seems
-			 * to be in progress. */
-			var isUnloading = false;
-			window.addEventListener('unload', function (event) {
-				console.log('Caught unload event!');
-				isUnloading = true;
-			});
+		/* Stop trying other event types as soon as the submission seems
+		 * to be in progress. */
+		var isUnloading = false;
+		window.addEventListener('unload', function (event) {
+			console.log('Caught unload event!');
+			isUnloading = true;
+		});
 
-			/* Create and dispatch an event of the next type in the
-			 * "eventTypes" array. */
-			function dispatchNextEvent() {
-				if (isUnloading) {
-					return;
-				}
-
-				var eventType = eventTypes.shift();
-
-				if (!eventType) {
-					return;
-				}
-
-				/* Make certain Angular sites like Wikiwand update their
-				 * internal copy of the search string. */
-				console.log('Search site: dispatching synthetic input event');
-				input.dispatchEvent(new Event('input', {}));
-
-				/* Simulate pressing the Enter key. */
-				console.log('Search site: dispatching synthetic ' + eventType + ' event');
-				input.dispatchEvent(new KeyboardEvent(eventType, {
-					keyCode: 13,
-					charCode: 13,
-					which: 13
-				}));
-
-				setTimeout(dispatchNextEvent, 250);
+		/* Create and dispatch an event of the next type in the
+		 * "eventTypes" array. */
+		function dispatchNextEvent() {
+			if (isUnloading) {
+				return;
 			}
 
-			dispatchNextEvent();
+			var eventType = eventTypes.shift();
+
+			if (!eventType) {
+				/* If we have tried all event types, resort to a normal form
+				 * submission. This used to be the default, but more and more
+				 * sites are “smart” and (ab)use Angular and the like instead of
+				 * Real HTML and JavaScript.  */
+				if (input.form && input.form.tagName && input.form.tagName.toLowerCase() === 'form') {
+					/* Call the FORM's submit() method, but avoid conflicts with
+					 * INPUTs with name="submit". */
+					HTMLFormElement.prototype.submit.call(input.form);
+				}
+
+				/* No more event types and no FORM to submit? End of the line
+				 * for us, then. */
+				return;
+			}
+
+			/* Make certain Angular sites like Wikiwand update their
+			 * internal copy of the search string. */
+			console.log('Search site: dispatching synthetic input event');
+			input.dispatchEvent(new Event('input', {}));
+
+			/* Simulate pressing the Enter key. */
+			console.log('Search site: dispatching synthetic ' + eventType + ' event');
+			input.dispatchEvent(new KeyboardEvent(eventType, {
+				keyCode: 13,
+				charCode: 13,
+				which: 13
+			}));
+
+			setTimeout(dispatchNextEvent, 250);
 		}
+
+		dispatchNextEvent();
 	}
 })();
