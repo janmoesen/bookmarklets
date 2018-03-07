@@ -12,7 +12,7 @@
 		alert('No file contents found on page.');
 		return;
 	}
-	
+
 	/* Extract the source code from the separately highlighted lines. */
 	var lineContainers = Array.prototype.slice.call(codeContainer.querySelectorAll('.line'));
 	if (!lineContainers.length) {
@@ -23,7 +23,7 @@
 	lineContainers.forEach(function (line) {
 		lines.push(line.textContent);
 	});
-	
+
 	/* Replace the code with a TEXTAREA of more or less the same dimensions. */
 	var textarea = document.createElement('textarea');
 	textarea.value = 'javascript:' + lines.join('\n');

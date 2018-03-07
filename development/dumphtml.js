@@ -76,7 +76,7 @@
 		if (node.systemId) {
 			docTypeParts.push(node.systemId);
 		};
-	
+
 		return '<!' + docTypeParts.join(' ') + '>';
 	};
 
