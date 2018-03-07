@@ -1,14 +1,15 @@
 /**
- * Search YouTube for the specified or selected text.
+ * Search YouTube for the specified or selected text, looking for videos only.
+ * (I.e., no playlists, channels, …)
  *
  * If the text looks like a video ID, you are taken directly to the video.
  *
  * If you append a "!" to the video ID, it will be opened in an IFRAME, so you
  * do not need to sign in for "restricted" videos.
  *
- * @title YouTube
+ * @title YouTube video
  */
-(function yt() {
+(function ytv() {
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
