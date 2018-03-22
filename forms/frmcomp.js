@@ -3,7 +3,7 @@
  *
  * @title Enable autocomplete
  */
-(function autocomp(document) {
+(function frmcomp(document) {
 	[].slice.call(document.forms).forEach(function (form) {
 		if (form.autocomplete === '' || form.autocomplete === 'off') {
 			console.log('Enable autocomplete: enabling on form: ', form);
