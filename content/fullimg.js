@@ -238,6 +238,7 @@
 		'iframe[src*="syndication"]',
 		'iframe[class*="altura"]',
 		'iframe[id*="altura"]',
+		'iframe[src*="altura"]',
 		'iframe[src*="//e.infogr.am/"]',
 		'iframe[src*="//www.kickstarter.com/projects/"]',
 		'iframe[src*="//media-service.vara.nl/player.php"]',
