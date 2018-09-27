@@ -25,7 +25,6 @@
 		};
 	})();
 
-
 	var processedDocuments = [];
 
 	(function execute(document) {
@@ -43,8 +42,13 @@
 		}
 
 		processedDocuments.push(document);
-	
-		[].forEach.call(document.querySelectorAll('img, input[type="image"], area'), function (element) {
+
+		function setTitleForElement(element) {
+			if (!element || element.hasBeenProcessedByAlt2Title)
+			{
+				return;
+			}
+
 			var newTitle = '';
 			if (element.hasAttribute('title')) {
 				newTitle = element.getAttribute('title') + '\n\n';
@@ -65,6 +69,12 @@
 			element.setAttribute('title', newTitle);
 
 			console.log('Alt to title: setting title for ', element, ' to: ', newTitle);
-		});
+
+			element.hasBeenProcessedByAlt2Title = true;
+		};
+
+		/* Process all existing images. */
+		var imageSelector = 'img, input[type="image"], area';
+		[].forEach.call(document.querySelectorAll(imageSelector), setTitleForElement);
 	})(document);
 })();
