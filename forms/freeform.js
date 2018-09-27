@@ -7,6 +7,8 @@
 (function freeform(document) {
 	var attributeNamesToRemove = [
 		'required',
+		'disabled',
+		'readonly',
 		'min',
 		'max',
 		'maxlength',
