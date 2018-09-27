@@ -478,6 +478,14 @@
 		}
 
 		-jancss-comment { content:
+			"Hide ad elements that slipped through my ad blocker ------";
+		}
+
+		iframe[id^="google_ads_"] {
+			display: none;
+		}
+
+		-jancss-comment { content:
 			"Hide empty list items ------------------------------------";
 		}
 
