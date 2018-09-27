@@ -57,6 +57,7 @@
 			'q',
 			'query',
 			'search',
+			'searchword',
 			's',
 			'filter'
 		];
