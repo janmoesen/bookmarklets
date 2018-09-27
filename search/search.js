@@ -63,7 +63,7 @@
 		];
 
 		for (var i = 0; i < controlNames.length; i++) {
-			input = document.querySelector('input[type="text"][name="' + controlNames[i] + '"]');
+			input = document.querySelector('input[type="text"][name="' + controlNames[i] + '"], input:not([type])[name="' + controlNames[i] + '"]');
 
 			if (input) {
 				if (!input.offsetHeight) {
