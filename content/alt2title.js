@@ -76,5 +76,13 @@
 		/* Process all existing images. */
 		var imageSelector = 'img, input[type="image"], area';
 		[].forEach.call(document.querySelectorAll(imageSelector), setTitleForElement);
+
+		/* Add a hover handler for images that may be added in the future. */
+		document.addEventListener('mousemove', function (e) {
+			var element;
+			if (e.target && typeof e.target.closest === 'function' && (element = e.target.closest(imageSelector))) {
+				setTitleForElement(element);
+			}
+		}, false);
 	})(document);
 })();
