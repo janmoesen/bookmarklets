@@ -27,7 +27,7 @@
 	 */
 	function getTextFromElement(element) {
 		/* TODO: take IMG@alt, BUTTON@value etc. into account */
-		return element.textContent.trim();
+		return element.textContent.trim().toLowerCase();
 	}
 
 	/**
