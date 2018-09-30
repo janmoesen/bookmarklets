@@ -131,9 +131,16 @@
 					let uniqueCellValues = new Set();
 
 					Array.from(tr.cells).forEach((cell, i) => {
+						/* Don't take the header cells into account. */
 						if (cell.tagName.toUpperCase() === 'TH') {
 							return;
 						}
+
+						/* Assume the first cell is a header cell, even if it is not a TH. */
+						if (i === 0) {
+							return;
+						}
+
 						cellValues[i] = getTextFromElement(cell);
 						uniqueCellValues.add(cellValues[i]);
 					});
