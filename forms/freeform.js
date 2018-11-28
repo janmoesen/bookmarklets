@@ -40,19 +40,19 @@
 					delete element[attr];
 					element.removeAttribute(attr);
 				}
+			});
 
-				if (element.tagName.toUpperCase() === 'INPUT') {
-					if (element.hasAttribute('type')) {
-						var type = element.getAttribute('type').toLowerCase();
-						if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
-							console.log('Freeform: remove “type” attribute on element: ', element);
-							changes.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '” (name: “' + element.name + '”)');
+			if (element.tagName.toUpperCase() === 'INPUT') {
+				if (element.hasAttribute('type')) {
+					var type = element.getAttribute('type').toLowerCase();
+					if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
+						console.log('Freeform: remove “type” attribute on element: ', element);
+						toolTipLines.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '”');
 
-							element.removeAttribute('type');
-						}
+						element.removeAttribute('type');
 					}
 				}
-			});
+			}
 
 			if (changes.length) {
 				var oldToolTip = element.title;
