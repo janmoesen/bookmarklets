@@ -5,6 +5,14 @@
  * @title Freeform
  */
 (function freeform(document) {
+	var originalAttributesToPutInToolTip = {
+		'name': 'Name',
+		'id': 'HTML element ID',
+		'type': 'Original type',
+		'value': 'Original value',
+		'placeholder': 'Original placeholder'
+	};
+
 	var attributeNamesToRemove = [
 		'required',
 		'disabled',
@@ -30,12 +38,12 @@
 
 	[].forEach.call(document.forms, function (form) {
 		[].forEach.call(form.elements, function (element) {
-			var changes = [];
+			var toolTipLines = [];
 
 			attributeNamesToRemove.forEach(function (attr) {
 				if (element[attr] || element.hasAttribute(attr)) {
 					console.log('Freeform: remove “' + attr + '” attribute on element: ', element);
-					changes.push('Removed “' + attr + '” attribute; was: “' + (element.getAttribute(attr) || element[attr]) + '”');
+					toolTipLines.push('Removed “' + attr + '” attribute; was: “' + (element.getAttribute(attr) || element[attr]) + '”');
 
 					delete element[attr];
 					element.removeAttribute(attr);
@@ -54,10 +62,10 @@
 				}
 			}
 
-			if (changes.length) {
+			if (toolTipLines.length) {
 				var oldToolTip = element.title;
 
-				var newToolTip = changes.join('\n');
+				var newToolTip = toolTipLines.join('\n');
 
 				element.title = oldToolTip
 					? oldToolTip + '\n\n' + newToolTip
