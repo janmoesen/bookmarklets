@@ -24,8 +24,6 @@
 	];
 
 	var allowedInputTypes = [
-		'text',
-		'search',
 		'password',
 		'checkbox',
 		'radio',
@@ -68,6 +66,30 @@
 
 						element.removeAttribute('type');
 					}
+				}
+
+				/* Change all default (text) INPUTs to multiline TEXTAREAs. */
+				if (!element.hasAttribute('type')) {
+					var textarea = element.ownerDocument.createElement('textarea');
+
+					textarea.name = element.name;
+					textarea.value = element.getAttribute('value');
+					textarea.rows = 1;
+
+					if (element.placeholder) {
+						textarea.placeholder = element.placeholder;
+					}
+
+					element.parentNode.replaceChild(textarea, element);
+					element = textarea;
+
+					var computedStyle = getComputedStyle(textarea);
+					textarea.style.height = parseInt(computedStyle.paddingTop || 0, 10)
+						+ parseInt(computedStyle.lineHeight || 0, 10)
+						+ parseInt(computedStyle.paddingBottom || 0, 10)
+						+ 'px';
+
+					toolTipLines.push('Changed from INPUT to TEXTAREA');
 				}
 			} else if (element.tagName.toUpperCase() === 'SELECT') {
 				/* Make sure there is at least one option to change. */
