@@ -69,6 +69,32 @@
 						element.removeAttribute('type');
 					}
 				}
+			} else if (element.tagName.toUpperCase() === 'SELECT') {
+				/* Make sure there is at least one option to change. */
+				element.insertBefore(document.createElement('option'), element.firstChild);
+
+				[].forEach.call(element.options, function (option) {
+					if (option.hasAttribute('value')) {
+						var oldToolTip = option.title;
+						var newToolTip = 'Original value: “' + option.getAttribute('value') + '”';
+
+						option.title = oldToolTip
+							? oldToolTip + '\n\n' + newToolTip
+							: newToolTip;
+					}
+				});
+
+				element.addEventListener('change', function (event) {
+					var option = element.options[element.selectedIndex];
+					var newValue = prompt('New value for option ' + element.selectedIndex + ' (“' + (option.textContent || option.value) + '”):', option.value);
+					if (newValue !== null) {
+						if (newValue !== option.value) {
+							option.textContent = newValue;
+						}
+
+						option.value = newValue;
+					}
+				});
 			}
 
 			if (toolTipLines.length) {
