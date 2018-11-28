@@ -28,8 +28,8 @@
 		'button',
 	];
 
-	[].slice.call(document.forms).forEach(function (form) {
-		[].slice.call(form.elements).forEach(function (element) {
+	[].forEach.call(document.forms, function (form) {
+		[].forEach.call(form.elements, function (element) {
 			var changes = [];
 
 			attributeNamesToRemove.forEach(function (attr) {
@@ -68,7 +68,7 @@
 
 	/* Recurse for frames and iframes. */
 	try {
-		[].slice.call(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(function (elem) {
+		[].forEach.call(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]'), function (elem) {
 			freeform(elem.contentDocument);
 		});
 	} catch (e) {
