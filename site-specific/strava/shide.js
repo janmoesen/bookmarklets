@@ -5,6 +5,7 @@
  */
 (function shide() {
 	var css = (function () { /*@charset "utf-8";
+		.xxx-jan-shide,
 		.feed-entry.challenge,
 		.feed-entry.suggested-follows,
 		.feed .promo,
@@ -13,6 +14,7 @@
 			transition: all 0.2s ease-in;
 		}
 
+		.xxx-jan-shide:not(:hover),
 		.feed-entry.challenge:not(:hover),
 		.feed-entry.suggested-follows:not(:hover),
 		.feed .promo:not(:hover),
@@ -29,4 +31,15 @@
 	*/;}).toString().replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '').replace(/\*\/\s*\;?\s*\}\s*$/, '').replace(/\u0025s/, '');
 
 	document.head.appendChild(document.createElement('style')).textContent = css;
+
+	/* I don't really care about running, so hide runs too.' */
+	Array.from(document.querySelectorAll('.icon-run')).forEach(function (elem) {
+		let container = elem.closest('.activity');
+
+		if (!container) {
+			return;
+		}
+
+		container.classList.add('xxx-jan-shide');
+	});
 })();
