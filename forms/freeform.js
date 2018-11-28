@@ -38,6 +38,7 @@
 		[].forEach.call(form.elements, function (element) {
 			var toolTipLines = [];
 
+			/* Put the original attribute values in the tooltip. */
 			Object.keys(originalAttributesToPutInToolTip).forEach(function (attrName) {
 				if (element.hasAttribute(attrName) || element[attrName]) {
 					var attrValue = element.getAttribute(attrName) || element[attrName];
@@ -47,6 +48,7 @@
 				}
 			});
 
+			/* Remove unwanted attributes. */
 			attributeNamesToRemove.forEach(function (attrName) {
 				if (element.hasAttribute(attrName) || element[attrName]) {
 					console.log('Freeform: remove “' + attrName + '” attribute on element: ', element);
@@ -58,6 +60,7 @@
 			});
 
 			if (element.tagName.toUpperCase() === 'INPUT') {
+				/* Change unwanted INPUT types to default INPUTs. */
 				if (element.hasAttribute('type')) {
 					var type = element.getAttribute('type').toLowerCase();
 					if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
@@ -95,6 +98,7 @@
 				/* Make sure there is at least one option to change. */
 				element.insertBefore(document.createElement('option'), element.firstChild);
 
+				/* Put the original OPTION value in the tooltip. */
 				[].forEach.call(element.options, function (option) {
 					if (option.hasAttribute('value')) {
 						var oldToolTip = option.title;
@@ -106,6 +110,7 @@
 					}
 				});
 
+				/* Allow changing OPTION values. */
 				element.addEventListener('change', function (event) {
 					var option = element.options[element.selectedIndex];
 					var newValue = prompt('New value for option ' + element.selectedIndex + ' (“' + (option.textContent || option.value) + '”):', option.value);
@@ -119,6 +124,7 @@
 				});
 			}
 
+			/* Create the new tooltip. */
 			if (toolTipLines.length) {
 				var oldToolTip = element.title;
 
