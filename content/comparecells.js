@@ -56,6 +56,7 @@
 			let hash;
 
 			let yesValues = [
+				'✔',
 				'yes',
 				'ja',
 				'oui',
@@ -64,6 +65,7 @@
 			];
 
 			let noValues = [
+				'x',
 				'no',
 				'nee',
 				'neen',
