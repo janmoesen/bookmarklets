@@ -5,7 +5,7 @@
  * @title Freeform
  */
 (function freeform(document) {
-	var originalAttributesToPutInToolTip = {
+	var originalAttributesToPutInTooltip = {
 		'name': 'Name',
 		'id': 'HTML element ID',
 		'type': 'Original type',
@@ -36,14 +36,14 @@
 
 	[].forEach.call(document.forms, function (form) {
 		[].forEach.call(form.elements, function (element) {
-			var toolTipLines = [];
+			var tooltipLines = [];
 
 			/* Put the original attribute values in the tooltip. */
-			Object.keys(originalAttributesToPutInToolTip).forEach(function (attrName) {
+			Object.keys(originalAttributesToPutInTooltip).forEach(function (attrName) {
 				if (element.hasAttribute(attrName) || element[attrName]) {
 					var attrValue = element.getAttribute(attrName) || element[attrName];
 					if (attrValue !== null && attrValue !== '') {
-						toolTipLines.push(originalAttributesToPutInToolTip[attrName] + ': “' + attrValue + '”');
+						tooltipLines.push(originalAttributesToPutInTooltip[attrName] + ': “' + attrValue + '”');
 					}
 				}
 			});
@@ -52,7 +52,7 @@
 			attributeNamesToRemove.forEach(function (attrName) {
 				if (element.hasAttribute(attrName) || element[attrName]) {
 					console.log('Freeform: remove “' + attrName + '” attribute on element: ', element);
-					toolTipLines.push('Removed “' + attrName + '” attribute; was: “' + (element.getAttribute(attrName) || element[attrName]) + '”');
+					tooltipLines.push('Removed “' + attrName + '” attribute; was: “' + (element.getAttribute(attrName) || element[attrName]) + '”');
 
 					delete element[attrName];
 					element.removeAttribute(attrName);
@@ -65,7 +65,7 @@
 					var type = element.getAttribute('type').toLowerCase();
 					if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
 						console.log('Freeform: remove “type” attribute on element: ', element);
-						toolTipLines.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '”');
+						tooltipLines.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '”');
 
 						element.removeAttribute('type');
 					}
@@ -92,7 +92,7 @@
 						+ parseInt(computedStyle.paddingBottom || 0, 10)
 						+ 'px';
 
-					toolTipLines.push('Changed from INPUT to TEXTAREA');
+					tooltipLines.push('Changed from INPUT to TEXTAREA');
 				}
 			} else if (element.tagName.toUpperCase() === 'SELECT') {
 				/* Make sure there is at least one option to change. */
@@ -101,12 +101,12 @@
 				/* Put the original OPTION value in the tooltip. */
 				[].forEach.call(element.options, function (option) {
 					if (option.hasAttribute('value')) {
-						var oldToolTip = option.title;
-						var newToolTip = 'Original value: “' + option.getAttribute('value') + '”';
+						var oldTooltip = option.title;
+						var newTooltip = 'Original value: “' + option.getAttribute('value') + '”';
 
-						option.title = oldToolTip
-							? oldToolTip + '\n\n' + newToolTip
-							: newToolTip;
+						option.title = oldTooltip
+							? oldTooltip + '\n\n' + newTooltip
+							: newTooltip;
 					}
 				});
 
@@ -125,14 +125,14 @@
 			}
 
 			/* Create the new tooltip. */
-			if (toolTipLines.length) {
-				var oldToolTip = element.title;
+			if (tooltipLines.length) {
+				var oldTooltip = element.title;
 
-				var newToolTip = toolTipLines.join('\n');
+				var newTooltip = tooltipLines.join('\n');
 
-				element.title = oldToolTip
-					? oldToolTip + '\n\n' + newToolTip
-					: newToolTip;
+				element.title = oldTooltip
+					? oldTooltip + '\n\n' + newTooltip
+					: newTooltip;
 			}
 		});
 	});
