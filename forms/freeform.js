@@ -40,13 +40,22 @@
 		[].forEach.call(form.elements, function (element) {
 			var toolTipLines = [];
 
-			attributeNamesToRemove.forEach(function (attr) {
-				if (element[attr] || element.hasAttribute(attr)) {
-					console.log('Freeform: remove “' + attr + '” attribute on element: ', element);
-					toolTipLines.push('Removed “' + attr + '” attribute; was: “' + (element.getAttribute(attr) || element[attr]) + '”');
+			Object.keys(originalAttributesToPutInToolTip).forEach(function (attrName) {
+				if (element.hasAttribute(attrName) || element[attrName]) {
+					var attrValue = element.getAttribute(attrName) || element[attrName];
+					if (attrValue !== null && attrValue !== '') {
+						toolTipLines.push(originalAttributesToPutInToolTip[attrName] + ': “' + attrValue + '”');
+					}
+				}
+			});
 
-					delete element[attr];
-					element.removeAttribute(attr);
+			attributeNamesToRemove.forEach(function (attrName) {
+				if (element.hasAttribute(attrName) || element[attrName]) {
+					console.log('Freeform: remove “' + attrName + '” attribute on element: ', element);
+					toolTipLines.push('Removed “' + attrName + '” attribute; was: “' + (element.getAttribute(attrName) || element[attrName]) + '”');
+
+					delete element[attrName];
+					element.removeAttribute(attrName);
 				}
 			});
 
