@@ -5,7 +5,7 @@
  */
 (function shide() {
 	var css = (function () { /*@charset "utf-8";
-		.xxx-jan-shide,
+		.xxxJanStravaHidden,
 		.feed-entry.challenge,
 		.feed-entry.suggested-follows,
 		.feed .promo,
@@ -14,7 +14,7 @@
 			transition: all 0.2s ease-in;
 		}
 
-		.xxx-jan-shide:not(:hover),
+		.xxxJanStravaHidden:not(:hover),
 		.feed-entry.challenge:not(:hover),
 		.feed-entry.suggested-follows:not(:hover),
 		.feed .promo:not(:hover),
@@ -40,6 +40,6 @@
 			return;
 		}
 
-		container.classList.add('xxx-jan-shide');
+		container.classList.add('xxxJanStravaHidden');
 	});
 })();
