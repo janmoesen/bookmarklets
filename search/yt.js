@@ -82,7 +82,31 @@
 				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
 			}
 		} else {
-			location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+			/* See if the search should filter (e.g. only videos, only playlists,
+			 * only live streams, …).
+			 *
+			 * You can only specify one filter, e.g. “yt --long autechre”.
+			 *
+			 * See the source code below this comment for supported filters.
+			 */
+			var filters = {
+				'video': 'EgIQAQ==',
+				'channel': 'EgIQAg==',
+				'playlist': 'EgIQAw==',
+
+				'short': 'EgIYAQ==',
+				'long': 'EgIYAg==',
+
+				'live': 'EgJAAQ=='
+			};
+
+			if ((matches = s.match(new RegExp('^\\s*--(' + Object.keys(filters).join('|') + ')\\s+(.*)$')))) {
+				var filterName = matches[1];
+				s = matches[2];
+				location = 'https://www.youtube.com/results?sp=' + filters[filterName] + '&search_query=' + encodeURIComponent(s);
+			} else {
+				location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+			}
 		}
 	}
 })();
