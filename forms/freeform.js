@@ -76,7 +76,7 @@
 					var textarea = element.ownerDocument.createElement('textarea');
 
 					textarea.name = element.name;
-					textarea.value = element.getAttribute('value');
+					textarea.value = element.value;
 					textarea.rows = 1;
 
 					if (element.placeholder) {
