@@ -87,7 +87,8 @@
 					element = textarea;
 
 					var computedStyle = getComputedStyle(textarea);
-					textarea.style.height = parseInt(computedStyle.paddingTop || 0, 10)
+					textarea.style.height = textarea.style.minHeight =
+						parseInt(computedStyle.paddingTop || 0, 10)
 						+ parseInt(computedStyle.lineHeight || 0, 10)
 						+ parseInt(computedStyle.paddingBottom || 0, 10)
 						+ 'px';
