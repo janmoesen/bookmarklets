@@ -60,14 +60,19 @@
 			});
 
 			if (element.tagName.toUpperCase() === 'INPUT') {
-				/* Change unwanted INPUT types to default INPUTs. */
 				if (element.hasAttribute('type')) {
 					var type = element.getAttribute('type').toLowerCase();
+					/* Change unwanted INPUT types to default INPUTs. */
 					if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
 						console.log('Freeform: remove “type” attribute on element: ', element);
 						tooltipLines.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '”');
 
 						element.removeAttribute('type');
+					}
+
+					/* Remove MIME type restriction on file uploads. */
+					if (type === 'file') {
+						element.removeAttribute('accept');
 					}
 				}
 
