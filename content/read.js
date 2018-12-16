@@ -15,15 +15,15 @@
 	var console = (function () {
 		var iframe = document.getElementById('xxxJanConsole');
 		if (!iframe) {
-			iframe = document.createElement('iframe');
+			iframe = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
 			iframe.id = 'xxxJanConsole';
 			iframe.style.display = 'none';
 
-			document.body.appendChild(iframe);
+			(document.body || document.documentElement).appendChild(iframe);
 		}
 
 		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
-			log: function () { }
+			log: function () {}
 		};
 	})();
 
@@ -925,6 +925,12 @@
 		 * Wikipedia office.
 		 */
 		[window, document, document.documentElement, document.body].forEach(function (elem) {
+			/* In non-HTML documents, elements like document.body can be
+			 * null. */
+			if (!elem) {
+				return;
+			}
+
 			/* Because the window for IFRAMEs is the same as the outer
 			 * document's window, we need to keep track of wether we
 			 * have toggled the event handlers. Otherwise, they might
@@ -1097,7 +1103,7 @@
 		if (!ourStyleSheet) {
 			(ourStyleSheet = document.createElement('style')).id = 'jancss';
 			ourStyleSheet.innerHTML = css;
-			document.head.appendChild(ourStyleSheet);
+			(document.head || document.body || document.documentElement).appendChild(ourStyleSheet);
 			ourStyleSheet.disabled = true;
 
 			/* Highlight matching data table columns on :hover. I do not
