@@ -50,11 +50,12 @@
 		}
 
 		/* Get the selection from inside a text control. */
-		if (
-			typeof activeElement.value === 'string'
-			&& activeElement.selectionStart !== activeElement.selectionEnd
-		) {
-			return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+		if (typeof activeElement.value === 'string') {
+			if (activeElement.selectionStart !== activeElement.selectionEnd) {
+				return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+			}
+
+			return activeElement.value;
 		}
 
 		/* Get the normal selection. */
