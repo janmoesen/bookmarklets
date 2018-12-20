@@ -88,6 +88,10 @@
 						textarea.placeholder = element.placeholder;
 					}
 
+					if (element.id) {
+						textarea.id = element.id;
+					}
+
 					element.parentNode.replaceChild(textarea, element);
 					element = textarea;
 
