@@ -12,15 +12,15 @@
 	var console = (function () {
 		var iframe = document.getElementById('xxxJanConsole');
 		if (!iframe) {
-			iframe = document.createElement('iframe');
+			iframe = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
 			iframe.id = 'xxxJanConsole';
 			iframe.style.display = 'none';
 
-			document.body.appendChild(iframe);
+			(document.body || document.documentElement).appendChild(iframe);
 		}
 
 		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
-			log: function () { }
+			log: function () {}
 		};
 	})();
 
