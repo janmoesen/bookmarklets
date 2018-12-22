@@ -8,7 +8,7 @@
  * distinguish between src-less IFRAMEs for ads and src-less IFRAMEs for
  * “regular” content. Maybe try to guess based on the dimensions? Meh.
  *
- * @title Delete suspicious IFRAMEs
+ * @title rm IFRAMEs
  */
 (function rmiframes() {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
