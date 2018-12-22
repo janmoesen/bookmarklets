@@ -58,7 +58,7 @@
 		return doc.getSelection() + '';
 	}
 
-	var root = document.createDocumentFragment().appendChild(document.createElement('html'));
+	var root = document.createDocumentFragment().appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'html'));
 
 	var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
 	var titleElement = document.querySelector('title');
@@ -86,7 +86,7 @@
 
 	/* Link to the current page's referrer, if available. */
 	if (document.referrer) {
-		var viaLink = document.createElement('a');
+		var viaLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
 		viaLink.setAttribute('href', document.referrer);
 		viaLink.textContent = viaLink.hostname || viaLink.href;
 		link.parentNode.parentNode.appendChild(document.createTextNode(' (via '));

@@ -1101,7 +1101,7 @@
 		/* The first time this bookmarklet is called, add our style sheet and
 		 * check for layout elements. */
 		if (!ourStyleSheet) {
-			(ourStyleSheet = document.createElement('style')).id = 'jancss';
+			(ourStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).id = 'jancss';
 			ourStyleSheet.innerHTML = css;
 			(document.head || document.body || document.documentElement).appendChild(ourStyleSheet);
 			ourStyleSheet.disabled = true;
@@ -1180,19 +1180,19 @@
 
 			/* (Re-)add some syntax highlighters' CSS if necessary. Those styles are often defined in the main CSS, so the HREF test in toggleStyles() does not match. */
 			if (document.querySelector('.prettyprint')) {
-				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prettify.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.syntaxhighlighter')) {
-				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/syntaxhighlighter.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.highlight .c, .highlight .k, .highlight .m, .highlight .s, .highlight .w')) {
-				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/pygments.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('code[class*="language-"] .token.punctuation')) {
-				prettyPrintStyleSheet = document.createElement('style');
+				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prism.css)';
 				document.head.appendChild(prettyPrintStyleSheet);
 			}

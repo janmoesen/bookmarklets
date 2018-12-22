@@ -25,7 +25,7 @@
 	});
 
 	/* Replace the code with a TEXTAREA of more or less the same dimensions. */
-	var textarea = document.createElement('textarea');
+	var textarea = document.createElementNS('http://www.w3.org/1999/xhtml', 'textarea');
 	textarea.value = 'javascript:' + lines.join('\n');
 	var codeContainerStyle = window.getComputedStyle(codeContainer);
 	['width', 'height', 'margin', 'padding'].forEach(function (property) {

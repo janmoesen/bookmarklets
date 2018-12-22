@@ -34,7 +34,7 @@
 		}
 
 		/* Reload the style sheet by creating a new LINK element with the updated URL. */
-		var newStyleSheet = document.createElement('link');
+		var newStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'link');
 		newStyleSheet.rel = 'StyleSheet';
 		newStyleSheet.media = allMedia.join(', ');
 		newStyleSheet.href = newHref;

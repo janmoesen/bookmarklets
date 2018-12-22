@@ -85,7 +85,7 @@
 	if (!overlays.length) {
 		overlays = [];
 		for (var i = 0; i < 4; i++) {
-			overlays[i] = document.createElement('div');
+			overlays[i] = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 			overlays[i].setAttribute('id', 'janbmLinksToOverlay' + i);
 			/* Clear the spotlighting when the user clicks on a masking overlay. */
 			overlays[i].onclick = function () {

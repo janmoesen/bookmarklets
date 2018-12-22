@@ -78,7 +78,7 @@
 
 				/* Change all default (text) INPUTs to multiline TEXTAREAs. */
 				if (!element.hasAttribute('type')) {
-					var textarea = element.ownerDocument.createElement('textarea');
+					var textarea = element.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'textarea');
 
 					textarea.name = element.name;
 					textarea.value = element.value;
@@ -106,7 +106,7 @@
 				}
 			} else if (element.tagName.toUpperCase() === 'SELECT') {
 				/* Make sure there is at least one option to change. */
-				element.insertBefore(document.createElement('option'), element.firstChild);
+				element.insertBefore(document.createElementNS('http://www.w3.org/1999/xhtml', 'option'), element.firstChild);
 
 				/* Put the original OPTION value in the tooltip. */
 				[].forEach.call(element.options, function (option) {

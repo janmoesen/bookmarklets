@@ -44,8 +44,8 @@
 	});
 
 	/* Avoid double borders on the last cell. */
-	document.head.appendChild(document.createElement('style')).textContent = '.dataView th:last-child, .dataView td:last-child { border-right: 0; }';
+	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = '.dataView th:last-child, .dataView td:last-child { border-right: 0; }';
 
 	/* Make the difference between rows more pronounced. */
-	document.head.appendChild(document.createElement('style')).textContent = '.dataView tr.evenRow th, .dataView tr.evenRow td { background-color: #cee; }';
+	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = '.dataView tr.evenRow th, .dataView tr.evenRow td { background-color: #cee; }';
 })();

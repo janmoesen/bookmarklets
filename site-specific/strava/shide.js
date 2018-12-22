@@ -30,7 +30,7 @@
 		}
 	*/;}).toString().replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '').replace(/\*\/\s*\;?\s*\}\s*$/, '').replace(/\u0025s/, '');
 
-	document.head.appendChild(document.createElement('style')).textContent = css;
+	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
 	/* I don't really care about running, so hide runs too.' */
 	Array.from(document.querySelectorAll('.icon-run')).forEach(function (elem) {

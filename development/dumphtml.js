@@ -20,7 +20,7 @@
 	};
 
 	stringifiers[Node.TEXT_NODE] = function handleTextNode(node) {
-		var tempDiv = document.createElement('div');
+		var tempDiv = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 		tempDiv.textContent = node.textContent;
 
 		return tempDiv.innerHTML;
@@ -105,7 +105,7 @@
 	 * because the <base href> overrides everything. */
 	var baseHref;
 	if (document.documentElement.nodeName.toUpperCase() === 'HTML' && !document.querySelector('base[href]')) {
-		baseHref = document.createElement('base');
+		baseHref = document.createElementNS('http://www.w3.org/1999/xhtml', 'base');
 		baseHref.href = document.location;
 		document.head.appendChild(baseHref);
 	}
