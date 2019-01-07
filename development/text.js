@@ -65,8 +65,8 @@
 
 	if (s) {
 		/* Replace the original document's HTML with our text. */
-		HTMLDocument.prototype.open.call(document, 'text/plain; charset=UTF-8');
-		HTMLDocument.prototype.write.call(document, s);
+		HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
+		HTMLDocument.prototype.write.call(document, '<plaintext>' + s);
 		HTMLDocument.prototype.close.call(document);
 	}
 })();
