@@ -72,7 +72,7 @@
 
 	if (s) {
 		s = s.split('').map(function (c) {
-			return '%' + c.charCodeAt(0).toString(16);
+			return '%' + ('0' + c.charCodeAt(0).toString(16)).slice(-2);
 		}).join('').toUpperCase();
 
 		/* Replace the original document's HTML with our generated text. */
