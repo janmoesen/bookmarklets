@@ -3,7 +3,7 @@
  *
  * @title rm overlays
  */
-(function rmoverlays() {
+(function rmo() {
 	"use strict";
 
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
@@ -51,7 +51,7 @@
 		let leftY = document.defaultView.innerHeight / 2;
 		let leftOverlay = getFirstZIndexedElement(document.elementsFromPoint(leftX, leftY));
 		if (!leftOverlay) {
-			console.log('rmoverlays: did not find Z-indexed overlay at (' + leftX + ', ' + leftY + ')');
+			console.log('rmo: did not find Z-indexed overlay at (' + leftX + ', ' + leftY + ')');
 			return;
 		}
 
@@ -59,12 +59,12 @@
 		let rightY = document.defaultView.innerHeight / 2;
 		let rightOverlay = getFirstZIndexedElement(document.elementsFromPoint(rightX, rightY));
 		if (!rightOverlay) {
-			console.log('rmoverlays: did not find Z-indexed overlay at (' + rightX + ', ' + rightY + ')');
+			console.log('rmo: did not find Z-indexed overlay at (' + rightX + ', ' + rightY + ')');
 			return;
 		}
 
 		if (leftOverlay !== rightOverlay) {
-			console.log('rmoverlays: did not detect full-width overlay; left:', leftOverlay, '; right:', rightOverlay);
+			console.log('rmo: did not detect full-width overlay; left:', leftOverlay, '; right:', rightOverlay);
 			return;
 		}
 
@@ -72,14 +72,14 @@
 		let centerY = document.defaultView.innerHeight / 2;
 		let centerElements = document.elementsFromPoint(centerX, centerY);
 		if (!centerElements.indexOf(leftOverlay) === -1) {
-			console.log('rmoverlays: overlay candidate (', leftOverlay, ') not found at (' + centerX + ', ' + centerY + ')');
+			console.log('rmo: overlay candidate (', leftOverlay, ') not found at (' + centerX + ', ' + centerY + ')');
 			return;
 		}
 
 		/* Hide the overlay and its “visual descendants” (i.e., the elements
 		 * on top of the overlay). */
 		for (let i = 0; i < centerElements.length; i++) {
-			console.log('rmoverlays: hiding', centerElements[i]);
+			console.log('rmo: hiding', centerElements[i]);
 
 			centerElements[i].style.display = 'none';
 
