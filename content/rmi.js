@@ -10,7 +10,7 @@
  *
  * @title rm IFRAMEs
  */
-(function rmiframes() {
+(function rmi() {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
 	 * console. Sometimes sites (e.g. Twitter) override console.log and even
 	 * the entire console object. "delete console.log" or "delete console"
@@ -60,18 +60,18 @@
 			}
 
 			if (shouldDelete) {
-				console.log('Delete suspicious IFRAMEs: found suspicious IFRAME to delete: ', iframe);
+				console.log('rm IFRAMEs: found suspicious IFRAME to delete: ', iframe);
 				let parentNode = iframe.parentNode;
 				iframe.remove();
 
 				while (parentNode && isEmpty(parentNode)) {
-					console.log('Delete suspicious IFRAMEs: found empty parent node to delete: ', parentNode);
+					console.log('rm IFRAMEs: found empty parent node to delete: ', parentNode);
 					let oldParentNode = parentNode;
 					parentNode = parentNode.parentNode;
 					oldParentNode.remove();
 				}
 			} else {
-				console.log('Delete suspicious IFRAMEs: found non-suspicious IFRAME to recurse into: ', iframe);
+				console.log('rm IFRAMEs: found non-suspicious IFRAME to recurse into: ', iframe);
 				execute(iframe.contentDocument);
 			}
 		});
