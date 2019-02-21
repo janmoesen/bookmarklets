@@ -40,7 +40,7 @@ process_dir () {
 		[ "$title" = "$description" ] && description=;
 	fi;
 	if [ "$1" = '.' ]; then
-		description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y/%m/%d %T %z').";
+		description="$description"$'\n\n'"These bookmarks were exported on $(date +'%a, %Y-%m-%d %T %z').";
 	fi;
 	cat <<-EOD
 		<DT><H3>$title</H3>

@@ -70,6 +70,12 @@ copy_2en_parameters=(
 	'Mandarin Chinese'
 	中文
 	'this page in Chinese'
+
+	2vi
+	vi
+	'Vietnamese'
+	tiếng Việt
+	'sang tiếng việt'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
@@ -100,6 +106,7 @@ COPY_ENWIKT=; copy-enwikt \
 	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
 	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
 	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
+	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
 	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'http://www.vandale.nl/opzoeken?lang=nn&pattern=' \
 	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
 	mw 'Merriam-Webster' 'using Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
@@ -131,6 +138,7 @@ COPY_ENW=; copy-enw \
 	it Italian \
 	es Spanish \
 	zh 'Mandarin Chinese' \
+	vi 'Vietnamese' \
 ;
 
 # Typing is hard; let's go shopping.
