@@ -32,6 +32,13 @@
 
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
+	/* Hide commutes. */
+	Array.from(document.querySelectorAll('.activity-map-tag')).forEach(tag => {
+		if (tag.textContent.trim().toLowerCase() === 'commute') {
+			tag.closest('.feed-entry').classList.add('xxxJanStravaHidden');
+		}
+	});
+
 	/* I don't really care about running, so hide runs too.' */
 	Array.from(document.querySelectorAll('.icon-run')).forEach(function (elem) {
 		let container = elem.closest('.activity');
