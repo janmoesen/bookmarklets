@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://www.vandale.nl/opzoeken?lang=nn&pattern=' + encodeURIComponent(s);
+		location = 'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/' + encodeURIComponent(s);
 	}
 })();

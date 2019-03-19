@@ -1,11 +1,11 @@
 /**
  * Go to the root directory, or the Nth directory starting from the root.
  *
- * For example, when you are on "http://www.example.com/foo/bar/baz":
- * - executing "/" goes to "http://www.example.com/"
- * - executing "/ 1" goes to "http://www.example.com/foo/"
- * - executing "/ 2" goes to "http://www.example.com/foo/bar/"
- * - executing "/ quux" goes to "http://www.example.com/quux"
+ * For example, when you are on "https://www.example.com/foo/bar/baz":
+ * - executing "/" goes to "https://www.example.com/"
+ * - executing "/ 1" goes to "https://www.example.com/foo/"
+ * - executing "/ 2" goes to "https://www.example.com/foo/bar/"
+ * - executing "/ quux" goes to "https://www.example.com/quux"
  *
  * @title Go to the root
  * @keyword /

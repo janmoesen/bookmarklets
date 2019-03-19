@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://dictionary.com/browse/' + encodeURIComponent(s);
+		location = 'https://www.dictionary.com/browse/' + encodeURIComponent(s);
 	}
 })();

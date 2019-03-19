@@ -1,6 +1,6 @@
 /**
  * Show the currently playing track in the window/tab title on SomaFM Player
- * pages like http://somafm.com/player/#/now-playing/cliqhop
+ * pages like https://somafm.com/player/#/now-playing/cliqhop
  *
  * @title SomaFM np
  */

@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://thesaurus.com/browse/' + encodeURIComponent(s);
+		location = 'https://www.thesaurus.com/browse/' + encodeURIComponent(s);
 	}
 })();

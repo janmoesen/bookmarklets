@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://wayback.archive.org/web/' + s;
+		location = 'https://web.archive.org/web/' + s;
 	}
 })();

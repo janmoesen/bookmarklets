@@ -92,8 +92,8 @@
 	/* Show the original image for Polopoly CMS "generated derivatives".
 	 *
 	 * Example:
-	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg_gen/derivatives/landscape670/1706320883.jpg
-	 * http://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg
+	 * https://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg_gen/derivatives/landscape670/1706320883.jpg
+	 * https://sporza.be/polopoly_fs/1.2671026!image/1706320883.jpg
 	 */
 	[].forEach.call(
 		document.querySelectorAll('img[src*="_gen/derivatives/"]'),
@@ -113,8 +113,8 @@
 		function (img) {
 			var oldSrc = img.src;
 			/* Example:
-			 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
-			 * http://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
+			 * https://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197-150x150.jpg
+			 * https://www.cycling-challenge.com/wp-content/uploads/2014/08/IMG_6197.jpg
 			 */
 			var matches = oldSrc.match(/(.*)[-_.@]\d+x\d+(\.[^\/.]+)/);
 			if (matches && matches[1] && matches[2]) {
@@ -315,9 +315,9 @@
 
 	/**
 	 * Crudely calculate the similarity between two strings. Taken from
-	 * http://stackoverflow.com/a/10473855. An alternative would be the
+	 * https://stackoverflow.com/a/10473855. An alternative would be the
 	 * Levenshtein distance, implemented in JavaScript here:
-	 * http://andrew.hedges.name/experiments/levenshtein/
+	 * https://andrew.hedges.name/experiments/levenshtein/
 	 */
 	function getSimilarity(strA, strB) {
 		var result = 0;

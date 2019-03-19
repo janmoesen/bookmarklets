@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://www.urbandictionary.com/define.php?term=' + encodeURIComponent(s);
+		location = 'https://www.urbandictionary.com/define.php?term=' + encodeURIComponent(s);
 	}
 })();

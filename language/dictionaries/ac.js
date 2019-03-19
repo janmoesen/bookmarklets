@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://www.archchinese.com/chinese_english_dictionary.html?find=' + encodeURIComponent(s);
+		location = 'https://www.archchinese.com/chinese_english_dictionary.html?find=' + encodeURIComponent(s);
 	}
 })();

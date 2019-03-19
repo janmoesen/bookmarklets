@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'http://www.merriam-webster.com/dictionary/' + encodeURIComponent(s);
+		location = 'https://www.merriam-webster.com/dictionary/' + encodeURIComponent(s);
 	}
 })();
