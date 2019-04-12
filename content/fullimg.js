@@ -215,6 +215,17 @@
 		}
 	);
 
+	/* Change all Blogspot images that have not been changed yet. */
+	Array.from(
+		document.querySelectorAll('img[src*="bp.blogspot.com/"]')
+	).forEach(img => {
+		let matches;
+		if ((matches = img.src.match(/^(.*\/)s(\d+)(\/[^/]+)$/)) && matches[2] < 9999) {
+			let newSrc = matches[1] + 's9999' + matches[3];
+			changeSrc(img, newSrc, 'found Blogspot image with restricted size (' + matches[2] + ')');
+		}
+	});
+
 	/* Get rid of all IMG@srcset attributes that have not been removed in the
 	 * previous steps.
 	 */
