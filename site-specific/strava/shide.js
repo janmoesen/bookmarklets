@@ -39,8 +39,8 @@
 		}
 	});
 
-	/* I don't really care about running, so hide runs too.' */
-	Array.from(document.querySelectorAll('.icon-run')).forEach(function (elem) {
+	/* Hide activity types I do not care about. (Like runs and stationary workouts.) */
+	Array.from(document.querySelectorAll('.icon-run, .icon-virtualride, .icon-workout')).forEach(function (elem) {
 		let container = elem.closest('.activity');
 
 		if (!container) {
