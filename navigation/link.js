@@ -58,16 +58,37 @@
 		return doc.getSelection() + '';
 	}
 
-	var root = document.createDocumentFragment().appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'html'));
+	function normalize(str) {
+		return str.replace(/\s\s+/g, ' ').trim();
+	}
 
-	var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
-	var titleElement = document.querySelector('title');
-	var titleText = s || (metaTitleElement && metaTitleElement.content) || (titleElement && titleElement.textContent) || document.title;
-	titleText = titleText.replace(/\s\s+/g, ' ').trim() || (location + '');
+	var titleText = normalize(s);
+	if (!titleText) {
+		var possibleTitleTexts = [];
+
+		var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
+		if (metaTitleElement && metaTitleElement.content) {
+			possibleTitleTexts.push(normalize(metaTitleElement.content));
+		}
+
+		var titleElement = document.querySelector('title');
+		if (titleElement && titleElement.textContent) {
+			possibleTitleTexts.push(normalize(titleElement.textContent));
+		}
+
+		possibleTitleTexts.push(normalize(document.title));
+
+		titleText = possibleTitleTexts.sort((a, b) => a.length < b.length)[0];
+	}
+
+	if (!titleText) {
+		titleText = (location + '');
+	}
 
 	var originalIconLink = s || document.querySelector('link[rel*="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
+	var root = document.createDocumentFragment().appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'html'));
 	root.innerHTML = '<html><title></title><link rel="icon"/><style>html { font-family: "Calibri", sans-serif; } img { max-width: 32px; max-height: 32px; } textarea { width: 100%; min-height: 30ex; padding: 1ex; border: 1px dotted grey; }</style><p><img/> <span><a></a></span></p><p>Link code:<br/><textarea rows="10" cols="80"></textarea></p><script>var textarea = document.querySelector("textarea"); if (textarea) { textarea.style.height = textarea.scrollHeight + "px"; }</script></html>';
 	var title = root.querySelector('title');
 	var iconLink = root.querySelector('link');
