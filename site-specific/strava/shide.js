@@ -7,6 +7,7 @@
 	var css = (function () { /*@charset "utf-8";
 		.xxxJanStravaHidden,
 		.feed-entry.challenge,
+		.feed-entry.performance-goal,
 		.feed-entry.suggested-follows,
 		.feed .promo,
 		.upsell {
@@ -16,6 +17,7 @@
 
 		.xxxJanStravaHidden:not(:hover),
 		.feed-entry.challenge:not(:hover),
+		.feed-entry.performance-goal:not(:hover),
 		.feed-entry.suggested-follows:not(:hover),
 		.feed .promo:not(:hover),
 		.upsell:not(:hover) {
@@ -33,7 +35,7 @@
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
 	/* Hide commutes. */
-	Array.from(document.querySelectorAll('.activity-map-tag')).forEach(tag => {
+	Array.from(document.querySelectorAll('.workout-type')).forEach(tag => {
 		if (tag.textContent.trim().toLowerCase() === 'commute') {
 			tag.closest('.feed-entry').classList.add('xxxJanStravaHidden');
 		}
