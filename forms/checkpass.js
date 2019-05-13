@@ -57,6 +57,7 @@
 				styleSheet.id = 'xxxJanCheckpassCss';
 				styleSheet.textContent = `
 					.xxxJanPasswordMismatch {
+						box-shadow: none !important;
 						background: #f44 !important;
 						color: #fff !important;
 					}
