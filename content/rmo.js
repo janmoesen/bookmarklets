@@ -89,8 +89,15 @@
 		}
 
 		/* Re-enable scrolling on the BODY element. */
-		document.body.style.overflow = 'auto';
-		document.body.style.position = 'static';
+		let currentBodyStyle = document.body.hasAttribute('style')
+			? document.body.getAttribute('style')
+			: '';
+
+		let newBodyStyle = currentBodyStyle +
+			'; overflow: auto !important' +
+			'; position: static !important';
+
+		document.body.setAttribute('style', newBodyStyle);
 
 		/* Re-enable scrolling on Quora.com. */
 		document.body.classList.remove('login_no_scroll');
