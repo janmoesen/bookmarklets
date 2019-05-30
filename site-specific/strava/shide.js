@@ -35,7 +35,7 @@
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
 	/* Hide commutes. */
-	Array.from(document.querySelectorAll('.workout-type')).forEach(tag => {
+	Array.from(document.querySelectorAll('.workout-type, .activity-map-tag')).forEach(tag => {
 		if (tag.textContent.trim().toLowerCase() === 'commute') {
 			tag.closest('.feed-entry').classList.add('xxxJanStravaHidden');
 		}
