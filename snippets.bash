@@ -107,13 +107,13 @@ COPY_ENWIKT=; copy-enwikt \
 	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
 	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
 	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
-	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'http://www.vandale.nl/opzoeken?lang=nn&pattern=' \
+	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/' \
 	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
-	mw 'Merriam-Webster' 'using Merriam-Webster' 'http://www.merriam-webster.com/dictionary/' \
-	dict 'Dictionary.com' 'on Dictionary.com' 'http://dictionary.com/browse/' \
-	thes 'Thesaurus.com' 'on Thesaurus.com' 'http://thesaurus.com/browse/' \
-	ud 'Urban Dictionary' 'in the Urban Dictionary' 'http://www.urbandictionary.com/define.php?term=' \
-	ac 'Arch Chinese' 'in the Arch Chinese dictionary' 'http://www.archchinese.com/chinese_english_dictionary.html?find=' \
+	mw 'Merriam-Webster' 'using Merriam-Webster' 'https://www.merriam-webster.com/dictionary/' \
+	dict 'Dictionary.com' 'on Dictionary.com' 'https://www.dictionary.com/browse/' \
+	thes 'Thesaurus.com' 'on Thesaurus.com' 'https://www.thesaurus.com/browse/' \
+	ud 'Urban Dictionary' 'in the Urban Dictionary' 'https://www.urbandictionary.com/define.php?term=' \
+	ac 'Arch Chinese' 'in the Arch Chinese dictionary' 'https://www.archchinese.com/chinese_english_dictionary.html?find=' \
 ;
 
 # Copy the English Wikipedia bookmarklet to some other languages.
