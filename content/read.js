@@ -266,6 +266,10 @@
 			"Limit icon dimensions --------------------------------";
 		}
 
+		a[href*="facebook.com"] svg,
+		a[href*="instagram.com"] svg,
+		a[href*="twitter.com"] svg,
+		a[href*=".pinterest."] svg,
 		svg[id*="icon"],
 		svg[class*="icon"],
 		[class*="icon"] svg,
