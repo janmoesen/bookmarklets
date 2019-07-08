@@ -1,5 +1,7 @@
 /**
  * Try to color the cells of comparison tables based on their contents.
+ *
+ * @title Compare cells
  */
 (function comparecells() {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
