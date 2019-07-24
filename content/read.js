@@ -276,6 +276,8 @@
 		[class*="Icon"] svg,
 		img[class*="icon"][src*=".svg"],
 		img[class*="Icon"][src*=".svg"],
+		span > svg,
+		button svg,
 		[class*="button"] svg,
 		[role*="button"] svg,
 		[class*="controls"] svg,
