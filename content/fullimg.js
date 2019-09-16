@@ -226,6 +226,17 @@
 		}
 	});
 
+	/* Use larger YouTube thumbnails. */
+	Array.from(
+		document.querySelectorAll('img[src*="//yt"][src*=".ggpht.com"]')
+	).forEach(img => {
+		let matches;
+		if ((matches = img.src.match(/^(.*\/)s(\d+)([^/]+\/photo\.[^/.]+)$/)) && matches[2] < 1024) {
+			let newSrc = matches[1] + 's1024' + matches[3];
+			changeSrc(img, newSrc, 'found YouTube avatar with restricted size (' + matches[2] + ')');
+		}
+	});
+
 	/* Get rid of all IMG@srcset attributes that have not been removed in the
 	 * previous steps.
 	 */
