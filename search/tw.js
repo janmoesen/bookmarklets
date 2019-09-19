@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'https://twitter.com/search?f=live&q=' + encodeURIComponent(s);
+		location = 'https://twitter.com/search?f=tweets&q=' + encodeURIComponent(s);
 	}
 })();
