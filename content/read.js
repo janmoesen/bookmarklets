@@ -353,19 +353,11 @@
 			overflow: auto;
 		}
 
-		.article__share {
-			display: none;
-		}
-
-		#social_btns {
-			display: none;
-		}
-
+		.article__share,
+		.social-share,
+		#social_btns,
+		.social-media > .share,
 		.taboola {
-			display: none;
-		}
-
-		.social-media > .share {
 			display: none;
 		}
 
