@@ -36,7 +36,7 @@
 	function execute(document) {
 		let thisDomain = location.protocol + '//' + location.hostname + '/';
 		Array.from(document.querySelectorAll('a[href]:not([href^="/"]):not([href^="' + thisDomain + '"])')).forEach(a => {
-			let newA = document.createElement('a');
+			let newA = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
 			newA.href = a.href;
 			newA.setAttribute('class', a.getAttribute('class'));
 			newA.innerHTML = a.innerHTML;
