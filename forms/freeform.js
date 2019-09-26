@@ -31,7 +31,7 @@
 		'submit',
 		'image',
 		'reset',
-		'button',
+		'button'
 	];
 
 	[].forEach.call(document.querySelectorAll('input, textarea, select'), function (element) {
@@ -61,12 +61,25 @@
 		if (element.tagName.toUpperCase() === 'INPUT') {
 			if (element.hasAttribute('type')) {
 				var type = element.getAttribute('type').toLowerCase();
+
 				/* Change unwanted INPUT types to default INPUTs. */
 				if (type !== '' && allowedInputTypes.indexOf(type) === -1) {
 					console.log('Freeform: remove “type” attribute on element: ', element);
 					tooltipLines.push('Removed “type” attribute; was: “' + element.getAttribute('type') + '”');
 
 					element.removeAttribute('type');
+				}
+
+				/* Add a click handler to change the value of radio buttons and checkboxes. */
+				if (type === 'radio' || type === 'checkbox') {
+					console.log('Freeform: add new value prompt on click on element: ', element);
+
+					element.addEventListener('click', function () {
+						var newValue = prompt('New value for element ' + (element.name ? '“' + element.name + '”' : '[type="' + type + '"]') + ':', element.value);
+						if (newValue !== null) {
+							element.value = newValue;
+						}
+					});
 				}
 
 				/* Remove MIME type restriction on file uploads. */
