@@ -132,8 +132,26 @@
 	var dataUri = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
 	textarea.textContent += '\n\nData URI for this link page:\n' + dataUri;
 
+	/* Remember the original document (as a string of the current HTML, so
+	 * without event handlers added in JavaScript, etc.)
+	 */
+	var originalHtml = document.documentElement.outerHTML;
+
 	/* Replace the original document's HTML with our generated HTML. */
 	HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
 	HTMLDocument.prototype.write.call(document, root.outerHTML);
 	HTMLDocument.prototype.close.call(document);
+
+	/* Restore the original document’s HTML by clicking a button. This is
+	 * not a 100% correct restoration, but it’s faster than reloading, which
+	 * still remains an option if the result is not satisfactory.
+	 */
+	var button = document.createElement('button');
+	button.textContent = 'Restore original page';
+	button.onclick = function () {
+		HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
+		HTMLDocument.prototype.write.call(document, originalHtml);
+		HTMLDocument.prototype.close.call(document);
+	};
+	document.querySelector('textarea').after(button);
 })();
