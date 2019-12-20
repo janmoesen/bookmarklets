@@ -85,7 +85,7 @@
 		titleText = (location + '');
 	}
 
-	var originalIconLink = s || document.querySelector('link[rel*="icon"]');
+	var originalIconLink = s || document.querySelector('link[rel~="icon"]');
 
 	/* Build a basic HTML document for easy element access. */
 	var root = document.createDocumentFragment().appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'html'));
