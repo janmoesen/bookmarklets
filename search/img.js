@@ -62,7 +62,7 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter your Google Images search query:');
+		s = getActiveSelection() || prompt('Please enter your Google Images search query or image URL:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
