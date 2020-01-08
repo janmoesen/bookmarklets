@@ -9,9 +9,15 @@
 
 	/* Recursively execute the logic on the document and its sub-documents. */
 	function execute(document) {
-		Array.from(document.querySelectorAll('[href^="//web.archive.org/web/"], [href^="http://web.archive.org/web/"], [href^="https://web.archive.org/web/"]')).forEach(
-			node => node.setAttribute('href', node.getAttribute('href').replace(/^(https?:)?\/\/web\.archive\.org\/.*?(https?:\/\/)/, '$2'))
+		Array.from(document.querySelectorAll('a[href^="//web.archive.org/web/"], a[href^="http://web.archive.org/web/"], a[href^="https://web.archive.org/web/"]')).forEach(
+			a => a.setAttribute('href', a.getAttribute('href').replace(/^(https?:)?\/\/web\.archive\.org\/.*?(https?:\/\/)/, '$2'))
 		);
+
+		if (document.location.host === 'web.archive.org') {
+			Array.from(document.querySelectorAll('a[href^="/web/"][href*="://"]')).forEach(
+				a => a.setAttribute('href', a.getAttribute('href').replace(/^\/web\/.*?(https?:\/\/)/, '$1'))
+			);
+		}
 
 		/* Recurse for frames and IFRAMEs. */
 		try {
