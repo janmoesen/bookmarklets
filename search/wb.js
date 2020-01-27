@@ -61,6 +61,12 @@
 		s = getActiveSelection() || prompt('Please enter the URL to look up in the Wayback Machine:', location);
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
+		/* Typing “wb *\/example.com” (without the backslash) to search all
+		 * archived versions of “example.com” does not work because of the way
+		 * this bookmarklet wraps “percent s” in a multiline comment in a
+		 * function body (see above). As a workaround, use “wb * example.com”.
+		 */
+		s = s.replace(/^\s*\* /, '*/');
 	}
 
 	if (s) {
