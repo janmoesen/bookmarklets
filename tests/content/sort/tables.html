@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Table sorter test</title>
+<style>
+html {
+	font: menu;
+	background: white;
+	color: black;
+}
+
+h1 {
+	display: none;
+}
+
+h2 {
+	font: inherit;
+	margin: inherit;
+}
+
+table {
+	border-collapse: collapse;
+	float: left;
+	vertical-align: top;
+	margin: 0.5em;
+}
+
+thead,
+tbody tr:nth-child(even) {
+	background: #ffe;
+}
+
+th,
+td {
+	min-width: 5em;
+	max-width: 20em;
+	border: 1px solid #ddd;
+	padding: 0.25em 1.25em;
+	vertical-align: top;
+}
+
+th:first-child {
+	min-width: 1em;
+	max-width: 2em;
+}
+
+table.allAreValid th.isValid {
+	background: rgb(128, 255, 128);
+	color: black;
+}
+
+table.someAreInvalid th.isInvalid {
+	background: rgb(255, 192, 192);
+	color: black;
+}
+
+table.allAreInvalid th.isInvalid {
+	background: rgb(255, 128, 128);
+	color: white;
+}
+
+</style>
+
+<h1>Table sorter test</h1>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Description test case #1</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">2</th><td>FOO002</td></tr>
+	<tr><th scope="row">1</th><td>foo1</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Description test case #2</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">2</th><td>EUR 3</td></tr>
+	<tr><th scope="row">3</th><td>EUR 10</td></tr>
+	<tr><th scope="row">1</th><td>- EUR 99</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Description test case #3</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">3</th><td>https://example.com/aaa</td></tr>
+	<tr><th scope="row">4</th><td>https://google.com/</td></tr>
+	<tr><th scope="row">1</th><td>http://www.example.com/zzz</td></tr>
+	<tr><th scope="row">2</th><td>https://www.example.com/</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Description test case #4</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">2</th><td>1 Apr 2020</td></tr>
+	<tr><th scope="row">1</th><td>31 Dec 2019</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Amount with currency code and decimal “.”</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">1</th><td>- EUR 4,000</td></tr>
+	<tr><th scope="row">4</th><td>- EUR 4.00</td></tr>
+	<tr><th scope="row">5</th><td>- EUR 2</td></tr>
+	<tr><th scope="row">7</th><td>EUR 0</td></tr>
+	<tr><th scope="row">3</th><td>- EUR 5</td></tr>
+	<tr><th scope="row">8</th><td>EUR 3</td></tr>
+	<tr><th scope="row">2</th><td>- EUR 6</td></tr>
+	<tr><th scope="row">6</th><td>- EUR 2.00</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Amount with currency symbol and decimal “,”</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">1</th><td>- $ 4.000</td></tr>
+	<tr><th scope="row">4</th><td>- $ 4,00</td></tr>
+	<tr><th scope="row">5</th><td>- $ 2</td></tr>
+	<tr><th scope="row">7</th><td>$ 0</td></tr>
+	<tr><th scope="row">3</th><td>- $ 5</td></tr>
+	<tr><th scope="row">8</th><td>$ 3</td></tr>
+	<tr><th scope="row">2</th><td>- $ 6</td></tr>
+	<tr><th scope="row">6</th><td>- $ 2,00</td></tr>
+</tbody>
+</table>
+
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>String with number suffix</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">3</th><td>foo003</td></tr>
+	<tr><th scope="row">2</th><td>FOO002</td></tr>
+	<tr><th scope="row">4</th><td>FOO4</td></tr>
+	<tr><th scope="row">1</th><td>foo1</td></tr>
+	<tr><th scope="row">6</th><td>quux1</td></tr>
+	<tr><th scope="row">5</th><td>QuUx0</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col">Type</th><th scope="col"><h2>String inside HTML element(s)</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">6</th><td>Normal text</th><td>foo003</td></tr>
+	<tr><th scope="row">5</th><td>SPAN inside P</th><td><p><span>FOO002</span></p></td></tr>
+	<tr><th scope="row">7</th><td>INPUT inside FORM</th><td><form><input value="FOO4"></form></td></tr>
+	<tr><th scope="row">1</th><td>Empty</th><td></td></tr>
+	<tr><th scope="row">3</th><td>Single whitespace</th><td> </td></tr>
+	<tr><th scope="row">2</th><td>Empty inside IMG@title</th><td><img title=""></td></tr>
+	<tr><th scope="row">4</th><td>IMG@alt</th><td><img alt="foo1"></td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>File name</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">2</th><td>2009-07-17-nokia.tgz</td></tr>
+	<tr><th scope="row">7</th><td>20090717-nokia</td></tr>
+	<tr><th scope="row">3</th><td>2017CimaCoppiMasterTemplate.pdf</td></tr>
+	<tr><th scope="row">4</th><td>2020-01-04-catena.sql.gz</td></tr>
+	<tr><th scope="row">5</th><td>2020-01-04-old-macbook-air-configs.tgz</td></tr>
+	<tr><th scope="row">6</th><td>2020-01-04-studioloarchite.sql.gz</td></tr>
+	<tr><th scope="row">1</th><td>900-249-PB.pdf</td></tr>
+	<tr><th scope="row">11</th><td>file-001.gif</td></tr>
+	<tr><th scope="row">14</th><td>file-003.jpg</td></tr>
+	<tr><th scope="row">13</th><td>file-002.jpg</td></tr>
+	<tr><th scope="row">12</th><td>file-001.jpg</td></tr>
+	<tr><th scope="row">8</th><td>file000.jpg</td></tr>
+	<tr><th scope="row">10</th><td>file7.jpg</td></tr>
+	<tr><th scope="row">15</th><td>file-99.jpg</td></tr>
+	<tr><th scope="row">9</th><td>file004.jpg</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Number, sometimes with leading zeros</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">22</th><td>25</td></tr>
+	<tr><th scope="row">8</th><td>0001</td></tr>
+	<tr><th scope="row">2</th><td>-01</td></tr>
+	<tr><th scope="row">5</th><td>-000001</td></tr>
+	<tr><th scope="row">21</th><td>21</td></tr>
+	<tr><th scope="row">1</th><td>-1.01</td></tr>
+	<tr><th scope="row">16</th><td>5</td></tr>
+	<tr><th scope="row">4</th><td>-00001</td></tr>
+	<tr><th scope="row">17</th><td>10</td></tr>
+	<tr><th scope="row">11</th><td>1</td></tr>
+	<tr><th scope="row">19</th><td>15</td></tr>
+	<tr><th scope="row">15</th><td>3</td></tr>
+	<tr><th scope="row">13</th><td>02</td></tr>
+	<tr><th scope="row">14</th><td>2</td></tr>
+	<tr><th scope="row">20</th><td>020</td></tr>
+	<tr><th scope="row">10</th><td>01</td></tr>
+	<tr><th scope="row">9</th><td>001</td></tr>
+	<tr><th scope="row">7</th><td>00001</td></tr>
+	<tr><th scope="row">3</th><td>-001</td></tr>
+	<tr><th scope="row">12</th><td>1.01</td></tr>
+	<tr><th scope="row">6</th><td>000001</td></tr>
+	<tr><th scope="row">18</th><td>12</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>String</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">8</th><td>zzz</td></tr>
+	<tr><th scope="row">4</th><td>def</td></tr>
+	<tr><th scope="row">7</th><td>xyz</td></tr>
+	<tr><th scope="row">1</th><td>a</td></tr>
+	<tr><th scope="row">3</th><td>abc</td></tr>
+	<tr><th scope="row">5</th><td>hij</td></tr>
+	<tr><th scope="row">6</th><td>xy</td></tr>
+	<tr><th scope="row">2</th><td>ab</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Amount with currency symbol, sometimes with garbage suffix</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">2</th><td>元 00.99</td></tr>
+	<tr><th scope="row">4</th><td>元 9.99</td></tr>
+	<tr><th scope="row">1</th><td>元 -00.99</td></tr>
+	<tr><th scope="row">5</th><td>元 10.00</td></tr>
+	<tr><th scope="row">6</th><td>元 10.00 10 ounce</td></tr>
+	<tr><th scope="row">3</th><td>元 01.99 foo</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Amount with currency symbol and decimal “,”, sometimes with minus sign before or after currency symbol, sometimes garbage</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">5</th><td>£ -3</td></tr>
+	<tr><th scope="row">2</th><td>“</td></tr>
+	<tr><th scope="row">3</th><td>- £3,20</td></tr>
+	<tr><th scope="row">6</th><td>£10</td></tr>
+	<tr><th scope="row">4</th><td>-£3,10</td></tr>
+	<tr><th scope="row">10</th><td>£99,90</td></tr>
+	<tr><th scope="row">7</th><td>£10,40</td></tr>
+	<tr><th scope="row">9</th><td>£87,00</td></tr>
+	<tr><th scope="row">8</th><td>£56,10</td></tr>
+	<tr><th scope="row">11</th><td>£234,10</td></tr>
+	<tr><th scope="row">1</th><td>…</td></tr>
+	<tr><th scope="row">12</th><td>£234,1000001</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>ISO date</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">6</th><td>2199-12-24</td></tr>
+	<tr><th scope="row">2</th><td>1999-12-31</td></tr>
+	<tr><th scope="row">5</th><td>2020-07-28</td></tr>
+	<tr><th scope="row">3</th><td>2000-01-01</td></tr>
+	<tr><th scope="row">1</th><td>1490-07-17</td></tr>
+	<tr><th scope="row">4</th><td>2010-07-28</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>en-US long date</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">3</th><td>Dec 6, 2010 8:14 AM</td></tr>
+	<tr><th scope="row">2</th><td>Jan 1, 2000 3:14 AM</td></tr>
+	<tr><th scope="row">6</th><td>Jan 18, 2199 9:12 AM</td></tr>
+	<tr><th scope="row">5</th><td>Feb 6, 2020 8:14 AM</td></tr>
+	<tr><th scope="row">1</th><td>Jul 17, 1490 0:00 PM</td></tr>
+	<tr><th scope="row">4</th><td>Dec 6, 2010 8:15 AM</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Percentage</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">6</th><td>10%</td></tr>
+	<tr><th scope="row">2</th><td>1.1%</td></tr>
+	<tr><th scope="row">1</th><td>1%</td></tr>
+	<tr><th scope="row">3</th><td>9.8%</td></tr>
+	<tr><th scope="row">4</th><td>9.80%</td></tr>
+	<tr><th scope="row">5</th><td>9.9%</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>HTTP(s) URL</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">7</th><td>https://yahoo.com/</td></tr>
+	<tr><th scope="row">5</th><td>https://google.com/robots.txt</td></tr>
+	<tr><th scope="row">3</th><td>http://gitlab.com/</td></tr>
+	<tr><th scope="row">6</th><td>https://google.com/search?q=bookmarklets</td></tr>
+	<tr><th scope="row">2</th><td>https://github.com/janmoesen/bookmarklets/</td></tr>
+	<tr><th scope="row">1</th><td>https://www.example.com/</td></tr>
+	<tr><th scope="row">4</th><td>https://gitlab.com/</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Currency with thousands “,”, sometimes with garbage format</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">10</th><td>$87,500</td></tr>
+	<tr><th scope="row">11</th><td>$90,560</td></tr>
+	<tr><th scope="row">12</th><td>$92575.5</td></tr>
+	<tr><th scope="row">13</th><td>$95,400</td></tr>
+	<tr><th scope="row">14</th><td>$98,540</td></tr>
+	<tr><th scope="row">15</th><td>$103,500</td></tr>
+	<tr><th scope="row">16</th><td>$103,600</td></tr>
+	<tr><th scope="row">17</th><td>$198,500</td></tr>
+	<tr><th scope="row">18</th><td>$205,500</td></tr>
+	<tr><th scope="row">19</th><td>$206850,000</td></tr>
+	<tr><th scope="row">1</th><td>$-85,666</td></tr>
+	<tr><th scope="row">20</th><td>$217,500</td></tr>
+	<tr><th scope="row">21</th><td>$345,000</td></tr>
+	<tr><th scope="row">22</th><td>$356,250</td></tr>
+	<tr><th scope="row">23</th><td>$357650.23133</td></tr>
+	<tr><th scope="row">24</th><td>$372,000</td></tr>
+	<tr><th scope="row">25</th><td>$385,750</td></tr>
+	<tr><th scope="row">26</th><td>$433,060</td></tr>
+	<tr><th scope="row">27</th><td>$452,500</td></tr>
+	<tr><th scope="row">28</th><td>$470,600</td></tr>
+	<tr><th scope="row">29</th><td>$645,750</td></tr>
+	<tr><th scope="row">2</th><td>$ 9.66</td></tr>
+	<tr><th scope="row">30</th><td>$675 000,12.</td></tr>
+	<tr><th scope="row">31</th><td>$725,000</td></tr>
+	<tr><th scope="row">32</th><td>$1,200,000</td></tr>
+	<tr><th scope="row">33</th><td>$850.000.000,12</td></tr>
+	<tr><th scope="row">3</th><td>$9.66</td></tr>
+	<tr><th scope="row">4</th><td>$000011.666</td></tr>
+	<tr><th scope="row">5</th><td>$12</td></tr>
+	<tr><th scope="row">6</th><td>$75,650</td></tr>
+	<tr><th scope="row">7</th><td>$85,675</td></tr>
+	<tr><th scope="row">8</th><td>$86,000</td></tr>
+	<tr><th scope="row">9</th><td>$86,500</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>Date as “YYYY/MM/DD”</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">9</th><td>2011/01/25</td></tr>
+	<tr><th scope="row">1</th><td>1900/09/26</td></tr>
+	<tr><th scope="row">4</th><td>2010/01/04</td></tr>
+	<tr><th scope="row">14</th><td>2199/08/11</td></tr>
+	<tr><th scope="row">3</th><td>2009/12/09</td></tr>
+	<tr><th scope="row">6</th><td>2010/03/17</td></tr>
+	<tr><th scope="row">10</th><td>2011/03/21</td></tr>
+	<tr><th scope="row">2</th><td>2009/09/15</td></tr>
+	<tr><th scope="row">11</th><td>2011/08/14</td></tr>
+	<tr><th scope="row">7</th><td>2010/06/09</td></tr>
+	<tr><th scope="row">5</th><td>2010/02/12</td></tr>
+	<tr><th scope="row">13</th><td>2013/03/03</td></tr>
+	<tr><th scope="row">8</th><td>2010/12/22</td></tr>
+	<tr><th scope="row">12</th><td>2013/02/01</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col">#</th><th scope="col"><h2>IPv4 addresses</h2></th></tr>
+</thead>
+<tbody>
+	<tr><th scope="row">4</th><td>83.212.99.146</td></tr>
+	<tr><th scope="row">26</th><td>212.7.220.13</td></tr>
+	<tr><th scope="row">11</th><td>111.161.126.83</td></tr>
+	<tr><th scope="row">10</th><td>103.249.155.142</td></tr>
+	<tr><th scope="row">28</th><td>221.178.182.82</td></tr>
+	<tr><th scope="row">21</th><td>187.33.48.165</td></tr>
+	<tr><th scope="row">16</th><td>122.96.59.99</td></tr>
+	<tr><th scope="row">1</th><td>5.39.67.201</td></tr>
+	<tr><th scope="row">5</th><td>91.200.12.6</td></tr>
+	<tr><th scope="row">19</th><td>176.97.116.180</td></tr>
+	<tr><th scope="row">17</th><td>124.192.98.200</td></tr>
+	<tr><th scope="row">23</th><td>195.211.155.252</td></tr>
+	<tr><th scope="row">27</th><td>221.178.182.16</td></tr>
+	<tr><th scope="row">9</th><td>96.47.225.162</td></tr>
+	<tr><th scope="row">13</th><td>117.136.234.18</td></tr>
+	<tr><th scope="row">12</th><td>112.13.43.207</td></tr>
+	<tr><th scope="row">6</th><td>91.200.12.43</td></tr>
+	<tr><th scope="row">8</th><td>91.207.9.214</td></tr>
+	<tr><th scope="row">7</th><td>91.200.12.67</td></tr>
+	<tr><th scope="row">14</th><td>120.198.237.5</td></tr>
+	<tr><th scope="row">2</th><td>36.80.57.98</td></tr>
+	<tr><th scope="row">24</th><td>200.146.34.58</td></tr>
+	<tr><th scope="row">22</th><td>195.211.155.61</td></tr>
+	<tr><th scope="row">25</th><td>201.91.91.14</td></tr>
+	<tr><th scope="row">3</th><td>58.153.50.154</td></tr>
+	<tr><th scope="row">20</th><td>185.68.180.135</td></tr>
+	<tr><th scope="row">18</th><td>173.44.37.226</td></tr>
+	<tr><th scope="row">15</th><td>121.41.15.122</td></tr>
+</tbody>
+</table>
+
+<table>
+<thead>
+	<tr><th scope="col"><h2>Random data from the other tables on this page</th></tr>
+</thead>
+<tbody id="random">
+<!--
+<tr><td>1</td></tr>
+<tr><td>2</td></tr>
+<tr><td>3</td></tr>
+<tr><td>4</td></tr>
+<tr><td>5</td></tr>
+<tr><td>6</td></tr>
+<tr><td>7</td></tr>
+<tr><td>8</td></tr>
+<tr><td>9</td></tr>
+<tr><td>10</td></tr>
+<tr><td>11</td></tr>
+<tr><td>12</td></tr>
+<tr><td>13</td></tr>
+<tr><td>14</td></tr>
+<tr><td>15</td></tr>
+<tr><td>1.01</td></tr>
+<tr><td>QuUx0</td></tr>
+<tr><td>https://yahoo.com/</td></tr>
+<tr><td>text 1.1%</td></tr>
+<tr><td>text 5</td></tr>
+<tr><td>text 13</td></tr>
+<tr><td>text 16</td></tr>
+<tr><td>text 16</td></tr>
+<tr><td>text 020</td></tr>
+<tr><td>text file-003.jpg</td></tr>
+<tr><td>text 22</td></tr>
+<tr><td>text 32</td></tr>
+<tr><td>text 33</td></tr>
+<tr><td>text 83.212.99.146</td></tr>
+-->
+</tbody>
+</table>
+
+<script>
+/* Fill one table with random data. */
+let cells = Array.from(document.querySelectorAll('td'));
+let tBody = document.getElementById('random');
+let i = 50;
+while (i--) {
+	tBody.insertRow().insertCell().textContent = cells[Math.floor(Math.random() * cells.length, 10)].textContent;
+}
+
+/* Check every so often because there is no hook that gets called after sorting. */
+const intervalId = setInterval(_ => {
+	Array.from(document.querySelectorAll('table')).forEach(table => {
+		let areAllValid = true;
+		let areSomeValid = false;
+
+		if (table.xxxJanPrevInnerHtml && table.xxxJanPrevInnerHtml === table.innerHTML) {
+			return;
+		}
+		table.xxxJanPrevInnerHtml = table.innerHTML;
+
+		const lastTh = table.querySelector('th:last-child');
+		const direction = lastTh && lastTh.xxxJanSortingDirection || 'asc';
+
+		const rowThs = Array.from(table.querySelectorAll('th[scope="row"]'));
+		rowThs.forEach((th, i) => {
+			const isValid = direction === 'desc'
+				? th.textContent.trim() === '' + (rowThs.length - i)
+				: th.textContent.trim() === '' + (i + 1);
+
+			if (isValid) {
+				th.classList.remove('isInvalid');
+				th.classList.add('isValid');
+			} else {
+				th.classList.add('isInvalid');
+				th.classList.remove('isValid');
+			}
+
+			areAllValid &= isValid;
+			areSomeValid |= isValid;
+		});
+
+		table.classList.remove('allAreValid', 'allAreInvalid', 'someAreInvalid');
+		if (areAllValid) {
+			table.classList.add('allAreValid');
+		} else if (areSomeValid) {
+			table.classList.add('someAreInvalid');
+		} else {
+			table.classList.add('allAreInvalid');
+		}
+	});
+}, 500);
+
+</script>
+
+<!-- Load the bookmarklet (which auto-executes). -->
+<script src="../../../content/sort.js"></script>
+
+<script>
+/* Trigger the first sort for each table. */
+Array.from(document.querySelectorAll('table')).forEach(table => {
+	const lastTh = table.querySelector('th:last-child');
+	if (!lastTh) {
+		return;
+	}
+
+	lastTh.click();
+});
+</script>
