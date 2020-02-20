@@ -67,7 +67,7 @@
 		document.title = s;
 
 		/* Also update the og:title META tags. (Used by the “link” bookmarklet.) */
-		Array.from(document.querySelectorAll('meta[property="og:title"]')).forEach(
+		Array.from(document.querySelectorAll('meta[property="og:title"], meta[property="twitter:title"]')).forEach(
 			title => title.setAttribute('content', s)
 		);
 	}
