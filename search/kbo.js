@@ -66,9 +66,9 @@
 
 	if (s) {
 		let matches;
-		if ((matches = s.match(/.*\b(BE)?(\d{4})[ .-]?(\d{3})[ .-]?(\d{3})\b.*/i))) {
+		if ((matches = s.match(/.*\b(BE)?\s?(0?\d{3})[ .-]?(\d{3})[ .-]?(\d{3})\b.*/i))) {
 			location = 'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer='
-				+ encodeURIComponent(matches[2] + matches[3] + matches[4]);
+				+ encodeURIComponent(('0' + matches[2]).slice(-4) + matches[3] + matches[4]);
 		} else {
 			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?_oudeBenaming=on&pstcdeNPRP=&postgemeente1=&ondNP=true&_ondNP=on&ondRP=true&_ondRP=on&rechtsvormFonetic=ALL&vest=true&_vest=on&filterEnkelActieve=true&_filterEnkelActieve=on&actionNPRP=Zoek&searchWord='
 				+ encodeURIComponent(s);
