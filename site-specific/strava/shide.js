@@ -41,6 +41,13 @@
 		}
 	});
 
+	/* Hide kudos notifications on <https://www.strava.com/notifications>. */
+	Array.from(document.querySelectorAll('#notifications-list-view tr')).forEach(notification => {
+		if (notification.textContent.trim().match(/\bkudos\b/i)) {
+			notification.classList.add('xxxJanStravaHidden');
+		}
+	});
+
 	/* Hide activity types I do not care about. (Like runs and stationary workouts.) */
 	Array.from(document.querySelectorAll('.icon-run, .icon-walk, .icon-virtualride, .icon-workout')).forEach(function (elem) {
 		let container = elem.closest('.activity');
