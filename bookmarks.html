@@ -43,7 +43,7 @@ Feel free to fork and create pull requests: http://kak.be/bookmarklets
 
 See COPYING for licence details. Or &quot;license details&quot;, if you are so inclined.
 
-These bookmarks were exported on Fri, 2020-09-25 17:27:53 +0200.</P>
+These bookmarks were exported on Fri, 2020-09-25 17:30:30 +0200.</P>
 <DL><P>
 	<DT><H3>Bookmarks toolbar</H3>
 	<DD><P>These are the bookmarklets I keep on the bookmarklets toolbar for quick access
@@ -532,6 +532,13 @@ If the text looks like a video ID, you are taken directly to the video.
 
 If you append a &quot;!&quot; to the video ID, it will be opened in an IFRAME, so you
 do not need to sign in for &quot;restricted&quot; videos.</P></DD>
+	<DT><A HREF="javascript:%28function%20yt%28%29%20%7B%20%20var%20s%20%3D%20%28function%20%28%29%20%7B%20%2F%2A%s%2A%2F%3B%20%7D%29.toString%28%29%20.replace%28%2F%5Efunction%5Cs%2A%5C%28%5Cs%2A%5C%29%5Cs%2A%5C%7B%5Cs%2A%5C%2F%5C%2A%2F%2C%20%27%27%29%20.replace%28%2F%5C%2A%5C%2F%5Cs%2A%5C%3B%3F%5Cs%2A%5C%7D%5Cs%2A%24%2F%2C%20%27%27%29%20.replace%28%2F%5Cu0025s%2F%2C%20%27%27%29%3B%20%20function%20getActiveSelection%28doc%29%20%7B%20if%20%28arguments.length%20%3D%3D%3D%200%29%20%7B%20doc%20%3D%20document%3B%20%7D%20if%20%28%21doc%20%7C%7C%20typeof%20doc.getSelection%20%21%3D%3D%20%27function%27%29%20%7B%20return%20%27%27%3B%20%7D%20if%20%28%21doc.activeElement%29%20%7B%20return%20doc.getSelection%28%29%20%2B%20%27%27%3B%20%7D%20var%20activeElement%20%3D%20doc.activeElement%3B%20%20try%20%7B%20if%20%28%20typeof%20activeElement.contentDocument%20%3D%3D%3D%20%27object%27%20%26%26%20activeElement.contentDocument%20%21%3D%3D%20null%20%29%20%7B%20return%20getActiveSelection%28activeElement.contentDocument%29%3B%20%7D%20%7D%20catch%20%28e%29%20%7B%20return%20doc.getSelection%28%29%20%2B%20%27%27%3B%20%7D%20%20if%20%28typeof%20activeElement.value%20%3D%3D%3D%20%27string%27%29%20%7B%20if%20%28activeElement.selectionStart%20%21%3D%3D%20activeElement.selectionEnd%29%20%7B%20return%20activeElement.value.substring%28activeElement.selectionStart%2C%20activeElement.selectionEnd%29%3B%20%7D%20return%20activeElement.value%3B%20%7D%20%20return%20doc.getSelection%28%29%20%2B%20%27%27%3B%20%7D%20if%20%28s%20%3D%3D%3D%20%27%27%29%20%7B%20s%20%3D%20getActiveSelection%28%29%20%7C%7C%20prompt%28%27Please%20enter%20your%20YouTube%20topic%20search%20query%3A%27%29%3B%20%7D%20else%20%7B%20s%20%3D%20s.replace%28%2F%28%5E%7C%5Cs%7C%22%29~%28%22%7C%5Cs%7C%24%29%2Fg%2C%20%27%241%27%20%2B%20getActiveSelection%28%29%20%2B%20%27%242%27%29%3B%20%7D%20if%20%28s%29%20%7B%20s%20%3D%20s.replace%28%2F%5CuFEFF%2Fg%2C%20%27%27%29%3B%20location%20%3D%20%27https%3A%2F%2Fwww.youtube.com%2Fresults%3Fsearch_query%3D%27%20%2B%20encodeURIComponent%28s%20%2B%20%27%20%22Provided%20to%20YouTube%20by%22%27%29%3B%20%7D%20%7D%29%28%29%3B" ADD_DATE="1328465540" LAST_MODIFIED="1601047805" SHORTCUTURL="yt">YouTube topic search</A>
+	<DD><P>Search YouTube for the specified or selected text inside “topic” videos.
+
+“Topic” videos are the official channels for artists/bands/musicians and can
+be recognized by either “ - Topic” or “🎵” suffixed to the name. However, it
+is easier to search for the text “Provided to YouTube by”, which is at the
+start of the auto-generated description for music “videos”.</P></DD>
 	</DL>
 	<DT><H3>Site-specific</H3>
 	<DD><P>Might as well turn these into Greasemonkey scripts one day.</P>
