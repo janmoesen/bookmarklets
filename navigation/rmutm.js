@@ -8,9 +8,9 @@
 (function rmutm() {
 	'use strict';
 
-	/* The following list was taken from https://en.wikipedia.org/wiki/UTM_parameters#See_also */
-	const hrefRegexp = /[?&](utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid)/;
-	const parameterRegexp = /^(utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid)/;
+	/* The following list was based on https://en.wikipedia.org/wiki/UTM_parameters#See_also and has since been expanded. */
+	const hrefRegexp = /[?&](utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid|ss_)/;
+	const parameterRegexp = /^(utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid|ss_(source|email|campaign))/;
 
 	function clearQueryString(queryString) {
 		return new URLSearchParams(
