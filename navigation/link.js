@@ -11,7 +11,7 @@
 		.replace(/\u0025s/, '');
 
 	if (s && !s.match(/^[a-zA-Z][-+.a-zA-Z0-9]*:/)) {
-		s = 'http://' + s;
+		s = 'https://' + s;
 	}
 
 	/**
