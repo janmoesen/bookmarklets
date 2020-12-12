@@ -90,8 +90,6 @@
 	/* Build a basic HTML document for easy element access. */
 	var root = document.createDocumentFragment().appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'html'));
 	root.innerHTML = `
-		<html>
-
 		<title></title>
 
 		<link rel="icon"/>
@@ -112,6 +110,11 @@
 			padding: 1ex;
 			border: 1px dotted grey;
 		}
+
+		input[type="url"] {
+			width: 100%;
+		}
+
 		</style>
 
 		<p>
@@ -123,14 +126,24 @@
 			<textarea rows="10" cols="80"></textarea>
 		</p>
 
-		<script>
-		const textarea = document.querySelector('textarea');
-		if (textarea) {
-			textarea.style.height = textarea.scrollHeight + 'px';
-		}
-		</script>
+		<p class="xxxJanExcludeFromDataUri">
+			Data URI for this link page:<br/>
+			<input type="url"/ onfocus="select()" readonly>
+		</p>
 
-		</html>`;
+		<p class="xxxJanExcludeFromDataUri">
+			<button>Restore original page</button>
+		</p>
+
+		<script>
+		(function () {
+			const textarea = document.querySelector('textarea');
+			if (textarea) {
+				textarea.style.height = textarea.scrollHeight + 'px';
+			}
+		})();
+		</script>
+	`;
 
 	var title = root.querySelector('title');
 	var iconLink = root.querySelector('link');
@@ -160,7 +173,7 @@
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
 	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'https://www.google.com/s2/favicons?domain=' + (domain || link.hostname || 'example.com');
 
-	/* Show the link code in various formats. */
+	/* Show the link code in various formats inside an editable TEXTAREA. */
 	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
 	var selectedText = getActiveSelection();
 	if (selectedText) {
@@ -171,29 +184,48 @@
 
 	textarea.textContent += '\n\nMarkdown:\n[' + link.textContent + '](' + link.href + ')';
 
-	var dataUri = 'data:text/html;charset=UTF-8,' + encodeURIComponent(root.innerHTML);
-	textarea.textContent += '\n\nData URI for this link page:\n' + dataUri;
-
 	/* Remember the original document (as a string of the current HTML, so
-	 * without event handlers added in JavaScript, etc.)
+	 * without event handlers added in JavaScript, etc.) so we can restore it
+	 * later on, if wanted.
 	 */
 	var originalHtml = document.documentElement.outerHTML;
 
 	/* Replace the original document's HTML with our generated HTML. */
 	HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
-	HTMLDocument.prototype.write.call(document, root.outerHTML);
+	HTMLDocument.prototype.write.call(document, '<!DOCTYPE html>' + root.outerHTML);
 	HTMLDocument.prototype.close.call(document);
+
+	/* Because the document fragment was serialized and then imported using
+	 * `document.write()`, we can no longer use the original `textarea`
+	 * variable to refer to the TEXTAREA as currently visible on our page.
+	 */
+	const currTextarea = document.querySelector('textarea');
+
+	/* Show the data URI for this link page. */
+	const dataUriInput = document.querySelector('input[type="url"]');
+	function updateDataUri() {
+		const domCopy = document.documentElement.cloneNode(true);
+		Array.from(domCopy.querySelectorAll('.xxxJanExcludeFromDataUri')).forEach(node => node.remove());
+		domCopy.querySelector('textarea').textContent = currTextarea.value;
+		dataUriInput.value = 'data:text/html;charset=UTF-8,' + encodeURIComponent('<!DOCTYPE html>' + domCopy.outerHTML);
+	}
+
+	updateDataUri();
+
+	/* Update the data URI when the TEXTAREA is changed. I use it to jot down
+	 * quick notes, and want to preserve those notes in the generated URI.
+	 */
+	currTextarea.addEventListener('input', updateDataUri);
 
 	/* Restore the original document’s HTML by clicking a button. This is
 	 * not a 100% correct restoration, but it’s faster than reloading, which
 	 * still remains an option if the result is not satisfactory.
 	 */
-	var button = document.createElement('button');
+	var button = document.querySelector('button');
 	button.textContent = 'Restore original page';
 	button.onclick = function () {
 		HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
 		HTMLDocument.prototype.write.call(document, originalHtml);
 		HTMLDocument.prototype.close.call(document);
 	};
-	document.querySelector('textarea').after(button);
 })();
