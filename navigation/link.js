@@ -82,7 +82,7 @@
 	}
 
 	if (!titleText) {
-		titleText = (location + '');
+		titleText = location + '';
 	}
 
 	var originalIconLink = s || document.querySelector('link[rel~="icon"]');
@@ -143,8 +143,8 @@
 	link.href = s || location;
 	link.textContent = title.textContent = s || titleText;
 	var domain = (s && link.hostname) || document.domain || location.hostname;
-	if (titleText) {
-		link.parentNode.insertBefore(document.createTextNode(' [' + (domain || link.hostname) + ']'), link.nextSibling);
+	if (domain) {
+		link.parentNode.insertBefore(document.createTextNode(` [${domain}]`), link.nextSibling);
 	}
 
 	/* Link to the current page's referrer, if available. */
