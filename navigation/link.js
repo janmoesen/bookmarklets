@@ -158,7 +158,7 @@
 	}
 
 	/* Make sure the favicon HREF is absolute. If there was none, use Google S2. */
-	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'https://www.google.com/s2/favicons?domain=' + (domain || link.hostname);
+	iconLink.href = iconImage.src = originalIconLink && originalIconLink.href || 'https://www.google.com/s2/favicons?domain=' + (domain || link.hostname || 'example.com');
 
 	/* Show the link code in various formats. */
 	textarea.textContent = 'Plain text:\n"' + link.textContent + '": ' + link.href;
