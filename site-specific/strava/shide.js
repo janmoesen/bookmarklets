@@ -6,7 +6,6 @@
 (function shide() {
 	const css = `@charset "utf-8";
 		.xxxJanStravaHidden {
-			outline: 1px dotted purple;
 			transition: max-height 0.25s ease-in 0s;
 
 			overflow: hidden;
@@ -16,7 +15,6 @@
 		}
 
 		.xxxJanStravaHidden:hover {
-			outline: 1px dotted magenta;
 			transition:
 				/* First fade in, then enlarge. */
 				opacity 0.2s ease-in 0s,
