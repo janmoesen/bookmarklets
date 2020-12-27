@@ -1,6 +1,12 @@
 /**
  * Hide visual pollution from the Strava feed.
  *
+ * “Pollution” is a highly subjective term, meaning “everything I do not care
+ * enough about to want to see featured in the feed”. That means things like
+ * very short rides (unless they have photos), short runs/hikes/walks, water
+ * sports and winter sports, Zwift sessions, people joining clubs or
+ * challenges, …
+ *
  * @title Hide Strava pollution
  */
 (function shide() {
