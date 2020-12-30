@@ -34,8 +34,10 @@
 
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
-	/* Process all feed entries. */
-	Array.from(document.querySelectorAll('.feed-entry')).forEach(entry => {
+	/**
+	 * Process a feed entry.
+	 */
+	function processEntry(entry) {
 		/* Feed entry types. */
 		const entryClassList = entry.classList;
 		const isActivity = entryClassList.contains('activity');
@@ -153,9 +155,28 @@
 		if (shouldHide) {
 			entry.classList.add('xxxJanStravaHidden');
 		}
-	});
+	}
 
-	/* TODO: Use MutationObserver and process new feed entries that are added dynamically. */
+	/* Process all existing feed entries. */
+	Array.from(document.querySelectorAll('.feed-entry')).forEach(processEntry);
+
+	/* Process feed entries that are dynamically loaded (when scrolling to the
+	 * end of the feed or clicking the “Load more…” button).
+	 */
+	new MutationObserver(function (mutations) {
+		mutations.forEach(function(mutation) {
+			if (!mutation?.addedNodes?.length) {
+				return;
+			}
+
+			Array.from(mutation.addedNodes)
+				.filter(node => typeof node.matches === 'function' && node.matches('.feed-entry'))
+				.forEach(processEntry);
+		});
+	}).observe(document, {
+		childList: true,
+		subtree: true
+	});
 
 	/* Hide unwanted stuff outside of the feed. */
 	Array.from(document.querySelectorAll('.upsell')).forEach(
