@@ -38,6 +38,11 @@
 	 * Process a feed entry.
 	 */
 	function processEntry(entry) {
+		/* Skip nested feed entries (i.e. inside a group activity) */
+		if (entry.parentElement.closest('.feed-entry')) {
+			return;
+		}
+
 		/* Feed entry types. */
 		const entryClassList = entry.classList;
 		const isActivity = entryClassList.contains('activity');
@@ -81,7 +86,7 @@
 			|| appIconClassList.contains('icon-workout');
 
 		/* Media. */
-		const numPhotos = entry.querySelectorAll('.entry-photo').length;
+		const numPhotos = entry.querySelectorAll('[str-type="photo"]').length;
 		const hasPhotos = numPhotos > 0;
 
 		const hasMap = !!entry.querySelector('.activity-map');
@@ -96,9 +101,13 @@
 		let durationInS = undefined;
 		let hasDurationInS = false;
 
-		Array.from(entry.querySelectorAll('.list-stats .stat')).forEach(stat => {
-			const label = stat.querySelector('.stat-subtext')?.textContent?.trim() ?? '';
-			const value = stat.querySelector('.stat-text')?.textContent?.trim() ?? '';
+		/* The DOM structure for the activity stats differs between the feed
+		 * entries on the dashboard and those on the athlete page. Also,
+		 * because group activities have the stats for all participants,
+		 * use `.reverse()` to process the first athlete’s stats last. */
+		Array.from(entry.querySelectorAll('.list-stats li')).reverse().forEach(stat => {
+			const label = stat.querySelector('.stat-subtext')?.textContent?.trim() || stat.title || '';
+			const value = stat.querySelector('.stat-text')?.textContent?.trim() || stat.textContent.trim();
 
 			/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
 			if (label.match(/^distance/i)) {
@@ -170,8 +179,13 @@
 			}
 
 			Array.from(mutation.addedNodes)
-				.filter(node => typeof node.matches === 'function' && node.matches('.feed-entry'))
-				.forEach(processEntry);
+				.forEach(node => {
+					if (typeof node.matches === 'function' && node.matches('.feed-entry')) {
+						processEntry(node);
+					} else if (typeof node.querySelectorAll === 'function') {
+						Array.from(node.querySelectorAll('.feed-entry')).forEach(processEntry);
+					}
+				});
 		});
 	}).observe(document, {
 		childList: true,
