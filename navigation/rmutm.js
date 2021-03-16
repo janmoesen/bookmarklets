@@ -35,13 +35,16 @@
 		Array.from(document.querySelectorAll('a[href]'))
 			.filter(a => a.href.match(hrefRegexp))
 			.forEach(a => {
-				const oldUrl = new URL(a.href);
+				try {
+					const oldUrl = new URL(a.href);
 
-				const newUrl = new URL(a.href);
-				newUrl.search = clearQueryString(oldUrl.search);
+					const newUrl = new URL(a.href);
+					newUrl.search = clearQueryString(oldUrl.search);
 
-				if (oldUrl.toString() !== newUrl.toString()) {
-					a.href = newUrl.toString();
+					if (oldUrl.toString() !== newUrl.toString()) {
+						a.href = newUrl.toString();
+					}
+				} catch (e) {
 				}
 			});
 
