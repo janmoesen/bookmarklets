@@ -59,7 +59,7 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection(document) || prompt('Please enter the Belgian company nubmer / VAT number:');
+		s = getActiveSelection(document) || prompt('Please enter the Belgian company number / VAT number:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection(document) + '$2');
 	}
