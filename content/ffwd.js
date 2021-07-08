@@ -1,14 +1,14 @@
 /**
- * Gradually speed up the video and audio playback rate from 1x to 10x by
+ * Speed up the video and audio playback rate, starting from 10x back to 1x by
  * executing this bookmarklet multiple times. Executing it once more after the
- * maximum speed will set it back to 1x.
+ * normal speed will restart the cycle from the maximum speed again.
  *
  * @title FFWD ⏩
  */
 (function ffwd() {
 	'use strict';
 
-	const playbackRates = [1, 1.5, 2, 4, 10];
+	const playbackRates = [10, 4, 2, 1.5, 1];
 
 	let playbackRateToUse = undefined;
 
@@ -19,7 +19,7 @@
 			 * on the first element encountered. */
 			if (typeof playbackRateToUse === 'undefined') {
 				for (let i = 0; i < playbackRates.length; i++) {
-					if (media.playbackRate <= playbackRates[i]) {
+					if (media.playbackRate >= playbackRates[i]) {
 						playbackRateToUse = i === playbackRates.length - 1
 							? playbackRates[0]
 							: playbackRates[i + 1];
