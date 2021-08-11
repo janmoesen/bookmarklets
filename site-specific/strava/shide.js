@@ -246,22 +246,103 @@
 			}
 		});
 
-		let shouldHide = (!isActivity && !isGroupActivity)
-			|| (isEBikeRide && !hasPhotos)
-			|| isVirtualRide
-			|| (!hasMap && !isGroupActivity)
-			|| (isRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30) && (!hasElevationInM || elevationInM < 400))
-			|| (isRun && !hasPhotos && (!hasDistanceInKm || distanceInKm < 20))
-			|| (isHike && !hasPhotos && (!hasDistanceInKm || distanceInKm < 15))
-			|| (isWalk && !hasPhotos && (!hasDistanceInKm || distanceInKm < 10))
-			|| (isSwim && !hasPhotos && (!hasDurationInS || durationInS < 3600))
-			|| (isWinterSport && !hasPhotos)
-			|| (isOther && !hasPhotos && (!hasDurationInS || durationInS < 3600))
-			|| (isCommute && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30));
+		/* Decide whether or not to hide the entry. */
+		let shouldHide = false;
+		let reasonForHiding = null;
+
+		if (!isActivity && !isGroupActivity) {
+			shouldHide = true;
+			reasonForHiding = 'Not an activity';
+		} else if (isEBikeRide && !hasPhotos) {
+			shouldHide = true;
+			reasonForHiding = 'E-bike ride without photos';
+		} else if (isVirtualRide) {
+			shouldHide = true;
+			reasonForHiding = 'Virtual ride';
+		} else if (!hasMap && !isGroupActivity) {
+			shouldHide = true;
+			reasonForHiding = 'No map/GPS data (and not a group activity)';
+		} else if (isRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30) && (!hasElevationInM || elevationInM < 400)) {
+			shouldHide = true;
+			reasonForHiding = 'Short ride without photos and without noteworthy elevation gain';
+		} else if (isRun && !hasPhotos && (!hasDistanceInKm || distanceInKm < 20)) {
+			shouldHide = true;
+			reasonForHiding = 'Short run without photos';
+		} else if (isHike && !hasPhotos && (!hasDistanceInKm || distanceInKm < 15)) {
+			shouldHide = true;
+			reasonForHiding = 'Short hike without photos';
+		} else if (isWalk && !hasPhotos && (!hasDistanceInKm || distanceInKm < 10)) {
+			shouldHide = true;
+			reasonForHiding = 'Short walk without photos';
+		} else if (isSwim && !hasPhotos && (!hasDurationInS || durationInS < 3600)) {
+			shouldHide = true;
+			reasonForHiding = 'Short swim without photos';
+		} else if (isWinterSport && !hasPhotos) {
+			shouldHide = true;
+			reasonForHiding = 'Winter sports without photos';
+		} else if (isOther && !hasPhotos && (!hasDurationInS || durationInS < 3600)) {
+			shouldHide = true;
+			reasonForHiding = 'Other short activity without photos';
+		} else if (isCommute && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30)) {
+			shouldHide = true;
+			reasonForHiding = 'Short commute without photos';
+		}
 
 		if (shouldHide) {
 			entry.classList.add('xxxJanStravaHidden');
 		}
+
+		/* Show the parsed information we use to decide the fate of the entry. */
+		entry.title = `
+			/* Decision. */
+			shouldHide = ${shouldHide}
+			reasonForHiding = ${reasonForHiding}
+
+			/* Feed entry types. */
+			isActivity = ${isActivity}
+			isGroupActivity = ${isGroupActivity}
+			isClub = ${isClub}
+			isChallenge = ${isChallenge}
+			isPromo = ${isPromo}
+
+			/* Tags/special properties. */
+			isOwnActivity = ${isOwnActivity}
+			isCommute = ${isCommute}
+			isVirtualRide = ${isVirtualRide}
+
+			/* Activity types. */
+			isRide = ${isRide}
+			isEBikeRide = ${isEBikeRide}
+			isRun = ${isRun}
+			isHike = ${isHike}
+			isWalk = ${isWalk}
+			isSwim = ${isSwim}
+			isWaterSport = ${isWaterSport}
+			isWinterSport = ${isWinterSport}
+			isOther = ${isOther}
+
+			/* Media. */
+			numPhotos = ${numPhotos}
+			hasPhotos = ${hasPhotos}
+			hasMap = ${hasMap}
+
+			/* Kudos and comments. */
+			numKudos = ${numKudos}
+			hasKudos = ${hasKudos}
+			numComments = ${numComments}
+			hasComments = ${hasComments}
+
+			/* Statistics. */
+			distanceInKm = ${distanceInKm}
+			hasDistanceInKm = ${hasDistanceInKm}
+			elevationInM = ${elevationInM}
+			hasElevationInM = ${hasElevationInM}
+			durationInS = ${durationInS}
+			hasDurationInS = ${hasDurationInS}
+
+			${entry.title ? '\n\n======\n\n' + entry.title : ''}
+		`.trim().replace(/^\t+/gm, '');
+
 	}
 
 	/* Process all existing feed entries. */
