@@ -406,7 +406,7 @@
 	});
 
 	/* Hide unwanted stuff outside of the feed. */
-	Array.from(document.querySelectorAll('.upsell')).forEach(
+	Array.from(document.querySelectorAll('.upsell, [id*="upsell"]')).forEach(
 		element => element.classList.add('xxxJanStravaHidden')
 	);
 
