@@ -293,56 +293,55 @@
 		}
 
 		/* Show the parsed information we use to decide the fate of the entry. */
-		entry.title = `
-			/* Decision. */
-			shouldHide = ${shouldHide}
-			reasonForHiding = ${reasonForHiding}
+		entry.title = [
+			'/* Decision. */',
+			`shouldHide = ${shouldHide}`,
+			`reasonForHiding = ${reasonForHiding}`,
 
-			/* Feed entry types. */
-			isActivity = ${isActivity}
-			isGroupActivity = ${isGroupActivity}
-			isClub = ${isClub}
-			isChallenge = ${isChallenge}
-			isPromo = ${isPromo}
+			'/* Feed entry types. */',
+			`isActivity = ${isActivity}`,
+			`isGroupActivity = ${isGroupActivity}`,
+			`isClub = ${isClub}`,
+			`isChallenge = ${isChallenge}`,
+			`isPromo = ${isPromo}`,
 
-			/* Tags/special properties. */
-			isOwnActivity = ${isOwnActivity}
-			isCommute = ${isCommute}
-			isVirtualRide = ${isVirtualRide}
+			'/* Tags/special properties. */',
+			`isOwnActivity = ${isOwnActivity}`,
+			`isCommute = ${isCommute}`,
+			`isVirtualRide = ${isVirtualRide}`,
 
-			/* Activity types. */
-			isRide = ${isRide}
-			isEBikeRide = ${isEBikeRide}
-			isRun = ${isRun}
-			isHike = ${isHike}
-			isWalk = ${isWalk}
-			isSwim = ${isSwim}
-			isWaterSport = ${isWaterSport}
-			isWinterSport = ${isWinterSport}
-			isOther = ${isOther}
+			'/* Activity types. */',
+			`isRide = ${isRide}`,
+			`isEBikeRide = ${isEBikeRide}`,
+			`isRun = ${isRun}`,
+			`isHike = ${isHike}`,
+			`isWalk = ${isWalk}`,
+			`isSwim = ${isSwim}`,
+			`isWaterSport = ${isWaterSport}`,
+			`isWinterSport = ${isWinterSport}`,
+			`isOther = ${isOther}`,
 
-			/* Media. */
-			numPhotos = ${numPhotos}
-			hasPhotos = ${hasPhotos}
-			hasMap = ${hasMap}
+			'/* Media. */',
+			`numPhotos = ${numPhotos}`,
+			`hasPhotos = ${hasPhotos}`,
+			`hasMap = ${hasMap}`,
 
-			/* Kudos and comments. */
-			numKudos = ${numKudos}
-			hasKudos = ${hasKudos}
-			numComments = ${numComments}
-			hasComments = ${hasComments}
+			'/* Kudos and comments. */',
+			`numKudos = ${numKudos}`,
+			`hasKudos = ${hasKudos}`,
+			`numComments = ${numComments}`,
+			`hasComments = ${hasComments}`,
 
-			/* Statistics. */
-			distanceInKm = ${distanceInKm}
-			hasDistanceInKm = ${hasDistanceInKm}
-			elevationInM = ${elevationInM}
-			hasElevationInM = ${hasElevationInM}
-			durationInS = ${durationInS}
-			hasDurationInS = ${hasDurationInS}
+			'/* Statistics. */',
+			`distanceInKm = ${distanceInKm}`,
+			`hasDistanceInKm = ${hasDistanceInKm}`,
+			`elevationInM = ${elevationInM}`,
+			`hasElevationInM = ${hasElevationInM}`,
+			`durationInS = ${durationInS}`,
+			`hasDurationInS = ${hasDurationInS}`,
 
-			${entry.title ? '\n\n======\n\n' + entry.title : ''}
-		`.trim().replace(/^\t+/gm, '');
-
+			`${entry.title ? '\n\n======\n\n' + entry.title : ''}`
+		].join('\n').replace(/^(\/\*)/gm, '\n$1').trim();
 	}
 
 	/* Process all existing feed entries. */
