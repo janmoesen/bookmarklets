@@ -196,19 +196,19 @@
 			const value = stat.value;
 
 			/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
-			if (label.match(/^distance/i)) {
-				let matches = value.match(/\b([0-9]+(\.[0-9]*))\s*km\s*$/);
+			if (label.match(/^(distan|afstand|distância)/i)) {
+				let matches = value.match(/\b([0-9]+([.,][0-9]*))\s*km\s*$/);
 				if (matches) {
 					hasDistanceInKm = true;
-					distanceInKm = parseFloat(matches[1]);
+					distanceInKm = parseFloat(matches[1].replace(',', '.'));
 				}
-			} else if (label.match(/^elev\S* gain/i)) {
+			} else if (label.match(/^(elev\S* gain|hoogteverschil|höhenmeter|desnivel|dislivello|ganho de elevação)/i)) {
 				let matches = value.match(/\b([0-9]+)\s*m\s*$/);
 				if (matches) {
 					hasElevationInM = true;
 					elevationInM = parseFloat(matches[1]);
 				}
-			} else if (label.match(/^time/i)) {
+			} else if (label.match(/^(time|tijd|zeit|tiempo|tempo)/i)) {
 				let tmpDurationInS = 0;
 				let hasParsedDuration = true;
 
@@ -219,7 +219,7 @@
 						tmpDurationInS += parseInt(matches[1], 10);
 					} else if ((matches = durationPart.match(/^\s*([0-9]+)m/))) {
 						tmpDurationInS += parseInt(matches[1], 10) * 60;
-					} else if ((matches = durationPart.match(/^\s*([0-9]+)h/))) {
+					} else if ((matches = durationPart.match(/^\s*([0-9]+)[hu]/))) {
 						tmpDurationInS += parseInt(matches[1], 10) * 3600;
 					} else {
 						console.log(`“${value}”: did not understand duration part “${durationPart}” for entry `, entry);
