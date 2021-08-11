@@ -73,7 +73,7 @@
 			|| data.rowData?.activities?.[0]?.is_commute
 			|| false;
 
-		const isVirtualRide = data.activity?.isVirtualRide
+		const isVirtual = data.activity?.isVirtual
 			|| data.rowData?.activities?.[0]?.is_virtual
 			|| false;
 
@@ -137,7 +137,7 @@
 		/* Pretty much equal to: Workout || Crossfit || Elliptical || RockClimbing || StairStepper || WeightTraining || Yoga */
 		const isOther = !isCommute
 			&& !isRide
-			&& !isVirtualRide
+			&& !isVirtual
 			&& !isEBikeRide
 			&& !isRun
 			&& !isHike
@@ -256,7 +256,7 @@
 		} else if (isEBikeRide && !hasPhotos) {
 			shouldHide = true;
 			reasonForHiding = 'E-bike ride without photos';
-		} else if (isVirtualRide) {
+		} else if (isVirtual) {
 			shouldHide = true;
 			reasonForHiding = 'Virtual ride';
 		} else if (!hasMap && !isGroupActivity) {
@@ -316,7 +316,7 @@
 			'Tags/special properties:',
 			`isOwnActivity = ${isOwnActivity}`,
 			`isCommute = ${isCommute}`,
-			`isVirtualRide = ${isVirtualRide}`,
+			`isVirtual = ${isVirtual}`,
 
 			'Activity type:',
 			isRide
