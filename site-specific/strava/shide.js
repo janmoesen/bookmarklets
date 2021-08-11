@@ -64,22 +64,24 @@
 		const isChallenge = data.entity === 'Challenge';
 		const isPromo = data.entity === 'FancyPromo';
 
+		/* Tags/special properties. */
 		const isOwnActivity = data.activity?.ownedByCurrentAthlete
-			|| data.rowData?.activities?.[0]?.owned_by_current_athlete;
+			|| data.rowData?.activities?.[0]?.owned_by_current_athlete
+			|| false;
 
-		/* Activity types, taken from the JSON data and completed with
-		 * <https://github.com/strava/go.strava/blob/master/activities_test.go>.
-		 */
 		const isCommute = data.activity?.isCommute
 			|| data.rowData?.activities?.[0]?.is_commute
 			|| false;
 
-		const isRide = data.activity?.type === 'Ride'
-			|| data.rowData?.activities?.[0]?.type === 'Ride';
-
 		const isVirtualRide = data.activity?.isVirtualRide
 			|| data.rowData?.activities?.[0]?.is_virtual
 			|| false;
+
+		/* Activity types, taken from the JSON data and completed with
+		 * <https://github.com/strava/go.strava/blob/master/activities_test.go>.
+		 */
+		const isRide = data.activity?.type === 'Ride'
+			|| data.rowData?.activities?.[0]?.type === 'Ride';
 
 		const isEBikeRide = data.activity?.type === 'EBikeRide'
 			|| data.rowData?.activities?.[0]?.type === 'EBikeRide';
