@@ -158,6 +158,16 @@
 			|| data.rowData?.activities?.[0]?.activity_map?.url
 		);
 
+		/* Kudos and comments. */
+		const numKudos = data.activity?.kudosAndComments?.kudosCount
+			|| 0;
+		const hasKudos = numKudos > 0;
+
+		const numComments = data.activity?.kudosAndComments?.comments?.length
+			|| 0;
+
+		const hasComments = numComments > 0;
+
 		/* Statistics. */
 		let distanceInKm = undefined;
 		let hasDistanceInKm = false;
