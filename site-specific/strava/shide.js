@@ -294,54 +294,89 @@
 
 		/* Show the parsed information we use to decide the fate of the entry. */
 		entry.title = [
-			'/* Decision. */',
+			'Decision:',
 			`shouldHide = ${shouldHide}`,
-			`reasonForHiding = ${reasonForHiding}`,
+			reasonForHiding
+				? `reasonForHiding = ${reasonForHiding}`
+				: null,
 
-			'/* Feed entry types. */',
+			'Feed entry types:',
 			`isActivity = ${isActivity}`,
 			`isGroupActivity = ${isGroupActivity}`,
-			`isClub = ${isClub}`,
-			`isChallenge = ${isChallenge}`,
-			`isPromo = ${isPromo}`,
+			isClub
+				? `isClub = ${isClub}`
+				: null,
+			isChallenge
+				? `isChallenge = ${isChallenge}`
+				: null,
+			isPromo
+				? `isPromo = ${isPromo}`
+				: null,
 
-			'/* Tags/special properties. */',
+			'Tags/special properties:',
 			`isOwnActivity = ${isOwnActivity}`,
 			`isCommute = ${isCommute}`,
 			`isVirtualRide = ${isVirtualRide}`,
 
-			'/* Activity types. */',
-			`isRide = ${isRide}`,
-			`isEBikeRide = ${isEBikeRide}`,
-			`isRun = ${isRun}`,
-			`isHike = ${isHike}`,
-			`isWalk = ${isWalk}`,
-			`isSwim = ${isSwim}`,
-			`isWaterSport = ${isWaterSport}`,
-			`isWinterSport = ${isWinterSport}`,
-			`isOther = ${isOther}`,
+			'Activity type:',
+			isRide
+				? `isRide = ${isRide}`
+				: null,
+			isEBikeRide
+				? `isEBikeRide = ${isEBikeRide}`
+				: null,
+			isRun
+				? `isRun = ${isRun}`
+				: null,
+			isHike
+				? `isHike = ${isHike}`
+				: null,
+			isWalk
+				? `isWalk = ${isWalk}`
+				: null,
+			isSwim
+				? `isSwim = ${isSwim}`
+				: null,
+			isWaterSport
+				? `isWaterSport = ${isWaterSport}`
+				: null,
+			isWinterSport
+				? `isWinterSport = ${isWinterSport}`
+				: null,
+			isOther
+				? `isOther = ${isOther}`
+				: null,
 
-			'/* Media. */',
-			`numPhotos = ${numPhotos}`,
-			`hasPhotos = ${hasPhotos}`,
+			'Media:',
+			hasPhotos
+				? `numPhotos = ${numPhotos}`
+				: `hasPhotos = ${hasPhotos}`,
 			`hasMap = ${hasMap}`,
 
-			'/* Kudos and comments. */',
-			`numKudos = ${numKudos}`,
-			`hasKudos = ${hasKudos}`,
-			`numComments = ${numComments}`,
-			`hasComments = ${hasComments}`,
+			'Kudos and comments:',
+			hasKudos
+				? `numKudos = ${numKudos}`
+				: `hasKudos = ${hasKudos}`,
+			hasComments
+				? `numComments = ${numComments}`
+				: `hasComments = ${hasComments}`,
 
-			'/* Statistics. */',
-			`distanceInKm = ${distanceInKm}`,
-			`hasDistanceInKm = ${hasDistanceInKm}`,
-			`elevationInM = ${elevationInM}`,
-			`hasElevationInM = ${hasElevationInM}`,
-			`durationInS = ${durationInS}`,
-			`hasDurationInS = ${hasDurationInS}`,
+			'Statistics:',
+			hasDistanceInKm
+				? `distanceInKm = ${distanceInKm}`
+				: `hasDistanceInKm = ${hasDistanceInKm}`,
+			hasElevationInM
+				? `elevationInM = ${elevationInM}`
+				: null,
+			hasDurationInS
+				? `durationInS = ${durationInS}`
+				: null,
+			hasDistanceInKm && hasDurationInS
+				? `calculatedAverageSpeed = ${(distanceInKm / durationInS * 3600).toFixed(1)} km/h`
+				: null,
 
 			`${entry.title ? '\n\n======\n\n' + entry.title : ''}`
-		].join('\n').replace(/^(\/\*)/gm, '\n$1').trim();
+		].filter(_ => _).join('\n').replace(/^([A-Z])/gm, '\n$1').trim();
 	}
 
 	/* Process all existing feed entries. */
