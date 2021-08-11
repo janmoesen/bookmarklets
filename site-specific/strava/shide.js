@@ -62,7 +62,7 @@
 		const isGroupActivity = data.entity === 'GroupActivity';
 		const isClub = data.entity === 'Club';
 		const isChallenge = data.entity === 'Challenge';
-		const isPromo = data.entity === 'FancyPromo';
+		const isPromo = data.entity === 'SimplePromo' || data.entity === 'FancyPromo';
 
 		/* Tags/special properties. */
 		const isOwnActivity = data.activity?.ownedByCurrentAthlete
