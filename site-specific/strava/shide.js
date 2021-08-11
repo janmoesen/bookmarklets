@@ -38,58 +38,123 @@
 	 * Process a feed entry.
 	 */
 	function processEntry(entry) {
-		/* Skip nested feed entries (i.e. inside a group activity) */
-		if (entry.parentElement.closest('.feed-entry')) {
+		/* Get the JSON-encoded data for the entry. */
+		const jsonContainer = entry.querySelector('[data-react-props]');
+		if (!jsonContainer) {
+			console.log('shide: no JSON container found for entry ', entry);
+			return;
+		}
+
+		const json = jsonContainer.dataset.reactProps;
+		if (typeof json === 'undefined' || (json + '').trim() === '') {
+			console.log('shide: no JSON in container ', jsonContainer, ' for entry ', entry);
+			return;
+		}
+
+		const data = JSON.parse(json);
+		if (!data) {
+			console.log('shide: could not parse JSON “', json, + '” from container ', jsonContainer, ' for entry ', entry);
 			return;
 		}
 
 		/* Feed entry types. */
-		const entryClassList = entry.classList;
-		const isActivity = entryClassList.contains('activity');
-		const isGroupActivity = entryClassList.contains('group-activity');
-		const isClub = entryClassList.contains('club');
-		const isPromo = entryClassList.contains('promo');
+		const isActivity = data.entity === 'Activity';
+		const isGroupActivity = data.entity === 'GroupActivity';
+		const isClub = data.entity === 'Club';
+		const isChallenge = data.entity === 'Challenge';
+		const isPromo = data.entity === 'FancyPromo';
 
-		/* Tags. */
-		const mapTag = entry.querySelector('.activity-map-tag');
-		const workoutType = entry.querySelector('.workout-type');
-		const isCommute = !!(mapTag || workoutType)?.textContent?.match(/commute/i);
+		const isOwnActivity = data.activity?.ownedByCurrentAthlete
+			|| data.rowData?.activities?.[0]?.owned_by_current_athlete;
 
-		/* Activity types, taken from the CSS. */
-		const appIconClassList = entry.querySelector('.entry-icon .app-icon, .entry-type-icon .app-icon, .group-activity-icon .app-icon')?.classList ?? { contains: _ => false };
+		/* Activity types, taken from the JSON data and completed with
+		 * <https://github.com/strava/go.strava/blob/master/activities_test.go>.
+		 */
+		const isCommute = data.activity?.isCommute
+			|| data.rowData?.activities?.[0]?.is_commute
+			|| false;
 
-		const isRide = appIconClassList.contains('icon-ride')
-			|| appIconClassList.contains('icon-cycling');
-		const isVirtualRide = appIconClassList.contains('icon-virtualride');
-		const isEBikeRide = appIconClassList.contains('icon-ebikeride');
+		const isRide = data.activity?.type === 'Ride'
+			|| data.rowData?.activities?.[0]?.type === 'Ride';
 
-		const isRun = appIconClassList.contains('icon-run')
-			|| appIconClassList.contains('icon-running');
-		const isHike = appIconClassList.contains('icon-hike')
-			|| appIconClassList.contains('icon-hiking');
-		const isWalk = appIconClassList.contains('icon-walk')
-			|| appIconClassList.contains('icon-walking');
+		const isVirtualRide = data.activity?.isVirtualRide
+			|| data.rowData?.activities?.[0]?.is_virtual
+			|| false;
 
-		const isSwim = appIconClassList.contains('icon-swim')
-			|| appIconClassList.contains('icon-swimming');
-		const isWaterSport = appIconClassList.contains('icon-watersport');
+		const isEBikeRide = data.activity?.type === 'EBikeRide'
+			|| data.rowData?.activities?.[0]?.type === 'EBikeRide';
 
-		const isWinterSport = appIconClassList.contains('icon-wintersport')
-			|| appIconClassList.contains('icon-snow')
-			|| appIconClassList.contains('icon-snowboard')
-			|| appIconClassList.contains('icon-snowshoe')
-			|| appIconClassList.contains('icon-alpineski')
-			|| appIconClassList.contains('icon-nordicski')
-			|| appIconClassList.contains('icon-backcountryski');
+		const isRun = data.activity?.type === 'Run'
+			|| data.rowData?.activities?.[0]?.type === 'Run';
 
-		const isOther = appIconClassList.contains('icon-other')
-			|| appIconClassList.contains('icon-workout');
+		const isHike = data.activity?.type === 'Hike'
+			|| data.rowData?.activities?.[0]?.type === 'Hike';
+
+		const isWalk = data.activity?.type === 'Walk'
+			|| data.rowData?.activities?.[0]?.type === 'Walk';
+
+		const isSwim = data.activity?.type === 'Swim'
+			|| data.rowData?.activities?.[0]?.type === 'Swim';
+
+		const isWaterSport = data.activity?.type === 'WaterSport'
+			|| data.rowData?.activities?.[0]?.type === 'WaterSport'
+			|| data.activity?.type === 'Surfing'
+			|| data.rowData?.activities?.[0]?.type === 'Surfing'
+			|| data.activity?.type === 'Kitesurf'
+			|| data.rowData?.activities?.[0]?.type === 'Kitesurf'
+			|| data.activity?.type === 'Windsurf'
+			|| data.rowData?.activities?.[0]?.type === 'Windsurf'
+			|| data.activity?.type === 'Canoeing'
+			|| data.rowData?.activities?.[0]?.type === 'Canoeing'
+			|| data.activity?.type === 'Kayaking'
+			|| data.rowData?.activities?.[0]?.type === 'Kayaking'
+			|| data.activity?.type === 'Rowing'
+			|| data.rowData?.activities?.[0]?.type === 'Rowing'
+			|| data.activity?.type === 'StandUpPaddling'
+			|| data.rowData?.activities?.[0]?.type === 'StandUpPaddling';
+
+		const isWinterSport = data.activity?.type === 'WinterSport'
+			|| data.rowData?.activities?.[0]?.type === 'WinterSport'
+			|| data.activity?.type === 'AlpineSki'
+			|| data.rowData?.activities?.[0]?.type === 'AlpineSki'
+			|| data.activity?.type === 'BackcountrySki'
+			|| data.rowData?.activities?.[0]?.type === 'BackcountrySki'
+			|| data.activity?.type === 'NordicSki'
+			|| data.rowData?.activities?.[0]?.type === 'NordicSki'
+			|| data.activity?.type === 'RollerSki' /* Hm, not exactly “winter”, but hey… */
+			|| data.rowData?.activities?.[0]?.type === 'RollerSki'
+			|| data.activity?.type === 'CrossCountrySkiing'
+			|| data.rowData?.activities?.[0]?.type === 'CrossCountrySkiing'
+			|| data.activity?.type === 'Snowboard'
+			|| data.rowData?.activities?.[0]?.type === 'Snowboard'
+			|| data.activity?.type === 'Snowshoe'
+			|| data.rowData?.activities?.[0]?.type === 'Snowshoe'
+			|| data.activity?.type === 'IceSkate'
+			|| data.rowData?.activities?.[0]?.type === 'IceSkate';
+
+		/* Pretty much equal to: Workout || Crossfit || Elliptical || RockClimbing || StairStepper || WeightTraining || Yoga */
+		const isOther = !isCommute
+			&& !isRide
+			&& !isVirtualRide
+			&& !isEBikeRide
+			&& !isRun
+			&& !isHike
+			&& !isWalk
+			&& !isSwim
+			&& !isWaterSport
+			&& !isWinterSport;
 
 		/* Media. */
-		const numPhotos = entry.querySelectorAll('[str-type="photo"]').length;
+		const numPhotos = data.activity?.mapAndPhotos?.photoList?.length
+			|| data.rowData?.activities?.[0]?.photos?.length
+			|| 0;
+
 		const hasPhotos = numPhotos > 0;
 
-		const hasMap = !!entry.querySelector('.activity-map');
+		const hasMap = !!(
+			data.activity?.mapAndPhotos?.activityMap
+			|| data.rowData?.activities?.[0]?.activity_map?.url
+		);
 
 		/* Statistics. */
 		let distanceInKm = undefined;
@@ -101,13 +166,34 @@
 		let durationInS = undefined;
 		let hasDurationInS = false;
 
-		/* The DOM structure for the activity stats differs between the feed
-		 * entries on the dashboard and those on the athlete page. Also,
-		 * because group activities have the stats for all participants,
-		 * use `.reverse()` to process the first athlete’s stats last. */
-		Array.from(entry.querySelectorAll('.list-stats li')).reverse().forEach(stat => {
-			const label = stat.querySelector('.stat-subtext')?.textContent?.trim() || stat.title || '';
-			const value = stat.querySelector('.stat-text')?.textContent?.trim() || stat.textContent.trim();
+		const stats = data.activity?.stats
+			|| data.rowData?.activities?.[0]?.stats;
+
+		const parsedStats = {};
+
+		if (Array.isArray(stats)) {
+			stats.forEach(stat => {
+				const isSubTitle = stat.key.match(/_subtitle$/);
+
+				const key = isSubTitle
+					? stat.key.replace(/_subtitle$/, '')
+					: stat.key;
+
+				if (!parsedStats[key]) {
+					parsedStats[key] = {};
+				}
+
+				if (isSubTitle) {
+					parsedStats[key].label = stat.value;
+				} else {
+					parsedStats[key].value = stat.value.replace(/<[^>]+>/g, '');
+				}
+			});
+		}
+
+		Object.values(parsedStats).forEach(stat => {
+			const label = stat.label;
+			const value = stat.value;
 
 			/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
 			if (label.match(/^distance/i)) {
@@ -167,7 +253,7 @@
 	}
 
 	/* Process all existing feed entries. */
-	Array.from(document.querySelectorAll('.feed-entry')).forEach(processEntry);
+	Array.from(document.querySelectorAll('.feed .react-card-container')).forEach(processEntry);
 
 	/* Process feed entries that are dynamically loaded (when scrolling to the
 	 * end of the feed or clicking the “Load more…” button).
@@ -180,10 +266,10 @@
 
 			Array.from(mutation.addedNodes)
 				.forEach(node => {
-					if (typeof node.matches === 'function' && node.matches('.feed-entry')) {
+					if (typeof node.matches === 'function' && node.matches('.react-card-container')) {
 						processEntry(node);
 					} else if (typeof node.querySelectorAll === 'function') {
-						Array.from(node.querySelectorAll('.feed-entry')).forEach(processEntry);
+						Array.from(node.querySelectorAll('.react-card-container')).forEach(processEntry);
 					}
 				});
 		});
