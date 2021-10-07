@@ -108,7 +108,7 @@ COPY_ENWIKT=; copy-enwikt \
 	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
 	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
 	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/' \
-	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'http://www.vlaamswoordenboek.be/definities/zoek?definition[word]=' \
+	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'https://www.vlaamswoordenboek.be/definities/search?definition[q]=' \
 	oed 'O.E.D.' 'in the Oxford English dictionary' 'https://en.oxforddictionaries.com/definition/' \
 	mw 'Merriam-Webster' 'using Merriam-Webster' 'https://www.merriam-webster.com/dictionary/' \
 	dict 'Dictionary.com' 'on Dictionary.com' 'https://www.dictionary.com/browse/' \
