@@ -14,7 +14,19 @@
 
 	/* Recursively execute the logic on the document and its sub-documents. */
 	function execute(document) {
-		Array.from(document.querySelectorAll('video, audio')).forEach(media => {
+		let allMedia = Array.from(document.querySelectorAll('video, audio'));
+
+		/* Find video/audio inside shadow DOMs. */
+		const notRegularHtmlElementsSelector = 'a,abbr,address,area,article,aside,audio,b,base,bdi,bdo,blockquote,body,br,button,canvas,caption,cite,code,col,colgroup,data,datalist,dd,del,details,dfn,dialog,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,head,header,hgroup,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,main,map,mark,math,math *,menu,meta,meter,nav,noscript,object,ol,optgroup,option,output,p,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,section,select,slot,small,source,span,strong,style,sub,summary,sup,svg,svg *,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,u,ul,var,video,wbr'
+			.split(',')
+			.map(s => `:not(${s})`)
+			.join('');
+
+		Array.from(document.querySelectorAll(notRegularHtmlElementsSelector))
+			.filter(elem => elem.shadowRoot)
+			.forEach(elem => allMedia = allMedia.concat(Array.from(elem.shadowRoot.querySelectorAll('video, audio'))));
+
+		allMedia.forEach(media => {
 			/* Determine the playback rate to use on all video/audio, based
 			 * on the first element encountered. */
 			if (typeof playbackRateToUse === 'undefined') {
