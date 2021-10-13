@@ -585,12 +585,10 @@
 			});
 		});
 
-		/* Recurse for frames and IFRAMEs. */
+		/* Recurse for (i)frames. */
 		try {
-			Array.from(
-				document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')
-			).forEach(
-				elem => execute(elem.contentDocument)
+			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
+				elem => { try { execute(elem.contentDocument) } catch (e) { } }
 			);
 		} catch (e) {
 			/* Catch and ignore exceptions for out-of-domain access. */
