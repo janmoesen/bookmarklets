@@ -96,7 +96,7 @@
 		}
 	}
 
-	if (numSecondsToJump) {
+	if (numSecondsToJump || shouldJumpToSpecificTime) {
 		let formattedDuration = '';
 		let numSecondsForFormatting = Math.abs(numSecondsToJump);
 
