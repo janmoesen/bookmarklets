@@ -3,9 +3,9 @@
  * and Facebook’s “fbclid” from the current document location (URI/URL) and
  * from the links on the page. It does not reload the page or its frames.
  *
- * @title rm “UTM” etc.
+ * @title Untrack links.
  */
-(function rmutm() {
+(function untrack() {
 	'use strict';
 
 	/* The following list was based on https://en.wikipedia.org/wiki/UTM_parameters#See_also and has since been expanded. */
