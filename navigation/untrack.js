@@ -8,9 +8,75 @@
 (function untrack() {
 	'use strict';
 
-	/* The following list was based on https://en.wikipedia.org/wiki/UTM_parameters#See_also and has since been expanded. */
-	const hrefRegexp = /[?&](utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid|ss_)/;
-	const parameterRegexp = /^(utm_|fbclid|gclid|gclsrc|dclid|mscklid|zanpid|ss_(source|email|campaign))/;
+	/* The following list was based on
+	* <https://en.wikipedia.org/wiki/UTM_parameters#See_also> and has since been
+	* expanded, primarily with the code from https://privacytests.org/
+	* <https://github.com/arthuredelstein/privacytests.org/blob/master/testing/index.js>.
+	* */
+	const parameterPatterns =[
+		/* Google (Analytics, Ads, DoubleClick) */
+		'utm_[^=]*',
+		'gclid',
+		'dclid',
+
+		 /* Facebook */
+		'fbclid',
+
+		 /* Instagram */
+		'igshid',
+
+		/* Microsoft/Bing */
+		'msclkid',
+
+		 /* Mailchimp */
+		'mc_eid',
+
+		 /* HubSpot */
+		'__hsfp',
+		'__hssc',
+		'__hstc',
+		'_hsenc',
+		'hsCtaTracking',
+
+		 /* Drip.com */
+		'__s',
+
+		/* Adobe Marketo */
+		'mkt_tok',
+
+		/* MailerLite */
+		'ml_subscriber',
+		'ml_subscriber_hash',
+
+		/* Omeda */
+		'oly_anon_id',
+		'oly_enc_id',
+
+		/* Unknown Russian tracker */
+		'rb_clickid',
+
+		/* Adobe Site Catalyst */
+		's_cid',
+		'ss_[^=]*',
+
+		/* Vero */
+		'vero_conv',
+		'vero_id',
+
+		/* Wicked Reports */
+		'wickedid',
+
+		/* Yandex */
+		'yclid',
+		'ymclid',
+		'_openstat',
+
+		/* Zanox/Awin */
+		'zanpid'
+	];
+
+	const hrefRegexp = new RegExp('[?&](' + parameterPatterns.join('|') + ')=');
+	const parameterRegexp = new RegExp('^(' + parameterPatterns.join('|') + ')$');
 
 	function clearQueryString(queryString) {
 		return new URLSearchParams(
