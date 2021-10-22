@@ -215,10 +215,10 @@
 					distanceInKm = parseFloat(matches[1].replace(',', '.'));
 				}
 			} else if (label.match(/^(elev\S* gain|hoogteverschil|höhenmeter|desnivel|dislivello|ganho de elevação)/i)) {
-				let matches = value.match(/\b([0-9]+)\s*m\s*$/);
+				let matches = value.match(/\b(([0-9]+,)*[0-9]+)\s*m\s*$/);
 				if (matches) {
 					hasElevationInM = true;
-					elevationInM = parseFloat(matches[1]);
+					elevationInM = parseFloat(matches[1].replace(/,/g, ''));
 				}
 			} else if (label.match(/^(time|tijd|zeit|tiempo|tempo)/i)) {
 				let tmpDurationInS = 0;
