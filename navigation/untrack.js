@@ -81,7 +81,10 @@
 	const hrefRegexp = new RegExp('[?&](' + parameterPatterns.join('|') + ')=');
 	const parameterRegexp = new RegExp('^(' + parameterPatterns.join('|') + ')$');
 
-	function clearQueryString(queryString) {
+	/**
+	 * Return the given query string without the known tracking parameters.
+	 */
+	function cleanQueryString(queryString) {
 		return new URLSearchParams(
 			Array.from(new URLSearchParams(queryString))
 				.filter(([key, value]) => !key.match(parameterRegexp))
@@ -94,7 +97,7 @@
 		const oldUrl = new URL(document.location);
 
 		const newUrl = new URL(document.location);
-		newUrl.search = clearQueryString(oldUrl.search);
+		newUrl.search = cleanQueryString(oldUrl.search);
 
 		if (oldUrl.toString() !== newUrl.toString()) {
 			document.defaultView.history.replaceState({}, document.title, newUrl);
