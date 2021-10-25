@@ -81,6 +81,16 @@
 	const hrefRegexp = new RegExp('[?&](' + parameterPatterns.join('|') + ')=');
 	const parameterRegexp = new RegExp('^(' + parameterPatterns.join('|') + ')$');
 
+	/* Link redirectors in the form 'CSS selector': handlerFunction(element). */
+	const linkRedirectors = {
+		/* Facebook */
+		'foo': 'bar',
+		'a[href^="https://l.facebook.com/l.php?"]': element => {
+			/* Facebook’s `l.php` takes the original URI in the `u` query string parameter. We do not care about the checksum or other parameters. */
+			element.href = new URLSearchParams(new URL(element.href).search)?.get('u') ?? element.href;
+		}
+	};
+
 	/**
 	 * Return the given query string without the known tracking parameters.
 	 */
@@ -102,6 +112,11 @@
 		if (oldUrl.toString() !== newUrl.toString()) {
 			document.defaultView.history.replaceState({}, document.title, newUrl);
 		}
+
+		/* Circumvent link redirectors. */
+		Object.entries(linkRedirectors).forEach(
+			([selector, callback]) => document.querySelectorAll(selector).forEach(element => callback(element))
+		);
 
 		/* Update all A@href links in the document. */
 		Array.from(document.querySelectorAll('a[href]'))
