@@ -140,6 +140,15 @@
 			.filter(a => a.href.match(hrefRegexp))
 			.forEach(a => cleanQueryStringForHrefAttribute(a));
 
+		/* Prevent tracking attributes from being re-added (looking at you, Facebook!) */
+		new MutationObserver(mutations => {
+			mutations.forEach(mutation => cleanQueryStringForHrefAttribute(mutation.target))
+		}).observe(document, {
+			attributes: true,
+			attributeFilter: ['href'],
+			subtree: true
+		});
+
 		/* Recurse for (i)frames. */
 		try {
 			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
