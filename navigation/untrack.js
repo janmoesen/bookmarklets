@@ -21,6 +21,9 @@
 
 		 /* Facebook */
 		'fbclid',
+		'__cft__((%5B|\\[)[^=]*)?',
+		'__tn__',
+		'__eep__',
 
 		 /* Instagram */
 		'igshid',
