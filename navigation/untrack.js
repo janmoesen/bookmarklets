@@ -101,6 +101,23 @@
 		).toString();
 	}
 
+	/**
+	 * Clean the query string for the given element’s HREF attribute.
+	 */
+	function cleanQueryStringForHrefAttribute(element) {
+		try {
+			const oldUrl = new URL(element.href);
+
+			const newUrl = new URL(element.href);
+			newUrl.search = cleanQueryString(oldUrl.search);
+
+			if (oldUrl.toString() !== newUrl.toString()) {
+				element.href = newUrl.toString();
+			}
+		} catch (e) {
+		}
+	}
+
 	/* Recursively execute the logic on the document and its sub-documents. */
 	function execute(document) {
 		/* Update the document location. */
@@ -121,19 +138,7 @@
 		/* Update all A@href links in the document. */
 		Array.from(document.querySelectorAll('a[href]'))
 			.filter(a => a.href.match(hrefRegexp))
-			.forEach(a => {
-				try {
-					const oldUrl = new URL(a.href);
-
-					const newUrl = new URL(a.href);
-					newUrl.search = clearQueryString(oldUrl.search);
-
-					if (oldUrl.toString() !== newUrl.toString()) {
-						a.href = newUrl.toString();
-					}
-				} catch (e) {
-				}
-			});
+			.forEach(a => cleanQueryStringForHrefAttribute(a));
 
 		/* Recurse for (i)frames. */
 		try {
