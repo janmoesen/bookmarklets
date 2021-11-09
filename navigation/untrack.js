@@ -84,7 +84,6 @@
 	/* Link redirectors in the form 'CSS selector': handlerFunction(element). */
 	const linkRedirectors = {
 		/* Facebook */
-		'foo': 'bar',
 		'a[href^="https://l.facebook.com/l.php?"]': element => {
 			/* Facebook’s `l.php` takes the original URI in the `u` query string parameter. We do not care about the checksum or other parameters. */
 			element.href = new URLSearchParams(new URL(element.href).search)?.get('u') ?? element.href;
