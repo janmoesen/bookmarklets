@@ -3,7 +3,7 @@
  * and Facebook’s “fbclid” from the current document location (URI/URL) and
  * from the links on the page. It does not reload the page or its frames.
  *
- * @title Untrack links.
+ * @title Untrack links
  */
 (function untrack() {
 	'use strict';
