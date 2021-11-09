@@ -55,6 +55,10 @@
 		'oly_anon_id',
 		'oly_enc_id',
 
+		/* Cloudflare DDOS challenge tokens */
+		'__cf_chl_jschl_tk__',
+		'__cf_chl_captcha_tk__',
+
 		/* Unknown Russian tracker */
 		'rb_clickid',
 
