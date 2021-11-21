@@ -55,6 +55,9 @@
 		'oly_anon_id',
 		'oly_enc_id',
 
+		/* Omnisend */
+		'omnisendContactID',
+
 		/* Cloudflare DDOS challenge tokens */
 		'__cf_chl_jschl_tk__',
 		'__cf_chl_captcha_tk__',
