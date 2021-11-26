@@ -148,7 +148,15 @@
 
 		/* Prevent tracking attributes from being re-added (looking at you, Facebook!) */
 		new MutationObserver(mutations => {
-			mutations.forEach(mutation => cleanQueryStringForHrefAttribute(mutation.target))
+			mutations.forEach(mutation => {
+				cleanQueryStringForHrefAttribute(mutation.target);
+
+				Object.entries(linkRedirectors).forEach(
+					([selector, callback]) => {
+						mutation.target.matches(selector) && callback(mutation.target)
+					}
+				);
+			});
 		}).observe(document, {
 			attributes: true,
 			attributeFilter: ['href'],
