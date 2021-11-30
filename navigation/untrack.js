@@ -112,6 +112,20 @@
 			const usp = new URLSearchParams(new URL(a.href).search);
 			/* Sometimes the parameters is `url`, other times `q`. Heh. */
 			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
+		},
+
+		/* Twitter */
+		'a[href^="https://t.co/"], a[href^="http://t.co/"]': a => {
+			/* See if we are able to extract a URL from the link text. For
+			 * text links without previews, the original URL is somewhat
+			 * hidden inside a few SPANs and a text node, which are shown
+			 * as a tooltip on hover. */
+			const possibleUri = a.textContent.replace(/…$/, '');
+			if (!possibleUri.match(/^https?:\/\//)) {
+				return;
+			}
+
+			a.href = a.textContent = possibleUri;
 		}
 	};
 
