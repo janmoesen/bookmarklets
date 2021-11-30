@@ -94,6 +94,24 @@
 		'a[href^="https://l.facebook.com/l.php?"]': a => {
 			/* Facebook’s `l.php` takes the original URI in the `u` query string parameter. We do not care about the checksum or other parameters. */
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
+		},
+
+		/* Google */
+		'a[href^="https://www.google."][href*="/url?"], a[href^="http://www.google."][href*="/url?"], a[href^="/url?"]': a => {
+			/* Make sure we only process Google’s redirects. It seems the
+			 * localised sites (e.g. www.google.de) do not use the `/url?`
+			 * redirect, so checking if `a.hostname === 'www.google.com'`
+			 * should suffise. However, the following regexp check is a good
+			 * compromise between allowing only the `.com` and incorporating
+			 * the entire Public Suffix List to check for valid top-level
+			 * Google domains. */
+			if (a.getAttribute('href').indexOf('/url?') === 0 && !a.hostname.match(/^www\.google\.(com?\.)?[^.]+$/)) {
+				return;
+			}
+
+			const usp = new URLSearchParams(new URL(a.href).search);
+			/* Sometimes the parameters is `url`, other times `q`. Heh. */
+			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
 		}
 	};
 
