@@ -87,7 +87,7 @@
 			.split(/\s*[ ,]\s*/)
 			.map(parseFloat);
 
-		if (typeof lat !== 'number' || typeof lng !== 'number') {
+		if (isNaN(lat) || isNaN(lng)) {
 			alert(`Could not parse (lat, lng) coordinates from “${s}”`);
 			return;
 		}
