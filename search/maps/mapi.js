@@ -84,6 +84,7 @@
 		const [lat, lng] = s
 			.replace(/^\s*\(\s*/, '')
 			.replace(/\s*\(\s*$/, '')
+			.replace(/^https:\/\/www\.google\.com\/maps\/([^@]+\/)*@/, '')
 			.split(/\s*[ ,]\s*/)
 			.map(parseFloat);
 
