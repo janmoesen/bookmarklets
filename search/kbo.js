@@ -58,8 +58,14 @@
 		return document.getSelection() + '';
 	}
 
+	let isSelectedText = false;
+
 	if (s === '') {
-		s = getActiveSelection(document) || prompt('Please enter the Belgian company number / VAT number:');
+		if ((s = getActiveSelection(document))) {
+			isSelectedText = true;
+		} else {
+			s = prompt('Please enter the Belgian company number / VAT number:');
+		}
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection(document) + '$2');
 	}
@@ -70,6 +76,11 @@
 			location = 'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer='
 				+ encodeURIComponent(('0' + matches[2]).slice(-4) + matches[3] + matches[4]);
 		} else {
+			if (isSelectedText && s.length > 512) {
+				alert('No Belgian company number / VAT number was found in the text you selected. If you select a shorter text, it will be used to look up the company by name.');
+				return;
+			}
+
 			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?_oudeBenaming=on&pstcdeNPRP=&postgemeente1=&ondNP=true&_ondNP=on&ondRP=true&_ondRP=on&rechtsvormFonetic=ALL&vest=true&_vest=on&filterEnkelActieve=true&_filterEnkelActieve=on&actionNPRP=Zoek&searchWord='
 				+ encodeURIComponent(s);
 		}
