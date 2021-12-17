@@ -81,7 +81,7 @@
 				return;
 			}
 
-			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?_oudeBenaming=on&pstcdeNPRP=&postgemeente1=&ondNP=true&_ondNP=on&ondRP=true&_ondRP=on&rechtsvormFonetic=ALL&vest=true&_vest=on&filterEnkelActieve=true&_filterEnkelActieve=on&actionNPRP=Zoek&searchWord='
+			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&_oudeBenaming=on&pstcdeNPRP=&postgemeente1=&ondNP=true&_ondNP=on&ondRP=true&_ondRP=on&rechtsvormFonetic=ALL&vest=true&_vest=on&filterEnkelActieve=true&_filterEnkelActieve=on&actionNPRP=Zoek&searchWord='
 				+ encodeURIComponent(s);
 		}
 	}
