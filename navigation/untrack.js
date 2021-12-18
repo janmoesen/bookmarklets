@@ -168,6 +168,9 @@
 			document.defaultView.history.replaceState({}, document.title, newUrl);
 		}
 
+		/* Discard Outbrain’s event handlers by simply resetting the HTML. */
+		document.querySelectorAll('.OUTBRAIN').forEach(element => element.outerHTML = element.outerHTML);
+
 		/* Circumvent link redirectors. */
 		Object.entries(linkRedirectors).forEach(
 			([selector, callback]) => document.querySelectorAll(selector).forEach(element => callback(element))
