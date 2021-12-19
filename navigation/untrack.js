@@ -168,8 +168,20 @@
 			document.defaultView.history.replaceState({}, document.title, newUrl);
 		}
 
-		/* Discard Outbrain’s event handlers by simply resetting the HTML. */
-		document.querySelectorAll('.OUTBRAIN').forEach(element => element.outerHTML = element.outerHTML);
+		/* Discard Outbrain’s event handlers by removing all the handlers
+		 * defined as HTML `onSomeEvent` attributes, and then resetting
+		 * the handler-less HTML. */
+		document.querySelectorAll('.OUTBRAIN').forEach(element => {
+			element.querySelectorAll('a').forEach(a => {
+				Array.from(a.attributes).forEach(attribute => {
+					if (attribute.name.match(/^on/i)) {
+						a.removeAttribute(attribute.name);
+					}
+				});
+			});
+
+			element.outerHTML = element.outerHTML;
+		});
 
 		/* Circumvent link redirectors. */
 		Object.entries(linkRedirectors).forEach(
