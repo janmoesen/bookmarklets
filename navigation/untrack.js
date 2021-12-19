@@ -58,6 +58,10 @@
 		/* Omnisend */
 		'omnisendContactID',
 
+		/* Outbrain */
+		'obOrigUrl',
+		'outbrainclickid',
+
 		/* Cloudflare DDOS challenge tokens */
 		'__cf_chl_jschl_tk__',
 		'__cf_chl_captcha_tk__',
@@ -178,6 +182,18 @@
 						a.removeAttribute(attribute.name);
 					}
 				});
+
+				/* Remove placeholder/template URI parameters that look like
+				 * `foo=$bar_baz$`. “Normal” tracking parameters can be added to
+				 * `parameterPatterns`.
+				 */
+				const usp = new URLSearchParams(a.search);
+				Array.from(usp).forEach(([name, value]) => {
+					if (value.match(/^\$.*\$$/)) {
+						usp.delete(name);
+					}
+				});
+				a.search = usp.toString();
 			});
 
 			element.outerHTML = element.outerHTML;
