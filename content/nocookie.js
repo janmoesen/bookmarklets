@@ -167,6 +167,21 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Fandom/Wikia
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'[data-tracking-opt-in-learn-more="true"]',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				setTimeout(_ => document.querySelector('[data-tracking-opt-in-save="true"]')?.click(), 100);
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Coolblue cookie dialog
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
