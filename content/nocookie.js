@@ -54,6 +54,12 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Cookie-Script <https://cookie-script.com/>
+		 * ----------------------------------------------------------------- */
+		document.querySelector('#cookiescript_reject')?.click();
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
