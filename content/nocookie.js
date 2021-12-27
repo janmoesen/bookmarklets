@@ -60,6 +60,12 @@
 
 
 		/* -----------------------------------------------------------------
+		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
+		 * ----------------------------------------------------------------- */
+		document.querySelector('#cookie_action_close_header_reject')?.click();
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
