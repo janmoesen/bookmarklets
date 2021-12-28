@@ -66,6 +66,12 @@
 
 
 		/* -----------------------------------------------------------------
+		 * PayPal.com cookie dialog
+		 * ----------------------------------------------------------------- */
+		document.querySelector('#gdprCookieBanner #bannerDeclineButton')?.click();
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
