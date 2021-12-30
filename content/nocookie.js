@@ -10,9 +10,9 @@
 	/* Recursively execute the logic on the document and its sub-documents. */
 	function execute(document) {
 		/**
-		 * If there is an `openButtonElementOrSelector`, click it and wait a bit
-		 * before calling the `setAndSaveFunction`. If there is no button,
-		 * immediately call the function.
+		 * If there is an `openButtonElementOrSelector`, click the corresponding
+		 * element and wait a bit before calling the `setAndSaveFunction`. If
+		 * there is no such element, immediately call the function.
 		 */
 		function openAndWaitOrDoItNow(openButtonElementOrSelector, setAndSaveFunction) {
 			const openButton = typeof openButtonElementOrSelector === 'string'
