@@ -48,47 +48,59 @@
 			}
 		}
 
+		/**
+		 * Call the `click` function on the first element that matches the
+		 * given selector.
+		 */
+		function tryToClick(selector) {
+			const elem = document.querySelector(selector);
+			if (elem) {
+				console.log('nocookie: found button to click: ', elem);
+				elem.click();
+			}
+		}
+
 
 		/* -----------------------------------------------------------------
 		 * Drupal’s EU Cookie Compliance (GDPR Compliance) banner <https://www.drupal.org/project/eu_cookie_compliance>
 		 * ----------------------------------------------------------------- */
-		document.querySelector('.eu-cookie-compliance-banner .decline-button')?.click();
+		tryToClick('.eu-cookie-compliance-banner .decline-button');
 
 
 		/* -----------------------------------------------------------------
 		 * Iubenda Cookie Solution <https://www.iubenda.com/en/cookie-solution>
 		 * ----------------------------------------------------------------- */
-		document.querySelector('.iubenda-cs-reject-btn')?.click();
+		tryToClick('.iubenda-cs-reject-btn');
 
 
 		/* -----------------------------------------------------------------
 		 * TrustArc cookie banner
 		 * ----------------------------------------------------------------- */
-		document.querySelector('#truste-consent-required')?.click();
+		tryToClick('#truste-consent-required');
 
 
 		/* -----------------------------------------------------------------
 		 * Bol.com cookie dialog
 		 * ----------------------------------------------------------------- */
-		document.querySelector('button[data-test="consent-modal-decline-btn"].js-decline-button')?.click();
+		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button');
 
 
 		/* -----------------------------------------------------------------
 		 * Cookie-Script <https://cookie-script.com/>
 		 * ----------------------------------------------------------------- */
-		document.querySelector('#cookiescript_reject')?.click();
+		tryToClick('#cookiescript_reject');
 
 
 		/* -----------------------------------------------------------------
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
 		 * ----------------------------------------------------------------- */
-		document.querySelector('#cookie_action_close_header_reject')?.click();
+		tryToClick('#cookie_action_close_header_reject');
 
 
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
 		 * ----------------------------------------------------------------- */
-		document.querySelector('#gdprCookieBanner #bannerDeclineButton')?.click();
+		tryToClick('#gdprCookieBanner #bannerDeclineButton');
 
 
 		/* -----------------------------------------------------------------
@@ -103,7 +115,7 @@
 				);
 
 				/* Save & exit. */
-				document.querySelector('.fc-confirm-choices')?.click();
+				tryToClick('.fc-confirm-choices');
 			}
 		);
 
@@ -120,7 +132,7 @@
 				);
 
 				/* Save & exit. */
-				document.querySelector('c-wiz form[jsaction^="submit:"] button')?.click();
+				tryToClick('c-wiz form[jsaction^="submit:"] button');
 			}
 		);
 
@@ -146,7 +158,7 @@
 				);
 
 				/* Save & exit. */
-				document.querySelector('.onetrust-close-btn-handler')?.click();
+				tryToClick('.onetrust-close-btn-handler');
 			}
 		);
 
@@ -158,10 +170,10 @@
 			'#didomi-notice-learn-more-button',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				setTimeout(_ => document.querySelector('.didomi-consent-popup-actions button:first-of-type')?.click(), 50);
+				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type'), 50);
 
 				/* Save & exit. */
-				setTimeout(_ => document.querySelector('.didomi-consent-popup-actions button:first-of-type')?.click(), 100);
+				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type'), 100);
 			}
 		);
 
@@ -184,7 +196,7 @@
 				});
 
 				/* Click the “Save & exit” button. */
-				setTimeout(_ => document.querySelector('.qc-cmp2-footer button[mode="primary"]')?.click(), 50);
+				setTimeout(_ => tryToClick('.qc-cmp2-footer button[mode="primary"]'), 50);
 			}
 		);
 
@@ -199,7 +211,7 @@
 				document.querySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => document.querySelector('[data-tracking-opt-in-save="true"]')?.click(), 100);
+				setTimeout(_ => tryToClick('[data-tracking-opt-in-save="true"]'), 100);
 			}
 		);
 
@@ -214,7 +226,7 @@
 				document.querySelectorAll('input[type="checkbox"][name="cookie_setting[]"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => document.querySelector('button[name="accept_cookie"][value="selection"]')?.click(), 100);
+				setTimeout(_ => tryToClick('button[name="accept_cookie"][value="selection"]'), 100);
 			}
 		);
 
@@ -229,7 +241,7 @@
 				document.querySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				document.querySelector('#kmcc-accept-some-cookies')?.click();
+				tryToClick('#kmcc-accept-some-cookies');
 			}
 		);
 
@@ -244,7 +256,7 @@
 				document.querySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				document.querySelector('#SG-CookieConsent--SavePreferencesButton')?.click();
+				tryToClick('#SG-CookieConsent--SavePreferencesButton');
 			}
 		);
 
