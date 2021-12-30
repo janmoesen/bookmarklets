@@ -230,6 +230,21 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Stad Gent cookie consent
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'#SG-CookieConsent--TogglePreferencesButton',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				document.querySelector('#SG-CookieConsent--SavePreferencesButton')?.click();
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
