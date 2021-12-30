@@ -170,21 +170,6 @@
 
 
 		/* -----------------------------------------------------------------
-		 * Didomi
-		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
-			'#didomi-notice-learn-more-button',
-			function () {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				setTimeout(_ => document.querySelector('.didomi-consent-popup-actions button:first-of-type')?.click(), 50);
-
-				/* Save & exit. */
-				setTimeout(_ => document.querySelector('.didomi-consent-popup-actions button:first-of-type')?.click(), 100);
-			}
-		);
-
-
-		/* -----------------------------------------------------------------
 		 * Fandom/Wikia
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
