@@ -281,6 +281,22 @@
 
 
 		/* -----------------------------------------------------------------
+		 * AdResults Cookie Script <AdResults Cookie Script>
+		 * E.g. https://www.ekoplaza.nl/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'a[href="#"].cookie_tool_more, #cookie_tool_config',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				(document.querySelector('input[name="cookie_tool_choise"][value="3"]') ?? {}).checked = true;
+
+				/* Save & exit. */
+				tryToClick('.cookie_tool_submit');
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
