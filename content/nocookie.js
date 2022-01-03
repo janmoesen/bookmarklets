@@ -263,6 +263,24 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Osano Cookie Consent <https://www.osano.com/cookieconsent>
+		 * E.g. https://www.pelotondeparis.cc/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.cc-btn.cc-settings',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				Array.from(document.querySelectorAll('.cc-settings-dialog input[type="checkbox"]')).forEach(
+					check => check.checked = false
+				);
+
+				/* Save & exit. */
+				tryToClick('.cc-btn.cc-btn-accept-selected');
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
