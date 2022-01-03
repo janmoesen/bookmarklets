@@ -30,6 +30,12 @@
 			border-top: 0.5ex solid transparent;
 			opacity: 1;
 		}
+
+		/* Limit the number of visible clubs (for those wankers [m/f/x] that join every single Strava club they come across). */
+		.grid.clubs {
+			max-height: 50vh;
+			overflow: scroll;
+		}
 	`;
 
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
