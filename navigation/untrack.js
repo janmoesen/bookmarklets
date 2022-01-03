@@ -110,7 +110,6 @@
 	];
 
 	const hrefRegexpForWhichToDeleteAllParameters = new RegExp('(?:' + uriPatternsForWhichToDeleteAllParameters.join('|') + ')\\?');
-	console.log(window.hrefRegexpForWhichToDeleteAllParameters = hrefRegexpForWhichToDeleteAllParameters);
 
 	/* Link redirectors in the form 'CSS selector': handlerFunction(element). */
 	const linkRedirectors = {
