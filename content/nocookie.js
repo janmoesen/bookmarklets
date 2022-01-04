@@ -57,6 +57,8 @@
 			if (elem) {
 				console.log('nocookie: found button to click: ', elem);
 				elem.click();
+
+				return true;
 			}
 		}
 
@@ -101,6 +103,15 @@
 		 * PayPal.com cookie dialog
 		 * ----------------------------------------------------------------- */
 		tryToClick('#gdprCookieBanner #bannerDeclineButton');
+
+
+		/* -----------------------------------------------------------------
+		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
+		 * E.g. https://ec.europa.eu/
+		 * ----------------------------------------------------------------- */
+		if (tryToClick('.cck-actions-button[href="#refuse"]')) {
+			tryToClick('.cck-actions [href="#close"]');
+		}
 
 
 		/* -----------------------------------------------------------------
