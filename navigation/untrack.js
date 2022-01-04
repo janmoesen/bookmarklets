@@ -137,6 +137,14 @@
 			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
 		},
 
+		/* Google Ads text links that were processed by this bookmarklet
+		 * before their `A@href` changed. */
+		'a[data-xxx-jan-google-ads-original-href]': a => {
+			if (a.href !== a.dataset.xxxJanGoogleAdsOriginalHref) {
+				a.href = a.dataset.xxxJanGoogleAdsOriginalHref;
+			}
+		},
+
 		/* Twitter */
 		'a[href^="https://t.co/"], a[href^="http://t.co/"]': a => {
 			/* See if we are able to extract a URI from the link text. For
@@ -216,6 +224,25 @@
 			});
 
 			element.outerHTML = element.outerHTML;
+		});
+
+		/* Keep track of the original `A@href` of Google Ads text links. */
+		document.querySelectorAll('[data-text-ad] a[href]').forEach(a => {
+			if (a.dataset.xxxJanGoogleAdsOriginalHref) {
+				return;
+			}
+
+			/* Google Ads text links have a bunch of data attributes with possibly
+			 * minified names. Just look at the values, not the names, to
+			 * determine whether this is an ad whose `A@href` will change
+			 * onclick/onmousedown/… */
+			let isGoogleAd = Object.entries(a.dataset).some(
+				([name, value]) => value.indexOf('https://www.googleadservices.com/pagead') === 0 || value.indexOf('https://www.google.com/aclk') === 0
+			);
+
+			if (isGoogleAd) {
+				a.dataset.xxxJanGoogleAdsOriginalHref = a.href;
+			}
 		});
 
 		/* Circumvent link redirectors. */
