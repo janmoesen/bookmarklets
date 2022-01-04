@@ -181,6 +181,8 @@
 
 		/* -----------------------------------------------------------------
 		 * Quantcast
+		 * E.g. https://road.cc/
+		 * E.g. https://www.bikeradar.com/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
@@ -234,6 +236,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
+		 * E.g. https://www.meteo.be/nl/gent
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.js-kmcc-extended-modal-button[data-target="legal_cookie_preferences"]',
