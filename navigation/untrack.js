@@ -139,8 +139,8 @@
 
 		/* Twitter */
 		'a[href^="https://t.co/"], a[href^="http://t.co/"]': a => {
-			/* See if we are able to extract a URL from the link text. For
-			 * text links without previews, the original URL is somewhat
+			/* See if we are able to extract a URI from the link text. For
+			 * text links without previews, the original URI is somewhat
 			 * hidden inside a few SPANs and a text node, which are shown
 			 * as a tooltip on hover. */
 			const possibleUri = a.textContent.replace(/…$/, '');
@@ -163,7 +163,7 @@
 	}
 
 	/**
-	 * Clean the query string for the given element’s HREF attribute.
+	 * Clean the query string for the given element’s `href` attribute.
 	 */
 	function cleanQueryStringForHrefAttribute(element) {
 		try {
