@@ -281,7 +281,7 @@
 
 
 		/* -----------------------------------------------------------------
-		 * AdResults Cookie Script <AdResults Cookie Script>
+		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
 		 * E.g. https://www.ekoplaza.nl/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
@@ -292,6 +292,23 @@
 
 				/* Save & exit. */
 				tryToClick('.cookie_tool_submit');
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
+		 * Free Privacy Policy’s Cookie Consent <https://www.freeprivacypolicy.com/free-cookie-consent/>
+		 * E.g. https://www.lehmanns.de/
+		 * E.g. https://www.dronten-online.nl/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.cc_dialog button.cc_b_cp, .cc_dialog .btn:not(.cc_b_ok_custom)',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				tryToClick('.cc_cp_f_save button');
 			}
 		);
 
