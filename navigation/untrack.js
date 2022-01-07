@@ -145,6 +145,11 @@
 			}
 		},
 
+		/* YouTube */
+		'a[href^="https://www.youtube.com/redirect?"][href*="q="]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('q') ?? a.href;
+		},
+
 		/* Twitter */
 		'a[href^="https://t.co/"], a[href^="http://t.co/"]': a => {
 			/* See if we are able to extract a URI from the link text. For
