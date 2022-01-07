@@ -137,11 +137,11 @@
 			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
 		},
 
-		/* Google Ads text links that were processed by this bookmarklet
-		 * before their `A@href` changed. */
-		'a[data-xxx-jan-google-ads-original-href]': a => {
-			if (a.href !== a.dataset.xxxJanGoogleAdsOriginalHref) {
-				a.href = a.dataset.xxxJanGoogleAdsOriginalHref;
+		/* Google Ads text links and affiliate links that were processed by
+		 * this bookmarklet before their `A@href` changed. */
+		'a[data-xxx-jan-original-href]': a => {
+			if (a.href !== a.dataset.xxxJanOriginalHref) {
+				a.href = a.dataset.xxxJanOriginalHref;
 			}
 		},
 
@@ -228,7 +228,7 @@
 
 		/* Keep track of the original `A@href` of Google Ads text links. */
 		document.querySelectorAll('[data-text-ad] a[href]').forEach(a => {
-			if (a.dataset.xxxJanGoogleAdsOriginalHref) {
+			if (a.dataset.xxxJanOriginalHref) {
 				return;
 			}
 
@@ -241,7 +241,7 @@
 			);
 
 			if (isGoogleAd) {
-				a.dataset.xxxJanGoogleAdsOriginalHref = a.href;
+				a.dataset.xxxJanOriginalHref = a.href;
 			}
 		});
 
@@ -277,6 +277,23 @@
 			attributeFilter: ['href'],
 			subtree: true
 		});
+
+		/* Keep track of the original `A@href` of links on pages with
+		 * Skimlinks. This needs to be run after all our other code that
+		 * changes the `href` values, like the link redirector bypassing
+		 * code, or it would undo that code’s effects.
+		 *
+		 * E.g. https://road.cc/content/feature/13-best-worst-and-wackiest-cycling-crowdfunders-289179
+		 */
+		if (typeof skimlinksAPI !== 'undefined') {
+			document.querySelectorAll('a[href]').forEach(a => {
+				if (a.dataset.xxxJanOriginalHref) {
+					return;
+				}
+
+				a.dataset.xxxJanOriginalHref = a.href;
+			});
+		}
 
 		/* Recurse for (i)frames. */
 		try {
