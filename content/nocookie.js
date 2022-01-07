@@ -40,7 +40,7 @@
 				: openButtonElementOrSelector;
 
 			if (openButton) {
-				console.log('nocookies: found button to open settings: ', openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '' : openButton);
+				console.log('nocookies: found button to open settings: ', openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
 				openButton.click();
 				setTimeout(setAndSaveFunction, 250);
 			} else {
