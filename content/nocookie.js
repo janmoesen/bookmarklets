@@ -27,6 +27,17 @@
 		};
 	})();
 
+	/* Keep track of out-of-origin IFRAMEs that this bookmarklet cannot access
+	 * but are likely to contain an external consent manager. */
+	const externalConsentManagerIframeSelectors = [
+		'iframe[src*=".trustarc.com/"]',
+		'iframe[src*=".consensu.org/"]',
+		'iframe[src*=".privacy-mgmt.com/"]',
+		'iframe[src*="/sourcepoint.theguardian.com/"]',
+	];
+	const probableExternalConsentManagerIframeUris = [];
+
+
 	/* Recursively execute the logic on the document and its sub-documents. */
 	function execute(document) {
 		/**
@@ -339,6 +350,14 @@
 		}
 
 
+		/* -----------------------------------------------------------------
+		 * Out-of-origin IFRAMEs.
+		 * ----------------------------------------------------------------- */
+		document.querySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
+			iframe => probableExternalConsentManagerIframeUris.push(iframe.src)
+		);
+
+
 		/* ================================================================= */
 
 
@@ -353,4 +372,11 @@
 	}
 
 	execute(document);
+
+	/* Show out-of-origin IFRAMEs of external consent managers. */
+	if (probableExternalConsentManagerIframeUris.length === 1) {
+		alert(`There appears to be an IFRAME of an external consent manager. This bookmarklet cannot access that IFRAME, sorry.\n\nURI: ${probableExternalConsentManagerIframeUris[0]}`);
+	} else if (probableExternalConsentManagerIframeUris.length > 1) {
+		alert(`There appear to be ${probableExternalConsentManagerIframeUris.length} IFRAMEs of an external consent manager. This bookmarklet cannot access such IFRAME, sorry.\n\nURIs:\n* ${probableExternalConsentManagerIframeUris.join('\n\n* ')}`);
+	}
 })();
