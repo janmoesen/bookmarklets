@@ -114,6 +114,14 @@
 
 
 		/* -----------------------------------------------------------------
+		 * CookieCuttr jQuery/WordPress plug-in <http://cookiecuttr.com/>
+		 * E.g. http://cookiecuttr.com/
+		 * E.g. https://www.findcrowdfunding.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cc-cookies .cc_cookie_decline, .cc-cookies .cc-cookie-decline');
+
+
+		/* -----------------------------------------------------------------
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
 		 * E.g. https://ec.europa.eu/
 		 * ----------------------------------------------------------------- */
