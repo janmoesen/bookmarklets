@@ -152,7 +152,7 @@
 
 			/* Sometimes the `q=` URIs do not specify the protocol, e.g.
 			 * `www.example.com`. In that case, assume they are HTTPS. */
-			if (!targetUri.match(/^[\/]+:/)) {
+			if (!targetUri.match(/^[^\/]+:/)) {
 				targetUri = `https://${targetUri}`;
 			}
 
