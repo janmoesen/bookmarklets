@@ -122,6 +122,14 @@
 
 
 		/* -----------------------------------------------------------------
+		 * GDPR Legal Cookie App for Shopify <https://gdpr-legal-cookie.myshopify.com/>
+		 * E.g. https://gdpr-legal-cookie.myshopify.com/
+		 * E.g. https://www.flectr.bike/
+		 * ----------------------------------------------------------------- */
+		tryToClick('#essential_accept .btn-btn-save');
+
+
+		/* -----------------------------------------------------------------
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
 		 * E.g. https://ec.europa.eu/
 		 * ----------------------------------------------------------------- */
