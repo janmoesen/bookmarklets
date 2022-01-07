@@ -146,6 +146,14 @@
 
 
 		/* -----------------------------------------------------------------
+		 * HubSpot’s cookie banner <https://www.hubspot.com/data-privacy/gdpr>
+		 * E.g. https://www.hubspot.com/
+		 * E.g. https://www.mdi.lu/
+		 * ----------------------------------------------------------------- */
+		tryToClick('#hs-eu-decline-button');
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
