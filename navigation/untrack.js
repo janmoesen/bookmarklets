@@ -137,14 +137,6 @@
 			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
 		},
 
-		/* Google Ads text links and affiliate links that were processed by
-		 * this bookmarklet before their `A@href` changed. */
-		'a[data-xxx-jan-original-href]': a => {
-			if (a.href !== a.dataset.xxxJanOriginalHref) {
-				a.href = a.dataset.xxxJanOriginalHref;
-			}
-		},
-
 		/* YouTube */
 		'a[href^="https://www.youtube.com/redirect?"][href*="q="]': a => {
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('q') ?? a.href;
@@ -162,6 +154,16 @@
 			}
 
 			a.href = a.textContent = possibleUri;
+		},
+
+		/* Links that were processed by this bookmarklet to restore their
+		 * original `A@href` after it was changed on the fly because of user
+		 * interaction, e.g. by clicking on Google Ads text links or
+		 * Skimlinks affiliate links. */
+		'a[data-xxx-jan-original-href]': a => {
+			if (a.href !== a.dataset.xxxJanOriginalHref) {
+				a.href = a.dataset.xxxJanOriginalHref;
+			}
 		}
 	};
 
