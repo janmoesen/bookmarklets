@@ -81,12 +81,6 @@
 
 
 		/* -----------------------------------------------------------------
-		 * Iubenda Cookie Solution <https://www.iubenda.com/en/cookie-solution>
-		 * ----------------------------------------------------------------- */
-		tryToClick('.iubenda-cs-reject-btn');
-
-
-		/* -----------------------------------------------------------------
 		 * TrustArc cookie banner
 		 * ----------------------------------------------------------------- */
 		tryToClick('#truste-consent-required');
@@ -336,6 +330,32 @@
 				tryToClick('.cc_cp_f_save button');
 			}
 		);
+
+
+		/* -----------------------------------------------------------------
+		 * Iubenda Cookie Solution <https://www.iubenda.com/en/cookie-solution>
+		 * E.g. https://www.iubenda.com/
+		 * E.g. https://www.siracusanews.it/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('.iubenda-cs-reject-btn')) {
+			openAndWaitOrDoItNow(
+				'.iubenda-cs-customize-btn',
+				function () {
+					if (!tryToClick('[class*="iubenda"] .purposes-btn-reject')) {
+						openAndWaitOrDoItNow(
+							'#iubFooterBtnIab',
+							function () {
+								/* Reject all possible cookies / object to all possible interests and personalization. */
+								tryToClick('.iub-cmp-reject-btn');
+
+								/* Save & exit. */
+								tryToClick('#iubFooterBtn, .iubenda-cs-reject-btn');
+							}
+						);
+					}
+				}
+			);
+		}
 
 
 		/* -----------------------------------------------------------------
