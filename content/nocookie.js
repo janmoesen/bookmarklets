@@ -131,6 +131,13 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Toerisme Oost-Vlaanderen’s cookie banner
+		 * E.g. https://www.routen.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary');
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
