@@ -139,7 +139,18 @@
 
 		/* YouTube */
 		'a[href^="https://www.youtube.com/redirect?"][href*="q="]': a => {
-			a.href = new URLSearchParams(new URL(a.href).search)?.get('q') ?? a.href;
+			let targetUri = new URLSearchParams(new URL(a.href).search)?.get('q');
+			if (!targetUri) {
+				return;
+			}
+
+			/* Sometimes the `q=` URIs do not specify the protocol, e.g.
+			 * `www.example.com`. In that case, assume they are HTTPS. */
+			if (!targetUri.match(/^[\/]+:/)) {
+				targetUri = `https://${targetUri}`;
+			}
+
+			a.href = targetUri;
 		},
 
 		/* Twitter */
