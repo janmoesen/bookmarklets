@@ -119,6 +119,11 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
 		},
 
+		/* Instagram */
+		'a[href^="https://l.instagram.com/?"]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
+		},
+
 		/* Google */
 		'a[href^="https://www.google."][href*="/url?"], a[href^="http://www.google."][href*="/url?"], a[href^="/url?"]': a => {
 			/* Make sure we only process Google’s redirects. It seems the
