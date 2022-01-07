@@ -166,7 +166,8 @@
 		 * Google’s own properties (not using their own Funding Choices…)
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
-			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"])',
+			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
+				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
