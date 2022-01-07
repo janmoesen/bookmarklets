@@ -386,6 +386,33 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Ezoic CMP <https://www.ezoic.com/>
+		 * E.g. https://www.ezoic.com/
+		 * E.g. https://www.sheldonbrown.com/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+
+				/* Do the same for all the vendors. */
+				openAndWaitOrDoItNow(
+					'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
+					_ => {
+						document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+
+						tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]');
+					}
+				);
+
+				/* Save & exit. */
+				setTimeout(_ => tryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]'), 350);
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
