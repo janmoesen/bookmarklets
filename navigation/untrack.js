@@ -18,6 +18,7 @@
 		'utm_[^=]*',
 		'gclid',
 		'dclid',
+		'_ga',
 
 		 /* Facebook */
 		'fbclid',
