@@ -63,8 +63,11 @@
 		 * Call the `click` function on the first element that matches the
 		 * given selector.
 		 */
-		function tryToClick(selector) {
-			const elem = document.querySelector(selector);
+		function tryToClick(selectorOrElement) {
+			const elem = typeof selectorOrElement === 'string'
+				? document.querySelector(selectorOrElement)
+				: selectorOrElement;
+
 			if (elem) {
 				console.log('nocookie: found button to click: ', elem);
 				elem.click();
@@ -368,6 +371,41 @@
 		} else {
 			document.querySelector('#CybotCookiebotDialogBodyButtonDecline')?.click();
 		}
+
+
+		/* -----------------------------------------------------------------
+		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
+		 * E.g. https://www.immoweb.be/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.uc-btn-more',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				setTimeout(_ => tryToClick('.uc-save-settings-button'), 50);
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
+		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (with Shadow DOM)
+		 * E.g. https://usercentrics.com/
+		 * E.g. https://www.rosebikes.nl/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				document.querySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
+					check => (check.getAttribute('aria-checked') === 'true') && check.click()
+				);
+
+				/* Save & exit. */
+				setTimeout(_ => tryToClick(document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]')), 250);
+			}
+		);
 
 
 		/* -----------------------------------------------------------------
