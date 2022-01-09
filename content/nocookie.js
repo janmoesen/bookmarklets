@@ -80,8 +80,16 @@
 
 		/* -----------------------------------------------------------------
 		 * Drupal’s EU Cookie Compliance (GDPR Compliance) banner <https://www.drupal.org/project/eu_cookie_compliance>
+		 * E.g. https://dropsolid.com/
+		 * E.g. https://www.mo.be/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.eu-cookie-compliance-banner .decline-button');
+		if (!tryToClick('.eu-cookie-compliance-banner .decline-button')) {
+			const euCookieComplianceCategoryCheckboxes = document.querySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
+			if (euCookieComplianceCategoryCheckboxes.length) {
+				euCookieComplianceCategoryCheckboxes.forEach(check => check.checked = false);
+				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button');
+			}
+		}
 
 
 		/* -----------------------------------------------------------------
