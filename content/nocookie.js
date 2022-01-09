@@ -46,13 +46,13 @@
 		 * element and wait a bit before calling the `setAndSaveFunction`. If
 		 * there is no such element, immediately call the function.
 		 */
-		function openAndWaitOrDoItNow(openButtonElementOrSelector, setAndSaveFunction) {
+		function openAndWaitOrDoItNow(openButtonElementOrSelector, provider, setAndSaveFunction) {
 			const openButton = typeof openButtonElementOrSelector === 'string'
 				? document.querySelector(openButtonElementOrSelector)
 				: openButtonElementOrSelector;
 
 			if (openButton) {
-				console.log('nocookies: found button to open settings: ', openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
+				console.log(`nocookies: found ${provider} button to open settings: `, openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
 				openButton.click();
 				setTimeout(setAndSaveFunction, 250);
 			} else {
@@ -64,13 +64,13 @@
 		 * Call the `click` function on the first element that matches the
 		 * given selector.
 		 */
-		function tryToClick(selectorOrElement) {
+		function tryToClick(selectorOrElement, provider) {
 			const elem = typeof selectorOrElement === 'string'
 				? document.querySelector(selectorOrElement)
 				: selectorOrElement;
 
 			if (elem) {
-				console.log('nocookie: found button to click: ', elem);
+				console.log(`nocookie: found ${provider} button to click: `, elem);
 				elem.click();
 
 				return true;
@@ -83,11 +83,11 @@
 		 * E.g. https://dropsolid.com/
 		 * E.g. https://www.mo.be/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.eu-cookie-compliance-banner .decline-button')) {
+		if (!tryToClick('.eu-cookie-compliance-banner .decline-button', 'Drupal')) {
 			const euCookieComplianceCategoryCheckboxes = document.querySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
 			if (euCookieComplianceCategoryCheckboxes.length) {
 				euCookieComplianceCategoryCheckboxes.forEach(check => check.checked = false);
-				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button');
+				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button', 'Drupal');
 			}
 		}
 
@@ -95,31 +95,31 @@
 		/* -----------------------------------------------------------------
 		 * TrustArc cookie banner
 		 * ----------------------------------------------------------------- */
-		tryToClick('#truste-consent-required');
+		tryToClick('#truste-consent-required', 'TrustArc');
 
 
 		/* -----------------------------------------------------------------
 		 * Bol.com cookie dialog
 		 * ----------------------------------------------------------------- */
-		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button');
+		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button', 'Bol.com');
 
 
 		/* -----------------------------------------------------------------
 		 * Cookie-Script <https://cookie-script.com/>
 		 * ----------------------------------------------------------------- */
-		tryToClick('#cookiescript_reject');
+		tryToClick('#cookiescript_reject', 'Cookie-Script');
 
 
 		/* -----------------------------------------------------------------
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
 		 * ----------------------------------------------------------------- */
-		tryToClick('#cookie_action_close_header_reject');
+		tryToClick('#cookie_action_close_header_reject', 'CookieYes/Cookie-Law-Info');
 
 
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
 		 * ----------------------------------------------------------------- */
-		tryToClick('#gdprCookieBanner #bannerDeclineButton');
+		tryToClick('#gdprCookieBanner #bannerDeclineButton', 'PayPal');
 
 
 		/* -----------------------------------------------------------------
@@ -127,7 +127,7 @@
 		 * E.g. http://cookiecuttr.com/
 		 * E.g. https://www.findcrowdfunding.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cc-cookies .cc_cookie_decline, .cc-cookies .cc-cookie-decline');
+		tryToClick('.cc-cookies .cc_cookie_decline, .cc-cookies .cc-cookie-decline', 'CookieCuttr');
 
 
 		/* -----------------------------------------------------------------
@@ -135,15 +135,15 @@
 		 * E.g. https://gdpr-legal-cookie.myshopify.com/
 		 * E.g. https://www.flectr.bike/
 		 * ----------------------------------------------------------------- */
-		tryToClick('#essential_accept .btn-btn-save');
+		tryToClick('#essential_accept .btn-btn-save', 'GDPR Legal Cookie App for Shopify');
 
 
 		/* -----------------------------------------------------------------
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
 		 * E.g. https://ec.europa.eu/
 		 * ----------------------------------------------------------------- */
-		if (tryToClick('.cck-actions-button[href="#refuse"]')) {
-			tryToClick('.cck-actions [href="#close"]');
+		if (tryToClick('.cck-actions-button[href="#refuse"]', 'NextEuropa')) {
+			tryToClick('.cck-actions [href="#close"]', 'NextEuropa');
 		}
 
 
@@ -151,7 +151,7 @@
 		 * Toerisme Oost-Vlaanderen’s cookie banner
 		 * E.g. https://www.routen.be/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary');
+		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary', 'Toerisme Oost-Vlaanderen');
 
 
 		/* -----------------------------------------------------------------
@@ -159,13 +159,13 @@
 		 * E.g. https://www.hubspot.com/
 		 * E.g. https://www.mdi.lu/
 		 * ----------------------------------------------------------------- */
-		tryToClick('#hs-eu-decline-button');
+		tryToClick('#hs-eu-decline-button', 'HubSpot');
 
 
 		/* -----------------------------------------------------------------
 		 * E.g. https://www.newscientist.nl/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cc-compliance .cc-dismiss');
+		tryToClick('.cc-compliance .cc-dismiss', 'NewScientist.nl');
 
 
 		/* -----------------------------------------------------------------
@@ -174,7 +174,7 @@
 		 * E.g. https://www.ecopower.be/
 		 * E.g. https://www.gezondheidenwetenschap.be/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.nimbuCookie .cn-ok button:not(.cm-btn-success):not(.cm-btn-info)');
+		tryToClick('.nimbuCookie .cn-ok button:not(.cm-btn-success):not(.cm-btn-info)', 'Nimbu (Zenjoy)');
 
 
 		/* -----------------------------------------------------------------
@@ -182,6 +182,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.fc-cta-manage-options',
+			'Google Funding Choices',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				Array.from(document.querySelectorAll('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]')).forEach(
@@ -189,7 +190,7 @@
 				);
 
 				/* Save & exit. */
-				tryToClick('.fc-confirm-choices');
+				tryToClick('.fc-confirm-choices', 'Google Funding Choices');
 			}
 		);
 
@@ -200,6 +201,7 @@
 		openAndWaitOrDoItNow(
 			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
 				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
+			'Google',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
@@ -207,7 +209,7 @@
 				);
 
 				/* Save & exit. */
-				tryToClick('c-wiz form[jsaction^="submit:"] button');
+				tryToClick('c-wiz form[jsaction^="submit:"] button', 'Google');
 			}
 		);
 
@@ -219,6 +221,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#consent-page .manage-settings',
+			'Yahoo IAB',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				const iabCookieComplianceCategoryCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]'));
@@ -228,7 +231,7 @@
 
 				/* Save & exit. */
 				if (iabCookieComplianceCategoryCheckboxes.length) {
-					tryToClick('#consent-page button[name="agree"]');
+					tryToClick('#consent-page button[name="agree"]', 'Yahoo IAB');
 				}
 			}
 		);
@@ -240,6 +243,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#onetrust-pc-btn-handler',
+			'Onetrust',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				Array.from(document.querySelectorAll('#onetrust-consent-sdk input[type="checkbox"]')).forEach(
@@ -247,7 +251,7 @@
 				);
 
 				/* Save & exit. */
-				tryToClick('.onetrust-close-btn-handler');
+				tryToClick('.onetrust-close-btn-handler', 'Onetrust');
 			}
 		);
 
@@ -257,12 +261,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#didomi-notice-learn-more-button',
+			'Didomi',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type'), 50);
+				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 50);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type'), 100);
+				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 100);
 			}
 		);
 
@@ -274,6 +279,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
+			'Quantcast',
 			function () {
 				/* Cycle through the “Partners” and “Legitimate interest” tabs. */
 				document.querySelectorAll('.qc-cmp2-footer-links button').forEach(tabButton => {
@@ -287,7 +293,7 @@
 				});
 
 				/* Click the “Save & exit” button. */
-				setTimeout(_ => tryToClick('.qc-cmp2-footer button[mode="primary"]'), 50);
+				setTimeout(_ => tryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast'), 50);
 			}
 		);
 
@@ -297,12 +303,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'[data-tracking-opt-in-learn-more="true"]',
+			'Fandom/Wikia',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('[data-tracking-opt-in-save="true"]'), 100);
+				setTimeout(_ => tryToClick('[data-tracking-opt-in-save="true"]', 'Fandom/Wikia'), 100);
 			}
 		);
 
@@ -312,12 +319,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'button.js-cookie-settings',
+			'Coolblue',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('input[type="checkbox"][name="cookie_setting[]"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('button[name="accept_cookie"][value="selection"]'), 100);
+				setTimeout(_ => tryToClick('button[name="accept_cookie"][value="selection"]', 'Coolblue'), 100);
 			}
 		);
 
@@ -328,12 +336,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.js-kmcc-extended-modal-button[data-target="legal_cookie_preferences"]',
+			'Kunstmaan Cookie Bar',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				tryToClick('#kmcc-accept-some-cookies');
+				tryToClick('#kmcc-accept-some-cookies', 'Kunstmaan Cookie Bar');
 			}
 		);
 
@@ -343,12 +352,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#SG-CookieConsent--TogglePreferencesButton',
+			'Stad Gent',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				tryToClick('#SG-CookieConsent--SavePreferencesButton');
+				tryToClick('#SG-CookieConsent--SavePreferencesButton', 'Stad Gent');
 			}
 		);
 
@@ -359,6 +369,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.cc-btn.cc-settings',
+			'Osano',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				Array.from(document.querySelectorAll('.cc-settings-dialog input[type="checkbox"]')).forEach(
@@ -366,7 +377,7 @@
 				);
 
 				/* Save & exit. */
-				tryToClick('.cc-btn.cc-btn-accept-selected');
+				tryToClick('.cc-btn.cc-btn-accept-selected', 'Osano');
 			}
 		);
 
@@ -377,12 +388,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'a[href="#"].cookie_tool_more, #cookie_tool_config',
+			'AdResults',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				(document.querySelector('input[name="cookie_tool_choise"][value="3"]') ?? {}).checked = true;
 
 				/* Save & exit. */
-				tryToClick('.cookie_tool_submit');
+				tryToClick('.cookie_tool_submit', 'AdResults');
 			}
 		);
 
@@ -394,12 +406,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.cc_dialog button.cc_b_cp, .cc_dialog .btn:not(.cc_b_ok_custom)',
+			'Free Privacy Policy',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				tryToClick('.cc_cp_f_save button');
+				tryToClick('.cc_cp_f_save button', 'Free Privacy Policy');
 			}
 		);
 
@@ -409,19 +422,21 @@
 		 * E.g. https://www.iubenda.com/
 		 * E.g. https://www.siracusanews.it/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.iubenda-cs-reject-btn')) {
+		if (!tryToClick('.iubenda-cs-reject-btn', 'Iubenda Cookie Solution')) {
 			openAndWaitOrDoItNow(
 				'.iubenda-cs-customize-btn',
+				'Iubenda',
 				function () {
-					if (!tryToClick('[class*="iubenda"] .purposes-btn-reject')) {
+					if (!tryToClick('[class*="iubenda"] .purposes-btn-reject', 'Iubenda Cookie Solution')) {
 						openAndWaitOrDoItNow(
 							'#iubFooterBtnIab',
+							'Iubenda',
 							function () {
 								/* Reject all possible cookies / object to all possible interests and personalization. */
-								tryToClick('.iub-cmp-reject-btn');
+								tryToClick('.iub-cmp-reject-btn', 'Iubenda');
 
 								/* Save & exit. */
-								tryToClick('#iubFooterBtn, .iubenda-cs-reject-btn');
+								tryToClick('#iubFooterBtn, .iubenda-cs-reject-btn', 'Iubenda');
 							}
 						);
 					}
@@ -437,6 +452,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
+			'Ezoic',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
@@ -444,15 +460,16 @@
 				/* Do the same for all the vendors. */
 				openAndWaitOrDoItNow(
 					'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
+					'Ezoic',
 					_ => {
 						document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
 
-						tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]');
+						tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
 					}
 				);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]'), 350);
+				setTimeout(_ => tryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic'), 350);
 			}
 		);
 
@@ -475,12 +492,13 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'.uc-btn-more',
+			'UserCentrics (without Shadow DOM)',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('.uc-save-settings-button'), 50);
+				setTimeout(_ => tryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)'), 50);
 			}
 		);
 
@@ -492,6 +510,7 @@
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
+			'UserCentrics (with Shadow DOM)',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				document.querySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
@@ -499,7 +518,7 @@
 				);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick(document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]')), 250);
+				setTimeout(_ => tryToClick(document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]', 'UserCentrics (with Shadow DOM)')), 250);
 			}
 		);
 
