@@ -198,11 +198,24 @@
 
 
 		/* -----------------------------------------------------------------
-		 * Yahoo IAB
+		 * Yahoo IAB cookie consent
+		 * E.g. https://techcrunch.com/
+		 * E.g. https://www.yahoo.com/
 		 * ----------------------------------------------------------------- */
-		/* TODO: click the necessary buttons, too. */
-		Array.from(document.querySelectorAll('input[type="checkbox"][data-toggle-type="legit"]')).forEach(
-			check => check.checked = false
+		openAndWaitOrDoItNow(
+			'#consent-page .manage-settings',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				const iabCookieComplianceCategoryCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]'));
+				iabCookieComplianceCategoryCheckboxes.forEach(
+					check => check.checked = false
+				);
+
+				/* Save & exit. */
+				if (iabCookieComplianceCategoryCheckboxes.length) {
+					tryToClick('#consent-page button[name="agree"]');
+				}
+			}
 		);
 
 
