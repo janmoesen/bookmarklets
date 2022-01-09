@@ -169,6 +169,15 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Nimbu (Zenjoy) cookie consent bar <https://www.nimbu.io/>
+		 * E.g. https://www.zenjoy.be/
+		 * E.g. https://www.ecopower.be/
+		 * E.g. https://www.gezondheidenwetenschap.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.nimbuCookie .cn-ok button:not(.cm-btn-success):not(.cm-btn-info)');
+
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
