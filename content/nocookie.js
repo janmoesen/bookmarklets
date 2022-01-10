@@ -137,6 +137,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Bol.com cookie dialog
+		 * E.g. https://www.bol.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button', 'Bol.com');
 
@@ -155,6 +156,7 @@
 
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
+		 * E.g. https://www.paypal.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#gdprCookieBanner #bannerDeclineButton', 'PayPal');
 
@@ -234,6 +236,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Google’s own properties (not using their own Funding Choices…)
+		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
@@ -253,8 +256,8 @@
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
-		 * E.g. https://techcrunch.com/
 		 * E.g. https://www.yahoo.com/
+		 * E.g. https://techcrunch.com/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#consent-page .manage-settings',
@@ -275,7 +278,8 @@
 
 
 		/* -----------------------------------------------------------------
-		 * Onetrust
+		 * Onetrust <https://www.onetrust.com/products/cookie-consent/>
+		 * E.g. https://www.onetrust.com/
 		 * E.g. https://www.booking.com/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
@@ -339,6 +343,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Fandom/Wikia
+		 * E.g. https://www.fandom.com/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'[data-tracking-opt-in-learn-more="true"]',
@@ -380,6 +385,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Stad Gent cookie consent
+		 * E.g. https://stad.gent/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#SG-CookieConsent--TogglePreferencesButton',
@@ -507,6 +513,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
+		 * E.g. https://www.cybot.com/
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
 		if (cybotAllowSelectionButton) {
