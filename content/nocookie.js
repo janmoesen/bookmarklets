@@ -38,7 +38,6 @@
 	];
 	const probableExternalConsentManagerIframeUris = [];
 
-
 	/* Get the top document and all of its sub-documents, recursively. */
 	function getAllDocuments(currDocument) {
 		if (!currDocument) {
@@ -175,12 +174,10 @@
 			}
 		}
 
-
 		/* -----------------------------------------------------------------
 		 * TrustArc cookie banner
 		 * ----------------------------------------------------------------- */
 		tryToClick('#truste-consent-required', 'TrustArc');
-
 
 		/* -----------------------------------------------------------------
 		 * Bol.com cookie dialog
@@ -188,25 +185,21 @@
 		 * ----------------------------------------------------------------- */
 		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button', 'Bol.com');
 
-
 		/* -----------------------------------------------------------------
 		 * Cookie-Script <https://cookie-script.com/>
 		 * ----------------------------------------------------------------- */
 		tryToClick('#cookiescript_reject', 'Cookie-Script');
-
 
 		/* -----------------------------------------------------------------
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
 		 * ----------------------------------------------------------------- */
 		tryToClick('#cookie_action_close_header_reject', 'CookieYes/Cookie-Law-Info');
 
-
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
 		 * E.g. https://www.paypal.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#gdprCookieBanner #bannerDeclineButton', 'PayPal');
-
 
 		/* -----------------------------------------------------------------
 		 * CookieCuttr jQuery/WordPress plug-in <http://cookiecuttr.com/>
@@ -215,14 +208,12 @@
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cc-cookies .cc_cookie_decline, .cc-cookies .cc-cookie-decline', 'CookieCuttr');
 
-
 		/* -----------------------------------------------------------------
 		 * GDPR Legal Cookie App for Shopify <https://gdpr-legal-cookie.myshopify.com/>
 		 * E.g. https://gdpr-legal-cookie.myshopify.com/
 		 * E.g. https://www.flectr.bike/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#essential_accept .btn-btn-save', 'GDPR Legal Cookie App for Shopify');
-
 
 		/* -----------------------------------------------------------------
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
@@ -232,13 +223,11 @@
 			tryToClick('.cck-actions [href="#close"]', 'NextEuropa');
 		}
 
-
 		/* -----------------------------------------------------------------
 		 * Toerisme Oost-Vlaanderen’s cookie banner
 		 * E.g. https://www.routen.be/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary', 'Toerisme Oost-Vlaanderen');
-
 
 		/* -----------------------------------------------------------------
 		 * HubSpot’s cookie banner <https://www.hubspot.com/data-privacy/gdpr>
@@ -247,12 +236,10 @@
 		 * ----------------------------------------------------------------- */
 		tryToClick('#hs-eu-decline-button', 'HubSpot');
 
-
 		/* -----------------------------------------------------------------
 		 * E.g. https://www.newscientist.nl/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cc-compliance .cc-dismiss', 'NewScientist.nl');
-
 
 		/* -----------------------------------------------------------------
 		 * Nimbu (Zenjoy) cookie consent bar <https://www.nimbu.io/>
@@ -261,7 +248,6 @@
 		 * E.g. https://www.gezondheidenwetenschap.be/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.nimbuCookie .cn-ok button:not(.cm-btn-success):not(.cm-btn-info)', 'Nimbu (Zenjoy)');
-
 
 		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
@@ -279,7 +265,6 @@
 				tryToClick('.fc-confirm-choices', 'Google Funding Choices');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Google’s own properties (not using their own Funding Choices…)
@@ -299,7 +284,6 @@
 				tryToClick('c-wiz form[jsaction^="submit:"] button', 'Google');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
@@ -323,7 +307,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Onetrust <https://www.onetrust.com/products/cookie-consent/>
 		 * E.g. https://www.onetrust.com/
@@ -343,7 +326,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Didomi
 		 * E.g. https://www.didomi.io/
@@ -360,7 +342,6 @@
 				setTimeout(_ => retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 250);
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Quantcast
@@ -387,7 +368,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Fandom/Wikia
 		 * E.g. https://www.fandom.com/
@@ -404,14 +384,12 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Coolblue cookie dialog
 		 * E.g. https://www.coolblue.nl/
 		 * E.g. https://www.coolblue.be/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookie button[name="decline_cookie"]', 'Coolblue');
-
 
 		/* -----------------------------------------------------------------
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
@@ -429,7 +407,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Stad Gent cookie consent
 		 * E.g. https://stad.gent/
@@ -445,7 +422,6 @@
 				tryToClick('#SG-CookieConsent--SavePreferencesButton', 'Stad Gent');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Osano Cookie Consent <https://www.osano.com/cookieconsent>
@@ -467,7 +443,6 @@
 
 		tryToClick('.osano-cm-denyAll, .osano-cm-button--type_denyAll', 'Osano');
 
-
 		/* -----------------------------------------------------------------
 		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
 		 * E.g. https://www.ekoplaza.nl/
@@ -483,7 +458,6 @@
 				tryToClick('.cookie_tool_submit', 'AdResults');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Free Privacy Policy’s Cookie Consent <https://www.freeprivacypolicy.com/free-cookie-consent/>
@@ -501,7 +475,6 @@
 				tryToClick('.cc_cp_f_save button', 'Free Privacy Policy');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Iubenda Cookie Solution <https://www.iubenda.com/en/cookie-solution>
@@ -529,7 +502,6 @@
 				}
 			);
 		}
-
 
 		/* -----------------------------------------------------------------
 		 * Ezoic CMP <https://www.ezoic.com/>
@@ -559,7 +531,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * E.g. https://www.cybot.com/
@@ -571,7 +542,6 @@
 		} else {
 			tryToClick('#CybotCookiebotDialogBodyButtonDecline');
 		}
-
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
@@ -588,7 +558,6 @@
 				retryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (with Shadow DOM)
@@ -609,7 +578,6 @@
 			}
 		);
 
-
 		/* -----------------------------------------------------------------
 		 * WordPress cookie banner (not on the main domain, but on the hosted sites)
 		 * E.g. https://*.wordpress.com/
@@ -623,7 +591,6 @@
 				retryToClick('.cmp__modal-footer-buttons button.is-secondary:nth-child(2)', 'WordPress');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Automattic cookie banner
@@ -640,7 +607,6 @@
 				tryToClick('.a8c-cookie-banner-accept-selection-button', 'Automattic');
 			}
 		);
-
 
 		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
