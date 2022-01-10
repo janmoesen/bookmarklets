@@ -354,19 +354,25 @@
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
 			'Quantcast',
 			function () {
-				/* Cycle through the “Partners” and “Legitimate interest” tabs. */
-				deepQuerySelectorAll('.qc-cmp2-footer-links button').forEach(tabButton => {
-					tabButton.click();
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (reject main cookies)');
 
-					/* Click the corresponding “REJECT ALL” or “OBJECT ALL” button. */
-					deepQuerySelectorAll('.qc-cmp2-header-links button:nth-of-type(1)').forEach(
-						/* TODO: make this language-independent, if possible */
-						justSayNoButton => justSayNoButton.textContent.match(/(reject|object) all/i) && justSayNoButton.click()
-					);
-				});
+				/* Do the same for the partners. */
+				if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(1)', 'Quantcast (go to “Partners” tab)')) {
+					setTimeout(_ => {
+						tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (reject partner cookies)');
+
+						/* Do the same for the legitimate interests. */
+						if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(2)', 'Quantcast (go to “Legitimate interest” tab)')) {
+							setTimeout(_ => tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (object to all interests)'), 50);
+						}
+					}, 50);
+				}
 
 				/* Click the “Save & exit” button. */
-				retryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast');
+				setTimeout(_ => {
+					retryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast:(save & exit)');
+				}, 500);
 			}
 		);
 
