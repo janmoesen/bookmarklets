@@ -611,6 +611,21 @@
 
 
 		/* -----------------------------------------------------------------
+		 * WordPress cookie banner (not on the main domain, but on the hosted sites)
+		 * E.g. https://*.wordpress.com/
+		 * E.g. https://longreads.com/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.cmp__banner-buttons button.is-tertiary:first-child',
+			'WordPress',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				retryToClick('.cmp__modal-footer-buttons button.is-secondary:nth-child(2)', 'WordPress');
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
