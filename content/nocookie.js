@@ -626,6 +626,23 @@
 
 
 		/* -----------------------------------------------------------------
+		 * Automattic cookie banner
+		 * E.g. https://wordpress.com/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.a8c-cookie-banner-customize-button',
+			'Automattic',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('.a8c-cookie-banner-options-selection input[type="checkbox"]').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				tryToClick('.a8c-cookie-banner-accept-selection-button', 'Automattic');
+			}
+		);
+
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
