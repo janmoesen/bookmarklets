@@ -103,17 +103,15 @@
 	 * given selector. Alternatively, you can specify an element
 	 * directly, or a callback that returns an element.
 	 */
-	function tryToClick(selectorOrElementOrCallback, provider) {
-		let elem = selectorOrElementOrCallback;
-		if (typeof selectorOrElementOrCallback === 'string') {
-			elem = deepQuerySelector(selectorOrElementOrCallback);
-		} else if (typeof selectorOrElementOrCallback === 'function') {
-			elem = selectorOrElementOrCallback(document);
+	function tryToClick(selectorOrElement, provider) {
+		let elem = selectorOrElement;
+		if (typeof selectorOrElement === 'string') {
+			elem = deepQuerySelector(selectorOrElement);
 		}
 
 		if (elem) {
-			const msg = typeof selectorOrElementOrCallback === 'string'
-				? `nocookie: found ${provider} button to click for selector ${selectorOrElementOrCallback}: `
+			const msg = typeof selectorOrElement === 'string'
+				? `nocookie: found ${provider} button to click for selector ${selectorOrElement}: `
 				: `nocookie: found ${provider} button to click: `;
 			console.log(msg, elem);
 
@@ -129,7 +127,7 @@
 	 * was found), keep looking for a matching element until the maximum
 	 * time has been exceeded.
 	 */
-	function retryToClick(selectorOrElementOrCallback, provider, maxNumMilliseconds) {
+	function retryToClick(selectorOrElement, provider, maxNumMilliseconds) {
 		if (typeof maxNumMilliseconds === 'undefined') {
 			maxNumMilliseconds = 5000;
 		}
@@ -139,7 +137,7 @@
 		const retrier = _ => {
 			const currTimestamp = +new Date();
 
-			if (tryToClick(selectorOrElementOrCallback, provider)) {
+			if (tryToClick(selectorOrElement, provider)) {
 				const numMillisecondsElapsed = currTimestamp - startTimestamp;
 				if (numMillisecondsElapsed >= numMillisecondsBetweenTries) {
 					console.log(`nocookie: ↑ found that button to click after ${numMillisecondsElapsed} milliseconds. ↑`);
