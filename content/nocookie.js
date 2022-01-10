@@ -110,9 +110,13 @@
 		}
 
 		if (elem) {
+			const buttonText = elem.localName === 'input'
+				? elem.value
+				: elem.textContent.replaceAll('\n', ' ').trim().replace(/(.{32}).*/, '$1…');
+
 			const msg = typeof selectorOrElement === 'string'
-				? `nocookie: found ${provider} button to click for selector ${selectorOrElement}: `
-				: `nocookie: found ${provider} button to click: `;
+				? `nocookie: found ${provider} button (“${buttonText}”) to click for selector ${selectorOrElement}: `
+				: `nocookie: found ${provider} button (“${buttonText}”) to click: `;
 			console.log(msg, elem);
 
 			elem.click();
