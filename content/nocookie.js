@@ -543,11 +543,12 @@
 		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
 		 * E.g. https://www.cybot.com/
+		 * E.g. https://www.bridge.nl/
 		 * ----------------------------------------------------------------- */
 		const cybotAllowSelectionButton = deepQuerySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
 		if (cybotAllowSelectionButton) {
 			deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
-			cybotAllowSelectionButton.click();
+			tryToClick(cybotAllowSelectionButton, 'Cybot');
 		} else {
 			tryToClick('#CybotCookiebotDialogBodyButtonDecline');
 		}
