@@ -39,89 +39,136 @@
 	const probableExternalConsentManagerIframeUris = [];
 
 
-	/* Recursively execute the logic on the document and its sub-documents. */
-	function execute(document) {
-		/**
-		 * If there is an `openButtonElementOrSelector`, click the corresponding
-		 * element and wait a bit before calling the `setAndSaveFunction`. If
-		 * there is no such element, immediately call the function.
-		 */
-		function openAndWaitOrDoItNow(openButtonElementOrSelector, provider, setAndSaveFunction) {
-			const openButton = typeof openButtonElementOrSelector === 'string'
-				? document.querySelector(openButtonElementOrSelector)
-				: openButtonElementOrSelector;
-
-			if (openButton) {
-				console.log(`nocookies: found ${provider} button to open settings: `, openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
-				openButton.click();
-				setTimeout(setAndSaveFunction, 250);
-			} else {
-				setAndSaveFunction();
-			}
+	/* Get the top document and all of its sub-documents, recursively. */
+	function getAllDocuments(currDocument) {
+		if (!currDocument) {
+			currDocument = document;
 		}
 
-		/**
-		 * Call the `click` function on the first element that matches the
-		 * given selector. Alternatively, you can specify an element
-		 * directly, or a callback that returns an element.
-		 */
-		function tryToClick(selectorOrElementOrCallback, provider) {
-			let elem = selectorOrElementOrCallback;
-			if (typeof selectorOrElementOrCallback === 'string') {
-				elem = document.querySelector(selectorOrElementOrCallback);
-			} else if (typeof selectorOrElementOrCallback === 'function') {
-				elem = selectorOrElementOrCallback(document);
-			}
+		let documents = [currDocument];
 
+		/* Recurse for (i)frames. */
+		currDocument.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]').forEach(elem => {
+			if (elem.contentDocument) {
+				documents = documents.concat(getAllDocuments(elem.contentDocument))
+			}
+		});
+
+		return documents;
+	}
+
+	/* Call querySelector on the top document and its sub-documents. */
+	function deepQuerySelector(selector) {
+		const allDocuments = getAllDocuments();
+		for (let i = 0; i < allDocuments.length; i++) {
+			const elem = allDocuments[i].querySelector(selector);
 			if (elem) {
-				console.log(`nocookie: found ${provider} button to click: `, elem);
-				elem.click();
-
-				return true;
+				return elem;
 			}
 		}
+	}
 
-		/**
-		 * Call the `tryToClick` function on the given selector, element, or
-		 * callback. If that was not successful (i.e., no element to click
-		 * was found), keep looking for a matching element until the maximum
-		 * time has been exceeded.
-		 */
-		function retryToClick(selectorOrElementOrCallback, provider, maxNumMilliseconds) {
-			if (typeof maxNumMilliseconds === 'undefined') {
-				maxNumMilliseconds = 5000;
-			}
-			const startTimestamp = +new Date();
-			const numMillisecondsBetweenTries = 100;
+	/* Call querySelectorAll on the top document and its sub-documents. */
+	function deepQuerySelectorAll(selector) {
+		let allElements = [];
 
-			const retrier = _ => {
-				const currTimestamp = +new Date();
-
-				if (tryToClick(selectorOrElementOrCallback, provider)) {
-					const numMillisecondsElapsed = currTimestamp - startTimestamp;
-					if (numMillisecondsElapsed >= numMillisecondsBetweenTries) {
-						console.log(`nocookie: found button to click after ${numMillisecondsElapsed} milliseconds.`);
-					}
-
-					return;
-				}
-
-				if (currTimestamp + numMillisecondsBetweenTries <= startTimestamp + maxNumMilliseconds) {
-					setTimeout(retrier, numMillisecondsBetweenTries);
-				}
-			};
-
-			retrier();
+		const allDocuments = getAllDocuments();
+		for (let i = 0; i < allDocuments.length; i++) {
+			allElements = allElements.concat(Array.from(allDocuments[i].querySelectorAll(selector)));
 		}
 
+		return allElements;
+	}
 
+	/**
+	 * If there is an `openButtonElementOrSelector`, click the corresponding
+	 * element and wait a bit before calling the `setAndSaveFunction`. If
+	 * there is no such element, immediately call the function.
+	 */
+	function openAndWaitOrDoItNow(openButtonElementOrSelector, provider, setAndSaveFunction) {
+		const openButton = typeof openButtonElementOrSelector === 'string'
+			? deepQuerySelector(openButtonElementOrSelector)
+			: openButtonElementOrSelector;
+
+		if (openButton) {
+			console.log(`nocookies: found ${provider} button to open settings: `, openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
+			openButton.click();
+			setTimeout(setAndSaveFunction, 250);
+		} else {
+			setAndSaveFunction();
+		}
+	}
+
+	/**
+	 * Call the `click` function on the first element that matches the
+	 * given selector. Alternatively, you can specify an element
+	 * directly, or a callback that returns an element.
+	 */
+	function tryToClick(selectorOrElementOrCallback, provider) {
+		let elem = selectorOrElementOrCallback;
+		if (typeof selectorOrElementOrCallback === 'string') {
+			elem = deepQuerySelector(selectorOrElementOrCallback);
+		} else if (typeof selectorOrElementOrCallback === 'function') {
+			elem = selectorOrElementOrCallback(document);
+		}
+
+		if (elem) {
+			const msg = typeof selectorOrElementOrCallback === 'string'
+				? `nocookie: found ${provider} button to click for selector ${selectorOrElementOrCallback}: `
+				: `nocookie: found ${provider} button to click: `;
+			console.log(msg, elem);
+
+			elem.click();
+
+			return true;
+		}
+	}
+
+	/**
+	 * Call the `tryToClick` function on the given selector, element, or
+	 * callback. If that was not successful (i.e., no element to click
+	 * was found), keep looking for a matching element until the maximum
+	 * time has been exceeded.
+	 */
+	function retryToClick(selectorOrElementOrCallback, provider, maxNumMilliseconds) {
+		if (typeof maxNumMilliseconds === 'undefined') {
+			maxNumMilliseconds = 5000;
+		}
+		const startTimestamp = +new Date();
+		const numMillisecondsBetweenTries = 100;
+
+		const retrier = _ => {
+			const currTimestamp = +new Date();
+
+			if (tryToClick(selectorOrElementOrCallback, provider)) {
+				const numMillisecondsElapsed = currTimestamp - startTimestamp;
+				if (numMillisecondsElapsed >= numMillisecondsBetweenTries) {
+					console.log(`nocookie: ↑ found that button to click after ${numMillisecondsElapsed} milliseconds. ↑`);
+				}
+
+				return;
+			}
+
+			if (currTimestamp + numMillisecondsBetweenTries <= startTimestamp + maxNumMilliseconds) {
+				setTimeout(retrier, numMillisecondsBetweenTries);
+			}
+		};
+
+		retrier();
+	}
+
+	/* ↙ In case you’re wondering about this brace: there used to be a
+	 * ↙ recursive  blockfunction here, but the logic was changed. To prevent
+	 * ↙ useless source diff/blame, I simply left the indent of its original
+	 * ↙ body block. */
+	{
 		/* -----------------------------------------------------------------
 		 * Drupal’s EU Cookie Compliance (GDPR Compliance) banner <https://www.drupal.org/project/eu_cookie_compliance>
 		 * E.g. https://dropsolid.com/
 		 * E.g. https://www.mo.be/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.eu-cookie-compliance-banner .decline-button', 'Drupal')) {
-			const euCookieComplianceCategoryCheckboxes = document.querySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
+			const euCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
 			if (euCookieComplianceCategoryCheckboxes.length) {
 				euCookieComplianceCategoryCheckboxes.forEach(check => check.checked = false);
 				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button', 'Drupal');
@@ -224,7 +271,7 @@
 			'Google Funding Choices',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				Array.from(document.querySelectorAll('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]')).forEach(
+				deepQuerySelectorAll('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]').forEach(
 					check => check.checked = false
 				);
 
@@ -244,7 +291,7 @@
 			'Google',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
+				deepQuerySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
 					button => button.click()
 				);
 
@@ -264,7 +311,7 @@
 			'Yahoo IAB',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				const iabCookieComplianceCategoryCheckboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]'));
+				const iabCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]');
 				iabCookieComplianceCategoryCheckboxes.forEach(
 					check => check.checked = false
 				);
@@ -287,7 +334,7 @@
 			'Onetrust',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				Array.from(document.querySelectorAll('#onetrust-consent-sdk input[type="checkbox"]')).forEach(
+				deepQuerySelectorAll('#onetrust-consent-sdk input[type="checkbox"]').forEach(
 					check => check.checked = false
 				);
 
@@ -325,11 +372,11 @@
 			'Quantcast',
 			function () {
 				/* Cycle through the “Partners” and “Legitimate interest” tabs. */
-				document.querySelectorAll('.qc-cmp2-footer-links button').forEach(tabButton => {
+				deepQuerySelectorAll('.qc-cmp2-footer-links button').forEach(tabButton => {
 					tabButton.click();
 
 					/* Click the corresponding “REJECT ALL” or “OBJECT ALL” button. */
-					document.querySelectorAll('.qc-cmp2-header-links button:nth-of-type(1)').forEach(
+					deepQuerySelectorAll('.qc-cmp2-header-links button:nth-of-type(1)').forEach(
 						/* TODO: make this language-independent, if possible */
 						justSayNoButton => justSayNoButton.textContent.match(/(reject|object) all/i) && justSayNoButton.click()
 					);
@@ -350,7 +397,7 @@
 			'Fandom/Wikia',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
+				deepQuerySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
 				retryToClick('[data-tracking-opt-in-save="true"]', 'Fandom/Wikia');
@@ -375,7 +422,7 @@
 			'Kunstmaan Cookie Bar',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
+				deepQuerySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
 				tryToClick('#kmcc-accept-some-cookies', 'Kunstmaan Cookie Bar');
@@ -392,7 +439,7 @@
 			'Stad Gent',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
+				deepQuerySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
 
 				/* Save & exit. */
 				tryToClick('#SG-CookieConsent--SavePreferencesButton', 'Stad Gent');
@@ -409,7 +456,7 @@
 			'Osano',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				Array.from(document.querySelectorAll('.cc-settings-dialog input[type="checkbox"]')).forEach(
+				deepQuerySelectorAll('.cc-settings-dialog input[type="checkbox"]').forEach(
 					check => check.checked = false
 				);
 
@@ -430,7 +477,7 @@
 			'AdResults',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				(document.querySelector('input[name="cookie_tool_choise"][value="3"]') ?? {}).checked = true;
+				(deepQuerySelector('input[name="cookie_tool_choise"][value="3"]') ?? {}).checked = true;
 
 				/* Save & exit. */
 				tryToClick('.cookie_tool_submit', 'AdResults');
@@ -448,7 +495,7 @@
 			'Free Privacy Policy',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
+				deepQuerySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
 
 				/* Save & exit. */
 				tryToClick('.cc_cp_f_save button', 'Free Privacy Policy');
@@ -494,14 +541,14 @@
 			'Ezoic',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+				deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
 
 				/* Do the same for all the vendors. */
 				openAndWaitOrDoItNow(
 					'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
 					'Ezoic',
 					_ => {
-						document.querySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+						deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
 
 						tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
 					}
@@ -517,12 +564,12 @@
 		 * Cybot Cookie Dialog
 		 * E.g. https://www.cybot.com/
 		 * ----------------------------------------------------------------- */
-		const cybotAllowSelectionButton = document.querySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
+		const cybotAllowSelectionButton = deepQuerySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
 		if (cybotAllowSelectionButton) {
-			document.querySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
+			deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
 			cybotAllowSelectionButton.click();
 		} else {
-			document.querySelector('#CybotCookiebotDialogBodyButtonDecline')?.click();
+			tryToClick('#CybotCookiebotDialogBodyButtonDecline');
 		}
 
 
@@ -535,7 +582,7 @@
 			'UserCentrics (without Shadow DOM)',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
+				deepQuerySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
 				retryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)');
@@ -549,16 +596,16 @@
 		 * E.g. https://www.rosebikes.nl/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
-			document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
+			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
 			'UserCentrics (with Shadow DOM)',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
+				deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
 					check => (check.getAttribute('aria-checked') === 'true') && check.click()
 				);
 
 				/* Save & exit. */
-				retryToClick(document => document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]'), 'UserCentrics (with Shadow DOM)');
+				retryToClick(deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]'), 'UserCentrics (with Shadow DOM)');
 			}
 		);
 
@@ -566,25 +613,10 @@
 		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
-		document.querySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
+		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
 			iframe => probableExternalConsentManagerIframeUris.push(iframe.src)
 		);
-
-
-		/* ================================================================= */
-
-
-		/* Recurse for (i)frames. */
-		try {
-			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
-				elem => { try { execute(elem.contentDocument) } catch (e) { } }
-			);
-		} catch (e) {
-			/* Catch and ignore exceptions for out-of-domain access. */
-		}
 	}
-
-	execute(document);
 
 	/* Show out-of-origin IFRAMEs of external consent managers. */
 	if (probableExternalConsentManagerIframeUris.length === 1) {
