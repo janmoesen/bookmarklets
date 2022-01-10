@@ -355,18 +355,10 @@
 
 		/* -----------------------------------------------------------------
 		 * Coolblue cookie dialog
+		 * E.g. https://www.coolblue.nl/
+		 * E.g. https://www.coolblue.be/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
-			'button.js-cookie-settings',
-			'Coolblue',
-			function () {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				document.querySelectorAll('input[type="checkbox"][name="cookie_setting[]"]').forEach(check => check.checked = false);
-
-				/* Save & exit. */
-				retryToClick('button[name="accept_cookie"][value="selection"]', 'Coolblue');
-			}
-		);
+		tryToClick('.cookie button[name="decline_cookie"]', 'Coolblue');
 
 
 		/* -----------------------------------------------------------------
