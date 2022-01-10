@@ -34,6 +34,7 @@
 		'iframe[src*=".consensu.org/"]',
 		'iframe[src*=".privacy-mgmt.com/"]',
 		'iframe[src*=".privacymanager.io/"]',
+		'iframe[src^="https://cmp."]',
 		'iframe[src*="/sourcepoint.theguardian.com/"]',
 	];
 	const probableExternalConsentManagerIframeUris = [];
