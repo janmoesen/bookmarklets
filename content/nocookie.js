@@ -618,6 +618,23 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Stack Exchange consent banner
+		 * It seems that it is just a re-wrap/re-arrangement of the Onetrust dialog.
+		 * E.g. https://stackoverflow.com/questions
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.js-consent-banner .js-cookie-settings',
+			'Stack Exchange',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('input[type="checkbox"].js-editor-toggle-state.category-switch-handler').forEach(check => check.checked = false);
+
+				/* Save & exit. */
+				setTimeout(_ => tryToClick('.js-consent-save', 'Stack Exchange'), 250);
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
