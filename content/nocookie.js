@@ -418,6 +418,8 @@
 			}
 		);
 
+		tryToClick('.osano-cm-denyAll, .osano-cm-button--type_denyAll', 'Osano');
+
 
 		/* -----------------------------------------------------------------
 		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
