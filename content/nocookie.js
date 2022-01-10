@@ -62,12 +62,16 @@
 
 		/**
 		 * Call the `click` function on the first element that matches the
-		 * given selector.
+		 * given selector. Alternatively, you can specify an element
+		 * directly, or a callback that returns an element.
 		 */
-		function tryToClick(selectorOrElement, provider) {
-			const elem = typeof selectorOrElement === 'string'
-				? document.querySelector(selectorOrElement)
-				: selectorOrElement;
+		function tryToClick(selectorOrElementOrCallback, provider) {
+			let elem = selectorOrElementOrCallback;
+			if (typeof selectorOrElementOrCallback === 'string') {
+				elem = document.querySelector(selectorOrElementOrCallback);
+			} else if (typeof selectorOrElementOrCallback === 'function') {
+				elem = selectorOrElementOrCallback(document);
+			}
 
 			if (elem) {
 				console.log(`nocookie: found ${provider} button to click: `, elem);
@@ -75,6 +79,39 @@
 
 				return true;
 			}
+		}
+
+		/**
+		 * Call the `tryToClick` function on the given selector, element, or
+		 * callback. If that was not successful (i.e., no element to click
+		 * was found), keep looking for a matching element until the maximum
+		 * time has been exceeded.
+		 */
+		function retryToClick(selectorOrElementOrCallback, provider, maxNumMilliseconds) {
+			if (typeof maxNumMilliseconds === 'undefined') {
+				maxNumMilliseconds = 5000;
+			}
+			const startTimestamp = +new Date();
+			const numMillisecondsBetweenTries = 100;
+
+			const retrier = _ => {
+				const currTimestamp = +new Date();
+
+				if (tryToClick(selectorOrElementOrCallback, provider)) {
+					const numMillisecondsElapsed = currTimestamp - startTimestamp;
+					if (numMillisecondsElapsed >= numMillisecondsBetweenTries) {
+						console.log(`nocookie: found button to click after ${numMillisecondsElapsed} milliseconds.`);
+					}
+
+					return;
+				}
+
+				if (currTimestamp + numMillisecondsBetweenTries <= startTimestamp + maxNumMilliseconds) {
+					setTimeout(retrier, numMillisecondsBetweenTries);
+				}
+			};
+
+			retrier();
 		}
 
 
@@ -258,16 +295,18 @@
 
 		/* -----------------------------------------------------------------
 		 * Didomi
+		 * E.g. https://www.didomi.io/
+		 * E.g. https://www.oui.sncf/
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
 			'#didomi-notice-learn-more-button',
 			'Didomi',
 			function () {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 50);
+				retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi');
 
-				/* Save & exit. */
-				setTimeout(_ => tryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 100);
+				/* Save & exit. We need to wait a bit for the new first button to become available. */
+				setTimeout(_ => retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 250);
 			}
 		);
 
@@ -293,7 +332,7 @@
 				});
 
 				/* Click the “Save & exit” button. */
-				setTimeout(_ => tryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast'), 50);
+				retryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast');
 			}
 		);
 
@@ -309,7 +348,7 @@
 				document.querySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('[data-tracking-opt-in-save="true"]', 'Fandom/Wikia'), 100);
+				retryToClick('[data-tracking-opt-in-save="true"]', 'Fandom/Wikia');
 			}
 		);
 
@@ -325,7 +364,7 @@
 				document.querySelectorAll('input[type="checkbox"][name="cookie_setting[]"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('button[name="accept_cookie"][value="selection"]', 'Coolblue'), 100);
+				retryToClick('button[name="accept_cookie"][value="selection"]', 'Coolblue');
 			}
 		);
 
@@ -469,7 +508,7 @@
 				);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic'), 350);
+				retryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
 			}
 		);
 
@@ -498,7 +537,7 @@
 				document.querySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)'), 50);
+				retryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)');
 			}
 		);
 
@@ -518,7 +557,7 @@
 				);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick(document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]', 'UserCentrics (with Shadow DOM)')), 250);
+				retryToClick(document => document.querySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]'), 'UserCentrics (with Shadow DOM)');
 			}
 		);
 
