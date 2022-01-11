@@ -550,7 +550,7 @@
 			deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
 			tryToClick(cybotAllowSelectionButton, 'Cybot');
 		} else {
-			tryToClick('#CybotCookiebotDialogBodyButtonDecline');
+			tryToClick('#CybotCookiebotDialogBodyButtonDecline', 'Cybot');
 		}
 
 		/* -----------------------------------------------------------------
