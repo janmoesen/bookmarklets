@@ -30,12 +30,27 @@
 	/* Keep track of out-of-origin IFRAMEs that this bookmarklet cannot access
 	 * but are likely to contain an external consent manager. */
 	const externalConsentManagerIframeSelectors = [
+		/* TrustArc Cookie Consent Manager <https://trustarc.com/cookie-consent-manager/> */
 		'iframe[src*=".trustarc.com/"]',
+
+		/* IAB (Interactive Advertising Bureau) CMP */
 		'iframe[src*=".consensu.org/"]',
-		'iframe[src*=".privacy-mgmt.com/"]',
+
+		/* LiveRamp CMP <https://liveramp.com/our-platform/preference-consent-management/privacy-manager/> */
 		'iframe[src*=".privacymanager.io/"]',
+
+		/* Generic `cmp` subdomain.
+		 * E.g. https://cmp.dpgmedia.be/
+		 */
 		'iframe[src^="https://cmp."]',
-		'iframe[src*="/sourcepoint.theguardian.com/"]',
+
+		/* Sourcepoint CMP <https://www.sourcepoint.com/cmp/>
+		/* E.g. https://www.theguardian.com/
+		 * E.g. https://www.bloomberg.com/
+		 */
+		'iframe[src*=".privacy-mgmt.com/"]',
+		'iframe[src*="https://sourcepoint.theguardian.com/"]',
+		'iframe[src*="https://sourcepointcmp."]',
 	];
 	const probableExternalConsentManagerIframeUris = [];
 
@@ -178,7 +193,9 @@
 		}
 
 		/* -----------------------------------------------------------------
-		 * TrustArc cookie banner
+		 * TrustArc Cookie Consent Manager <https://trustarc.com/cookie-consent-manager/>
+		 * (This is the in-page version, not the out-of-origin IFRAME version.)
+		 * E.g. https://trustarc.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#truste-consent-required', 'TrustArc');
 
