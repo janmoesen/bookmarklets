@@ -51,6 +51,11 @@
 		'iframe[src*=".privacy-mgmt.com/"]',
 		'iframe[src*="https://sourcepoint.theguardian.com/"]',
 		'iframe[src*="https://sourcepointcmp."]',
+
+		/* The Telegraph
+		 * E.g. https://www.telegraph.co.uk/
+		 */
+		'iframe[src^="https://tcf2.telegraph.co.uk/"]',
 	];
 	const probableExternalConsentManagerIframeUris = [];
 
