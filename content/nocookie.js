@@ -636,6 +636,40 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Pon Bike (“Pee on bike”? Triathletes, tsss…) Group cookie pop-up
+		 * (Possibly a generic Magento 2 module.)
+		 * E.g. https://bbbcycling.com/
+		 * E.g. https://www.union.nl/
+		 * E.g. https://www.focus-bikes.com/
+		 * E.g. https://www.kalkhoff-bikes.com/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'#notice-cookie-block #btn-cookie-settings',
+			'Pon Bike Group',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				/* Variety 1. */
+				deepQuerySelectorAll('#cookie-manager-popup input[type="checkbox"]:checked').forEach(check => {
+					/* Ugh. This appears to be some ass-backwards React “app” that
+					 * keeps state based on click events instead of, y’know, looking
+					 * at the actual state of an actual checkbox. */
+					tryToClick(`#cookie-manager-popup label[for="${check.id}"]`);
+					check.checked = false;
+				});
+
+				/* Variety 2. */
+				deepQuerySelectorAll('#cookie-manager-popup [data-switch="on"]').forEach(fakeCheckbox => {
+					/* This is even worse than the first variety. */
+					fakeCheckbox.click();
+					fakeCheckbox.dataset.switch = 'off';
+				});
+
+				/* Save & exit. */
+				tryToClick('#cookie-manager-popup .modal-footer button, .cookie-manager-popup .modal-footer button');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
