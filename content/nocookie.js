@@ -286,7 +286,12 @@
 		 * E.g. https://www.zettlerelectronics.com/
 		 * E.g. https://www.nosta.de/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cookiefirst-root [data-cf-action="reject"]', 'CookieFirst');
+		if (!tryToClick('.cookiefirst-root [data-cf-action="reject"]', 'CookieFirst')) {
+			const lastPossibleCookieFirstButton = deepQuerySelectorAll('button[data-cookiefirst-button="secondary"]:nth-of-type(3):last-child').pop();
+			if (lastPossibleCookieFirstButton) {
+				tryToClick(lastPossibleCookieFirstButton, 'CookieFirst modal dialog');
+			}
+		}
 
 		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
