@@ -275,6 +275,12 @@
 		tryToClick('.nimbuCookie .cn-ok button:not(.cm-btn-success):not(.cm-btn-info)', 'Nimbu (Zenjoy)');
 
 		/* -----------------------------------------------------------------
+		 * Orejime, GDPR compliance for Drupal <https://www.drupal.org/project/orejime>
+		 * E.g. https://financien.belgium.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.orejime-Button--decline, .orejime-Notice-declineButton', 'Orejime');
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
