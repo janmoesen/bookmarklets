@@ -281,6 +281,14 @@
 		tryToClick('.orejime-Button--decline, .orejime-Notice-declineButton', 'Orejime');
 
 		/* -----------------------------------------------------------------
+		 * CookieFirst Cookie Consent <https://cookiefirst.com/cookie-consent/>
+		 * E.g. https://cycling.vlaanderen/
+		 * E.g. https://www.zettlerelectronics.com/
+		 * E.g. https://www.nosta.de/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookiefirst-root [data-cf-action="reject"]', 'CookieFirst');
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		openAndWaitOrDoItNow(
