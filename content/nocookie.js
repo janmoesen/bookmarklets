@@ -4,7 +4,7 @@
  *
  * @title ⛔🍪⛔
  */
-(function nocookies() {
+(function nocookie() {
 	'use strict';
 
 	/* Create a new IFRAME to get a “clean” Window object, so we can use its
