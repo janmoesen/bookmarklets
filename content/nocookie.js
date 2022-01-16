@@ -711,6 +711,19 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * CookiePro (old version, from before they were acquired by Onetrust)
+		 * E.g. https://www.nature.com/
+		 * ----------------------------------------------------------------- */
+		openAndWaitOrDoItNow(
+			'.cc-banner button[data-cc-action="preferences"]',
+			'CookiePro',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				tryToClick('.cc-preferences button[data-cc-action="reject"]', 'CookiePro');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
