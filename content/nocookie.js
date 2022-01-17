@@ -725,6 +725,29 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * SBFX CMP <https://sfbx.io/en/produits/>
+		 * E.g. https://www.rtbf.be/
+		 * E.g. https://www.meteo-grenoble.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('.frame-content .button__skip', 'SBFX CMP')) {
+			openAndWaitOrDoItNow(
+				'.frame-content .button__openPrivacyCenter',
+				'SBFX CMP',
+				function () {
+					openAndWaitOrDoItNow(
+						/* Reject all possible cookies / object to all possible interests and personalization. */
+						'.frame-content .privacy__modalFooter a.link:first-of-type',
+						'SBFX CMP',
+						_ => {
+							/* Save & exit. */
+							tryToClick('.frame-content .saveSection button', 'SBFX CMP');
+						}
+					);
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
