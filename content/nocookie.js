@@ -49,8 +49,9 @@
 		 * E.g. https://www.bloomberg.com/
 		 */
 		'iframe[src*=".privacy-mgmt.com/"]',
-		'iframe[src*="https://sourcepoint.theguardian.com/"]',
-		'iframe[src*="https://sourcepointcmp."]',
+		'iframe[src^="https://sourcepoint.theguardian.com/"]',
+		'iframe[src^="https://sourcepointcmp."]',
+		'iframe[src^="https://"][src*="/index.html?"][src*="consentUUID"]',
 
 		/* The Telegraph
 		 * E.g. https://www.telegraph.co.uk/
