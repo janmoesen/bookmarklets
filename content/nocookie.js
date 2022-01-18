@@ -743,6 +743,35 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Traffective Open CMP <https://opencmp.net/> (site not working 2022-01-16)
+		 * E.g. https://traffective.com/
+		 * E.g. https://www.mactechnews.de/
+		 * E.g. https://www.fliegermagazin.de/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.cmp_state-stacks .cmp_mainButtons .cmp_saveLink a',
+			'Open CMP',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				tryToClick('.cmp_activateAll a:last-of-type', 'Open CMP (deactivate consent)');
+
+				/* Do the same for the legitimate interests. */
+				if (tryToClick('.cmp_level1Container .cmp_levelItem:not(.cmp_active) *', 'Open CMP (go to legitimate interests tab)')) {
+					setTimeout(_ => {
+						deepQuerySelectorAll('.cmp_activateAll a:last-of-type').forEach((deselectAll, i) => {
+							tryToClick(deselectAll, `Open CMP (deactivate legitimate interests, #${i + 1})`);
+						});
+					}, 250);
+				}
+
+				/* Save & exit. */
+				setTimeout(_ => {
+					retryToClick('.cmp_state-settings .cmp_mainButtons .cmp_saveLink a, .cmp_state-legitimateInterests .cmp_mainButtons .cmp_saveLink a', 'Open CMP (save & exit)');
+				}, 500);
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
