@@ -396,20 +396,20 @@
 				tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (reject main cookies)');
 
 				/* Do the same for the partners. */
-				if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(1)', 'Quantcast (go to “Partners” tab)')) {
+				if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(1)', 'Quantcast (go to partners tab)')) {
 					setTimeout(_ => {
 						tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (reject partner cookies)');
 
 						/* Do the same for the legitimate interests. */
-						if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(2)', 'Quantcast (go to “Legitimate interest” tab)')) {
+						if (tryToClick('.qc-cmp2-footer-links button:nth-of-type(2)', 'Quantcast (go to legitimate interests tab)')) {
 							setTimeout(_ => tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (object to all interests)'), 50);
 						}
 					}, 50);
 				}
 
-				/* Click the “Save & exit” button. */
+				/* Save & exit. */
 				setTimeout(_ => {
-					retryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast:(save & exit)');
+					retryToClick('.qc-cmp2-footer button[mode="primary"]', 'Quantcast (save & exit)');
 				}, 500);
 			}
 		);
