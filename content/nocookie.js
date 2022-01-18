@@ -102,43 +102,38 @@
 	}
 
 	/**
-	 * If there is an `openButtonElementOrSelector`, click the corresponding
-	 * element and wait a bit before calling the `setAndSaveFunction`. If
-	 * there is no such element, immediately call the function.
+	 * If there is a match for `selectorOrElement`, click the corresponding
+	 * element and wait a bit before executing the callback, e.g. to allow for
+	 * a cookie dialog to be opened.
+	 *
+	 * If there is no matching element, execute the callback immediately.
 	 */
-	function openAndWaitOrDoItNow(openButtonElementOrSelector, provider, setAndSaveFunction) {
-		const openButton = typeof openButtonElementOrSelector === 'string'
-			? deepQuerySelector(openButtonElementOrSelector)
-			: openButtonElementOrSelector;
-
-		if (openButton) {
-			console.log(`nocookies: found ${provider} button to open settings: `, openButtonElementOrSelector, openButton === openButtonElementOrSelector ? '(element specified directly; no selector given)' : openButton);
-			openButton.click();
-			setTimeout(setAndSaveFunction, 250);
+	function clickAndWaitOrDoItNow(selectorOrElement, provider, callback) {
+		if (tryToClick(selectorOrElement, provider)) {
+			setTimeout(callback, 250);
 		} else {
-			setAndSaveFunction();
+			callback();
 		}
 	}
 
 	/**
 	 * Call the `click` function on the first element that matches the
 	 * given selector. Alternatively, you can specify an element
-	 * directly, or a callback that returns an element.
+	 * directly.
 	 */
 	function tryToClick(selectorOrElement, provider) {
-		let elem = selectorOrElement;
-		if (typeof selectorOrElement === 'string') {
-			elem = deepQuerySelector(selectorOrElement);
-		}
+		const elem = typeof selectorOrElement === 'string'
+			? deepQuerySelector(selectorOrElement)
+			: selectorOrElement;
 
 		if (elem) {
-			const buttonText = elem.localName === 'input'
+			const text = elem.localName === 'input'
 				? elem.value
 				: elem.textContent.replaceAll('\n', ' ').trim().replace(/(.{32}).*/, '$1…');
 
 			const msg = typeof selectorOrElement === 'string'
-				? `nocookie: found ${provider} button (“${buttonText}”) to click for selector ${selectorOrElement}: `
-				: `nocookie: found ${provider} button (“${buttonText}”) to click: `;
+				? `nocookie: found ${provider} element (“${text}”) to click for selector ${selectorOrElement}: `
+				: `nocookie: found ${provider} element (“${text}”) to click: `;
 			console.log(msg, elem);
 
 			elem.click();
@@ -297,7 +292,7 @@
 		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.fc-cta-manage-options',
 			'Google Funding Choices',
 			function () {
@@ -315,7 +310,7 @@
 		 * Google’s own properties (not using their own Funding Choices…)
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
 				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
 			'Google',
@@ -335,7 +330,7 @@
 		 * E.g. https://www.yahoo.com/
 		 * E.g. https://techcrunch.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#consent-page .manage-settings',
 			'Yahoo IAB',
 			function () {
@@ -357,7 +352,7 @@
 		 * E.g. https://www.onetrust.com/
 		 * E.g. https://www.booking.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#onetrust-pc-btn-handler',
 			'Onetrust',
 			function () {
@@ -376,7 +371,7 @@
 		 * E.g. https://www.didomi.io/
 		 * E.g. https://www.oui.sncf/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#didomi-notice-learn-more-button',
 			'Didomi',
 			function () {
@@ -393,7 +388,7 @@
 		 * E.g. https://road.cc/
 		 * E.g. https://www.bikeradar.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
 			'Quantcast',
 			function () {
@@ -423,7 +418,7 @@
 		 * Fandom/Wikia
 		 * E.g. https://www.fandom.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'[data-tracking-opt-in-learn-more="true"]',
 			'Fandom/Wikia',
 			function () {
@@ -446,7 +441,7 @@
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
 		 * E.g. https://www.meteo.be/nl/gent
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.js-kmcc-extended-modal-button[data-target="legal_cookie_preferences"]',
 			'Kunstmaan Cookie Bar',
 			function () {
@@ -462,7 +457,7 @@
 		 * Stad Gent cookie consent
 		 * E.g. https://stad.gent/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#SG-CookieConsent--TogglePreferencesButton',
 			'Stad Gent',
 			function () {
@@ -478,7 +473,7 @@
 		 * Osano Cookie Consent <https://www.osano.com/cookieconsent>
 		 * E.g. https://www.pelotondeparis.cc/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.cc-btn.cc-settings',
 			'Osano',
 			function () {
@@ -498,7 +493,7 @@
 		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
 		 * E.g. https://www.ekoplaza.nl/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'a[href="#"].cookie_tool_more, #cookie_tool_config',
 			'AdResults',
 			function () {
@@ -515,7 +510,7 @@
 		 * E.g. https://www.lehmanns.de/
 		 * E.g. https://www.dronten-online.nl/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.cc_dialog button.cc_b_cp, .cc_dialog .btn:not(.cc_b_ok_custom)',
 			'Free Privacy Policy',
 			function () {
@@ -533,12 +528,12 @@
 		 * E.g. https://www.siracusanews.it/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.iubenda-cs-reject-btn', 'Iubenda Cookie Solution')) {
-			openAndWaitOrDoItNow(
+			clickAndWaitOrDoItNow(
 				'.iubenda-cs-customize-btn',
 				'Iubenda',
 				function () {
 					if (!tryToClick('[class*="iubenda"] .purposes-btn-reject', 'Iubenda Cookie Solution')) {
-						openAndWaitOrDoItNow(
+						clickAndWaitOrDoItNow(
 							'#iubFooterBtnIab',
 							'Iubenda',
 							function () {
@@ -559,7 +554,7 @@
 		 * E.g. https://www.ezoic.com/
 		 * E.g. https://www.sheldonbrown.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
 			'Ezoic',
 			function () {
@@ -567,7 +562,7 @@
 				deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
 
 				/* Do the same for all the vendors. */
-				openAndWaitOrDoItNow(
+				clickAndWaitOrDoItNow(
 					'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
 					'Ezoic',
 					_ => {
@@ -599,7 +594,7 @@
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
 		 * E.g. https://www.immoweb.be/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.uc-btn-more',
 			'UserCentrics (without Shadow DOM)',
 			function () {
@@ -616,7 +611,7 @@
 		 * E.g. https://usercentrics.com/
 		 * E.g. https://www.rosebikes.nl/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
 			'UserCentrics (with Shadow DOM)',
 			function () {
@@ -635,7 +630,7 @@
 		 * E.g. https://*.wordpress.com/
 		 * E.g. https://longreads.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.cmp__banner-buttons button.is-tertiary:first-child',
 			'WordPress',
 			function () {
@@ -648,7 +643,7 @@
 		 * Automattic cookie banner
 		 * E.g. https://wordpress.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.a8c-cookie-banner-customize-button',
 			'Automattic',
 			function () {
@@ -665,7 +660,7 @@
 		 * It seems that it is just a re-wrap/re-arrangement of the Onetrust dialog.
 		 * E.g. https://stackoverflow.com/questions
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.js-consent-banner .js-cookie-settings',
 			'Stack Exchange',
 			function () {
@@ -685,7 +680,7 @@
 		 * E.g. https://www.focus-bikes.com/
 		 * E.g. https://www.kalkhoff-bikes.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'#notice-cookie-block #btn-cookie-settings',
 			'Pon Bike Group',
 			function () {
@@ -715,7 +710,7 @@
 		 * CookiePro (old version, from before they were acquired by Onetrust)
 		 * E.g. https://www.nature.com/
 		 * ----------------------------------------------------------------- */
-		openAndWaitOrDoItNow(
+		clickAndWaitOrDoItNow(
 			'.cc-banner button[data-cc-action="preferences"]',
 			'CookiePro',
 			function () {
@@ -730,11 +725,11 @@
 		 * E.g. https://www.meteo-grenoble.com/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.frame-content .button__skip', 'SBFX CMP')) {
-			openAndWaitOrDoItNow(
+			clickAndWaitOrDoItNow(
 				'.frame-content .button__openPrivacyCenter',
 				'SBFX CMP',
 				function () {
-					openAndWaitOrDoItNow(
+					clickAndWaitOrDoItNow(
 						/* Reject all possible cookies / object to all possible interests and personalization. */
 						'.frame-content .privacy__modalFooter a.link:first-of-type',
 						'SBFX CMP',
