@@ -173,6 +173,11 @@
 			a.href = a.textContent = possibleUri;
 		},
 
+		/* LinkedIn */
+		'a[href^="https://www.linkedin.com/redir/redirect?"]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('url') ?? a.href;
+		},
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
