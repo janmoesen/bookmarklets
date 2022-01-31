@@ -668,7 +668,7 @@
 				deepQuerySelectorAll('input[type="checkbox"].js-editor-toggle-state.category-switch-handler').forEach(check => check.checked = false);
 
 				/* Save & exit. */
-				setTimeout(_ => tryToClick('.js-consent-save', 'Stack Exchange'), 250);
+				setTimeout(_ => retryToClick('.js-consent-save', 'Stack Exchange'), 500);
 			}
 		);
 
