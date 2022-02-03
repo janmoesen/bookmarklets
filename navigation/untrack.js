@@ -165,17 +165,23 @@
 			 * text links without previews, the original URI is somewhat
 			 * hidden inside a few SPANs and a text node, which are shown
 			 * as a tooltip on hover. */
-			let possibleUri = a.textContent.replace(/(^…|…$)/g, '');
+			let possibleUri = a.textContent;
 
 			/* The site link in a user’s profile does not contain the full
 			 * URI as its text. However, if there are no ellipses, we can
 			 * safely ass-u-me the URI is shown as-is, albeit without its
 			 * scheme. */
 			if (a.dataset.testid === 'UserUrl' && possibleUri.indexOf('…') === -1) {
+				if (possibleUri.indexOf('/') === -1) {
+					possibleUri += '/';
+				}
+
 				if (!possibleUri.match(/^https?:\/\//)) {
 					possibleUri = `${a.protocol}//${possibleUri}`;
 				}
 			}
+
+			possibleUri = possibleUri.replace(/(^…|…$)/g, '');
 
 			if (!possibleUri.match(/^https?:\/\//)) {
 				return;
