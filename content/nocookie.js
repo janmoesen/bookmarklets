@@ -772,6 +772,40 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Mediavine GDPR CMP
+		 * E.g. https://www.thenordroom.com/
+		 * E.g. https://yesmissy.com/
+		 * E.g. https://www.literaryladiesguide.com/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'[data-name="mediavine-gdpr-cmp"] [data-view="manageSettings"]',
+			'Mediavine GDPR CMP',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				/* Setting `check.checked = false` is not enough. It seems this is yet another “app” that only updates its internal state `onclick`. */
+				deepQuerySelectorAll('[data-name="mediavine-gdpr-cmp"] input[type="checkbox"]:checked').forEach(check => {
+					check.click();
+					check.checked = false;
+				});
+
+				/* Do the same for the partners. */
+				if (tryToClick('[data-name="mediavine-gdpr-cmp"] [data-view="partnerSettings"]', 'Mediavine GDPR CMP (go to partners tab)')) {
+					setTimeout(_ => {
+						deepQuerySelectorAll('[data-name="mediavine-gdpr-cmp"] input[type="checkbox"]:checked').forEach(check => {
+							check.click();
+							check.checked = false;
+						});
+					}, 250);
+				}
+
+				/* Save & exit. */
+				setTimeout(_ => {
+					retryToClick('[data-name="mediavine-gdpr-cmp"] [format="secondary"]', 'Mediavine GDPR CMP (save & exit)');
+				}, 500);
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
