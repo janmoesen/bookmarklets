@@ -806,6 +806,25 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Wix cookie consent banner
+		 * E.g. https://www.deparcoursbouwer.cc/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'[data-hook="consent-banner-root"] [data-hook="consent-banner-settings-button"]',
+			'Wix cookie consent banner',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('[data-hook="consent-banner-settings-container"] input[type="checkbox"]:checked').forEach(check => {
+					check.click();
+					check.checked = false;
+				});
+
+				/* Save & exit. */
+				tryToClick('[data-hook="consent-banner-settings-container"] [data-hook="consent-banner-settings-save-button"]', 'Wix cookie consent banner');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
