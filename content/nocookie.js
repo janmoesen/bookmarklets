@@ -825,6 +825,29 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * NitroPay CMP <https://nitropay.com/>
+		 * E.g. https://scp-wiki.wikidot.com/
+		 * E.g. https://dnd5e.wikidot.com/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.ncmp__btn[onclick*="showModal"]',
+			'NitroPay CMP',
+			_ => clickAndWaitOrDoItNow(
+				'.ncmp__toggle-purposes-off',
+				'NitroPay CMP (reject all purposes)',
+				_ => clickAndWaitOrDoItNow(
+					'.ncmp__nav [onclick*="showModal"][onclick*="object"]',
+					'NitroPay CMP (go to legimate interests tab)',
+					_ => clickAndWaitOrDoItNow(
+						'.ncmp__toggle-legint-purposes-off',
+						'NitroPay CMP (object to all legitimate interests)',
+						_ => retryToClick('.ncmp__btn[onclick*="hideModal"]', 'NitroPay CMP (save & exit)')
+					)
+				)
+			)
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
