@@ -848,6 +848,34 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Wieni cookie notice <https://www.wieni.be/>
+		 * (A custom Drupal module for their customers only, it seems.)
+		 *
+		 * It is always the first button in the pop-up that we want to click,
+		 * so it does not matter which of the four states the pop-up is in
+		 * when this code executes:
+		 * - intro with “More info” button,
+		 * - step 1/3 (functional/required cookies) and only a “Next” button,
+		 * - step 2/3 (analytical cookies) with a “Decline” and a “Next” button,
+		 * - step 3/3 (thank you message) with with a “Close” button,
+		 *
+		 * E.g. https://www.mskgent.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.cookie-notice-portal .cookie-notice__footer button:first-child',
+			'Wieni cookie notice (1/3)',
+			_ => clickAndWaitOrDoItNow(
+				'.cookie-notice-portal .cookie-notice__footer button:first-child',
+				'Wieni cookie notice (2/3)',
+				_ => clickAndWaitOrDoItNow(
+					'.cookie-notice-portal .cookie-notice__footer button:first-child',
+					'Wieni cookie notice (3/3)',
+					_ => tryToClick('.cookie-notice-portal .cookie-notice__footer button:first-child', 'Wieni cookie notice (close)')
+				)
+			)
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
