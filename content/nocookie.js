@@ -896,6 +896,12 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Brompton cookie opt-out
+		 * E.g. https://www.brompton.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookie-panel .optOut', 'Brompton opt-out button');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
