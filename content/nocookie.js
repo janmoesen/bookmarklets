@@ -933,6 +933,14 @@
 		tryToClick('#pz-gdpr-btn-reject', 'NYT cookie notice opt-out button (games version)');
 
 		/* -----------------------------------------------------------------
+		 * Complianz cookie consent <https://complianz.io/>
+		 * E.g. https://www.pedaleurdeflandres.be/
+		 * E.g. https://wpformation.com/
+		 * E.g. https://thispointer.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cmplz-btn.cmplz-deny', 'Complianz cookie consent deny button');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
