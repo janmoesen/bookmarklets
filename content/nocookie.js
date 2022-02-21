@@ -902,6 +902,25 @@
 		tryToClick('.cookie-panel .optOut', 'Brompton opt-out button');
 
 		/* -----------------------------------------------------------------
+		 * Twitter cookie notice
+		 *
+		 * We can’t use class names or other “obvious” indicators because
+		 * they are all mangled by minifiers. :-( Our best bet is to look at
+		 * the button texts and hope that they don’t change too much (or the
+		 * translations are not too different).
+		 *
+		 * E.g. https://twitter.com/
+		 * E.g. https://mobile.twitter.com/
+		 * ----------------------------------------------------------------- */
+		if (document.domain === 'twitter.com' || document.domain === 'mobile.twitter.com') {
+			const twitterCookieButtons = [];
+			deepQuerySelectorAll('[role="button"]').forEach(button => button.textContent.match(/\bcooki/i) && twitterCookieButtons.push(button));
+			if (twitterCookieButtons.length === 2) {
+				tryToClick(twitterCookieButtons[1], 'Twitter coookie notice (refuse)');
+			}
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
