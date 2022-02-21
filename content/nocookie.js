@@ -921,6 +921,18 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * New York Times cookie notice
+		 * E.g. https://www.nytimes.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('button[data-testid="GDPR-reject"]', 'NYT cookie notice opt-out button');
+
+		/* -----------------------------------------------------------------
+		 * New York Times cookie notice (as used in the Games section)
+		 * E.g. https://www.nytimes.com/games/wordle/index.html
+		 * ----------------------------------------------------------------- */
+		tryToClick('#pz-gdpr-btn-reject', 'NYT cookie notice opt-out button (games version)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
