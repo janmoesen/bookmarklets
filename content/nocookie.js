@@ -941,6 +941,28 @@
 		tryToClick('.cmplz-btn.cmplz-deny', 'Complianz cookie consent deny button');
 
 		/* -----------------------------------------------------------------
+		 * Cookie Control by CIVIC <https://www.civicuk.com/cookie-control>
+		 * E.g. https://www.civicuk.com/
+		 * E.g. https://www.mottmac.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('#ccc-notify-reject', 'Cookie Control by CIVIC')) {
+			clickAndWaitOrDoItNow(
+				'.ccc-notify-link, #ccc-icon:not([aria-expanded="true"])',
+				'Cookie Control by CIVIC',
+				function () {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('#ccc-content input[type="checkbox"]:checked').forEach(check => {
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick('#ccc-dismiss-button, #ccc-close', 'Cookie Control by CIVIC (save & exit)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
