@@ -969,6 +969,13 @@
 		tryToClick('[data-gdpr-expression="denyAll"]', 'Le Monde GDPR consent (“Deny all” button)');
 
 		/* -----------------------------------------------------------------
+		 * Inventis cookie consent dialog
+		 * E.g. https://www.inventis.be/
+		 * E.g. https://www.arenberg.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('dialog.cookie-consent button[value="no"]', 'Inventis cookie consent dialog (“Deny” button)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
