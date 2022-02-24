@@ -976,6 +976,28 @@
 		tryToClick('dialog.cookie-consent button[value="no"]', 'Inventis cookie consent dialog (“Deny” button)');
 
 		/* -----------------------------------------------------------------
+		 * Stripe (using a separate page to manage cookies)
+		 * E.g. https://www.stripe.com/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'[data-js-target="CookieSettingsNotification.manageButton"]',
+			'Stripe',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('[data-js-controller="CookieSettingsSection"] input[type="checkbox"]:checked').forEach(check => {
+					check.click();
+					check.checked = false;
+				});
+
+				/* The settings are saved as soon as they are changed, so just go back to the previous page. */
+				if (!deepQuerySelector('[data-js-target="CookieSettingsNotification.manageButton"]')) {
+					setTimeout(_ => history.back(), 250);
+				}
+
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
