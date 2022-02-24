@@ -963,6 +963,12 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Le Monde GDPR consent
+		 * E.g. https://www.lemonde.fr/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-gdpr-expression="denyAll"]', 'Le Monde GDPR consent (“Deny all” button)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
