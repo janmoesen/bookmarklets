@@ -979,23 +979,46 @@
 		 * Stripe (using a separate page to manage cookies)
 		 * E.g. https://www.stripe.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'[data-js-target="CookieSettingsNotification.manageButton"]',
-			'Stripe',
-			function () {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('[data-js-controller="CookieSettingsSection"] input[type="checkbox"]:checked').forEach(check => {
-					check.click();
-					check.checked = false;
-				});
+		if (document.domain.match(/(^|\.)stripe\.com$/)) {
+			const stripeManageButtonSelectors = `
+				[data-js-target="CookieSettingsNotification.manageButton"],
+				.db-CookieBanner a[href$="/cookie-settings"],
+				.NotificationContainer a[href$="/cookie-settings"]
+			`;
 
-				/* The settings are saved as soon as they are changed, so just go back to the previous page. */
-				if (!deepQuerySelector('[data-js-target="CookieSettingsNotification.manageButton"]')) {
-					setTimeout(_ => history.back(), 250);
+			clickAndWaitOrDoItNow(
+				stripeManageButtonSelectors,
+				'Stripe',
+				function () {
+					/* The settings are saved as soon as they are changed, so just go
+					 * back to the previous page. Make sure we are on the cookie settings
+					 * page, though. */
+					if (location.pathname.match(/\/cookie-settings$/)) {
+						/* Reject all possible cookies / object to all possible interests and personalization. */
+						deepQuerySelectorAll('[data-js-controller="CookieSettingsSection"] input[type="checkbox"]:checked').forEach(check => {
+							check.click();
+							check.checked = false;
+						});
+
+						/* If the cookie preferences page was opened as a pop-up, close
+						 * it. Otherwise, go back one step in the history. */
+						setTimeout(
+							_ => {
+								if (history.length === 1) {
+									if (confirm('Preferences updated. Close tab/window?')) {
+										top.close();
+									}
+								} else {
+									history.back();
+								}
+							},
+							250
+						);
+					}
+
 				}
-
-			}
-		);
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
