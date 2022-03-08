@@ -59,6 +59,7 @@
 		'iframe[src^="https://tcf2.telegraph.co.uk/"]',
 	];
 	const probableExternalConsentManagerIframeUris = [];
+	const probableExternalConsentManagerIframes = [];
 
 	/* Get the top document and all of its sub-documents, recursively. */
 	function getAllDocuments(currDocument) {
@@ -1024,14 +1025,73 @@
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
-			iframe => probableExternalConsentManagerIframeUris.push(iframe.src)
+			iframe => {
+				probableExternalConsentManagerIframeUris.push(iframe.src);
+				probableExternalConsentManagerIframes.push(iframe);
+			}
 		);
 	}
 
-	/* Show out-of-origin IFRAMEs of external consent managers. */
-	if (probableExternalConsentManagerIframeUris.length === 1) {
-		alert(`There appears to be an IFRAME of an external consent manager. This bookmarklet cannot access that IFRAME, sorry.\n\nURI: ${probableExternalConsentManagerIframeUris[0]}`);
-	} else if (probableExternalConsentManagerIframeUris.length > 1) {
-		alert(`There appear to be ${probableExternalConsentManagerIframeUris.length} IFRAMEs of an external consent manager. This bookmarklet cannot access such IFRAME, sorry.\n\nURIs:\n* ${probableExternalConsentManagerIframeUris.join('\n\n* ')}`);
+	/* Show out-of-origin IFRAMEs of external consent managers. First, flash
+	 * their borders (well, outline). Only show the alert when the bookmarklet
+	 * is run for the second time, to avoid an extra click/keypress to close
+	 * the alert dialog that says it can’t close the cookie dialog. */
+	const hasAlreadyGrabbedAttention = probableExternalConsentManagerIframes.some(
+		iframe => iframe.classList.contains('xxxJanProbableExternalConsentManagerIframe')
+	);
+
+	if (hasAlreadyGrabbedAttention) {
+		if (probableExternalConsentManagerIframeUris.length === 1) {
+			alert(`There appears to be an IFRAME of an external consent manager. This bookmarklet cannot access that IFRAME, sorry.\n\nURI: ${probableExternalConsentManagerIframeUris[0]}`);
+		} else if (probableExternalConsentManagerIframeUris.length > 1) {
+			alert(`There appear to be ${probableExternalConsentManagerIframeUris.length} IFRAMEs of an external consent manager. This bookmarklet cannot access such IFRAME, sorry.\n\nURIs:\n* ${probableExternalConsentManagerIframeUris.join('\n\n* ')}`);
+		}
 	}
+
+	const randomRgb = _ => Math.round(Math.random() * 255);
+
+	const numKeyframes = 10;
+	const outlineWidth = 6;
+
+	let keyframesBody = '';
+	for (let i = 0; i < numKeyframes; i++) {
+		keyframesBody += `${Math.round(i / (numKeyframes - 1) * 100)}% {
+			outline-width: ${outlineWidth}px;
+			outline-style: ${i % 2 === 0 ? 'groove' : 'ridge'};
+			outline-color: rgb(${randomRgb()}, ${randomRgb()}, ${randomRgb()});
+		}`;
+	}
+
+	const animationName = `xxxJanAttentionGrabber${+new Date()}`;
+
+	probableExternalConsentManagerIframes.forEach(iframe => {
+		iframe.classList.add('xxxJanProbableExternalConsentManagerIframe');
+
+		const iframeBounds = iframe.getBoundingClientRect();
+
+		const div = iframe.parentNode.insertBefore(iframe.ownerDocument.createElement('div'), iframe.nextSibling);
+		div.classList.add('xxxJanProbableExternalConsentManagerAttentionGrabber');
+		div.style.width = `${iframe.offsetWidth - (outlineWidth * 2)}px`;
+		div.style.height = `${iframe.offsetHeight - (outlineWidth * 2)}px`;
+		div.style.left = `${iframeBounds.x + outlineWidth}px`;
+		div.style.top = `${iframeBounds.y + outlineWidth}px`;
+		div.style.zIndex = iframe.ownerDocument?.defaultView?.getComputedStyle(iframe)?.zIndex ?? 1969 /* in the sunshine */;
+		div.addEventListener('animationend', _ => div.remove());
+
+		const style = document.createElement('style');
+		style.media = 'screen and (prefers-reduced-motion: no-preference)';
+		style.textContent = `
+			.xxxJanProbableExternalConsentManagerAttentionGrabber {
+				position: absolute;
+				background: rgba(128, 216, 255, 0.15);
+				pointer-events: none;
+				animation: 1s ${animationName};
+			}
+
+			@keyframes ${animationName} {
+				${keyframesBody}
+			}
+		`;
+		iframe.ownerDocument.head.appendChild(style);
+	});
 })();
