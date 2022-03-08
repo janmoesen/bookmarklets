@@ -1038,6 +1038,53 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Deutsche Bahn cookie consent dialog (without Shadow DOM)
+		 *
+		 * Seems to be a front-end for Tealium’s Univeral Tag <https://docs.tealium.com/platforms/javascript/install/>
+		 *
+		 * E.g. https://www.bahn.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('#consent-layer .js-accept-essential-cookies', 'Deutsche Bahn cookie consent dialog (without Shadow DOM)')) {
+			clickAndWaitOrDoItNow(
+				'#consent-layer .js-show-cookie-settings',
+				'Deutsche Bahn cookie consent dialog (without Shadow DOM)',
+				function () {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('#consent-layer input[type="checkbox"]:checked').forEach(check => {
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick('#consent-layer .js-accept-selected-cookies', 'Deutsche Bahn cookie consent dialog (without Shadow DOM) (save & exit)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
+		 * Deutsche Bahn cookie consent dialog (with Shadow DOM)
+		 *
+		 * E.g. https://reiseauskunft.bahn.de/
+		 * ----------------------------------------------------------------- */
+		const bahnShadowRoot = deepQuerySelector('body > div:first-child')?.shadowRoot;
+		if (bahnShadowRoot && !tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-essential-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM)')) {
+			clickAndWaitOrDoItNow(
+				bahnShadowRoot.querySelector('#consent-layer .js-show-cookie-settings'),
+				'Deutsche Bahn cookie consent dialog (with Shadow DOM)',
+				function () {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					bahnShadowRoot.querySelectorAll('#consent-layer input[type="checkbox"]:checked').forEach(check => {
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-selected-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM) (save & exit)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
