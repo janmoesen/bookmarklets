@@ -1085,6 +1085,13 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Tarte Au Citron / tarteaucitron.js <https://tarteaucitron.io/>
+		 * E.g. https://tarteaucitron.io/
+		 * E.g. https://www.scandiberique.fr/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.tarteaucitronDeny', 'tarteaucitron.js (“Deny all” button)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
