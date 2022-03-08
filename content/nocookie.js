@@ -1022,6 +1022,22 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * DeepL cookie banner
+		 * E.g. https://www.deepl.com/
+		 * ----------------------------------------------------------------- */
+		const deepLSaveSelectionButton = deepQuerySelector('.dl_cookieBanner--buttonSelected');
+		if (deepLSaveSelectionButton) {
+			/* Reject all possible cookies / object to all possible interests and personalization. */
+			deepQuerySelectorAll('input[type="checkbox"].dl_cookieBanner--checkbox:checked').forEach(check => {
+				check.click();
+				check.checked = false;
+			});
+
+			/* Save & exit. */
+			tryToClick(deepLSaveSelectionButton, 'DeepL cookie banner (save & exit)');
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
