@@ -296,7 +296,7 @@
 		clickAndWaitOrDoItNow(
 			'.fc-cta-manage-options',
 			'Google Funding Choices',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]').forEach(
 					check => check.checked = false
@@ -315,7 +315,7 @@
 			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
 				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
 			'Google',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
 					button => button.click()
@@ -334,7 +334,7 @@
 		clickAndWaitOrDoItNow(
 			'#consent-page .manage-settings',
 			'Yahoo IAB',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				const iabCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]');
 				iabCookieComplianceCategoryCheckboxes.forEach(
@@ -356,7 +356,7 @@
 		clickAndWaitOrDoItNow(
 			'#onetrust-pc-btn-handler',
 			'Onetrust',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('#onetrust-consent-sdk input[type="checkbox"]').forEach(
 					check => check.checked = false
@@ -375,7 +375,7 @@
 		clickAndWaitOrDoItNow(
 			'#didomi-notice-learn-more-button',
 			'Didomi',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi');
 
@@ -392,7 +392,7 @@
 		clickAndWaitOrDoItNow(
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
 			'Quantcast',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				tryToClick('.qc-cmp2-header-links button:nth-of-type(1)', 'Quantcast (reject main cookies)');
 
@@ -422,7 +422,7 @@
 		clickAndWaitOrDoItNow(
 			'[data-tracking-opt-in-learn-more="true"]',
 			'Fandom/Wikia',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
 
@@ -445,7 +445,7 @@
 		clickAndWaitOrDoItNow(
 			'.js-kmcc-extended-modal-button[data-target="legal_cookie_preferences"]',
 			'Kunstmaan Cookie Bar',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
 
@@ -461,7 +461,7 @@
 		clickAndWaitOrDoItNow(
 			'#SG-CookieConsent--TogglePreferencesButton',
 			'Stad Gent',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
 
@@ -477,7 +477,7 @@
 		clickAndWaitOrDoItNow(
 			'.cc-btn.cc-settings',
 			'Osano',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.cc-settings-dialog input[type="checkbox"]').forEach(
 					check => check.checked = false
@@ -497,7 +497,7 @@
 		clickAndWaitOrDoItNow(
 			'a[href="#"].cookie_tool_more, #cookie_tool_config',
 			'AdResults',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				(deepQuerySelector('input[name="cookie_tool_choise"][value="3"]') ?? {}).checked = true;
 
@@ -514,7 +514,7 @@
 		clickAndWaitOrDoItNow(
 			'.cc_dialog button.cc_b_cp, .cc_dialog .btn:not(.cc_b_ok_custom)',
 			'Free Privacy Policy',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
 
@@ -532,12 +532,12 @@
 			clickAndWaitOrDoItNow(
 				'.iubenda-cs-customize-btn',
 				'Iubenda',
-				function () {
+				_ => {
 					if (!tryToClick('[class*="iubenda"] .purposes-btn-reject', 'Iubenda Cookie Solution')) {
 						clickAndWaitOrDoItNow(
 							'#iubFooterBtnIab',
 							'Iubenda',
-							function () {
+							_ => {
 								/* Reject all possible cookies / object to all possible interests and personalization. */
 								tryToClick('.iub-cmp-reject-btn', 'Iubenda');
 
@@ -558,7 +558,7 @@
 		clickAndWaitOrDoItNow(
 			'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
 			'Ezoic',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
 
@@ -598,7 +598,7 @@
 		clickAndWaitOrDoItNow(
 			'.uc-btn-more',
 			'UserCentrics (without Shadow DOM)',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
 
@@ -615,7 +615,7 @@
 		clickAndWaitOrDoItNow(
 			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
 			'UserCentrics (with Shadow DOM)',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
 					check => (check.getAttribute('aria-checked') === 'true') && check.click()
@@ -634,7 +634,7 @@
 		clickAndWaitOrDoItNow(
 			'.cmp__banner-buttons button.is-tertiary:first-child',
 			'WordPress',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				retryToClick('.cmp__modal-footer-buttons button.is-secondary:nth-child(2)', 'WordPress');
 			}
@@ -647,7 +647,7 @@
 		clickAndWaitOrDoItNow(
 			'.a8c-cookie-banner-customize-button',
 			'Automattic',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.a8c-cookie-banner-options-selection input[type="checkbox"]').forEach(check => check.checked = false);
 
@@ -664,7 +664,7 @@
 		clickAndWaitOrDoItNow(
 			'.js-consent-banner .js-cookie-settings',
 			'Stack Exchange',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('input[type="checkbox"].js-editor-toggle-state.category-switch-handler').forEach(check => check.checked = false);
 
@@ -684,7 +684,7 @@
 		clickAndWaitOrDoItNow(
 			'#notice-cookie-block #btn-cookie-settings',
 			'Pon Bike Group',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				/* Variety 1. */
 				deepQuerySelectorAll('#cookie-manager-popup input[type="checkbox"]:checked').forEach(check => {
@@ -714,7 +714,7 @@
 		clickAndWaitOrDoItNow(
 			'.cc-banner button[data-cc-action="preferences"]',
 			'CookiePro',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				tryToClick('.cc-preferences button[data-cc-action="reject"]', 'CookiePro');
 			}
@@ -729,7 +729,7 @@
 			clickAndWaitOrDoItNow(
 				'.frame-content .button__openPrivacyCenter',
 				'SBFX CMP',
-				function () {
+				_ => {
 					clickAndWaitOrDoItNow(
 						/* Reject all possible cookies / object to all possible interests and personalization. */
 						'.frame-content .privacy__modalFooter a.link:first-of-type',
@@ -752,7 +752,7 @@
 		clickAndWaitOrDoItNow(
 			'.cmp_state-stacks .cmp_mainButtons .cmp_saveLink a',
 			'Open CMP',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				tryToClick('.cmp_activateAll a:last-of-type', 'Open CMP (deactivate consent)');
 
@@ -781,7 +781,7 @@
 		clickAndWaitOrDoItNow(
 			'[data-name="mediavine-gdpr-cmp"] [data-view="manageSettings"]',
 			'Mediavine GDPR CMP',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				/* Setting `check.checked = false` is not enough. It seems this is yet another “app” that only updates its internal state `onclick`. */
 				deepQuerySelectorAll('[data-name="mediavine-gdpr-cmp"] input[type="checkbox"]:checked').forEach(check => {
@@ -813,7 +813,7 @@
 		clickAndWaitOrDoItNow(
 			'[data-hook="consent-banner-root"] [data-hook="consent-banner-settings-button"]',
 			'Wix cookie consent banner',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('[data-hook="consent-banner-settings-container"] input[type="checkbox"]:checked').forEach(check => {
 					check.click();
@@ -884,7 +884,7 @@
 		clickAndWaitOrDoItNow(
 			'[href="#uxm-settings"]',
 			'Google Tag Manager UXM',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('input.uxm-toggle-input[type="checkbox"]:checked').forEach(check => {
 					check.click();
@@ -950,7 +950,7 @@
 			clickAndWaitOrDoItNow(
 				'.ccc-notify-link, #ccc-icon:not([aria-expanded="true"])',
 				'Cookie Control by CIVIC',
-				function () {
+				_ => {
 					/* Reject all possible cookies / object to all possible interests and personalization. */
 					deepQuerySelectorAll('#ccc-content input[type="checkbox"]:checked').forEach(check => {
 						check.click();
@@ -990,7 +990,7 @@
 			clickAndWaitOrDoItNow(
 				stripeManageButtonSelectors,
 				'Stripe',
-				function () {
+				_ => {
 					/* The settings are saved as soon as they are changed, so just go
 					 * back to the previous page. Make sure we are on the cookie settings
 					 * page, though. */
@@ -1016,7 +1016,6 @@
 							250
 						);
 					}
-
 				}
 			);
 		}
@@ -1048,7 +1047,7 @@
 			clickAndWaitOrDoItNow(
 				'#consent-layer .js-show-cookie-settings',
 				'Deutsche Bahn cookie consent dialog (without Shadow DOM)',
-				function () {
+				_ => {
 					/* Reject all possible cookies / object to all possible interests and personalization. */
 					deepQuerySelectorAll('#consent-layer input[type="checkbox"]:checked').forEach(check => {
 						check.click();
@@ -1071,7 +1070,7 @@
 			clickAndWaitOrDoItNow(
 				bahnShadowRoot.querySelector('#consent-layer .js-show-cookie-settings'),
 				'Deutsche Bahn cookie consent dialog (with Shadow DOM)',
-				function () {
+				_ => {
 					/* Reject all possible cookies / object to all possible interests and personalization. */
 					bahnShadowRoot.querySelectorAll('#consent-layer input[type="checkbox"]:checked').forEach(check => {
 						check.click();
@@ -1099,7 +1098,7 @@
 		clickAndWaitOrDoItNow(
 			'#bs-gdpr-cookies-modal-advanced-btn',
 			'bsgdprcookies',
-			function () {
+			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('input[type="checkbox"][name="bsgdpr[]"]:checked').forEach(check => {
 					check.click();
