@@ -1092,6 +1092,26 @@
 		tryToClick('.tarteaucitronDeny', 'tarteaucitron.js (“Deny all” button)');
 
 		/* -----------------------------------------------------------------
+		 * bsgdprcookies by Aleksander Woźnica <https://github.com/Aleksander98/bsgdprcookies>
+		 * E.g. https://www.jqueryscript.net/demo/GDPR-Cookie-Consent-Bootstrap-4-bsgdprcookies/
+		 * E.g. https://paradisio-online.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'#bs-gdpr-cookies-modal-advanced-btn',
+			'bsgdprcookies',
+			function () {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('input[type="checkbox"][name="bsgdpr[]"]:checked').forEach(check => {
+					check.click();
+					check.checked = false;
+				});
+
+				/* Save & exit. */
+				tryToClick('#bs-gdpr-cookies-modal-accept-btn', 'bsgdprcookies (save & exit)');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
