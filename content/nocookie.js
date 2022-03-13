@@ -1111,14 +1111,18 @@
 		);
 
 		/* -----------------------------------------------------------------
-		 * AS Adventure cookie message
+		 * Yonderland group cookie message
 		 *
 		 * E.g. https://www.asadventure.com/
 		 * E.g. https://www.juttu.be/
+		 * E.g. https://www.bever.nl/
+		 * E.g. https://www.cotswoldoutdoor.com/
+		 * E.g. https://www.runnersneed.com/
+		 * E.g. https://www.snowandrock.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'.as-m-popover .as-a-btn--link:last-child:not(:only-child)',
-			'AS Adventure cookie message',
+			'Yonderland group cookie message',
 			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
 				deepQuerySelectorAll('.as-m-popover input[type="checkbox"][name="cookie-group"]:checked').forEach(check => {
@@ -1127,7 +1131,7 @@
 				});
 
 				/* Save & exit. */
-				tryToClick('.as-m-popover .as-m-group .as-a-btn', 'AS Adventure cookie message (save & exit)');
+				tryToClick('.as-m-popover .as-m-group .as-a-btn', 'Yonderland group cookie message (save & exit)');
 			}
 		);
 
