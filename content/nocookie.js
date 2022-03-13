@@ -1111,6 +1111,27 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * AS Adventure cookie message
+		 *
+		 * E.g. https://www.asadventure.com/
+		 * E.g. https://www.juttu.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.as-m-popover .as-a-btn--link:last-child:not(:only-child)',
+			'AS Adventure cookie message',
+			_ => {
+				/* Reject all possible cookies / object to all possible interests and personalization. */
+				deepQuerySelectorAll('.as-m-popover input[type="checkbox"][name="cookie-group"]:checked').forEach(check => {
+					check.click();
+					check.checked = false;
+				});
+
+				/* Save & exit. */
+				tryToClick('.as-m-popover .as-m-group .as-a-btn', 'AS Adventure cookie message (save & exit)');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
