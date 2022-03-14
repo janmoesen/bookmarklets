@@ -1136,6 +1136,14 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * CookieYes GDPR Cookie Consent <https://www.cookieyes.com/cookie-consent/>
+		 *
+		 * E.g. https://www.cookieyes.com/
+		 * E.g. https://paschka.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[cky-i18n="gdpr.buttons.reject.title"]', 'CookieYes GDPR Cookie Consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
