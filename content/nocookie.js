@@ -177,16 +177,18 @@
 	}
 
 	/* ↙ In case you’re wondering about this brace: there used to be a
-	 * ↙ recursive  blockfunction here, but the logic was changed. To prevent
+	 * ↙ recursive function here, but the logic was changed. To prevent
 	 * ↙ useless source diff/blame, I simply left the indent of its original
 	 * ↙ body block. */
 	{
 		/* -----------------------------------------------------------------
 		 * Drupal’s EU Cookie Compliance (GDPR Compliance) banner <https://www.drupal.org/project/eu_cookie_compliance>
+		 *
 		 * E.g. https://dropsolid.com/
 		 * E.g. https://www.mo.be/
+		 * E.g. https://www.warmshowers.org/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.eu-cookie-compliance-banner .decline-button', 'Drupal')) {
+		if (!tryToClick('.eu-cookie-compliance-banner .decline-button, .decline-button[class*="eu-cookie-compliance"]', 'Drupal')) {
 			const euCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
 			if (euCookieComplianceCategoryCheckboxes.length) {
 				euCookieComplianceCategoryCheckboxes.forEach(check => check.checked = false);
