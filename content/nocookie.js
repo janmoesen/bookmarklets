@@ -40,12 +40,14 @@
 		'iframe[src*=".privacymanager.io/"]',
 
 		/* Generic `cmp` subdomain.
+		 *
 		 * E.g. https://cmp.dpgmedia.be/
 		 */
 		'iframe[src^="https://cmp."]',
 
 		/* Sourcepoint CMP <https://www.sourcepoint.com/cmp/>
-		/* E.g. https://www.theguardian.com/
+		 *
+		 * E.g. https://www.theguardian.com/
 		 * E.g. https://www.bloomberg.com/
 		 */
 		'iframe[src*=".privacy-mgmt.com/"]',
@@ -54,6 +56,7 @@
 		'iframe[src^="https://"][src*="/index.html?"][src*="consentUUID"]',
 
 		/* The Telegraph
+		 *
 		 * E.g. https://www.telegraph.co.uk/
 		 */
 		'iframe[src^="https://tcf2.telegraph.co.uk/"]',
@@ -199,12 +202,14 @@
 		/* -----------------------------------------------------------------
 		 * TrustArc Cookie Consent Manager <https://trustarc.com/cookie-consent-manager/>
 		 * (This is the in-page version, not the out-of-origin IFRAME version.)
+		 *
 		 * E.g. https://trustarc.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#truste-consent-required', 'TrustArc');
 
 		/* -----------------------------------------------------------------
 		 * Bol.com cookie dialog
+		 *
 		 * E.g. https://www.bol.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button', 'Bol.com');
@@ -221,12 +226,14 @@
 
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
+		 *
 		 * E.g. https://www.paypal.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#gdprCookieBanner #bannerDeclineButton', 'PayPal');
 
 		/* -----------------------------------------------------------------
 		 * CookieCuttr jQuery/WordPress plug-in <http://cookiecuttr.com/>
+		 *
 		 * E.g. http://cookiecuttr.com/
 		 * E.g. https://www.findcrowdfunding.com/
 		 * ----------------------------------------------------------------- */
@@ -234,6 +241,7 @@
 
 		/* -----------------------------------------------------------------
 		 * GDPR Legal Cookie App for Shopify <https://gdpr-legal-cookie.myshopify.com/>
+		 *
 		 * E.g. https://gdpr-legal-cookie.myshopify.com/
 		 * E.g. https://www.flectr.bike/
 		 * ----------------------------------------------------------------- */
@@ -241,6 +249,7 @@
 
 		/* -----------------------------------------------------------------
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
+		 *
 		 * E.g. https://ec.europa.eu/
 		 * ----------------------------------------------------------------- */
 		if (tryToClick('.cck-actions-button[href="#refuse"]', 'NextEuropa')) {
@@ -249,24 +258,29 @@
 
 		/* -----------------------------------------------------------------
 		 * Toerisme Oost-Vlaanderen’s cookie banner
+		 *
 		 * E.g. https://www.routen.be/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary', 'Toerisme Oost-Vlaanderen');
 
 		/* -----------------------------------------------------------------
 		 * HubSpot’s cookie banner <https://www.hubspot.com/data-privacy/gdpr>
+		 *
 		 * E.g. https://www.hubspot.com/
 		 * E.g. https://www.mdi.lu/
 		 * ----------------------------------------------------------------- */
 		tryToClick('#hs-eu-decline-button', 'HubSpot');
 
 		/* -----------------------------------------------------------------
+		 * NewScientist.nl cookie compliance
+		 *
 		 * E.g. https://www.newscientist.nl/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cc-compliance .cc-dismiss', 'NewScientist.nl');
 
 		/* -----------------------------------------------------------------
 		 * Nimbu (Zenjoy) cookie consent bar <https://www.nimbu.io/>
+		 *
 		 * E.g. https://www.zenjoy.be/
 		 * E.g. https://www.ecopower.be/
 		 * E.g. https://www.gezondheidenwetenschap.be/
@@ -275,12 +289,14 @@
 
 		/* -----------------------------------------------------------------
 		 * Orejime, GDPR compliance for Drupal <https://www.drupal.org/project/orejime>
+		 *
 		 * E.g. https://financien.belgium.be/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.orejime-Button--decline, .orejime-Notice-declineButton', 'Orejime');
 
 		/* -----------------------------------------------------------------
 		 * CookieFirst Cookie Consent <https://cookiefirst.com/cookie-consent/>
+		 *
 		 * E.g. https://cycling.vlaanderen/
 		 * E.g. https://www.zettlerelectronics.com/
 		 * E.g. https://www.nosta.de/
@@ -311,6 +327,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Google’s own properties (not using their own Funding Choices…)
+		 *
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -330,6 +347,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
+		 *
 		 * E.g. https://www.yahoo.com/
 		 * E.g. https://techcrunch.com/
 		 * ----------------------------------------------------------------- */
@@ -352,6 +370,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Onetrust <https://www.onetrust.com/products/cookie-consent/>
+		 *
 		 * E.g. https://www.onetrust.com/
 		 * E.g. https://www.booking.com/
 		 * ----------------------------------------------------------------- */
@@ -371,6 +390,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Didomi
+		 *
 		 * E.g. https://www.didomi.io/
 		 * E.g. https://www.oui.sncf/
 		 * ----------------------------------------------------------------- */
@@ -388,6 +408,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Quantcast
+		 *
 		 * E.g. https://road.cc/
 		 * E.g. https://www.bikeradar.com/
 		 * ----------------------------------------------------------------- */
@@ -419,6 +440,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Fandom/Wikia
+		 *
 		 * E.g. https://www.fandom.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -435,6 +457,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Coolblue cookie dialog
+		 *
 		 * E.g. https://www.coolblue.nl/
 		 * E.g. https://www.coolblue.be/
 		 * ----------------------------------------------------------------- */
@@ -442,6 +465,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
+		 *
 		 * E.g. https://www.meteo.be/nl/gent
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -458,6 +482,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Stad Gent cookie consent
+		 *
 		 * E.g. https://stad.gent/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -474,6 +499,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Osano Cookie Consent <https://www.osano.com/cookieconsent>
+		 *
 		 * E.g. https://www.pelotondeparis.cc/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -494,6 +520,7 @@
 
 		/* -----------------------------------------------------------------
 		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
+		 *
 		 * E.g. https://www.ekoplaza.nl/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -510,6 +537,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Free Privacy Policy’s Cookie Consent <https://www.freeprivacypolicy.com/free-cookie-consent/>
+		 *
 		 * E.g. https://www.lehmanns.de/
 		 * E.g. https://www.dronten-online.nl/
 		 * ----------------------------------------------------------------- */
@@ -527,6 +555,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Iubenda Cookie Solution <https://www.iubenda.com/en/cookie-solution>
+		 *
 		 * E.g. https://www.iubenda.com/
 		 * E.g. https://www.siracusanews.it/
 		 * ----------------------------------------------------------------- */
@@ -554,6 +583,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Ezoic CMP <https://www.ezoic.com/>
+		 *
 		 * E.g. https://www.ezoic.com/
 		 * E.g. https://www.sheldonbrown.com/
 		 * ----------------------------------------------------------------- */
@@ -582,6 +612,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
+		 *
 		 * E.g. https://www.cybot.com/
 		 * E.g. https://www.bridge.nl/
 		 * ----------------------------------------------------------------- */
@@ -595,6 +626,7 @@
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
+		 *
 		 * E.g. https://www.immoweb.be/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -611,6 +643,7 @@
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (with Shadow DOM)
+		 *
 		 * E.g. https://usercentrics.com/
 		 * E.g. https://www.rosebikes.nl/
 		 * ----------------------------------------------------------------- */
@@ -630,6 +663,7 @@
 
 		/* -----------------------------------------------------------------
 		 * WordPress cookie banner (not on the main domain, but on the hosted sites)
+		 *
 		 * E.g. https://*.wordpress.com/
 		 * E.g. https://longreads.com/
 		 * ----------------------------------------------------------------- */
@@ -644,6 +678,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Automattic cookie banner
+		 *
 		 * E.g. https://wordpress.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -661,6 +696,7 @@
 		/* -----------------------------------------------------------------
 		 * Stack Exchange consent banner
 		 * It seems that it is just a re-wrap/re-arrangement of the Onetrust dialog.
+		 *
 		 * E.g. https://stackoverflow.com/questions
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -678,6 +714,7 @@
 		/* -----------------------------------------------------------------
 		 * Pon Bike (“Pee on bike”? Triathletes, tsss…) Group cookie pop-up
 		 * (Possibly a generic Magento 2 module.)
+		 *
 		 * E.g. https://bbbcycling.com/
 		 * E.g. https://www.union.nl/
 		 * E.g. https://www.focus-bikes.com/
@@ -711,6 +748,7 @@
 
 		/* -----------------------------------------------------------------
 		 * CookiePro (old version, from before they were acquired by Onetrust)
+		 *
 		 * E.g. https://www.nature.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -724,6 +762,7 @@
 
 		/* -----------------------------------------------------------------
 		 * SBFX CMP <https://sfbx.io/en/produits/>
+		 *
 		 * E.g. https://www.rtbf.be/
 		 * E.g. https://www.meteo-grenoble.com/
 		 * ----------------------------------------------------------------- */
@@ -747,6 +786,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Traffective Open CMP <https://opencmp.net/> (site not working 2022-01-16)
+		 *
 		 * E.g. https://traffective.com/
 		 * E.g. https://www.mactechnews.de/
 		 * E.g. https://www.fliegermagazin.de/
@@ -776,6 +816,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Mediavine GDPR CMP
+		 *
 		 * E.g. https://www.thenordroom.com/
 		 * E.g. https://yesmissy.com/
 		 * E.g. https://www.literaryladiesguide.com/
@@ -810,6 +851,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Wix cookie consent banner
+		 *
 		 * E.g. https://www.deparcoursbouwer.cc/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
@@ -829,6 +871,7 @@
 
 		/* -----------------------------------------------------------------
 		 * NitroPay CMP <https://nitropay.com/>
+		 *
 		 * E.g. https://scp-wiki.wikidot.com/
 		 * E.g. https://dnd5e.wikidot.com/
 		 * ----------------------------------------------------------------- */
@@ -880,6 +923,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Google Tag Manager “UXM” (2022-02-20: I could not find *any* info on this, WTF?)
+		 *
 		 * E.g. https://www.vlaamsparlement.be/
 		 * E.g. https://mca.be/nl/
 		 * ----------------------------------------------------------------- */
@@ -900,6 +944,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Brompton cookie opt-out
+		 *
 		 * E.g. https://www.brompton.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookie-panel .optOut', 'Brompton opt-out button');
@@ -925,18 +970,21 @@
 
 		/* -----------------------------------------------------------------
 		 * New York Times cookie notice
+		 *
 		 * E.g. https://www.nytimes.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('button[data-testid="GDPR-reject"]', 'NYT cookie notice opt-out button');
 
 		/* -----------------------------------------------------------------
 		 * New York Times cookie notice (as used in the Games section)
+		 *
 		 * E.g. https://www.nytimes.com/games/wordle/index.html
 		 * ----------------------------------------------------------------- */
 		tryToClick('#pz-gdpr-btn-reject', 'NYT cookie notice opt-out button (games version)');
 
 		/* -----------------------------------------------------------------
 		 * Complianz cookie consent <https://complianz.io/>
+		 *
 		 * E.g. https://www.pedaleurdeflandres.be/
 		 * E.g. https://wpformation.com/
 		 * E.g. https://thispointer.com/
@@ -945,6 +993,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Cookie Control by CIVIC <https://www.civicuk.com/cookie-control>
+		 *
 		 * E.g. https://www.civicuk.com/
 		 * E.g. https://www.mottmac.com/
 		 * ----------------------------------------------------------------- */
@@ -967,12 +1016,14 @@
 
 		/* -----------------------------------------------------------------
 		 * Le Monde GDPR consent
+		 *
 		 * E.g. https://www.lemonde.fr/
 		 * ----------------------------------------------------------------- */
 		tryToClick('[data-gdpr-expression="denyAll"]', 'Le Monde GDPR consent (“Deny all” button)');
 
 		/* -----------------------------------------------------------------
 		 * Inventis cookie consent dialog
+		 *
 		 * E.g. https://www.inventis.be/
 		 * E.g. https://www.arenberg.be/
 		 * ----------------------------------------------------------------- */
@@ -980,6 +1031,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Stripe (using a separate page to manage cookies)
+		 *
 		 * E.g. https://www.stripe.com/
 		 * ----------------------------------------------------------------- */
 		if (document.domain.match(/(^|\.)stripe\.com$/)) {
@@ -1024,6 +1076,7 @@
 
 		/* -----------------------------------------------------------------
 		 * DeepL cookie banner
+		 *
 		 * E.g. https://www.deepl.com/
 		 * ----------------------------------------------------------------- */
 		const deepLSaveSelectionButton = deepQuerySelector('.dl_cookieBanner--buttonSelected');
@@ -1087,6 +1140,7 @@
 
 		/* -----------------------------------------------------------------
 		 * Tarte Au Citron / tarteaucitron.js <https://tarteaucitron.io/>
+		 *
 		 * E.g. https://tarteaucitron.io/
 		 * E.g. https://www.scandiberique.fr/
 		 * ----------------------------------------------------------------- */
@@ -1094,6 +1148,7 @@
 
 		/* -----------------------------------------------------------------
 		 * bsgdprcookies by Aleksander Woźnica <https://github.com/Aleksander98/bsgdprcookies>
+		 *
 		 * E.g. https://www.jqueryscript.net/demo/GDPR-Cookie-Consent-Bootstrap-4-bsgdprcookies/
 		 * E.g. https://paradisio-online.be/
 		 * ----------------------------------------------------------------- */
