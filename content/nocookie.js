@@ -1146,6 +1146,14 @@
 		tryToClick('[cky-i18n="gdpr.buttons.reject.title"]', 'CookieYes GDPR Cookie Consent');
 
 		/* -----------------------------------------------------------------
+		 * Cookie Information CMP <https://cookieinformation.com/>
+		 *
+		 * E.g. https://cookieinformation.com/
+		 * E.g. https://toogoodtogo.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('#cookie-information-template-wrapper #declineButton', 'Cookie Information CMP deny button');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
