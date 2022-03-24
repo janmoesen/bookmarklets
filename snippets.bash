@@ -147,6 +147,7 @@ COPY_ENW=; copy-enw \
 	es Spanish \
 	zh 'Mandarin Chinese' \
 	vi 'Vietnamese' \
+	ru 'Russian' \
 ;
 
 # Typing is hard; let's go shopping.
