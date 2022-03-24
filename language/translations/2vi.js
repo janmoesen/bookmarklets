@@ -154,7 +154,7 @@
 		if (s.match(/^(https?:\/\/)([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
 			location = 'https://translate.google.com/translate?sl=auto&tl=vi&u=' + encodeURIComponent(s);
 		} else {
-			location = 'https://translate.google.com/translate_t#auto|vi|' + encodeURIComponent(s);
+			location = 'https://translate.google.com/?op=translate&sl=auto&tl=vi&text=' + encodeURIComponent(s);
 		}
 	}
 })();

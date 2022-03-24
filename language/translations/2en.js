@@ -154,7 +154,7 @@
 		if (s.match(/^(https?:\/\/)([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
 			location = 'https://translate.google.com/translate?sl=auto&tl=en&u=' + encodeURIComponent(s);
 		} else {
-			location = 'https://translate.google.com/translate_t#auto|en|' + encodeURIComponent(s);
+			location = 'https://translate.google.com/?op=translate&sl=auto&tl=en&text=' + encodeURIComponent(s);
 		}
 	}
 })();
