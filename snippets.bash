@@ -74,7 +74,7 @@ copy_2en_parameters=(
 	2vi
 	vi
 	'Vietnamese'
-	tiếng Việt
+	'tiếng Việt'
 	'sang tiếng việt'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";

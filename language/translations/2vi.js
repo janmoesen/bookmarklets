@@ -104,7 +104,7 @@
 				'[class*="lang"][class*="elect"] a[hreflang^="vi-"]',
 				'a.language[href*="/vi/"]',
 				'a[href][title$="this page in Vietnamese"]',
-				'a[href][title$="Việt"]'
+				'a[href][title$="sang tiếng việt"]'
 			];
 
 			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
@@ -121,7 +121,7 @@
 
 			var interLanguageXPathSelectors = [
 				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "vi"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "tiếng"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZ", "abcçdefghijklmnñopqrstuvwxyz") = "tiếng Việt"]',
 				'//a[@href][contains(., "page in Vietnamese")]',
 			];
 
