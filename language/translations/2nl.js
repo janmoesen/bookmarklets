@@ -152,7 +152,21 @@
 
 	if (s) {
 		if (s.match(/^(https?:\/\/)([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
-			location = 'https://translate.google.com/translate?sl=auto&tl=nl&u=' + encodeURIComponent(s);
+			const googleTranslateUrl = new URL(s);
+
+			const isHttp = googleTranslateUrl.protocol === 'http:';
+			googleTranslateUrl.protocol = 'https';
+
+			googleTranslateUrl.host = googleTranslateUrl.host.replaceAll('-', '--').replaceAll('.', '-') + '.translate.goog';
+
+			if (isHttp) {
+				googleTranslateUrl.searchParams.set('_x_tr_sch', 'http');
+			}
+
+			googleTranslateUrl.searchParams.set('_x_tr_sl', 'auto');
+			googleTranslateUrl.searchParams.set('_x_tr_tl', 'nl');
+
+			location = googleTranslateUrl;
 		} else {
 			location = 'https://translate.google.com/?op=translate&sl=auto&tl=nl&text=' + encodeURIComponent(s);
 		}
