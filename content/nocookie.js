@@ -251,8 +251,9 @@
 		 * NextEuropa cookie consent kit <https://github.com/ec-europa/nexteuropa_cookie_consent_kit>
 		 *
 		 * E.g. https://ec.europa.eu/
+		 * E.g. https://eur-lex.europa.eu/
 		 * ----------------------------------------------------------------- */
-		if (tryToClick('.cck-actions-button[href="#refuse"]', 'NextEuropa')) {
+		if (tryToClick('.cck-actions-button[href="#refuse"], .wt-cck-btn-refuse', 'NextEuropa')) {
 			tryToClick('.cck-actions [href="#close"]', 'NextEuropa');
 		}
 
