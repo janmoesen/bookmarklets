@@ -1,16 +1,16 @@
 /**
- * Translate the specified or selected text or URL to French.
+ * Translate the specified or selected text or URL to Russian.
  *
  * It determines what and how to translate using the following logic:
  * - If a parameter has been specified, translate that using Google Translate.
  * - If text has been selected, translate that using Google Translate.
- * - If the page appears to link to the French version of itself (e.g. in a
+ * - If the page appears to link to the Russian version of itself (e.g. in a
  *   language selector menu), follow that link.
  * - If the page is accessible via HTTP(S), use its URL with Google Translate.
  * - Otherwise, prompt the user for text to translate with Google Translate.
  *
- * @title Translate to French
- * @keyword 2fr
+ * @title Translate to Russian
+ * @keyword 2ru
  */
 (function () {
 	/* Create a new IFRAME to get a "clean" Window object, so we can use its
@@ -90,28 +90,28 @@
 			/* If there is no selection, look for translation links. */
 			var interLanguageSelectors = [
 				/* Wikipedia/Mediawiki */
-				'.interlanguage-link a[href][hreflang="fr"]',
+				'.interlanguage-link a[href][hreflang="ru"]',
 
 				/* CatenaCycling.com */
-				'#language a[href][hreflang="fr"]',
+				'#language a[href][hreflang="ru"]',
 
 				/* Generic */
-				'link[rel="alternate"][hreflang="fr"]',
-				'link[rel="alternate"][hreflang^="fr-"]',
-				'[id*="lang"][id*="elect"] a[hreflang="fr"]',
-				'[id*="lang"][id*="elect"] a[hreflang^="fr-"]',
-				'[class*="lang"][class*="elect"] a[hreflang="fr"]',
-				'[class*="lang"][class*="elect"] a[hreflang^="fr-"]',
-				'a.language[href*="/fr/"]',
-				'a[href][title$="this page in French"]',
-				'a[href][title$="cette page en français"]'
+				'link[rel="alternate"][hreflang="ru"]',
+				'link[rel="alternate"][hreflang^="ru-"]',
+				'[id*="lang"][id*="elect"] a[hreflang="ru"]',
+				'[id*="lang"][id*="elect"] a[hreflang^="ru-"]',
+				'[class*="lang"][class*="elect"] a[hreflang="ru"]',
+				'[class*="lang"][class*="elect"] a[hreflang^="ru-"]',
+				'a.language[href*="/ru/"]',
+				'a[href][title$="this page in Russian"]',
+				'a[href][title$="эта страница на русском языке"]'
 			];
 
 			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
-					console.log('Translate to French: found link for selector ', interLanguageSelectors[i], ': ', link);
+					console.log('Translate to Russian: found link for selector ', interLanguageSelectors[i], ': ', link);
 
 					location = link.href;
 
@@ -120,15 +120,15 @@
 			}
 
 			var interLanguageXPathSelectors = [
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "fr"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "français"]',
-				'//a[@href][contains(., "page in French")]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "ru"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "русский"]',
+				'//a[@href][contains(., "page in Russian")]',
 			];
 
 			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
 				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				if (xPathResult.snapshotLength) {
-					console.log('Translate to French: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
+					console.log('Translate to Russian: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
 
 					location = xPathResult.snapshotItem(0).href;
 
@@ -143,7 +143,7 @@
 
 			/* If all else fails, prompt the user for the text to translate. */
 			if (!s) {
-				s = prompt('Please enter your text to translate to French:');
+				s = prompt('Please enter your text to translate to Russian:');
 			}
 		}
 	} else {
@@ -164,11 +164,11 @@
 			}
 
 			googleTranslateUrl.searchParams.set('_x_tr_sl', 'auto');
-			googleTranslateUrl.searchParams.set('_x_tr_tl', 'fr');
+			googleTranslateUrl.searchParams.set('_x_tr_tl', 'ru');
 
 			location = googleTranslateUrl;
 		} else {
-			location = 'https://translate.google.com/?op=translate&sl=auto&tl=fr&text=' + encodeURIComponent(s);
+			location = 'https://translate.google.com/?op=translate&sl=auto&tl=ru&text=' + encodeURIComponent(s);
 		}
 	}
 })();

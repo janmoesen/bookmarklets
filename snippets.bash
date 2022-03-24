@@ -76,6 +76,12 @@ copy_2en_parameters=(
 	'Vietnamese'
 	'tiếng Việt'
 	'sang tiếng việt'
+
+	2ru
+	ru
+	'Russian'
+	'русский'
+	'эта страница на русском языке'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
