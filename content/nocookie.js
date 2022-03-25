@@ -1210,6 +1210,13 @@
 		tryToClick('#cookie-information-template-wrapper #declineButton', 'Cookie Information CMP deny button');
 
 		/* -----------------------------------------------------------------
+		 * TikTok’s cookie banner
+		 *
+		 * E.g. https://www.tiktok.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[class*="tiktok-"][class*="ButtonDeny"]', 'TikTok');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
