@@ -73,11 +73,24 @@
 	if (s) {
 		let matches;
 		if ((matches = s.match(/.*\b(BE)?\s?(0?\d{3})[ .-]?(\d{3})[ .-]?(\d{3})\b.*/i))) {
+			/* This looks like a Belgian company number. */
 			location = 'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer='
 				+ encodeURIComponent(('0' + matches[2]).slice(-4) + matches[3] + matches[4]);
 		} else {
+			let normalizedS = s.trim().replaceAll(/ (bus|boîte|boite) /gi, 'b').replaceAll(/\s+/g, ' ');
+			if (
+				(matches = normalizedS.match(/(?<street>.{3,63}[^0-9]),? (?<number>\d+[^,]{0,5})[,/-]? (?<postalCode>[1-9]\d\d\d)\b/))
+				|| (matches = normalizedS.match(/(?<number>\d+[^,]{0,5}),? (?<street>.{3,63}[^0-9]),? (?<postalCode>[1-9]\d\d\d)\b/))
+			) {
+				/* This looks like a Belgian address. */
+				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?filterEnkelActieve=true&_filterEnkelActieve=on&actionLU=Zoek&postcod1=${encodeURIComponent(matches.groups.postalCode)}&postgemeente1=&straatgemeente1=${encodeURIComponent(matches.groups.street)}&huisnummer=${encodeURIComponent(matches.groups.number)}`;
+				console.log('Yay! ', matches.groups);
+				console.log('→ ', location);
+				return;
+			}
+
 			if (isSelectedText && s.length > 512) {
-				alert('No Belgian company number / VAT number was found in the text you selected. If you select a shorter text, it will be used to look up the company by name.');
+				alert('No Belgian company number / VAT number or easily-parsable postal address was found in the text you selected. If you select a shorter text, it will be used to look up the company by name.');
 				return;
 			}
 
