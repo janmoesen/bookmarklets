@@ -136,6 +136,30 @@
 				}
 			}
 
+			/* Special case: if we are on a Wikimedia (e.g. Wikipedia or Wiktionary)
+			 * page that does not exist, there are no interlanguage links. However,
+			 * the page might still exist on a different language instance, so simply
+			 * change the subdomain instead of falling back to Google Translate for
+			 * the current URL.
+			 */
+			const wikimediaDomains = [
+				'wikipedia.org',
+				'wiktionary.org',
+				'wikibooks.org',
+				'wikinews.org',
+				'wikiquote.org',
+				'wikisource.org',
+				'wikiversity.org',
+				'wikivoyage.org',
+			];
+
+			const possibleWikimediaDomain = location.host.replace(/.*\.([^.]+\.[^.]+$)/, '$1').toLowerCase();
+			if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('#ca-view')) {
+				const languageSubdomain = 'zh-CN'.replace(/-.*/, '');
+				location.host = `${languageSubdomain}.${possibleWikimediaDomain}`;
+				return;
+			}
+
 			/* If we did not find a translation link, use the current URL if it is HTTP(S). (No point in sending data: or file: URLs to Google Translate.) */
 			s = (location.protocol + '').match(/^http/)
 				? location + ''
