@@ -153,11 +153,17 @@
 				'wikivoyage.org',
 			];
 
-			const possibleWikimediaDomain = location.host.replace(/.*\.([^.]+\.[^.]+$)/, '$1').toLowerCase();
-			if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('#ca-view')) {
-				const languageSubdomain = 'ru'.replace(/-.*/, '');
-				location.host = `${languageSubdomain}.${possibleWikimediaDomain}`;
-				return;
+			const possibleWikimediaDomainMatches = location.host.match(/.*?\.(m\.)?([^.]+\.[^.]+$)/);
+			if (possibleWikimediaDomainMatches) {
+				const possibleWikimediaDomain = possibleWikimediaDomainMatches[2];
+				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('#ca-view')) {
+					const mobileSubdomain = possibleWikimediaDomainMatches[1];
+					const languageSubdomain = 'ru'.replace(/-.*/, '');
+					const targetLanguageDomain = `${languageSubdomain}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
+					console.log(`Translate to Russian: Wikimedia special case: going to the corresponding page on the Russian domain ${targetLanguageDomain}`);
+					location.host = targetLanguageDomain;
+					return;
+				}
 			}
 
 			/* If we did not find a translation link, use the current URL if it is HTTP(S). (No point in sending data: or file: URLs to Google Translate.) */
