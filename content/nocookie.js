@@ -310,6 +310,29 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * CookieFirst Cookie Consent, v2.0 <https://cookiefirst.com/cookie-consent/>
+		 *
+		 * E.g. https://www.boekenwereld.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('[data-cookiefirst-action="reject"]', 'CookieFirst')) {
+			clickAndWaitOrDoItNow(
+				'[data-cookiefirst-action="adjust"]',
+				'CookieFirst',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('.cookiefirst-root [role="checkbox"][aria-checked="true"], .cookiefirst-root input[type="checkbox"]:checked').forEach(check => {
+						check.click();
+						check.checked = false;
+						check.setAttribute('aria-checked', 'false');
+					});
+
+					/* Save & exit. */
+					tryToClick('[data-cookiefirst-action="save"]', 'CookieFirst');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
