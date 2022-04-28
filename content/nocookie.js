@@ -1240,6 +1240,13 @@
 		tryToClick('[class*="tiktok-"][class*="ButtonDeny"]', 'TikTok');
 
 		/* -----------------------------------------------------------------
+		 * IAB (Interactive Advertising Bureau) CMP
+		 *
+		 * E.g. https://slashdot.org/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cmpboxbtnno', 'IAB');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
