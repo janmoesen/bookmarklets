@@ -1247,6 +1247,13 @@
 		tryToClick('.cmpboxbtnno', 'IAB');
 
 		/* -----------------------------------------------------------------
+		 * GRRR Cookie Consent dialog <https://github.com/grrr-amsterdam/cookie-consent>
+		 *
+		 * E.g. https://www.horstartsandmusic.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookie-consent__btnSome', 'GRRR Cookie Consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
