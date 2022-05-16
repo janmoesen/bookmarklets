@@ -386,7 +386,7 @@
 	}
 
 	/* Process all existing feed entries. */
-	Array.from(document.querySelectorAll('.feed .react-card-container')).forEach(processEntry);
+	Array.from(document.querySelectorAll('[class*="Feed--entry-container"]')).forEach(processEntry);
 
 	/* Process feed entries that are dynamically loaded (when scrolling to the
 	 * end of the feed or clicking the “Load more…” button).
@@ -399,10 +399,10 @@
 
 			Array.from(mutation.addedNodes)
 				.forEach(node => {
-					if (typeof node.matches === 'function' && node.matches('.react-card-container')) {
+					if (typeof node.matches === 'function' && node.matches('[class*="Feed--entry-container"]')) {
 						processEntry(node);
 					} else if (typeof node.querySelectorAll === 'function') {
-						Array.from(node.querySelectorAll('.react-card-container')).forEach(processEntry);
+						Array.from(node.querySelectorAll('[class*="Feed--entry-container"]')).forEach(processEntry);
 					}
 				});
 		});
