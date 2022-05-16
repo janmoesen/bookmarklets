@@ -44,44 +44,22 @@
 	 * Process a feed entry.
 	 */
 	function processEntry(entry) {
-		/* Get the JSON-encoded data for the entry. */
-		const jsonContainer = entry.querySelector('[data-react-props]');
-		if (!jsonContainer) {
-			console.log('shide: no JSON container found for entry ', entry);
-			return;
-		}
-
-		const json = jsonContainer.dataset.reactProps;
-		if (typeof json === 'undefined' || (json + '').trim() === '') {
-			console.log('shide: no JSON in container ', jsonContainer, ' for entry ', entry);
-			return;
-		}
-
-		const data = JSON.parse(json);
-		if (!data) {
-			console.log('shide: could not parse JSON “', json, + '” from container ', jsonContainer, ' for entry ', entry);
-			return;
-		}
-
+/* XXX DELME XXX */ const data = {};
 		/* Feed entry types. */
-		const isActivity = data.entity === 'Activity';
-		const isGroupActivity = data.entity === 'GroupActivity';
-		const isClub = data.entity === 'Club';
-		const isChallenge = data.entity === 'Challenge';
-		const isPromo = data.entity === 'SimplePromo' || data.entity === 'FancyPromo';
+		const isActivity = !!entry.querySelector('[class^="ActivityEntry"]');
+		const isGroupActivity = !!entry.querySelector('[class^="GroupActivity"]');
+		const isClubJoin = !!(entry.querySelector('[class^="AthleteJoinEntry"]') && entry.querySelector('[class*="ClubJoin"]'));
+		const isChallengeJoin = !!(entry.querySelector('[class^="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
+		const isPromo = !!entry.querySelector('[class^="PromoEntry"]');
 
 		/* Tags/special properties. */
 		const isOwnActivity = data.activity?.ownedByCurrentAthlete
 			|| data.rowData?.activities?.[0]?.owned_by_current_athlete
 			|| false;
 
-		const isCommute = data.activity?.isCommute
-			|| data.rowData?.activities?.[0]?.is_commute
-			|| false;
+		const isCommute = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Commute")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-		const isVirtual = data.activity?.isVirtual
-			|| data.rowData?.activities?.[0]?.is_virtual
-			|| false;
+		const isVirtual = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Virtual")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
 		/* Activity types, taken from the JSON data and completed with
 		 * <https://github.com/strava/go.strava/blob/master/activities_test.go>.
@@ -295,6 +273,7 @@
 		}
 
 		if (shouldHide) {
+/* XXX → DELME → XXX */ if (0)
 			entry.classList.add('xxxJanStravaHidden');
 		}
 
@@ -309,11 +288,11 @@
 			'Feed entry types:',
 			`isActivity = ${isActivity}`,
 			`isGroupActivity = ${isGroupActivity}`,
-			isClub
-				? `isClub = ${isClub}`
+			isClubJoin
+				? `isClubJoin = ${isClubJoin}`
 				: null,
-			isChallenge
-				? `isChallenge = ${isChallenge}`
+			isChallengeJoin
+				? `isChallengeJoin = ${isChallengeJoin}`
 				: null,
 			isPromo
 				? `isPromo = ${isPromo}`
