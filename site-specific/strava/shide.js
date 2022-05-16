@@ -40,6 +40,14 @@
 
 	document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = css;
 
+	/* Determine the profile URL for the logged-in user. This will be used to
+	 * see which activities are the current user’s own. */
+	const ownProfileLink = Array.from(document.querySelectorAll('.user-nav a[href^="/athletes/"]'))
+		.filter(a => a.getAttribute('href').match(/^\/athletes\/[^\/]+\/?$/))[0];
+
+	const ownProfileHref = ownProfileLink?.getAttribute('href');
+	const ownProfileUrl = ownProfileLink?.href;
+
 	/**
 	 * Process a feed entry.
 	 */
@@ -53,9 +61,7 @@
 		const isPromo = !!entry.querySelector('[class^="PromoEntry"]');
 
 		/* Tags/special properties. */
-		const isOwnActivity = data.activity?.ownedByCurrentAthlete
-			|| data.rowData?.activities?.[0]?.owned_by_current_athlete
-			|| false;
+		const isOwnActivity = !!entry.querySelector('[class*="Owner"]')?.querySelector(`a[href="${ownProfileHref}"]`);
 
 		const isCommute = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Commute")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
@@ -280,6 +286,8 @@
 		/* Show the parsed information we use to decide the fate of the entry. */
 		entry.title = [
 			'Decision:',
+			`ownProfileHref: ${ownProfileHref}`,
+			`ownProfileUrl: ${ownProfileUrl}`,
 			`shouldHide = ${shouldHide}`,
 			reasonForHiding
 				? `reasonForHiding = ${reasonForHiding}`
