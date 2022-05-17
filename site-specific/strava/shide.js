@@ -10,6 +10,49 @@
  * @title Hide Strava pollution
  */
 (function shide() {
+	/* ↓ The following `cyrb53` function is used for hashing the SVG activity
+	 * ↓ icons in order to determine the activity type. I don’t care about
+	 * ↓ cryptographic properties all that, so I have not checked the source.
+	 * ↓ It may well be perfect, but all I care about is that it is Good Enough™
+	 * ↓ for my purposes. */
+	/**
+	 * cyrb53 (c) 2018 bryc (github.com/bryc)
+	 * A fast and simple hash function with decent collision resistance.
+	 * Largely inspired by MurmurHash2/3, but with a focus on speed/simplicity.
+	 * Public domain. Attribution appreciated.
+	 */
+	const cyrb53 = function(str, seed = 0) {
+		let h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+		for (let i = 0, ch; i < str.length; i++) {
+			ch = str.charCodeAt(i);
+			h1 = Math.imul(h1 ^ ch, 2654435761);
+			h2 = Math.imul(h2 ^ ch, 1597334677);
+		}
+		h1 = Math.imul(h1 ^ (h1>>>16), 2246822507) ^ Math.imul(h2 ^ (h2>>>13), 3266489909);
+		h2 = Math.imul(h2 ^ (h2>>>16), 2246822507) ^ Math.imul(h1 ^ (h1>>>13), 3266489909);
+		return 4294967296 * (2097151 & h2) + (h1>>>0);
+	};
+
+	function calculateHash(str) {
+		return cyrb53(str).toString(16);
+	}
+
+	const svgHashesToActivityTypes = {
+		'16edea6887d196': 'Ride',
+		'16f788ac0ed6d3': 'EBikeRide',
+
+		'f801835ea53ad': 'Run',
+		'153fcbcc5018c3': 'Hike',
+		'1986a6bb534033': 'Walk',
+
+		'cbf4e2c84d04c': 'Swim',
+
+		'11af222ad81529': 'IceSkate',
+		'9c7194036d140': 'BackcountrySki',
+
+		'bff242f16fcb0': 'Wheelchair',
+	};
+
 	const css = `@charset "utf-8";
 		.xxxJanStravaHidden {
 			transition: max-height 0.25s ease-in 0s;
@@ -67,62 +110,64 @@
 
 		const isVirtual = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Virtual")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-		/* Activity types, taken from the JSON data and completed with
-		 * <https://github.com/strava/go.strava/blob/master/activities_test.go>.
-		 */
-		const isRide = data.activity?.type === 'Ride'
-			|| data.rowData?.activities?.[0]?.type === 'Ride';
+		/* Activity types, based on the activity icon’s SVG. (Super robust, yeah.) */
+		const svgIcon = entry.querySelector('[class*="activity-icon"] path');
+		const svgHash = svgIcon
+			? calculateHash(svgIcon.outerHTML)
+			: '';
 
-		const isEBikeRide = data.activity?.type === 'EBikeRide'
-			|| data.rowData?.activities?.[0]?.type === 'EBikeRide';
+		const activityType = svgHashesToActivityTypes[svgHash];
 
-		const isRun = data.activity?.type === 'Run'
-			|| data.rowData?.activities?.[0]?.type === 'Run';
+		/* Log unknown activity types so we can update our svgHashesToActivityTypes table. */
+		if (isActivity) {
+			const svg = svgIcon?.closest('svg');
+			const svgTitle = svg?.getAttribute('title')?.replace(/[ -]/g, '');
 
-		const isHike = data.activity?.type === 'Hike'
-			|| data.rowData?.activities?.[0]?.type === 'Hike';
+			if (typeof activityType === 'undefined') {
+				if (typeof svgTitle === 'undefined') {
+					console.warn(`⚠️  Unknown activity type for SVG with checksum “${svgHash}” but without SVG title; svg: `, svg, '; entry: ', entry);
+				} else {
+					svgHashesToActivityTypes[svgHash] = svgTitle;
+					console.info(`🆕 Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
+					console.log(`const svgHashesToActivityTypes = ${JSON.stringify(svgHashesToActivityTypes)};\n\n`, svgHashesToActivityTypes);
+				}
+			} else if (typeof svgTitle !== 'undefined' && svgHashesToActivityTypes[svgHash] !== svgTitle && !isVirtual) {
+				console.error(`⚠️ ⚠️ ⚠️  SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
+			}
+			window.svgHashesToActivityTypes = svgHashesToActivityTypes;
+			console.log({entry, svgIcon, svgHash, svg, svgTitle, type: svgHashesToActivityTypes[svgHash]});
+		}
 
-		const isWalk = data.activity?.type === 'Walk'
-			|| data.rowData?.activities?.[0]?.type === 'Walk';
+		const isRide = activityType === 'Ride';
 
-		const isSwim = data.activity?.type === 'Swim'
-			|| data.rowData?.activities?.[0]?.type === 'Swim';
+		const isEBikeRide = activityType === 'EBikeRide';
 
-		const isWaterSport = data.activity?.type === 'WaterSport'
-			|| data.rowData?.activities?.[0]?.type === 'WaterSport'
-			|| data.activity?.type === 'Surfing'
-			|| data.rowData?.activities?.[0]?.type === 'Surfing'
-			|| data.activity?.type === 'Kitesurf'
-			|| data.rowData?.activities?.[0]?.type === 'Kitesurf'
-			|| data.activity?.type === 'Windsurf'
-			|| data.rowData?.activities?.[0]?.type === 'Windsurf'
-			|| data.activity?.type === 'Canoeing'
-			|| data.rowData?.activities?.[0]?.type === 'Canoeing'
-			|| data.activity?.type === 'Kayaking'
-			|| data.rowData?.activities?.[0]?.type === 'Kayaking'
-			|| data.activity?.type === 'Rowing'
-			|| data.rowData?.activities?.[0]?.type === 'Rowing'
-			|| data.activity?.type === 'StandUpPaddling'
-			|| data.rowData?.activities?.[0]?.type === 'StandUpPaddling';
+		const isRun = activityType === 'Run';
 
-		const isWinterSport = data.activity?.type === 'WinterSport'
-			|| data.rowData?.activities?.[0]?.type === 'WinterSport'
-			|| data.activity?.type === 'AlpineSki'
-			|| data.rowData?.activities?.[0]?.type === 'AlpineSki'
-			|| data.activity?.type === 'BackcountrySki'
-			|| data.rowData?.activities?.[0]?.type === 'BackcountrySki'
-			|| data.activity?.type === 'NordicSki'
-			|| data.rowData?.activities?.[0]?.type === 'NordicSki'
-			|| data.activity?.type === 'RollerSki' /* Hm, not exactly “winter”, but hey… */
-			|| data.rowData?.activities?.[0]?.type === 'RollerSki'
-			|| data.activity?.type === 'CrossCountrySkiing'
-			|| data.rowData?.activities?.[0]?.type === 'CrossCountrySkiing'
-			|| data.activity?.type === 'Snowboard'
-			|| data.rowData?.activities?.[0]?.type === 'Snowboard'
-			|| data.activity?.type === 'Snowshoe'
-			|| data.rowData?.activities?.[0]?.type === 'Snowshoe'
-			|| data.activity?.type === 'IceSkate'
-			|| data.rowData?.activities?.[0]?.type === 'IceSkate';
+		const isHike = activityType === 'Hike';
+
+		const isWalk = activityType === 'Walk';
+
+		const isSwim = activityType === 'Swim';
+
+		const isWaterSport = activityType === 'WaterSport'
+			|| activityType === 'Surfing'
+			|| activityType === 'Kitesurf'
+			|| activityType === 'Windsurf'
+			|| activityType === 'Canoeing'
+			|| activityType === 'Kayaking'
+			|| activityType === 'Rowing'
+			|| activityType === 'StandUpPaddling';
+
+		const isWinterSport = activityType === 'WinterSport'
+			|| activityType === 'AlpineSki'
+			|| activityType === 'BackcountrySki'
+			|| activityType === 'NordicSki'
+			|| activityType === 'RollerSki' /* Hm, not exactly “winter”, but hey… */
+			|| activityType === 'CrossCountrySkiing'
+			|| activityType === 'Snowboard'
+			|| activityType === 'Snowshoe'
+			|| activityType === 'IceSkate';
 
 		/* Pretty much equal to: Workout || Crossfit || Elliptical || RockClimbing || StairStepper || WeightTraining || Yoga */
 		const isOther = !isCommute
