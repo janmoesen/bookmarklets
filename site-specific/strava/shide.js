@@ -196,41 +196,27 @@
 		const hasComments = numComments > 0;
 
 		/* Statistics. */
-		let distanceInKm = undefined;
+		let distanceInKm;
 		let hasDistanceInKm = false;
 
-		let elevationInM = undefined;
+		let elevationInM;
 		let hasElevationInM = false;
 
-		let durationInS = undefined;
+		let durationInS;
 		let hasDurationInS = false;
 
-		const stats = data.activity?.stats
-			|| data.rowData?.activities?.[0]?.stats;
+		const stats = [];
 
-		const parsedStats = {};
+		(firstActivityFromGroup || entry).querySelectorAll('li > [class^="Stat--stat"]').forEach(statContainer => {
+			const statLabelContainer = statContainer.querySelector('[class^="Stat--stat-label"]');
+			const statValueContainer = statContainer.querySelector('[class^="Stat--stat-value"]');
 
-		if (Array.isArray(stats)) {
-			stats.forEach(stat => {
-				const isSubTitle = stat.key.match(/_subtitle$/);
+			if (statLabelContainer && statValueContainer) {
+				stats.push({label: statLabelContainer.textContent, value: statValueContainer.textContent});
+			}
+		});
 
-				const key = isSubTitle
-					? stat.key.replace(/_subtitle$/, '')
-					: stat.key;
-
-				if (!parsedStats[key]) {
-					parsedStats[key] = {};
-				}
-
-				if (isSubTitle) {
-					parsedStats[key].label = stat.value;
-				} else {
-					parsedStats[key].value = stat.value.replace(/<[^>]+>/g, '');
-				}
-			});
-		}
-
-		Object.values(parsedStats).forEach(stat => {
+		stats.forEach(stat => {
 			const label = stat.label;
 			const value = stat.value;
 
