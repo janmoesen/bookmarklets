@@ -103,6 +103,8 @@
 		const isChallengeJoin = !!(entry.querySelector('[class^="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
 		const isPromo = !!entry.querySelector('[class^="PromoEntry"]');
 
+		const firstActivityFromGroup = isGroupActivity && entry.querySelector('[class^="GroupActivity--child-entry"]');
+
 		/* Tags/special properties. */
 		const isOwnActivity = !!entry.querySelector('[class*="Owner"]')?.querySelector(`a[href="${ownProfileHref}"]`);
 
@@ -182,25 +184,15 @@
 			&& !isWinterSport;
 
 		/* Media. */
-		const numPhotos = data.activity?.mapAndPhotos?.photoList?.length
-			|| data.rowData?.activities?.[0]?.photos?.length
-			|| 0;
+		const hasPhotos = !!entry.querySelector('[data-testid="photo"]');
 
-		const hasPhotos = numPhotos > 0;
-
-		const hasMap = !!(
-			data.activity?.mapAndPhotos?.activityMap
-			|| data.rowData?.activities?.[0]?.activity_map?.url
-		);
+		const hasMap = !!entry.querySelector('[data-testid="map"]');
 
 		/* Kudos and comments. */
-		const numKudos = data.activity?.kudosAndComments?.kudosCount
-			|| 0;
+		const numKudos = parseInt((firstActivityFromGroup || entry).querySelector('[data-testid="kudos_count"]')?.textContent, 10);
 		const hasKudos = numKudos > 0;
 
-		const numComments = data.activity?.kudosAndComments?.comments?.length
-			|| 0;
-
+		const numComments = parseInt((firstActivityFromGroup || entry).querySelector('[data-testid="comments_count"]')?.textContent, 10);
 		const hasComments = numComments > 0;
 
 		/* Statistics. */
@@ -331,8 +323,6 @@
 		/* Show the parsed information we use to decide the fate of the entry. */
 		entry.title = [
 			'Decision:',
-			`ownProfileHref: ${ownProfileHref}`,
-			`ownProfileUrl: ${ownProfileUrl}`,
 			`shouldHide = ${shouldHide}`,
 			reasonForHiding
 				? `reasonForHiding = ${reasonForHiding}`
@@ -386,9 +376,7 @@
 				: null,
 
 			'Media:',
-			hasPhotos
-				? `numPhotos = ${numPhotos}`
-				: `hasPhotos = ${hasPhotos}`,
+			`hasPhotos = ${hasPhotos}`,
 			`hasMap = ${hasMap}`,
 
 			'Kudos and comments:',
