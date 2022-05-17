@@ -95,7 +95,6 @@
 	 * Process a feed entry.
 	 */
 	function processEntry(entry) {
-/* XXX DELME XXX */ const data = {};
 		/* Feed entry types. */
 		const isActivity = !!entry.querySelector('[class^="ActivityEntry"]');
 		const isGroupActivity = !!entry.querySelector('[class^="GroupActivity"]');
@@ -137,7 +136,6 @@
 				console.error(`⚠️ ⚠️ ⚠️  SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
 			}
 			window.svgHashesToActivityTypes = svgHashesToActivityTypes;
-			console.log({entry, svgIcon, svgHash, svg, svgTitle, type: svgHashesToActivityTypes[svgHash]});
 		}
 
 		const isRide = activityType === 'Ride';
@@ -302,7 +300,6 @@
 		}
 
 		if (shouldHide) {
-/* XXX → DELME → XXX */ if (0)
 			entry.classList.add('xxxJanStravaHidden');
 		}
 
