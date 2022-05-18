@@ -51,6 +51,8 @@
 		'9c7194036d140': 'BackcountrySki',
 
 		'bff242f16fcb0': 'Wheelchair',
+
+		'f4b0a7f8a14d6': 'WeightTraining',
 	};
 
 	const css = `@charset "utf-8";
