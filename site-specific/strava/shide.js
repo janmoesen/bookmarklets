@@ -113,6 +113,8 @@
 
 		const isVirtual = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Virtual")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
+		const activityName = entry.querySelector('[data-testid="activity_name"]')?.textContent;
+
 		/* Activity types, based on the activity icon’s SVG. (Super robust, yeah.) */
 		const svgIcon = entry.querySelector('[class*="activity-icon"] path');
 		const svgHash = svgIcon
@@ -128,14 +130,14 @@
 
 			if (typeof activityType === 'undefined') {
 				if (typeof svgTitle === 'undefined') {
-					console.warn(`⚠️  Unknown activity type for SVG with checksum “${svgHash}” but without SVG title; svg: `, svg, '; entry: ', entry);
+					console.warn(`⚠️  Activity “${activityName}”: Unknown activity type for SVG with checksum “${svgHash}” but without SVG title; svg: `, svg, '; entry: ', entry);
 				} else {
 					svgHashesToActivityTypes[svgHash] = svgTitle;
-					console.info(`🆕 Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
+					console.info(`🆕 Activity “${activityName}”: Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
 					console.log(`const svgHashesToActivityTypes = ${JSON.stringify(svgHashesToActivityTypes)};\n\n`, svgHashesToActivityTypes);
 				}
 			} else if (typeof svgTitle !== 'undefined' && svgHashesToActivityTypes[svgHash] !== svgTitle && !isVirtual) {
-				console.error(`⚠️ ⚠️ ⚠️  SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
+				console.error(`⚠️ ⚠️ ⚠️  Activity “${activityName}”: SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
 			}
 			window.svgHashesToActivityTypes = svgHashesToActivityTypes;
 		}
