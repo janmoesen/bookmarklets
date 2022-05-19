@@ -83,7 +83,7 @@
 				|| (matches = normalizedS.match(/(?<number>\d+[^,]{0,5}),? (?<street>.{3,63}[^0-9]),? (?<postalCode>[1-9]\d\d\d)\b/))
 			) {
 				/* This looks like a Belgian address. */
-				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?filterEnkelActieve=true&_filterEnkelActieve=on&actionLU=Zoek&postcod1=${encodeURIComponent(matches.groups.postalCode)}&postgemeente1=&straatgemeente1=${encodeURIComponent(matches.groups.street)}&huisnummer=${encodeURIComponent(matches.groups.number)}`;
+				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?filterEnkelActieve=false&actionLU=Zoek&postcod1=${encodeURIComponent(matches.groups.postalCode)}&postgemeente1=&straatgemeente1=${encodeURIComponent(matches.groups.street)}&huisnummer=${encodeURIComponent(matches.groups.number)}`;
 				console.log('Yay! ', matches.groups);
 				console.log('→ ', location);
 				return;
@@ -94,7 +94,7 @@
 				return;
 			}
 
-			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&_oudeBenaming=on&pstcdeNPRP=&postgemeente1=&ondNP=true&_ondNP=on&ondRP=true&_ondRP=on&rechtsvormFonetic=ALL&vest=true&_vest=on&filterEnkelActieve=true&_filterEnkelActieve=on&actionNPRP=Zoek&searchWord='
+			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&ondNP=true&ondRP=true&rechtsvormFonetic=ALL&vest=true&filterEnkelActieve=false&searchWord='
 				+ encodeURIComponent(s);
 		}
 	}
