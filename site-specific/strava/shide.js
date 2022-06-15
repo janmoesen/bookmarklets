@@ -38,21 +38,35 @@
 	}
 
 	const svgHashesToActivityTypes = {
-		'16edea6887d196': 'Ride',
-		'16f788ac0ed6d3': 'EBikeRide',
+		'16edea6887d196': 'Ride', /* Old (delme after 2022-07-01) */
+		'5ef512b3a637f': 'Ride',
 
-		'f801835ea53ad': 'Run',
-		'153fcbcc5018c3': 'Hike',
+		'1395e4030abfa9': 'MountainBikeRide',
+
+		'1210c3d6670189': 'GravelRide',
+
+		'16f788ac0ed6d3': 'EBikeRide', /* Old (delme after 2022-07-01) */
+		'b845af03f9439': 'EBikeRide',
+
+		'f801835ea53ad': 'Run', /* Old (delme after 2022-07-01) */
+		'22beeefea3b6f': 'Run',
+		'1d3a490877e643': 'TrailRun',
+		'153fcbcc5018c3': 'Hike', /* Old (delme after 2022-07-01) */
+		'c5b848e0a0e23': 'Hike',
 		'1986a6bb534033': 'Walk',
 
-		'cbf4e2c84d04c': 'Swim',
+		'cbf4e2c84d04c': 'Swim', /* Old (delme after 2022-07-01) */
+		'3d190f23f662a': 'Swim',
 
 		'11af222ad81529': 'IceSkate',
 		'9c7194036d140': 'BackcountrySki',
 
 		'bff242f16fcb0': 'Wheelchair',
 
-		'f4b0a7f8a14d6': 'WeightTraining',
+		'f4b0a7f8a14d6': 'WeightTraining', /* Old (delme after 2022-07-01) */
+		'6c893c99a1688': 'WeightTraining',
+
+		'1877faad59afe8': 'Windsurf',
 	};
 
 	const css = `@charset "utf-8";
@@ -144,9 +158,15 @@
 
 		const isRide = activityType === 'Ride';
 
+		const isMountainBikeRide = activityType === 'MountainBikeRide';
+
+		const isGravelRide = activityType === 'GravelRide';
+
 		const isEBikeRide = activityType === 'EBikeRide';
 
 		const isRun = activityType === 'Run';
+
+		const isTrailRun = activityType === 'TrailRun';
 
 		const isHike = activityType === 'Hike';
 
@@ -176,9 +196,12 @@
 		/* Pretty much equal to: Workout || Crossfit || Elliptical || RockClimbing || StairStepper || WeightTraining || Yoga */
 		const isOther = !isCommute
 			&& !isRide
+			&& !isMountainBikeRide
+			&& !isGravelRide
 			&& !isVirtual
 			&& !isEBikeRide
 			&& !isRun
+			&& !isTrailRun
 			&& !isHike
 			&& !isWalk
 			&& !isSwim
@@ -280,9 +303,18 @@
 		} else if (isRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30) && (!hasElevationInM || elevationInM < 400)) {
 			shouldHide = true;
 			reasonForHiding = 'Short ride without photos and without noteworthy elevation gain';
+		} else if (isMountainBikeRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 20) && (!hasElevationInM || elevationInM < 300)) {
+			shouldHide = true;
+			reasonForHiding = 'Short mountain bike ride without photos and without noteworthy elevation gain';
+		} else if (isGravelRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30) && (!hasElevationInM || elevationInM < 300)) {
+			shouldHide = true;
+			reasonForHiding = 'Short gravel ride without photos and without noteworthy elevation gain';
 		} else if (isRun && !hasPhotos && (!hasDistanceInKm || distanceInKm < 20)) {
 			shouldHide = true;
 			reasonForHiding = 'Short run without photos';
+		} else if (isTrailRun && !hasPhotos && (!hasDistanceInKm || distanceInKm < 10)) {
+			shouldHide = true;
+			reasonForHiding = 'Short trail run without photos';
 		} else if (isHike && !hasPhotos && (!hasDistanceInKm || distanceInKm < 15)) {
 			shouldHide = true;
 			reasonForHiding = 'Short hike without photos';
@@ -337,11 +369,20 @@
 			isRide
 				? `isRide = ${isRide}`
 				: null,
+			isMountainBikeRide
+				? `isMountainBikeRide = ${isMountainBikeRide}`
+				: null,
+			isGravelRide
+				? `isGravelRide = ${isGravelRide}`
+				: null,
 			isEBikeRide
 				? `isEBikeRide = ${isEBikeRide}`
 				: null,
 			isRun
 				? `isRun = ${isRun}`
+				: null,
+			isTrailRun
+				? `isTrailRun = ${isTrailRun}`
 				: null,
 			isHike
 				? `isHike = ${isHike}`
