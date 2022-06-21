@@ -104,6 +104,10 @@
 		/* TikTok videos */
 		/* E.g. https://www.tiktok.com/@andreswilley/video/7039611724638604549?_d=a0000000000000BcD000SdffsddfF0&checksum=0000000000000000000000000000000000000000000000000000000000000000&language=en&preview_pb=0&sec_user_id=Abcd12345DsdfdsfsdfsdfSDFS&share_app_id=1233&share_item_id=0000000000000000000&share_link_id=00000000-0000-0000-0000-000000000000&source=h5_m&timestamp=2147483648&tt_from=more&u_code=abcdef12345678&user_id=abcdef12345678efabc&_r=1&is_copy_url=1&is_from_webapp=v1 */
 		/https?:\/\/(www\.)?tiktok\.com\/[^?]*\/video\/\d+/,
+
+		/* Embedded Twitter profiles and tweets */
+		/* E.g. https://twitter.com/Twitter/status/1509951255388504066?ref_src=twsrc%5Etfw */
+		/https?:\/\/(www\.)?twitter\.com\/.*/,
 	];
 
 	const hrefRegexpForWhichToDeleteAllParameters = new RegExp('(?:'
