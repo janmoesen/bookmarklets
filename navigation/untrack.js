@@ -95,22 +95,22 @@
 
 	/* Some URIs work just fine without parameters, and the parameters they
 	 * use, seem to be mostly tracking-related anyway. Just delete them all.
-	 *
-	 * Note that because these patterns are defined as normal strings instead
-	 * of RegExps, you need to escape the backslash you use to escape special
-	 * characters in the pattern, e.g. `example\\.com` instead of
-	 * `example\.com`. */
+	 */
 	const uriPatternsForWhichToDeleteAllParameters = [
 		/* New York Times articles */
 		/* E.g. https://www.nytimes.com/2021/12/17/realestate/right-at-home-kitchen-reno.html?action=click&algo=bandit-all-surfaces-alpha-06&block=editors_picks_recirc&fellback=false&imp_id=000000000&impression_id=0abc123d-0000-0000-0000-000000000000&index=0&pgtype=Article&pool=pool%2F00000000-0000-0000-0000-000000000000&region=footer&req_id=000000000&surface=eos-home-featured&variant=0_bandit-all-surfaces-alpha-06 */
-		'https?://(www\\.)?nytimes\\.com/[^?]*\\.html',
+		/https?:\/\/(www\.)?nytimes\.com\/[^?]*\.html/,
 
 		/* TikTok videos */
 		/* E.g. https://www.tiktok.com/@andreswilley/video/7039611724638604549?_d=a0000000000000BcD000SdffsddfF0&checksum=0000000000000000000000000000000000000000000000000000000000000000&language=en&preview_pb=0&sec_user_id=Abcd12345DsdfdsfsdfsdfSDFS&share_app_id=1233&share_item_id=0000000000000000000&share_link_id=00000000-0000-0000-0000-000000000000&source=h5_m&timestamp=2147483648&tt_from=more&u_code=abcdef12345678&user_id=abcdef12345678efabc&_r=1&is_copy_url=1&is_from_webapp=v1 */
-		'https?://(www\\.)?tiktok\\.com/[^?]*/video/\\d+'
+		/https?:\/\/(www\.)?tiktok\.com\/[^?]*\/video\/\d+/,
 	];
 
-	const hrefRegexpForWhichToDeleteAllParameters = new RegExp('(?:' + uriPatternsForWhichToDeleteAllParameters.join('|') + ')\\?');
+	const hrefRegexpForWhichToDeleteAllParameters = new RegExp('(?:'
+		+ uriPatternsForWhichToDeleteAllParameters
+			.map(regexp => regexp.toString().replace(/^\/(.*)\/[^\/]*$/, '$1'))
+			.join('|')
+		+ ')\\?');
 
 	/* Link redirectors in the form 'CSS selector': handlerFunction(element). */
 	const linkRedirectors = {
