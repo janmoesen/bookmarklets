@@ -225,13 +225,19 @@
 	 */
 	function cleanQueryStringForHrefAttribute(element) {
 		try {
+			const textEqualsUrl = element.textContent.trim() === element.href.trim();
+
 			const oldUrl = new URL(element.href);
 
 			const newUrl = new URL(element.href);
 			newUrl.search = cleanQueryString(oldUrl.search);
 
 			if (oldUrl.toString() !== newUrl.toString()) {
-				element.href = newUrl.toString();
+				element.href = newUrl;
+
+				if (textEqualsUrl) {
+					element.textContent = newUrl;
+				}
 			}
 		} catch (e) {
 		}
