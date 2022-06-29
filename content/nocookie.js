@@ -1254,6 +1254,29 @@
 		tryToClick('.cookie-consent__btnSome', 'GRRR Cookie Consent');
 
 		/* -----------------------------------------------------------------
+		 * WPEka GDPR Cookie Consent (“WP Cookie Notice for GDPR, CCPA & ePrivacy Consent”) <https://club.wpeka.com/product/wp-gdpr-cookie-consent/>
+		 *
+		 * E.g. https://demo.wpeka.com/wp-gdpr-cookie-consent/
+		 * E.g. https://innoventum.se/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('[data-gdpr_action="reject"]', 'WPEka GDPR Cookie Consent')) {
+			clickAndWaitOrDoItNow(
+				'[data-gdpr_action="settings"]',
+				'WPEka GDPR Cookie Consent',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('input[type="checkbox"][name^="gdpr_messagebar_"], input[type="checkbox"][id^="gdpr_messagebar_"]').forEach(check => {
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick('#cookie_action_save[data-gdpr_action="accept"]', 'WPEka GDPR Cookie Consent (save & exit)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
