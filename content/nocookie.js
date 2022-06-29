@@ -355,7 +355,7 @@
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
-			'[aria-modal="true"][title*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
+			'[aria-modal="true"][aria-label*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
 				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
 			'Google',
 			_ => {
