@@ -1277,6 +1277,13 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Strava Cookie Banner
+		 *
+		 * E.g. https://www.strava.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.btn-deny-cookie-banner', 'Strava Cookie Banner');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
