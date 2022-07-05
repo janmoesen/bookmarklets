@@ -140,7 +140,10 @@
 				: `nocookie: found ${provider} element (“${text}”) to click: `;
 			console.log(msg, elem);
 
-			elem.click();
+			/* Click after a small timeout to make sure the `console.log()`
+			 * is executed before potentially unloading the page, e.g.
+			 * because the `click()` submits a form. */
+			setTimeout(_ => elem.click(), 50);
 
 			return true;
 		}
