@@ -354,20 +354,15 @@
 		 *
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'[aria-modal="true"][aria-label*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"]), '
-				+ 'a.ytd-button-renderer[href^="https://consent.youtube.com/"]',
-			'Google',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('c-wiz div[jsaction]:first-child:not(:only-child) button').forEach(
-					button => button.click()
-				);
+		tryToClick('[aria-modal="true"][aria-label*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"])', 'Google consent modal dialog')
+			|| tryToClick('form[action="https://consent.google.com/save"]:first-child button', 'Google consent modal dialog (FORM version)');
 
-				/* Save & exit. */
-				tryToClick('c-wiz form[jsaction^="submit:"] button', 'Google');
-			}
-		);
+		/* -----------------------------------------------------------------
+		 * YouTube “consent bump” (yet another method for a Google property…)
+		 *
+		 * E.g. https://www.youtube.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('ytd-consent-bump-v2-lightbox ytd-button-renderer.style-primary:first-child', 'YouTube consent bump');
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
