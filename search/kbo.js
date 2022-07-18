@@ -72,10 +72,10 @@
 
 	if (s) {
 		let matches;
-		if ((matches = s.match(/.*\b(BE)?\s?(0?\d{3})[ .-]?(\d{3})[ .-]?(\d{3})\b.*/i))) {
+		if ((matches = s.match(/.*\b(BE)?\s?(\d{3})[ .-]?(\d{3})[ .-]?(\d{3})\b.*/i))) {
 			/* This looks like a Belgian company number. */
 			location = 'https://kbopub.economie.fgov.be/kbopub/toonondernemingps.html?ondernemingsnummer='
-				+ encodeURIComponent(('0' + matches[2]).slice(-4) + matches[3] + matches[4]);
+				+ encodeURIComponent(matches[2] + matches[3] + matches[4]);
 		} else {
 			let normalizedS = s.trim().replaceAll(/ (bus|boîte|boite) /gi, 'b').replaceAll(/\s+/g, ' ');
 			if (
