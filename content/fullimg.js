@@ -231,8 +231,8 @@
 		document.querySelectorAll('img[src*="//yt"][src*=".ggpht.com"]')
 	).forEach(img => {
 		let matches;
-		if ((matches = img.src.match(/^(.*\/)s(\d+)([^/]+\/photo\.[^/.]+)$/)) && matches[2] < 1024) {
-			let newSrc = matches[1] + 's1024' + matches[3];
+		if ((matches = img.src.match(/^(.*\/[A-Za-z0-9_-]{16,}=s)(\d+)([^/]+.*)$/)) && matches[2] < 1024) {
+			let newSrc = matches[1] + 1024 + matches[3];
 			changeSrc(img, newSrc, 'found YouTube avatar with restricted size (' + matches[2] + ')');
 		}
 	});
