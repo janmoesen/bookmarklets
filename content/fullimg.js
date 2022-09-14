@@ -226,9 +226,9 @@
 		}
 	});
 
-	/* Use larger YouTube thumbnails. */
+	/* Use larger YouTube/Google thumbnails. */
 	Array.from(
-		document.querySelectorAll('img[src*="//yt"][src*=".ggpht.com"]')
+		document.querySelectorAll('img[src*="//yt"][src*=".ggpht.com"], img[src*=".googleusercontent.com"]')
 	).forEach(img => {
 		let matches;
 		if ((matches = img.src.match(/^(.*\/[A-Za-z0-9_-]{16,}=s)(\d+)([^/]+.*)$/)) && matches[2] < 1024) {
