@@ -100,7 +100,14 @@
 
 			if (matches) {
 				/* This looks like a Belgian address. */
-				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?filterEnkelActieve=false&actionLU=Zoek&postcod1=${encodeURIComponent(matches.groups.postalCode)}&postgemeente1=&straatgemeente1=${encodeURIComponent(matches.groups.street)}&huisnummer=${encodeURIComponent(matches.groups.number)}`;
+				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?${new URLSearchParams({
+					filterEnkelActieve: false,
+					actionLU: 'Zoek',
+					postcod1: matches.groups.postalCode,
+					postgemeente1: '',
+					straatgemeente1: matches.groups.street,
+					huisnummer: matches.groups.number,
+				})}`;
 				return;
 			}
 
