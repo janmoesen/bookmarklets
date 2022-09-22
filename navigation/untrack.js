@@ -29,6 +29,9 @@
 		 /* Instagram */
 		'igshid',
 
+		/* Twitter */
+		'twclid',
+
 		/* Microsoft/Bing */
 		'msclkid',
 
