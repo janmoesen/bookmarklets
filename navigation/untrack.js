@@ -354,6 +354,28 @@
 			});
 		}
 
+		/* Show the full URL for all links whose link text looks like a
+		 * truncated version of the URL, e.g. showing just the domain
+		 * (possibly without protocol/scheme and/or without `www.`), or
+		 * hiding part of the path. */
+		document.querySelectorAll('a[href]').forEach(a => {
+			const normalizedDomainName = a.href.replace(/^https?:\/\/(?:www\.)?([^/]+).*/, '$1');
+
+			const textContainersToCheck = Array.from(a.querySelectorAll('*'));
+			textContainersToCheck.unshift(a);
+			for (let i = textContainersToCheck.length - 1; i >= 0; i--) {
+				const textContainer = textContainersToCheck[i];
+				const normalizedInnerText = textContainer.textContent.replace(/^(?:https?:\/\/)?(?:www\.)?([^/]+).*/, '$1');
+
+				console.log(a, textContainer, `: normalizedDomainName = “${normalizedDomainName}”; normalizedInnerText = “${normalizedInnerText}”`);
+				if (normalizedDomainName === normalizedInnerText) {
+					console.log(a, textContainer, `: Changing “${textContainer.textContent}” to “${a.href}”`);
+					textContainer.textContent = a.href;
+					break;
+				}
+			}
+		});
+
 		/* Recurse for (i)frames. */
 		try {
 			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
