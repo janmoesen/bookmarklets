@@ -76,6 +76,15 @@
 			return;
 		}
 
+		/* Include the transparent timeline overlay on Twitter.com */
+		if (document.location.host.match(/^(.+\.)?twitter\.com$/)) {
+			document.querySelectorAll('div[role="group"]').forEach(div => {
+				if (div.offsetWidth / window.innerWidth >= 0.75 && div.offsetHeight / window.innerHeight * 100 >= 0.75) {
+					centerElements.unshift(div);
+				}
+			});
+		}
+
 		/* Hide the overlay and its “visual descendants” (i.e., the elements
 		 * on top of the overlay). */
 		for (let i = 0; i < centerElements.length; i++) {
