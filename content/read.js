@@ -1290,7 +1290,8 @@
 				return str
 					.replace(/\xAD/g, '')
 					.replace(charactersToIgnore, ' ')
-					.trim();
+					.trim()
+					.toLowerCase();
 			}
 
 			var metaTitleElement = document.querySelector('meta[property="og:title"], meta[property="twitter:title"], meta[name="title"]');
