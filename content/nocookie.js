@@ -358,7 +358,7 @@
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('[aria-modal="true"][aria-label*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"])', 'Google consent modal dialog')
-			|| tryToClick('form[action="https://consent.google.com/save"]:first-child button', 'Google consent modal dialog (FORM version)');
+			|| tryToClick('form[action^="https://consent.google."][action$="/save"]:first-child button', 'Google consent modal dialog (FORM version)');
 
 		/* -----------------------------------------------------------------
 		 * YouTube “consent bump” (yet another method for a Google property…)
