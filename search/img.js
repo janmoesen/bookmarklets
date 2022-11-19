@@ -70,10 +70,10 @@
 	if (s) {
 		var words = s.split(' '), matches;
 
-		/* If the first parameter looks like a URL, use Google's "Search by image". */
+		/* If the first parameter looks like a URL, use Google Lens. */
 		if (words[0].match(/^(\w+:(\/\/)?)?[^\s]+(\.[^\s]+)+\//))
 		{
-			location = 'https://images.google.com/searchbyimage?safe=off&image_url=' + encodeURIComponent(words[0]) + '&q=' + encodeURIComponent(words.slice(1).join(' '));
+			location = 'https://lens.google.com/uploadbyurl?url=' + encodeURIComponent(words[0]) + '&q=' + encodeURIComponent(words.slice(1).join(' '));
 			return;
 		}
 
