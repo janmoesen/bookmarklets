@@ -1,4 +1,4 @@
-Jan Moesen's bookmarklets
+Jan Moesen’s bookmarklets
 
 A collection of time-saving and life-enhancing (ahem) bookmarklets.
 
@@ -11,8 +11,8 @@ http://kak.be/phl.)
 
 The bookmarklets are stored here as separate script files. You can copy and
 paste them into your bookmarks manager, or import them wholesale using the
-generated "bookmarks.html" file.
+generated `bookmarks.html` file.
 
 Feel free to fork and create pull requests: http://kak.be/bookmarklets
 
-See COPYING for licence details. Or "license details", if you are so inclined.
+See COPYING for licence details. Or “license details”, if you are so inclined.
