@@ -93,6 +93,6 @@
 			return;
 		}
 
-		location = `https://www.mapillary.com/app/?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&z=13`;
+		location = `https://www.mapillary.com/app/?lat=${encodeURIComponent(lat)}&lng=${encodeURIComponent(lng)}&z=15`;
 	}
 })(document);
