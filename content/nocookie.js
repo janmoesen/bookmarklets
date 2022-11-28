@@ -215,7 +215,7 @@
 		 *
 		 * E.g. https://www.bol.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('button[data-test="consent-modal-decline-btn"].js-decline-button', 'Bol.com');
+		tryToClick('button[data-test="consent-modal-ofc-reject-btn"]#js-reject-all-button', 'Bol.com');
 
 		/* -----------------------------------------------------------------
 		 * Cookie-Script <https://cookie-script.com/>
