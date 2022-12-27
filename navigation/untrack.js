@@ -206,6 +206,19 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('session_redirect') ?? a.href;
 		},
 
+		/* Beehiiv (newsletter platform) */
+		'a[href^="https://flight.beehiiv.net/v2/clicks/eyJ"]': a => {
+			const parts = a.pathname.split('.');
+			try {
+				const originalUrl = JSON.parse(atob(parts[1].replaceAll('_', '/'))).url;
+				if (originalUrl) {
+					a.href = originalUrl;
+				}
+			} catch (e) {
+				console.log('untrack: error while decoding URL for link: ', a, e);
+			}
+		},
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
