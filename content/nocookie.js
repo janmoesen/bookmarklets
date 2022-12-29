@@ -365,7 +365,7 @@
 		 *
 		 * E.g. https://www.youtube.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('ytd-consent-bump-v2-lightbox ytd-button-renderer.style-primary:first-child', 'YouTube consent bump');
+		tryToClick('ytd-consent-bump-v2-lightbox ytd-button-renderer:first-of-type:not(:only-child) button', 'YouTube consent bump');
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
