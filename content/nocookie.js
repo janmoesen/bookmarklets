@@ -7,26 +7,6 @@
 (function nocookie() {
 	'use strict';
 
-	/* Create a new IFRAME to get a “clean” Window object, so we can use its
-	 * console. Sometimes sites (e.g. Twitter) override `console.log` and even
-	 * the entire console object. `delete console.log` or `delete console`
-	 * does not always work, and messing with the prototype seemed more
-	 * brittle than this. */
-	const console = (function () {
-		let iframe = document.getElementById('xxxJanConsole');
-		if (!iframe) {
-			iframe = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
-			iframe.id = 'xxxJanConsole';
-			iframe.style.display = 'none';
-
-			(document.body || document.documentElement).appendChild(iframe);
-		}
-
-		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
-			log: function () {}
-		};
-	})();
-
 	/* Keep track of out-of-origin IFRAMEs that this bookmarklet cannot access
 	 * but are likely to contain an external consent manager. */
 	const externalConsentManagerIframeSelectors = [

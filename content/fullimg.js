@@ -7,26 +7,6 @@
  * @title Load full images
  */
 (function fullimg() {
-	/* Create a new IFRAME to get a "clean" Window object, so we can use its
-	 * console. Sometimes sites (e.g. Twitter) override console.log and even
-	 * the entire console object. "delete console.log" or "delete console"
-	 * does not always work, and messing with the prototype seemed more
-	 * brittle than this. */
-	var console = (function () {
-		var iframe = document.getElementById('xxxJanConsole');
-		if (!iframe) {
-			iframe = document.createElementNS('http://www.w3.org/1999/xhtml', 'iframe');
-			iframe.id = 'xxxJanConsole';
-			iframe.style.display = 'none';
-
-			(document.body || document.documentElement).appendChild(iframe);
-		}
-
-		return iframe && iframe.contentWindow && iframe.contentWindow.console || {
-			log: function () {}
-		};
-	})();
-
 	/* Get rid of "width=", "height=" etc. followed by numbers or number pairs
 	 * in IMG@src query strings. */
 	var parameterNames = [
