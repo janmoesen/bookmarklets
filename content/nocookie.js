@@ -338,14 +338,7 @@
 		 * E.g. https://www.google.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('[aria-modal="true"][aria-label*="Google"] button:first-child:not(:only-child):not([aria-haspopup="true"])', 'Google consent modal dialog')
-			|| tryToClick('form[action^="https://consent.google."][action$="/save"]:first-child button', 'Google consent modal dialog (FORM version)');
-
-		/* -----------------------------------------------------------------
-		 * YouTube “consent bump” (yet another method for a Google property…)
-		 *
-		 * E.g. https://www.youtube.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('ytd-consent-bump-v2-lightbox ytd-button-renderer:first-of-type:not(:only-child) button', 'YouTube consent bump');
+			|| tryToClick('form[action^="https://consent."][action$="/save"] button[jsaction]', 'Google/YouTube consent modal dialog (FORM version)');
 
 		/* -----------------------------------------------------------------
 		 * Yahoo IAB cookie consent
