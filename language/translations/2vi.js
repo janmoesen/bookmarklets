@@ -83,6 +83,7 @@
 				'[class*="lang"][class*="elect"] a[hreflang="vi"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="vi-"]',
 				'a.language[href*="/vi/"]',
+				'a[class*="choose"][class*="lang"][href^="/vi/"]',
 				'a[href][title$="this page in Vietnamese"]',
 				'a[href][title$="sang tiếng việt"]'
 			];

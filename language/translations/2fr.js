@@ -83,6 +83,7 @@
 				'[class*="lang"][class*="elect"] a[hreflang="fr"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="fr-"]',
 				'a.language[href*="/fr/"]',
+				'a[class*="choose"][class*="lang"][href^="/fr/"]',
 				'a[href][title$="this page in French"]',
 				'a[href][title$="cette page en français"]'
 			];

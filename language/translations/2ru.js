@@ -83,6 +83,7 @@
 				'[class*="lang"][class*="elect"] a[hreflang="ru"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="ru-"]',
 				'a.language[href*="/ru/"]',
+				'a[class*="choose"][class*="lang"][href^="/ru/"]',
 				'a[href][title$="this page in Russian"]',
 				'a[href][title$="эта страница на русском языке"]'
 			];
