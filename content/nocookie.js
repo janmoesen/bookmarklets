@@ -464,7 +464,7 @@
 		 * E.g. https://www.coolblue.nl/
 		 * E.g. https://www.coolblue.be/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie button[name="decline_cookie"]', 'Coolblue');
+		tryToClick('[class*="cookie"] button[name="decline_cookie"]', 'Coolblue');
 
 		/* -----------------------------------------------------------------
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
