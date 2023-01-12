@@ -1263,6 +1263,21 @@
 		tryToClick('.btn-deny-cookie-banner', 'Strava Cookie Banner');
 
 		/* -----------------------------------------------------------------
+		 * OVH (hosting provider), using an old version of tagContainer
+		 * Privacy by Tag Commander (now Commanders Act).
+		 *
+		 * E.g. https://www.ovhtelecom.fr/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-tc-privacy="cookie-banner::decline"]', 'OVH cookie consent dialog');
+
+		/* -----------------------------------------------------------------
+		 * OVH (hosting provider), using an in-house solution.
+		 *
+		 * E.g. https://www.ovh.com/manager/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.oui-button.deny', 'OVH cookie consent dialog (2)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
