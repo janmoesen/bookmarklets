@@ -210,7 +210,7 @@
 		'a[href^="https://flight.beehiiv.net/v2/clicks/eyJ"]': a => {
 			const parts = a.pathname.split('.');
 			try {
-				const originalUrl = JSON.parse(atob(parts[1].replaceAll('_', '/'))).url;
+				const originalUrl = JSON.parse(atob(parts[1].replaceAll('_', '/').replaceAll('-', '+'))).url;
 				if (originalUrl) {
 					a.href = originalUrl;
 				}
