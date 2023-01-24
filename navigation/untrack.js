@@ -384,7 +384,6 @@
 				const textContainer = textContainersToCheck[i];
 				const normalizedInnerText = textContainer.textContent.replace(/^(?:https?:\/\/)?(?:www\.)?([^/]+).*/, '$1');
 
-				console.log(a, textContainer, `: normalizedDomainName = “${normalizedDomainName}”; normalizedInnerText = “${normalizedInnerText}”`);
 				if (normalizedDomainName === normalizedInnerText) {
 					console.log(a, textContainer, `: Changing “${textContainer.textContent}” to “${a.href}”`);
 					textContainer.textContent = a.href;
