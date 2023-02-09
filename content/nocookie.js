@@ -1278,6 +1278,13 @@
 		tryToClick('.oui-button.deny', 'OVH cookie consent dialog (2)');
 
 		/* -----------------------------------------------------------------
+		 * Bing cookie bar
+		 *
+		 * E.g. https://www.bing.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('#bnp_btn_reject, .bnp_btn_reject', 'Bing');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
