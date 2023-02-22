@@ -205,7 +205,7 @@
 		/* -----------------------------------------------------------------
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
 		 * ----------------------------------------------------------------- */
-		tryToClick('#cookie_action_close_header_reject', 'CookieYes/Cookie-Law-Info');
+		tryToClick('#cookie_action_close_header_reject, [data-cky-tag="reject-button"], .cky-btn-reject', 'CookieYes/Cookie-Law-Info');
 
 		/* -----------------------------------------------------------------
 		 * PayPal.com cookie dialog
