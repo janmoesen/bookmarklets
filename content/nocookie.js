@@ -1288,6 +1288,13 @@
 		tryToClick('#bnp_btn_reject, .bnp_btn_reject', 'Bing');
 
 		/* -----------------------------------------------------------------
+		 * Cookie Plus WordPress plugin <https://wpcookieplus.com/>
+		 *
+		 * E.g. https://www.minieurope.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookieplus-btn-decline-cookies', 'Cookie Plus');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
