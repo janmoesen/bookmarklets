@@ -618,13 +618,16 @@
 		 *
 		 * E.g. https://www.cybot.com/
 		 * E.g. https://www.bridge.nl/
+		 * E.g. https://www.sncf.com/
 		 * ----------------------------------------------------------------- */
-		const cybotAllowSelectionButton = deepQuerySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
-		if (cybotAllowSelectionButton) {
-			deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
-			tryToClick(cybotAllowSelectionButton, 'Cybot');
-		} else {
-			tryToClick('#CybotCookiebotDialogBodyButtonDecline', 'Cybot');
+		if (!tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll', 'Cybot')) {
+			const cybotAllowSelectionButton = deepQuerySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
+			if (cybotAllowSelectionButton) {
+				deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
+				tryToClick(cybotAllowSelectionButton, 'Cybot');
+			} else {
+				tryToClick('#CybotCookiebotDialogBodyButtonDecline', 'Cybot');
+			}
 		}
 
 		/* -----------------------------------------------------------------
