@@ -1295,6 +1295,13 @@
 		tryToClick('.cookieplus-btn-decline-cookies', 'Cookie Plus');
 
 		/* -----------------------------------------------------------------
+		 * 2dehands.be (and possibly other eBay properties, but not marktplaats.nl) GDPR consent.
+		 *
+		 * E.g. https://www.2dehands.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('#gdpr-consent-banner-refuse-button, .gdpr-consent-button-refuse', '2dehands.be GDPR consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
