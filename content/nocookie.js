@@ -1302,6 +1302,16 @@
 		tryToClick('#gdpr-consent-banner-refuse-button, .gdpr-consent-button-refuse', '2dehands.be GDPR consent');
 
 		/* -----------------------------------------------------------------
+		 * Reddit EU Cookie Policy toast
+		 *
+		 * Because of CSS class name mangling/minimizing, the selector relies
+		 * heavily on the DOM structure and is therefore pretty fragile.
+		 *
+		 * E.g. https://www.reddit.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('section section section + section button[role="button"]', 'Reddit EU Cookie Policy toast');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
