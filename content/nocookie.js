@@ -1219,7 +1219,10 @@
 		 *
 		 * E.g. https://www.tiktok.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('[class*="tiktok-"][class*="ButtonDeny"]', 'TikTok');
+		const tikTokShadowRoot = deepQuerySelector('tiktok-cookie-banner')?.shadowRoot;
+		if (tikTokShadowRoot) {
+			tryToClick(tikTokShadowRoot.querySelector('.tiktok-cookie-banner button'), 'TikTok cookie banner (with Shadow DOM)');
+		}
 
 		/* -----------------------------------------------------------------
 		 * IAB (Interactive Advertising Bureau) CMP
