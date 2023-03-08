@@ -38,24 +38,19 @@
 	}
 
 	const svgHashesToActivityTypes = {
-		'16edea6887d196': 'Ride', /* Old (delme after 2022-07-01) */
 		'5ef512b3a637f': 'Ride',
 
 		'1395e4030abfa9': 'MountainBikeRide',
 
 		'1210c3d6670189': 'GravelRide',
 
-		'16f788ac0ed6d3': 'EBikeRide', /* Old (delme after 2022-07-01) */
 		'b845af03f9439': 'EBikeRide',
 
-		'f801835ea53ad': 'Run', /* Old (delme after 2022-07-01) */
 		'22beeefea3b6f': 'Run',
 		'1d3a490877e643': 'TrailRun',
-		'153fcbcc5018c3': 'Hike', /* Old (delme after 2022-07-01) */
 		'c5b848e0a0e23': 'Hike',
 		'1986a6bb534033': 'Walk',
 
-		'cbf4e2c84d04c': 'Swim', /* Old (delme after 2022-07-01) */
 		'3d190f23f662a': 'Swim',
 
 		'11af222ad81529': 'IceSkate',
@@ -63,7 +58,6 @@
 
 		'bff242f16fcb0': 'Wheelchair',
 
-		'f4b0a7f8a14d6': 'WeightTraining', /* Old (delme after 2022-07-01) */
 		'6c893c99a1688': 'WeightTraining',
 
 		'1877faad59afe8': 'Windsurf',
@@ -112,13 +106,13 @@
 	 */
 	function processEntry(entry) {
 		/* Feed entry types. */
-		const isActivity = !!entry.querySelector('[class^="ActivityEntry"]');
-		const isGroupActivity = !!entry.querySelector('[class^="GroupActivity"]');
-		const isClubJoin = !!(entry.querySelector('[class^="AthleteJoinEntry"]') && entry.querySelector('[class*="ClubJoin"]'));
-		const isChallengeJoin = !!(entry.querySelector('[class^="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
-		const isPromo = !!entry.querySelector('[class^="PromoEntry"]');
+		const isActivity = !!entry.querySelector('[class*="ActivityEntry"]');
+		const isGroupActivity = !!entry.querySelector('[class*="GroupActivity"]');
+		const isClubJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ClubJoin"]'));
+		const isChallengeJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
+		const isPromo = !!entry.querySelector('[class*="PromoEntry"]');
 
-		const firstActivityFromGroup = isGroupActivity && entry.querySelector('[class^="GroupActivity--child-entry"]');
+		const firstActivityFromGroup = isGroupActivity && entry.querySelector('[class*="GroupActivityEntry"]');
 
 		/* Tags/special properties. */
 		const isOwnActivity = !!entry.querySelector('[class*="Owner"]')?.querySelector(`a[href="${ownProfileHref}"]`);
@@ -232,9 +226,9 @@
 
 		const stats = [];
 
-		(firstActivityFromGroup || entry).querySelectorAll('li > [class^="Stat--stat"]').forEach(statContainer => {
-			const statLabelContainer = statContainer.querySelector('[class^="Stat--stat-label"]');
-			const statValueContainer = statContainer.querySelector('[class^="Stat--stat-value"]');
+		(firstActivityFromGroup || entry).querySelectorAll('[class*="list-stats"] > li').forEach(statContainer => {
+			const statLabelContainer = statContainer.querySelector('[class*="stat-label"]');
+			const statValueContainer = statContainer.querySelector('[class*="stat-value"]');
 
 			if (statLabelContainer && statValueContainer) {
 				stats.push({label: statLabelContainer.textContent, value: statValueContainer.textContent});
@@ -434,7 +428,8 @@
 	}
 
 	/* Process all existing feed entries. */
-	Array.from(document.querySelectorAll('[class*="Feed--entry-container"]')).forEach(processEntry);
+	const entrySelector = '[class*="FeedEntry__entry-container"]';
+	Array.from(document.querySelectorAll(entrySelector)).forEach(processEntry);
 
 	/* Process feed entries that are dynamically loaded (when scrolling to the
 	 * end of the feed or clicking the “Load more…” button).
@@ -447,10 +442,10 @@
 
 			Array.from(mutation.addedNodes)
 				.forEach(node => {
-					if (typeof node.matches === 'function' && node.matches('[class*="Feed--entry-container"]')) {
+					if (typeof node.matches === 'function' && node.matches(entrySelector)) {
 						processEntry(node);
 					} else if (typeof node.querySelectorAll === 'function') {
-						Array.from(node.querySelectorAll('[class*="Feed--entry-container"]')).forEach(processEntry);
+						Array.from(node.querySelectorAll(entrySelector)).forEach(processEntry);
 					}
 				});
 		});
