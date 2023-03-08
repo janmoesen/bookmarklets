@@ -1315,6 +1315,16 @@
 		tryToClick('section section section + section button[role="button"]', 'Reddit EU Cookie Policy toast');
 
 		/* -----------------------------------------------------------------
+		 * The Verge cookie banner.
+		 *
+		 * This selector ass-u-mes the “Reject all” button is meant *not* to
+		 * stand out with a different background color.
+		 *
+		 * E.g. https://www.theverge.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.duet--cta--cookie-banner * button:not([class*=" bg-"])', 'The Verge cookie banner');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
