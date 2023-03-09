@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'https://duckduckgo.com/?kv=1&q=' + encodeURIComponent(s);
+		location = 'https://duckduckgo.com/?ia=web&kv=1&q=' + encodeURIComponent(s);
 	}
 })();
