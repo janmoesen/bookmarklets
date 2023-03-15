@@ -226,9 +226,9 @@
 
 		const stats = [];
 
-		(firstActivityFromGroup || entry).querySelectorAll('[class*="list-stats"] > li').forEach(statContainer => {
-			const statLabelContainer = statContainer.querySelector('[class*="stat-label"]');
-			const statValueContainer = statContainer.querySelector('[class*="stat-value"]');
+		(firstActivityFromGroup || entry).querySelectorAll('[class*="list-stats"] > li, [class*="listStats"] > li').forEach(statContainer => {
+			const statLabelContainer = statContainer.querySelector('[class*="stat-label"], [class*="statLabel"]');
+			const statValueContainer = statContainer.querySelector('[class*="stat-value"], [class*="statValue"]');
 
 			if (statLabelContainer && statValueContainer) {
 				stats.push({label: statLabelContainer.textContent, value: statValueContainer.textContent});
