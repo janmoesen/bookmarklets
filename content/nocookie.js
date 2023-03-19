@@ -231,7 +231,7 @@
 		if (!tryToClick('.eu-cookie-compliance-banner .decline-button, .decline-button[class*="eu-cookie-compliance"]', 'Drupal')) {
 			const euCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
 			if (euCookieComplianceCategoryCheckboxes.length) {
-				euCookieComplianceCategoryCheckboxes.forEach(check => check.checked = false);
+				tryToUncheck(euCookieComplianceCategoryCheckboxes);
 				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button', 'Drupal');
 			}
 		}
@@ -356,14 +356,7 @@
 				'[data-cookiefirst-action="adjust"]',
 				'CookieFirst',
 				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					deepQuerySelectorAll('.cookiefirst-root [role="checkbox"][aria-checked="true"], .cookiefirst-root input[type="checkbox"]:checked').forEach(check => {
-						check.click();
-						check.checked = false;
-						check.setAttribute('aria-checked', 'false');
-					});
-
-					/* Save & exit. */
+					tryToUncheck('.cookiefirst-root [role="checkbox"][aria-checked="true"], .cookiefirst-root input[type="checkbox"]:checked');
 					tryToClick('[data-cookiefirst-action="save"]', 'CookieFirst');
 				}
 			);
@@ -376,12 +369,7 @@
 			'.fc-cta-manage-options',
 			'Google Funding Choices',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]').forEach(
-					check => check.checked = false
-				);
-
-				/* Save & exit. */
+				tryToUncheck('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]');
 				tryToClick('.fc-confirm-choices', 'Google Funding Choices');
 			}
 		);
