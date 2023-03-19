@@ -550,10 +550,7 @@
 			'.cc_dialog button.cc_b_cp, .cc_dialog .btn:not(.cc_b_ok_custom)',
 			'Free Privacy Policy',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.checkbox_cookie_consent').forEach(check => check.checked = false);
-
-				/* Save & exit. */
+				tryToUncheck('.checkbox_cookie_consent:checked');
 				tryToClick('.cc_cp_f_save button', 'Free Privacy Policy');
 			}
 		);
