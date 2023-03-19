@@ -509,7 +509,8 @@
 		/* -----------------------------------------------------------------
 		 * AdResults Cookie Script <https://adresults.nl/tools/cookie-script/>
 		 *
-		 * E.g. https://www.ekoplaza.nl/
+		 * E.g. https://adresults.nl/
+		 * E.g. https://www.ekoplaza.be/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'a[href="#"].cookie_tool_more, #cookie_tool_config',
@@ -522,6 +523,13 @@
 				tryToClick('.cookie_tool_submit', 'AdResults');
 			}
 		);
+
+		/* -----------------------------------------------------------------
+		 * Ekoplaza.nl Vue.js thing (no further info)
+		 *
+		 * E.g. https://www.ekoplaza.nl/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookie-box a.btn-plain[href="javascript:;"]', 'Ekoplaza.nl Vue.js thing');
 
 		/* -----------------------------------------------------------------
 		 * Free Privacy Policy’s Cookie Consent <https://www.freeprivacypolicy.com/free-cookie-consent/>
