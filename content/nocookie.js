@@ -396,22 +396,7 @@
 		 * E.g. https://www.yahoo.com/
 		 * E.g. https://techcrunch.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'#consent-page .manage-settings',
-			'Yahoo IAB',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				const iabCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('input[type="checkbox"][data-toggle-type="legit"], input[type="checkbox"][data-toggle-type="consent"]');
-				iabCookieComplianceCategoryCheckboxes.forEach(
-					check => check.checked = false
-				);
-
-				/* Save & exit. */
-				if (iabCookieComplianceCategoryCheckboxes.length) {
-					tryToClick('#consent-page button[name="agree"]', 'Yahoo IAB');
-				}
-			}
-		);
+		tryToClick('#consent-page button[name="reject"]', 'Yahoo IAB');
 
 		/* -----------------------------------------------------------------
 		 * Onetrust <https://www.onetrust.com/products/cookie-consent/>
