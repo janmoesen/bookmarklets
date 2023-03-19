@@ -1325,6 +1325,29 @@
 		tryToClick('.duet--cta--cookie-banner * button:not([class*=" bg-"])', 'The Verge cookie banner');
 
 		/* -----------------------------------------------------------------
+		 * Happy Socks cookie consent
+		 *
+		 * E.g. https://www.happysocks.com/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.cookies-consent-banner button.manage-settings',
+			'Happy Socks',
+			_ => {
+				/* Try the newly appeared “Only required cookies” button. */
+				if (!tryToClick('.cookies-consent-banner button.required-only', 'Happy Socks')) {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('.cookies-consent-banner input[type="checkbox"]:checked').forEach(check => {
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick('.cookies-consent-banner button.confirm', 'Happy Socks');
+				}
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
