@@ -658,14 +658,11 @@
 		 * E.g. https://wordpress.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
-			'.a8c-cookie-banner-customize-button',
+			'.a8c-cookie-banner__customize-button',
 			'Automattic',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.a8c-cookie-banner-options-selection input[type="checkbox"]').forEach(check => check.checked = false);
-
-				/* Save & exit. */
-				tryToClick('.a8c-cookie-banner-accept-selection-button', 'Automattic');
+				tryToUncheck('.a8c-cookie-banner__options-selection input[type="checkbox"]:checked');
+				tryToClick('.a8c-cookie-banner__accept-selection-button', 'Automattic');
 			}
 		);
 
