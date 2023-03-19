@@ -486,7 +486,7 @@
 		);
 
 		/* -----------------------------------------------------------------
-		 * Stad Gent cookie consent
+		 * Stad Gent cookie consent (a heavily modified Cybot Cookie Dialog)
 		 *
 		 * E.g. https://stad.gent/
 		 * ----------------------------------------------------------------- */
@@ -494,10 +494,7 @@
 			'#SG-CookieConsent--TogglePreferencesButton',
 			'Stad Gent',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.SG-CookieConsent--checkbox').forEach(check => check.checked = false);
-
-				/* Save & exit. */
+				tryToUncheck('input.SG-CookieConsent--checkbox[type="checkbox"]:checked');
 				tryToClick('#SG-CookieConsent--SavePreferencesButton', 'Stad Gent');
 			}
 		);
