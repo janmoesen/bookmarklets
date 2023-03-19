@@ -49,7 +49,7 @@
 		'22beeefea3b6f': 'Run',
 		'1d3a490877e643': 'TrailRun',
 		'c5b848e0a0e23': 'Hike',
-		'1986a6bb534033': 'Walk',
+		'cca03104f75a0': 'Walk',
 
 		'3d190f23f662a': 'Swim',
 
