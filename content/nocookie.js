@@ -229,11 +229,8 @@
 		 * E.g. https://www.warmshowers.org/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.eu-cookie-compliance-banner .decline-button, .decline-button[class*="eu-cookie-compliance"]', 'Drupal')) {
-			const euCookieComplianceCategoryCheckboxes = deepQuerySelectorAll('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]');
-			if (euCookieComplianceCategoryCheckboxes.length) {
-				tryToUncheck(euCookieComplianceCategoryCheckboxes);
-				tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button', 'Drupal');
-			}
+			tryToUncheck('.eu-cookie-compliance-categories input[type="checkbox"][name="cookie-categories"]:checked');
+			tryToClick('.eu-cookie-compliance-banner .eu-cookie-compliance-save-preferences-button', 'Drupal');
 		}
 
 		/* -----------------------------------------------------------------
@@ -408,12 +405,7 @@
 			'#onetrust-pc-btn-handler',
 			'Onetrust',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('#onetrust-consent-sdk input[type="checkbox"]').forEach(
-					check => check.checked = false
-				);
-
-				/* Save & exit. */
+				tryToUncheck('#onetrust-consent-sdk input[type="checkbox"]:checked');
 				tryToClick('.onetrust-close-btn-handler', 'Onetrust');
 			}
 		);
@@ -424,23 +416,12 @@
 		 * E.g. https://www.didomi.io/
 		 * E.g. https://www.oui.sncf/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'#didomi-notice-learn-more-button',
-			'Didomi',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi');
-
-				/* Save & exit. We need to wait a bit for the new first button to become available. */
-				setTimeout(_ => retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 250);
-			}
-		);
+		tryToClick('#didomi-notice-disagree-button, .didomi-continue-without-agreeing', 'Didomi');
 
 		/* -----------------------------------------------------------------
 		 * Quantcast
 		 *
-		 * E.g. https://road.cc/
-		 * E.g. https://www.bikeradar.com/
+		 * E.g. https://www.quantcast.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'.qc-cmp2-summary-buttons button[mode="secondary"]',
@@ -477,10 +458,7 @@
 			'[data-tracking-opt-in-learn-more="true"]',
 			'Fandom/Wikia',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]').forEach(check => check.checked = false);
-
-				/* Save & exit. */
+				tryToUncheck('[data-tracking-opt-in-overlay="true"] input[type="checkbox"]:checked');
 				retryToClick('[data-tracking-opt-in-save="true"]', 'Fandom/Wikia');
 			}
 		);
@@ -502,10 +480,7 @@
 			'.js-kmcc-extended-modal-button[data-target="legal_cookie_preferences"]',
 			'Kunstmaan Cookie Bar',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.kmcc-cookies-toggle-pp input[type="checkbox"]').forEach(check => check.checked = false);
-
-				/* Save & exit. */
+				tryToUncheck('.kmcc-cookies-toggle-pp input[type="checkbox"]:checked');
 				tryToClick('#kmcc-accept-some-cookies', 'Kunstmaan Cookie Bar');
 			}
 		);
