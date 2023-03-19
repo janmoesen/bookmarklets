@@ -614,40 +614,27 @@
 		tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll, #CybotCookiebotDialogBodyButtonDecline', 'Cybot');
 
 		/* -----------------------------------------------------------------
-		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
-		 *
-		 * E.g. https://www.immoweb.be/
-		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.uc-btn-more',
-			'UserCentrics (without Shadow DOM)',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.uc-category-row input[type="checkbox"]').forEach(check => check.checked = false);
-
-				/* Save & exit. */
-				retryToClick('.uc-save-settings-button', 'UserCentrics (without Shadow DOM)');
-			}
-		);
-
-		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (with Shadow DOM)
 		 *
 		 * E.g. https://usercentrics.com/
 		 * E.g. https://www.rosebikes.nl/
+		 * E.g. https://www.immoweb.be/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
-			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-customize-anchor"]'),
+			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-more-button"]'),
 			'UserCentrics (with Shadow DOM)',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelectorAll('button[role="switch"]').forEach(
-					check => (check.getAttribute('aria-checked') === 'true') && check.click()
-				);
-
-				/* Save & exit. */
-				retryToClick(deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-save-button"]'), 'UserCentrics (with Shadow DOM)');
-			}
+			/* Use `setTimeout` because `retryToClick` would be useless: we
+			 * cannot specify a selector string because of the shadow root,
+			 * and passing the *result* of `shadowRoot.querySelector` would
+			 * not get magically updated on the next try.
+			 *
+			 * A possible fix would be to allow specifying a (shadow) root
+			 * node for `retryToFix` and `tryToFix`, but that is more work
+			 * than this workaround.
+			 */
+			_ => setTimeout(_ => {
+				tryToClick(deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM)');
+			}, 250)
 		);
 
 		/* -----------------------------------------------------------------
