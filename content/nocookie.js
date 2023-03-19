@@ -577,31 +577,32 @@
 		/* -----------------------------------------------------------------
 		 * Ezoic CMP <https://www.ezoic.com/>
 		 *
-		 * E.g. https://www.ezoic.com/
-		 * E.g. https://www.sheldonbrown.com/
+		 * E.g. https://www.ezoic.com/ (has “Reject all” button)
+		 * E.g. https://www.sheldonbrown.com/ (only has “Configure” button)
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
-			'Ezoic',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+		if (!tryToClick('#ez-accept-necessary', 'Ezoic')) {
+			clickAndWaitOrDoItNow(
+				'#ez-manage-settings, [onclick*="handleShowDetails"], [onclick*="handleManageSettings"]',
+				'Ezoic',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					tryToUncheck('input[type="checkbox"].ez-cmp-checkbox:checked');
 
-				/* Do the same for all the vendors. */
-				clickAndWaitOrDoItNow(
-					'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
-					'Ezoic',
-					_ => {
-						deepQuerySelectorAll('input[type="checkbox"].ez-cmp-checkbox').forEach(check => check.checked = false);
+					/* Do the same for all the vendors. */
+					clickAndWaitOrDoItNow(
+						'#ez-show-vendors, [onclick*="savePurposesAndShowVendors"]',
+						'Ezoic',
+						_ => {
+							tryToUncheck('input[type="checkbox"].ez-cmp-checkbox:checked');
+							tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
+						}
+					);
 
-						tryToClick('#ez-save-settings, [onclick*="saveVendorsAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
-					}
-				);
-
-				/* Save & exit. */
-				retryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
-			}
-		);
+					/* Save & exit. */
+					retryToClick('#ez-save-settings, [onclick*="savePurposesAndExitModal"], [onclick*="handleSaveSettings"]', 'Ezoic');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Cybot Cookie Dialog
