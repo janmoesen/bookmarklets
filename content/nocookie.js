@@ -1348,6 +1348,37 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Borlabs Cookie
+		 *
+		 * E.g. https://borlabs.io/borlabs-cookie/
+		 * E.g. https://www.buchinger-wilhelmi.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('[data-cookie-refuse]', 'Borlabs Cookie')) {
+			clickAndWaitOrDoItNow(
+				'[data-cookie-individual]',
+				'Borlabs Cookie',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					deepQuerySelectorAll('[data-borlabs-cookie-switch]:checked').forEach(check => {
+						/* If this checkbox was toggled after clicking another checkbox
+						 * (e.g. a checkbox that represents entire group), don’t trigger
+						 * another click, as that would inadvertently re-check the box. */
+						if (check.checked === false) {
+							return;
+						}
+
+						check.click();
+						check.checked = false;
+					});
+
+					/* Save & exit. */
+					tryToClick('[data-cookie-accept]', 'Borlabs Cookie');
+				}
+			);
+
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
