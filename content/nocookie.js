@@ -502,22 +502,8 @@
 		/* -----------------------------------------------------------------
 		 * Osano Cookie Consent <https://www.osano.com/cookieconsent>
 		 *
-		 * E.g. https://www.pelotondeparis.cc/
+		 * E.g. https://www.osano.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.cc-btn.cc-settings',
-			'Osano',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.cc-settings-dialog input[type="checkbox"]').forEach(
-					check => check.checked = false
-				);
-
-				/* Save & exit. */
-				tryToClick('.cc-btn.cc-btn-accept-selected', 'Osano');
-			}
-		);
-
 		tryToClick('.osano-cm-denyAll, .osano-cm-button--type_denyAll', 'Osano');
 
 		/* -----------------------------------------------------------------
