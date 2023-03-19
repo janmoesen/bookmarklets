@@ -162,6 +162,60 @@
 		retrier();
 	}
 
+	/**
+	 * Uncheck the given checkboxes or the checkboxes matching the given
+	 * selector.
+	 */
+	function tryToUncheck(selectorOrElements) {
+		const elems = typeof selectorOrElements === 'string'
+			? deepQuerySelectorAll(selectorOrElements)
+			: selectorOrElements;
+
+		elems.forEach(check => {
+			/* Determine the label for each checkbox to include in the log. */
+			let labellingElement;
+			let labelText;
+
+			if (check.hasAttribute('aria-labelledby')) {
+				labellingElement = document.getElementById(check.getAttribute('aria-labelledby'));
+			}
+
+			if (!labellingElement && check.hasAttribute('id')) {
+				try {
+					labellingElement = document.querySelector(`label[for="${check.id}"]`);
+				} catch (e) {
+				}
+			}
+
+			if (!labellingElement) {
+				labellingElement = check.closest('label');
+			}
+
+			if (labellingElement) {
+				labelText = labellingElement.textContent.trim();
+			}
+
+			/* If this checkbox was toggled after clicking another checkbox
+			 * (e.g. a checkbox that represents entire group), don’t trigger
+			 * another click, as that would inadvertently re-check the box. */
+			if (check.checked === false) {
+				console.log(`nocookie: checkbox for “${labelText}” was already unchecked: `, check);
+				return;
+			}
+
+			/* Some elements are not actually checkboxes but CSOs (a.ka.
+			 * Checkbox-Shaped Objects™). They often have custom logic and
+			 * event handlers that requires them to be clicked to uncheck
+			 * them. To be on the safe side, set the `.checked` to `false`
+			 * anyway, even after clicking. */
+			console.log(`nocookie: unchecking checkbox for “${labelText}”: `, check);
+			check.click();
+			check.checked = false;
+			check.setAttribute('aria-checked', 'false');
+		});
+
+	}
+
 	/* ↙ In case you’re wondering about this brace: there used to be a
 	 * ↙ recursive function here, but the logic was changed. To prevent
 	 * ↙ useless source diff/blame, I simply left the indent of its original
