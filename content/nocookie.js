@@ -644,11 +644,11 @@
 		 * E.g. https://longreads.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
-			'.cmp__banner-buttons button.is-tertiary:first-child',
+			'.cmp__notice-buttons button.is-secondary:nth-child(2)',
 			'WordPress',
 			_ => {
 				/* Reject all possible cookies / object to all possible interests and personalization. */
-				retryToClick('.cmp__modal-footer-buttons button.is-secondary:nth-child(2)', 'WordPress');
+				retryToClick('.cmp__dialog-footer-buttons button.is-secondary:nth-child(2)', 'WordPress');
 			}
 		);
 
