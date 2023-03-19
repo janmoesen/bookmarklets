@@ -150,6 +150,12 @@
 			a.href = usp.get('url') ?? usp.get('q') ?? a.href;
 		},
 
+		/* Google Translate */
+		'a[href^="https://translate.google."][href*="/website?"][href*="u="]': a => {
+			const usp = new URLSearchParams(new URL(a.href).search);
+			a.href = usp.get('u') ?? a.href;
+		},
+
 		/* YouTube */
 		'a[href^="https://www.youtube.com/redirect?"][href*="q="]': a => {
 			let targetUri = new URLSearchParams(new URL(a.href).search)?.get('q');
