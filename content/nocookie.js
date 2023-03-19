@@ -195,6 +195,13 @@
 				labelText = labellingElement.textContent.trim();
 			}
 
+			if (typeof labelText === 'undefined' || labelText === '') {
+				labelText = `<${check.localName}` + ['name', 'value', 'id', 'class'].map(attrName => check.hasAttribute(attrName)
+					? ` ${attrName}="${check.getAttribute(attrName)}"`
+					: ''
+				).filter(_ => _).join('') + '>';
+			}
+
 			/* If this checkbox was toggled after clicking another checkbox
 			 * (e.g. a checkbox that represents entire group), don’t trigger
 			 * another click, as that would inadvertently re-check the box. */
