@@ -611,13 +611,7 @@
 		 * E.g. https://www.bridge.nl/
 		 * E.g. https://www.sncf.com/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll, #CybotCookiebotDialogBodyButtonDecline', 'Cybot')) {
-			const cybotAllowSelectionButton = deepQuerySelector('#CybotCookiebotDialogBodyLevelButtonLevelOptinAllowallSelection');
-			if (cybotAllowSelectionButton) {
-				deepQuerySelectorAll('.CybotCookiebotDialogBodyLevelButton').forEach(check => check.checked = false);
-				tryToClick(cybotAllowSelectionButton, 'Cybot');
-			}
-		}
+		tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll, #CybotCookiebotDialogBodyButtonDecline', 'Cybot');
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (without Shadow DOM)
