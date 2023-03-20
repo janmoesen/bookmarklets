@@ -176,23 +176,29 @@
 			let labellingElement;
 			let labelText;
 
-			if (check.hasAttribute('aria-labelledby')) {
-				labellingElement = document.getElementById(check.getAttribute('aria-labelledby'));
-			}
-
-			if (!labellingElement && check.hasAttribute('id')) {
-				try {
-					labellingElement = document.querySelector(`label[for="${check.id}"]`);
-				} catch (e) {
+			if (check.hasAttribute('aria-label')) {
+				labelText = check.getAttribute('aria-label');
+			} else if (check.hasAttribute('title')) {
+				labelText = check.getAttribute('title');
+			} else {
+				if (check.hasAttribute('aria-labelledby')) {
+					labellingElement = document.getElementById(check.getAttribute('aria-labelledby'));
 				}
-			}
 
-			if (!labellingElement) {
-				labellingElement = check.closest('label');
-			}
+				if (!labellingElement && check.hasAttribute('id')) {
+					try {
+						labellingElement = document.querySelector(`label[for="${check.id}"]`);
+					} catch (e) {
+					}
+				}
 
-			if (labellingElement) {
-				labelText = labellingElement.textContent.trim();
+				if (!labellingElement) {
+					labellingElement = check.closest('label');
+				}
+
+				if (labellingElement) {
+					labelText = labellingElement.textContent.trim();
+				}
 			}
 
 			if (typeof labelText === 'undefined' || labelText === '') {
