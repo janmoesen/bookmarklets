@@ -424,6 +424,7 @@
 		 * E.g. https://www.oui.sncf/
 		 * E.g. https://www.jobat.be/ (2023-03-20: still without “Deny all”)
 		 * E.g. https://www.zimmo.be/ (2023-03-20: still without “Deny all”)
+		 * E.g. https://www.rtbf.be/ (2023-03-20: still without “Deny all”)
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('#didomi-notice-disagree-button, .didomi-continue-without-agreeing', 'Didomi')) {
 			clickAndWaitOrDoItNow(
@@ -747,26 +748,10 @@
 		/* -----------------------------------------------------------------
 		 * SBFX CMP <https://sfbx.io/en/produits/>
 		 *
-		 * E.g. https://www.rtbf.be/
 		 * E.g. https://www.meteo-grenoble.com/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.frame-content .button__skip', 'SBFX CMP')) {
-			clickAndWaitOrDoItNow(
-				'.frame-content .button__openPrivacyCenter',
-				'SBFX CMP',
-				_ => {
-					clickAndWaitOrDoItNow(
-						/* Reject all possible cookies / object to all possible interests and personalization. */
-						'.frame-content .privacy__modalFooter a.link:first-of-type',
-						'SBFX CMP',
-						_ => {
-							/* Save & exit. */
-							tryToClick('.frame-content .saveSection button', 'SBFX CMP');
-						}
-					);
-				}
-			);
-		}
+		tryToClick('.frame-content .button__refuseAll, .frame-content .button__skip', 'SBFX AppConsent')
+			|| tryToClick('.frame-content button[aria-roledescription="link"]:only-child', 'SBFX AppConsent (brittle selector!)');
 
 		/* -----------------------------------------------------------------
 		 * Traffective Open CMP <https://opencmp.net/> (site not working 2022-01-16)
