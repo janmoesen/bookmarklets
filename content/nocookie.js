@@ -812,13 +812,7 @@
 			'[data-hook="consent-banner-root"] [data-hook="consent-banner-settings-button"]',
 			'Wix cookie consent banner',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('[data-hook="consent-banner-settings-container"] input[type="checkbox"]:checked').forEach(check => {
-					check.click();
-					check.checked = false;
-				});
-
-				/* Save & exit. */
+				tryToUncheck('[data-hook="consent-banner-settings-container"] input[type="checkbox"]:checked');
 				tryToClick('[data-hook="consent-banner-settings-container"] [data-hook="consent-banner-settings-save-button"]', 'Wix cookie consent banner');
 			}
 		);
