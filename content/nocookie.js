@@ -1241,15 +1241,9 @@
 			'Happy Socks',
 			_ => {
 				/* Try the newly appeared “Only required cookies” button. */
-				if (!tryToClick('.cookies-consent-banner button.required-only', 'Happy Socks')) {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					deepQuerySelectorAll('.cookies-consent-banner input[type="checkbox"]:checked').forEach(check => {
-						check.click();
-						check.checked = false;
-					});
-
-					/* Save & exit. */
-					tryToClick('.cookies-consent-banner button.confirm', 'Happy Socks');
+				if (!tryToClick('.cookies-consent-banner button.required-only, [name="advanced-cookie-consent"] button.required-only', 'Happy Socks')) {
+					tryToUncheck('.cookies-consent-banner input[type="checkbox"]:checked, [name="advanced-cookie-consent"] input[type="checkbox"]:checked');
+					tryToClick('.cookies-consent-banner button.confirm, [name="advanced-cookie-consent"] button.confirm', 'Happy Socks');
 				}
 			}
 		);
