@@ -653,7 +653,7 @@
 				 * not get magically updated on the next try.
 				 *
 				 * A possible fix would be to allow specifying a (shadow) root
-				 * node for `retryToFix` and `tryToFix`, but that is more work
+				 * node for `retryToClick` and `tryToClick`, but that is more work
 				 * than this workaround.
 				 */
 				_ => setTimeout(_ => {
