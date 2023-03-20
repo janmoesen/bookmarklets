@@ -1080,13 +1080,7 @@
 			'#bs-gdpr-cookies-modal-advanced-btn',
 			'bsgdprcookies',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('input[type="checkbox"][name="bsgdpr[]"]:checked').forEach(check => {
-					check.click();
-					check.checked = false;
-				});
-
-				/* Save & exit. */
+				tryToUncheck('input[type="checkbox"][name="bsgdpr[]"]:checked');
 				tryToClick('#bs-gdpr-cookies-modal-accept-btn', 'bsgdprcookies (save & exit)');
 			}
 		);
