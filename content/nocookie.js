@@ -818,6 +818,13 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Wix cookie consent banner (only used on Wix.com?)
+		 *
+		 * E.g. https://www.wix.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-hook="ccsu-banner-decline-all"]', 'Wix.com cookie consent');
+
+		/* -----------------------------------------------------------------
 		 * NitroPay CMP <https://nitropay.com/>
 		 *
 		 * E.g. https://scp-wiki.wikidot.com/
