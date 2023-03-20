@@ -642,22 +642,25 @@
 		 * E.g. https://www.rosebikes.nl/
 		 * E.g. https://www.immoweb.be/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-more-button"]'),
-			'UserCentrics (with Shadow DOM)',
-			/* Use `setTimeout` because `retryToClick` would be useless: we
-			 * cannot specify a selector string because of the shadow root,
-			 * and passing the *result* of `shadowRoot.querySelector` would
-			 * not get magically updated on the next try.
-			 *
-			 * A possible fix would be to allow specifying a (shadow) root
-			 * node for `retryToFix` and `tryToFix`, but that is more work
-			 * than this workaround.
-			 */
-			_ => setTimeout(_ => {
-				tryToClick(deepQuerySelector('#usercentrics-root')?.shadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM)');
-			}, 250)
-		);
+		const userCentricsShadowRoot = deepQuerySelector('#usercentrics-root')?.shadowRoot;
+		if (userCentricsShadowRoot) {
+			clickAndWaitOrDoItNow(
+				userCentricsShadowRoot.querySelector('button[data-testid="uc-more-button"]'),
+				'UserCentrics (with Shadow DOM)',
+				/* Use `setTimeout` because `retryToClick` would be useless: we
+				 * cannot specify a selector string because of the shadow root,
+				 * and passing the *result* of `shadowRoot.querySelector` would
+				 * not get magically updated on the next try.
+				 *
+				 * A possible fix would be to allow specifying a (shadow) root
+				 * node for `retryToFix` and `tryToFix`, but that is more work
+				 * than this workaround.
+				 */
+				_ => setTimeout(_ => {
+					tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM)');
+				}, 250)
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * WordPress cookie banner (not on the main domain, but on the hosted sites)
