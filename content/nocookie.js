@@ -897,19 +897,13 @@
 		 * Google Tag Manager “UXM” (2022-02-20: I could not find *any* info on this, WTF?)
 		 *
 		 * E.g. https://www.vlaamsparlement.be/
-		 * E.g. https://mca.be/nl/
+		 * E.g. https://mca.be/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'[href="#uxm-settings"]',
 			'Google Tag Manager UXM',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('input.uxm-toggle-input[type="checkbox"]:checked').forEach(check => {
-					check.click();
-					check.checked = false;
-				});
-
-				/* Save & exit. */
+				tryToUncheck('input.uxm-toggle-input[type="checkbox"]:checked');
 				tryToClick('#uxm-accept-custom', 'Google Tag Manager UXM');
 			}
 		);
