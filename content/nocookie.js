@@ -1361,6 +1361,19 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Piwik PRO Marketing Suite <https://piwik.pro/web-analytics/>
+		 *
+		 * E.g. https://piwik.pro/
+		 * E.g. https://www.ugent.be/
+		 * E.g. https://research.ugent.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'#ppms_cm_open-popup, .ppms_cm_open-popup_link',
+			'Piwik PRO Marketing Suite',
+			_ => tryToClick('#ppms_cm_reject-all, .ppms_cm_reject-all', 'Piwik PRO Marketing Suite')
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
