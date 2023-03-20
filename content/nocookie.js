@@ -763,28 +763,21 @@
 		 * E.g. https://www.mactechnews.de/
 		 * E.g. https://www.fliegermagazin.de/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.cmp_state-stacks .cmp_mainButtons .cmp_saveLink a',
-			'Open CMP',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				tryToClick('.cmp_activateAll a:last-of-type', 'Open CMP (deactivate consent)');
-
-				/* Do the same for the legitimate interests. */
-				if (tryToClick('.cmp_level1Container .cmp_levelItem:not(.cmp_active) *', 'Open CMP (go to legitimate interests tab)')) {
-					setTimeout(_ => {
-						deepQuerySelectorAll('.cmp_activateAll a:last-of-type').forEach((deselectAll, i) => {
-							tryToClick(deselectAll, `Open CMP (deactivate legitimate interests, #${i + 1})`);
-						});
-					}, 250);
-				}
-
-				/* Save & exit. */
-				setTimeout(_ => {
-					retryToClick('.cmp_state-settings .cmp_mainButtons .cmp_saveLink a, .cmp_state-legitimateInterests .cmp_mainButtons .cmp_saveLink a', 'Open CMP (save & exit)');
-				}, 500);
+		const openCmpShadowHost = document.querySelector('body > div.needsclick');
+		const openCmpShadowRoot = openCmpShadowHost?.shadowRoot;
+		if (openCmpShadowHost && !openCmpShadowRoot) {
+			let alreadyHasShadowRoot = false;
+			try {
+				openCmpShadowHost.attachShadow({mode: 'open'});
+			} catch (e) {
+				alreadyHasShadowRoot = true;
 			}
-		);
+
+			if (alreadyHasShadowRoot) {
+				console.log('nocookie: found Open CMP with closed shadow DOM; can’t access the options using JavaScript, so simply removing the shadow host (which is not remembered across page loads, unfortunately):', openCmpShadowHost);
+				openCmpShadowHost.remove();
+			}
+		}
 
 		/* -----------------------------------------------------------------
 		 * Mediavine GDPR CMP
