@@ -368,15 +368,19 @@
 
 		/* -----------------------------------------------------------------
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
+		 *
+		 * E.g. https://www.nme.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.fc-cta-manage-options',
-			'Google Funding Choices',
-			_ => {
-				tryToUncheck('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]');
-				tryToClick('.fc-confirm-choices', 'Google Funding Choices');
-			}
-		);
+		if (!tryToClick('.fc-cta-do-not-consent', 'Google Funding Choices')) {
+			clickAndWaitOrDoItNow(
+				'.fc-cta-manage-options',
+				'Google Funding Choices',
+				_ => {
+					tryToUncheck('.fc-preference-legitimate-interest, input[type="checkbox"][id*="egitimate"]:checked');
+					tryToClick('.fc-confirm-choices', 'Google Funding Choices');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Google’s own properties (not using their own Funding Choices…)
