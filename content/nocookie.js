@@ -1342,6 +1342,21 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * KBC/Cera cookie consent, a custom SiteCore module.
+		 *
+		 * E.g. https://www.cera.coop/
+		 * E.g. https://www.kbcancora.be/ (not kbc.be, though)
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'[data-component-class="Dlw.ScBase.Features.CookieConsentModule.CookieConsentModal"] .cookie-settings-open',
+			'KBC/Cera cookie consent',
+			_ => {
+				tryToUncheck('[data-component-class="Dlw.ScBase.Features.CookieConsentModule.CookieConsentModal"] input[type="checkbox"]:not([name="Consent"]):not([name="Functional"]):not([name="Analytics"]):checked');
+				tryToClick('[data-component-class="Dlw.ScBase.Features.CookieConsentModule.CookieConsentModal"] .cookie-save-button', 'KBC/Cera cookie consent');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
