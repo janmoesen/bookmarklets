@@ -422,8 +422,22 @@
 		 *
 		 * E.g. https://www.didomi.io/
 		 * E.g. https://www.oui.sncf/
+		 * E.g. https://www.jobat.be/ (2023-03-20: still without “Deny all”)
+		 * E.g. https://www.zimmo.be/ (2023-03-20: still without “Deny all”)
 		 * ----------------------------------------------------------------- */
-		tryToClick('#didomi-notice-disagree-button, .didomi-continue-without-agreeing', 'Didomi');
+		if (!tryToClick('#didomi-notice-disagree-button, .didomi-continue-without-agreeing', 'Didomi')) {
+			clickAndWaitOrDoItNow(
+				'#didomi-notice-learn-more-button',
+				'Didomi',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi');
+
+					/* Save & exit. We need to wait a bit for the new first button to become available. */
+					setTimeout(_ => retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 250);
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Quantcast
