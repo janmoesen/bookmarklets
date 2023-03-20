@@ -1312,20 +1312,7 @@
 				'[data-cookie-individual]',
 				'Borlabs Cookie',
 				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					deepQuerySelectorAll('[data-borlabs-cookie-switch]:checked').forEach(check => {
-						/* If this checkbox was toggled after clicking another checkbox
-						 * (e.g. a checkbox that represents entire group), don’t trigger
-						 * another click, as that would inadvertently re-check the box. */
-						if (check.checked === false) {
-							return;
-						}
-
-						check.click();
-						check.checked = false;
-					});
-
-					/* Save & exit. */
+					tryToUncheck('[data-borlabs-cookie-switch]:checked');
 					tryToClick('[data-cookie-accept]', 'Borlabs Cookie');
 				}
 			);
