@@ -968,13 +968,7 @@
 				'.ccc-notify-link, #ccc-icon:not([aria-expanded="true"])',
 				'Cookie Control by CIVIC',
 				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					deepQuerySelectorAll('#ccc-content input[type="checkbox"]:checked').forEach(check => {
-						check.click();
-						check.checked = false;
-					});
-
-					/* Save & exit. */
+					tryToUncheck('#ccc-content input[type="checkbox"]:checked');
 					tryToClick('#ccc-dismiss-button, #ccc-close', 'Cookie Control by CIVIC (save & exit)');
 				}
 			);
