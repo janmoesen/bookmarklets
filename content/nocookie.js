@@ -853,28 +853,33 @@
 		 * (A custom Drupal module for their customers only, it seems.)
 		 *
 		 * It is always the first button in the pop-up that we want to click,
-		 * so it does not matter which of the four states the pop-up is in
-		 * when this code executes:
-		 * - intro with “More info” button,
-		 * - step 1/3 (functional/required cookies) and only a “Next” button,
-		 * - step 2/3 (analytical cookies) with a “Decline” and a “Next” button,
-		 * - step 3/3 (thank you message) with with a “Close” button,
+		 * so it does not matter which step the pop-up is in when this code
+		 * executes:
+		 * - step 0: intro with “More info” button,
+		 * - step 1: (functional/required cookies) and only a “Next” button,
+		 * - step 2: (analytical cookies) with a “Decline” and a “Next” button,
+		 * - step …: (optional other cookies) with a “Decline” and a “Next” button,
+		 * - step N (thank you message) with with a “Close” button.
 		 *
-		 * E.g. https://www.mskgent.be/
+		 * E.g. https://www.gondola.be/
+		 * E.g. https://www.the500hiddensecrets.com/
+		 * E.g. https://www.joker.be/
+		 * E.g. https://www.fara.be/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.cookie-notice-portal .cookie-notice__footer button:first-child',
-			'Wieni cookie notice (1/3)',
-			_ => clickAndWaitOrDoItNow(
-				'.cookie-notice-portal .cookie-notice__footer button:first-child',
-				'Wieni cookie notice (2/3)',
-				_ => clickAndWaitOrDoItNow(
-					'.cookie-notice-portal .cookie-notice__footer button:first-child',
-					'Wieni cookie notice (3/3)',
-					_ => tryToClick('.cookie-notice-portal .cookie-notice__footer button:first-child', 'Wieni cookie notice (close)')
-				)
-			)
-		);
+		let wieniCurrStep = 0;
+		let wieniMaxSteps = 10;
+		const wieniButtonSelector = '.cookie-notice .cookie-notice__footer button:first-child';
+		function recursivelyClickWieniButtons() {
+			if (
+				tryToClick(wieniButtonSelector, `Wieni cookie notice (step ${wieniCurrStep})`)
+			) {
+				wieniCurrStep++;
+				if (wieniCurrStep < wieniMaxSteps) {
+					setTimeout(recursivelyClickWieniButtons, 125);
+				}
+			}
+		}
+		recursivelyClickWieniButtons();
 
 		/* -----------------------------------------------------------------
 		 * Google Tag Manager “UXM” (2022-02-20: I could not find *any* info on this, WTF?)
