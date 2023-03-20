@@ -1274,6 +1274,13 @@
 		tryToClick('.duet--cta--cookie-banner * button:not([class*=" bg-"])', 'The Verge cookie banner');
 
 		/* -----------------------------------------------------------------
+		 * Instagram cookie dialog
+		 *
+		 * E.g. https://www.instagram.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[style*="--tos-box"] [role="dialog"] button[tabindex]', 'Instagram cookie dialog');
+
+		/* -----------------------------------------------------------------
 		 * Happy Socks cookie consent
 		 *
 		 * E.g. https://www.happysocks.com/
