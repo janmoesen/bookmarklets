@@ -408,14 +408,16 @@
 		 * E.g. https://www.onetrust.com/
 		 * E.g. https://www.booking.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'#onetrust-pc-btn-handler',
-			'Onetrust',
-			_ => {
-				tryToUncheck('#onetrust-consent-sdk input[type="checkbox"]:checked');
-				tryToClick('.onetrust-close-btn-handler', 'Onetrust');
-			}
-		);
+		if (!tryToClick('#onetrust-reject-all-handler', 'Onetrust')) {
+			clickAndWaitOrDoItNow(
+				'#onetrust-pc-btn-handler',
+				'Onetrust',
+				_ => {
+					tryToUncheck('#onetrust-consent-sdk input[type="checkbox"]:checked');
+					tryToClick('.onetrust-close-btn-handler', 'Onetrust');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Didomi
