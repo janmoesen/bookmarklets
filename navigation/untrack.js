@@ -122,7 +122,7 @@
 	/* Link redirectors in the form 'CSS selector': handlerFunction(element). */
 	const linkRedirectors = {
 		/* Facebook */
-		'a[href^="https://l.facebook.com/l.php?"]': a => {
+		'a[href^="https://l.facebook.com/l.php?"], a[href^="https://lm.facebook.com/l.php?"]': a => {
 			/* Facebook’s `l.php` takes the original URI in the `u` query string parameter. We do not care about the checksum or other parameters. */
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
 		},
