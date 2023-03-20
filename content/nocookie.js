@@ -1099,13 +1099,7 @@
 			'.as-m-popover .as-a-btn--link:last-child:not(:only-child)',
 			'Yonderland group cookie message',
 			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				deepQuerySelectorAll('.as-m-popover input[type="checkbox"][name="cookie-group"]:checked').forEach(check => {
-					check.click();
-					check.checked = false;
-				});
-
-				/* Save & exit. */
+				tryToUncheck('.as-m-popover input[type="checkbox"][name="cookie-group"]:checked');
 				tryToClick('.as-m-popover .as-m-group .as-a-btn', 'Yonderland group cookie message (save & exit)');
 			}
 		);
