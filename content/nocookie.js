@@ -693,19 +693,7 @@
 		 *
 		 * E.g. https://stackoverflow.com/questions
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.js-consent-banner .js-reject-cookies', 'Stack Exchange')) {
-			clickAndWaitOrDoItNow(
-				'.js-consent-banner .js-cookie-settings',
-				'Stack Exchange',
-				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					deepQuerySelectorAll('input[type="checkbox"].js-editor-toggle-state.category-switch-handler').forEach(check => check.checked = false);
-
-					/* Save & exit. */
-					setTimeout(_ => retryToClick('.js-consent-save', 'Stack Exchange'), 500);
-				}
-			);
-		}
+		tryToClick('.js-consent-banner .js-reject-cookies', 'Stack Exchange');
 
 		/* -----------------------------------------------------------------
 		 * Pon Bike (“Pee on bike”? Triathletes, tsss…) Group cookie pop-up
