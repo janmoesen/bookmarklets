@@ -1257,6 +1257,7 @@
 		 *
 		 * E.g. https://borlabs.io/borlabs-cookie/
 		 * E.g. https://www.buchinger-wilhelmi.com/
+		 * E.g. https://www.erlebnisberg-hoherodskopf.de/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('[data-cookie-refuse]', 'Borlabs Cookie')) {
 			clickAndWaitOrDoItNow(
