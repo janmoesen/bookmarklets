@@ -1302,6 +1302,13 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * mynexuzhealth cookie “app” (some Schmangular thing)
+		 *
+		 * E.g. https://mynexuz.be/ (requires login)
+		 * ----------------------------------------------------------------- */
+		tryToClick('app-cookies button:not(.btn-primary)', 'mynexuzhealth');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
