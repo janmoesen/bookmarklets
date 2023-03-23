@@ -40,6 +40,13 @@
 		 * E.g. https://www.telegraph.co.uk/
 		 */
 		'iframe[src^="https://tcf2.telegraph.co.uk/"]',
+
+		/* “No Jazz”, whatever that may be. Used by Van Dale, possibly
+		 * others. <https://nojazz.eu/nl/zaynabstestcmp/consentui>
+		 *
+		 * E.g. https://www.vandale.nl/
+		 */
+		'iframe[src^="https://nojazz.eu/"]',
 	];
 	const probableExternalConsentManagerIframeUris = [];
 	const probableExternalConsentManagerIframes = [];
