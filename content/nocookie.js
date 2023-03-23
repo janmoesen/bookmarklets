@@ -1354,6 +1354,16 @@
 		tryToClick('.pd-cp-ui-rejectAll', 'Pandectes (another version)');
 
 		/* -----------------------------------------------------------------
+		 * Nine O’Clock Somewhere cookie consent
+		 *
+		 * E.g. https://www.nineoclocksomewhe.re/
+		 * E.g. https://www.wanda.be/
+		 * E.g. https://www.rodekruis.be/
+		 * E.g. https://eurogarant.be/nl
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cookieconsent-btn.accept-necessary, form[action*="/api/cookies/"] .btn-accept-necessary, #cookieconsent-banner-accept-necessary-button', 'Nine O’Clock Somewhere cookie consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
