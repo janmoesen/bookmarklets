@@ -969,14 +969,17 @@
 		 *
 		 * E.g. https://www.civicuk.com/
 		 * E.g. https://www.mottmac.com/
+		 * E.g. https://www.nacro.org.uk/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('#ccc-notify-reject', 'Cookie Control by CIVIC')) {
+		if (!tryToClick('#ccc-notify-reject, #ccc-reject-settings', 'Cookie Control by CIVIC')) {
 			clickAndWaitOrDoItNow(
 				'.ccc-notify-link, #ccc-icon:not([aria-expanded="true"])',
 				'Cookie Control by CIVIC',
 				_ => {
-					tryToUncheck('#ccc-content input[type="checkbox"]:checked');
-					tryToClick('#ccc-dismiss-button, #ccc-close', 'Cookie Control by CIVIC (save & exit)');
+					if (!tryToClick('#ccc-notify-reject, #ccc-reject-settings', 'Cookie Control by CIVIC')) {
+						tryToUncheck('#ccc-content input[type="checkbox"]:checked');
+						tryToClick('#ccc-dismiss-button, #ccc-close', 'Cookie Control by CIVIC (save & exit)');
+					}
 				}
 			);
 		}
