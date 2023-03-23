@@ -181,6 +181,25 @@ cat <<EOD
 EOD
 } > bookmarks.html;
 
+# Create a separate version of the bookmarks HTML file without support for
+# parameters (`%s`) for inferior browsers.
+#
+# Safari can’t handle `%s` in bookmarklets, and completely refuses to execute
+# them. My guess it does not see `%s` as a placeholder, but as an invalid
+# (non-URL-encoded) part of a URL.
+#
+# Chrome automatically converts bookmarklets with a `%s` into custom search
+# engines, but they are inactive by default. You need to activate them in the
+# settings. Even then, they are not as useful as in Firefox: when you use the
+# keyword without a parameter (so not `vidspeed 1.33` but just `vidspeed`), it
+# refuses to execute, instead of letting the prompt fallback code ask for a
+# parameter. Sigh.
+#
+# Bookmarklets without a `%s` get added as normal bookmarks in Chrome, but you
+# cannot execute them using the keyword. So no `read` or `nocookie` or `2comm`,
+# for instance. Sigh-the-sequel.
+sed 's/%s//g' bookmarks.html > bookmarks-without-parameters.html;
+
 # I keep a symlink to bookmarks.html in my Downloads directory so I can quickly
 # import it from Firefox's bookmarks manager. My Downloads directory is set to
 # display the most recently modified files first, so if I update the symlink's
