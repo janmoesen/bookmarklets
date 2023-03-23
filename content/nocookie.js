@@ -1365,6 +1365,13 @@
 		tryToClick('.cookieconsent-btn.accept-necessary, form[action*="/api/cookies/"] .btn-accept-necessary, #cookieconsent-banner-accept-necessary-button', 'Nine O’Clock Somewhere cookie consent');
 
 		/* -----------------------------------------------------------------
+		 * Futurumshop.nl cookie dialog
+		 *
+		 * E.g. https://www.bol.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.js_cookie-bar__decline', 'Futurumshop.nl');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
