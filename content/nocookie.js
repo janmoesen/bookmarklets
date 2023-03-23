@@ -327,13 +327,6 @@
 		tryToClick('#hs-eu-decline-button', 'HubSpot');
 
 		/* -----------------------------------------------------------------
-		 * NewScientist.nl cookie compliance
-		 *
-		 * E.g. https://www.newscientist.nl/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cc-compliance .cc-dismiss', 'NewScientist.nl');
-
-		/* -----------------------------------------------------------------
 		 * Nimbu (Zenjoy) cookie consent bar <https://www.nimbu.io/>
 		 *
 		 * E.g. https://www.zenjoy.be/
