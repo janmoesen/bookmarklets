@@ -1339,6 +1339,21 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Shopify (main site)
+		 *
+		 * E.g. https://www.shopify.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-component-name="cookie-active-consent-notice"] [data-component-name="reject"]', 'Shopify');
+
+		/* -----------------------------------------------------------------
+		 * Pandectes for Shopify <https://pandectes.io/>
+		 *
+		 * E.g. https://pandectes.myshopify.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cc-btn.cc-deny', 'Pandectes (one version)');
+		tryToClick('.pd-cp-ui-rejectAll', 'Pandectes (another version)');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
