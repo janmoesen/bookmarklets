@@ -1331,6 +1331,20 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Fluvius cookie dialog
+		 *
+		 * E.g. https://mijn-meterstanden.fluvius.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'#fluv-cookies-button-goto-preferences',
+			'Fluvius cookie dialog',
+			_ => {
+				tryToUncheck('input[type="checkbox"][id^="fluv-cookies-checkbox"]:checked');
+				tryToClick('#fluv-cookies-button-accept-preferences', 'Fluvius cookie dialog');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
