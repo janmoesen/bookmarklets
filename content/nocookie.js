@@ -1270,7 +1270,6 @@
 					tryToClick('[data-cookie-accept]', 'Borlabs Cookie');
 				}
 			);
-
 		}
 
 		/* -----------------------------------------------------------------
@@ -1307,6 +1306,26 @@
 		 * E.g. https://mynexuz.be/ (requires login)
 		 * ----------------------------------------------------------------- */
 		tryToClick('app-cookies button:not(.btn-primary)', 'mynexuzhealth');
+
+		/* -----------------------------------------------------------------
+		 * Moove GDPR Cookie Compliance <https://wordpress.org/plugins/gdpr-cookie-compliance/>
+		 *
+		 * E.g. https://www.mooveagency.com/wordpress/gdpr-cookie-compliance-plugin/
+		 * E.g. https://www.mrisoftware.com/
+		 * E.g. https://www.aptitudesoftware.com/
+		 * E.g. https://www.teneo.net/
+		 * E.g. https://pearlsfoodmarket.be/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('.moove-gdpr-infobar-reject-btn', 'Moove GDPR Cookie Compliance')) {
+			clickAndWaitOrDoItNow(
+				'.moove-gdpr-infobar-settings-btn, #moove_gdpr_save_popup_settings_button, [data-href="#moove_gdpr_cookie_modal"]',
+				'Moove GDPR Cookie Compliance',
+				_ => {
+					tryToUncheck('input[type="checkbox"][name^="moove_gdpr"]:not(#moove_gdpr_strict_cookies):checked');
+					tryToClick('.moove-gdpr-modal-save-settings', 'Moove GDPR Cookie Compliance');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
