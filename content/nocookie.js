@@ -651,8 +651,9 @@
 		 * E.g. https://www.cybot.com/
 		 * E.g. https://www.bridge.nl/
 		 * E.g. https://www.sncf.com/
+		 * E.g. https://www.velux.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll, #CybotCookiebotDialogBodyButtonDecline', 'Cybot');
+		tryToClick('#CybotCookiebotDialogBodyLevelButtonLevelOptinDeclineAll, #CybotCookiebotDialogBodyButtonDecline, #CybotCookiebotDialogBodyLevelButtonDecline', 'Cybot');
 
 		/* -----------------------------------------------------------------
 		 * UserCentrics Consent Management Platform <https://usercentrics.com/> (with Shadow DOM)
