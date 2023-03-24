@@ -7,6 +7,9 @@
  * sports and winter sports, Zwift sessions, people joining clubs or
  * challenges, …
  *
+ * On individual activity pages, hide segment efforts that are either too short
+ * or not “climby” enough.
+ *
  * @title Hide Strava pollution
  */
 (function shide() {
@@ -35,6 +38,40 @@
 
 	function calculateHash(str) {
 		return cyrb53(str).toString(16);
+	}
+
+	/**
+	 * Return the float of a string like `1.23 km`. The unit suffix is
+	 * required for this function.
+	 */
+	function parseDistance(str) {
+		const matches = str.match(/\b([0-9]+([.,][0-9]*))\s*km\s*$/);
+		if (matches) {
+			return parseFloat(matches[1].replace(',', '.'));
+		}
+	}
+
+	/**
+	 * Return the float of a string like `123 m`. The unit suffix is
+	 * required for this function.
+	 */
+	function parseElevation(str) {
+		const matches = str.match(/\b(-?([0-9]+,)*[0-9]+)\s*m\s*$/);
+		if (matches) {
+			return parseFloat(matches[1].replace(/,/g, ''));
+		}
+	}
+
+	/**
+	 * Return the float of a string like `12.3%`. The percentage sign is
+	 * required for this function.
+	 */
+	function parseGradient(str) {
+		const matches = str.match(/(?:^| )(-?[0-9]+([.,][0-9]+)?)s*%\s*$/);
+		if (matches) {
+			return parseFloat(matches[1].replace(',', '.'));
+		}
+		else console.log({str, matches});
 	}
 
 	const svgHashesToActivityTypes = {
@@ -242,16 +279,16 @@
 
 			/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
 			if (label.match(/^(distan|afstand|distância)/i)) {
-				let matches = value.match(/\b([0-9]+([.,][0-9]*))\s*km\s*$/);
-				if (matches) {
+				const parsedValue = parseDistance(value);
+				if (Number.isFinite(parsedValue)) {
 					hasDistanceInKm = true;
-					distanceInKm = parseFloat(matches[1].replace(',', '.'));
+					distanceInKm = parsedValue;
 				}
 			} else if (label.match(/^(elev\S* gain|hoogteverschil|höhenmeter|desnivel|dislivello|ganho de elevação)/i)) {
-				let matches = value.match(/\b(([0-9]+,)*[0-9]+)\s*m\s*$/);
-				if (matches) {
+				const parsedValue = parseElevation(value);
+				if (Number.isFinite(parsedValue)) {
 					hasElevationInM = true;
-					elevationInM = parseFloat(matches[1].replace(/,/g, ''));
+					elevationInM = parsedValue;
 				}
 			} else if (label.match(/^(time|tijd|zeit|tiempo|tempo)/i)) {
 				let tmpDurationInS = 0;
@@ -465,5 +502,43 @@
 		if (notification.textContent.trim().match(/\bkudos\b/i)) {
 			notification.classList.add('xxxJanStravaHidden');
 		}
+	});
+
+	/* Hide segments on individual activity pages that are either too short or
+	* too flat. */
+	document.querySelectorAll('tr[data-segment-effort-id]').forEach(tr => {
+		const [distanceElement, elevationElement, averageGradientElement] = tr.querySelectorAll('.stats > span');
+		const distanceInKm = parseDistance(distanceElement.textContent);
+		const elevationInM = parseElevation(elevationElement.textContent);
+		const gradientPercentage = parseGradient(averageGradientElement.textContent);
+
+		/* Top 10 results are always interesting. */
+		if (tr.querySelector('[class*="icon-at-kom-"]')) {
+			tr.title = `shide: Not hiding, because a top 10 result: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+			return;
+		}
+
+		/* Categorized climbs are always interesting. */
+		if (tr.querySelector('td.climb-cat-col:not(:empty)')) {
+			tr.title = `shide: Not hiding, because a categorized climb: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+			return;
+		}
+
+		if (
+			(distanceInKm >= 10)
+			|| (distanceInKm >= 5 && gradientPercentage >= 2)
+			|| (distanceInKm >= 0.75 && gradientPercentage >= 3)
+			|| (distanceInKm >= 0.50 && gradientPercentage >= 6)
+		) {
+			tr.title = `shide: Not hiding because steep and/or long enough: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+			return;
+		}
+
+		tr.title = `shide: Hiding because not interesting: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+		tr.classList.add('xxxJanStravaHidden');
+
+		/* To permanently hide the segment, click the button provided by Strava:
+		 * tr.querySelector('[data-action="hide"]')?.click();
+		 * But that causes a LOT of network requests, obviously. */
 	});
 })();
