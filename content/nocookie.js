@@ -1135,13 +1135,6 @@
 		}
 
 		/* -----------------------------------------------------------------
-		 * IAB (Interactive Advertising Bureau) CMP
-		 *
-		 * E.g. https://slashdot.org/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cmpboxbtnno', 'IAB');
-
-		/* -----------------------------------------------------------------
 		 * GRRR Cookie Consent dialog <https://github.com/grrr-amsterdam/cookie-consent>
 		 *
 		 * E.g. https://www.horstartsandmusic.com/
@@ -1379,6 +1372,46 @@
 		 * E.g. https://www.thenation.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.st-cmp-permanent-footer-nav-buttons .st-button:nth-of-type(2) span', 'The Nation');
+
+		/* -----------------------------------------------------------------
+		 * Consent Manager Provider <https://www.consentmanager.net/>
+		 *
+		 * This is the version without Shadow DOM.
+		 *
+		 * E.g. https://slashdot.org/
+		 * E.g. https://www.allgemeine-zeitung.de/ (without AND with Shadow DOM)
+		 * E.g. https://www.reviersport.de/
+		 * E.g. https://www.deutschesee.de/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('.cmpboxbtnno', 'Consent Manager Provider (without Shadow DOM)')) {
+			clickAndWaitOrDoItNow(
+				'#cmpbox .cmptxt_btn_settings',
+				'Consent Manager Provider (without Shadow DOM)',
+				_ => {
+					tryToUncheck('#cmpbox [role="checkbox"][aria-checked="true"]');
+					tryToClick('#cmpbox .cmptxt_btn_save', 'Consent Manager Provider (without Shadow DOM)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
+		 * Consent Manager Provider <https://www.consentmanager.net/>
+		 *
+		 * This is the version with Shadow DOM.
+		 *
+		 * E.g. https://www.wielerflits.nl/
+		 * ----------------------------------------------------------------- */
+		const cmpShadowRoot = deepQuerySelector('#cmpwrapper')?.shadowRoot;
+		if (cmpShadowRoot && !tryToClick(cmpShadowRoot.querySelector('.cmpboxbtnno'), 'Consent Manager Provider (with Shadow DOM)')) {
+			clickAndWaitOrDoItNow(
+				cmpShadowRoot.querySelector('.cmptxt_btn_settings'),
+				'Consent Manager Provider (with Shadow DOM)',
+				_ => {
+					tryToUncheck(cmpShadowRoot.querySelectorAll('[role="checkbox"][aria-checked="true"]'));
+					tryToClick(cmpShadowRoot.querySelector('.cmptxt_btn_save'), 'Consent Manager Provider (with Shadow DOM)');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
