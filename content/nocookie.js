@@ -1372,6 +1372,15 @@
 		tryToClick('.js_cookie-bar__decline', 'Futurumshop.nl');
 
 		/* -----------------------------------------------------------------
+		 * The Nation consent dialog
+		 *
+		 * Something custom based on IAB TCF? (It’s using consensu.org.)
+		 *
+		 * E.g. https://www.thenation.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.st-cmp-permanent-footer-nav-buttons .st-button:nth-of-type(2) span', 'The Nation');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
