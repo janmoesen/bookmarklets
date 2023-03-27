@@ -1382,6 +1382,7 @@
 		 * E.g. https://www.allgemeine-zeitung.de/ (without AND with Shadow DOM)
 		 * E.g. https://www.reviersport.de/
 		 * E.g. https://www.deutschesee.de/
+		 * E.g. https://www.auswandererforum.de/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.cmpboxbtnno', 'Consent Manager Provider (without Shadow DOM)')) {
 			clickAndWaitOrDoItNow(
@@ -1400,6 +1401,7 @@
 		 * This is the version with Shadow DOM.
 		 *
 		 * E.g. https://www.wielerflits.nl/
+		 * E.g. https://www.consentmanager.net/
 		 * ----------------------------------------------------------------- */
 		const cmpShadowRoot = deepQuerySelector('#cmpwrapper')?.shadowRoot;
 		if (cmpShadowRoot && !tryToClick(cmpShadowRoot.querySelector('.cmpboxbtnno'), 'Consent Manager Provider (with Shadow DOM)')) {
