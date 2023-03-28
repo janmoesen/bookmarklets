@@ -19,6 +19,7 @@
 		'gclid',
 		'dclid',
 		'_ga',
+		'_gl',
 
 		 /* Facebook */
 		'fbclid',
