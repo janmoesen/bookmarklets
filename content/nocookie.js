@@ -1416,6 +1416,15 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * Mapillary cookie consent
+		 *
+		 * A Facebook property since 2013, and it seems to use some Facebook JS (Falco), too.
+		 *
+		 * E.g. https://www.mapillary.com/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-testid="cookie-policy-banner-accept"]', 'Mapillary cookie consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
