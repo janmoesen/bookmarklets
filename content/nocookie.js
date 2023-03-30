@@ -1425,6 +1425,68 @@
 		tryToClick('[data-testid="cookie-policy-banner-accept"]', 'Mapillary cookie consent');
 
 		/* -----------------------------------------------------------------
+		 * Axeptio <https://www.axeptio.eu/>
+		 *
+		 * Some sites (e.g. PrestaShop) have several steps for the
+		 * configuration, like the Wieni cookie notice.
+		 *
+		 * E.g. https://www.axeptio.eu/
+		 * E.g. https://www.prestashop.com/
+		 * E.g. https://www.ulule.com/
+		 * ----------------------------------------------------------------- */
+		if (!tryToClick('#axeptio_btn_dismiss', 'Axeptio')) {
+			clickAndWaitOrDoItNow(
+				'#axeptio_btn_configure',
+				'Axeptio',
+				_ => {
+					let axeptioCurrStep = 0;
+					let axeptioMaxSteps = 10;
+					const axeptioButtonSelector = '#axeptio_btn_next';
+					const axeptioCheckboxSelector = '#axeptio_overlay [role="checkbox"][aria-checked="true"]';
+					const axeptioCheckboxHoldersProcessed = new WeakMap();
+
+					function repeatedlyClickAxeptioButtons() {
+						axeptioCurrStep++;
+
+						/* Not only does Axeptio not use standard `<input * type="checkbox"…>`
+						 * checkboxes, it also does not place the click handler on those fake
+						 * checkbox elements, so we need to travel through the DOM
+						 * a bit. */
+						const axeptioCheckboxes = deepQuerySelectorAll(axeptioCheckboxSelector);
+						axeptioCheckboxes.forEach(checkbox => {
+							/* We need to check again because there are *two* `[role="checkbox"]`
+							 * elements for every fake “checkbox”, and clicking one toggles the
+							 * other, so clicking twice effectively is a no-op. */
+							if (!checkbox.matches(axeptioCheckboxSelector)) {
+								return;
+							}
+
+							const axeptioCheckboxHolder = checkbox.closest('.ListSwitch__Item')?.querySelector('.ListSwitch__Vendor');
+
+							/* More checks to avoid duplicate clicks. */
+							if (!axeptioCheckboxHolder || axeptioCheckboxHoldersProcessed.get(axeptioCheckboxHolder)) {
+								return;
+							}
+
+							axeptioCheckboxHoldersProcessed.set(axeptioCheckboxHolder, true);
+
+							tryToClick(axeptioCheckboxHolder, `Axeptio (step ${axeptioCurrStep}) fake checkbox holder`);
+						});
+
+						if (
+							tryToClick(axeptioButtonSelector, `Axeptio (step ${axeptioCurrStep})`)
+						) {
+							if (axeptioCurrStep < axeptioMaxSteps) {
+								setTimeout(repeatedlyClickAxeptioButtons, 125);
+							}
+						}
+					}
+					repeatedlyClickAxeptioButtons();
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
