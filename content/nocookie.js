@@ -1441,9 +1441,11 @@
 				_ => {
 					let axeptioCurrStep = 0;
 					let axeptioMaxSteps = 10;
-					const axeptioButtonSelector = '#axeptio_btn_next';
+					const axeptioNextButtonSelector = '#axeptio_btn_next';
+					const axeptioNextButtonsClicked = new WeakMap();
+
 					const axeptioCheckboxSelector = '#axeptio_overlay [role="checkbox"][aria-checked="true"]';
-					const axeptioCheckboxHoldersProcessed = new WeakMap();
+					const axeptioCheckboxHoldersClicked = new WeakMap();
 
 					function repeatedlyClickAxeptioButtons() {
 						axeptioCurrStep++;
@@ -1464,18 +1466,27 @@
 							const axeptioCheckboxHolder = checkbox.closest('.ListSwitch__Item')?.querySelector('.ListSwitch__Vendor');
 
 							/* More checks to avoid duplicate clicks. */
-							if (!axeptioCheckboxHolder || axeptioCheckboxHoldersProcessed.get(axeptioCheckboxHolder)) {
+							if (!axeptioCheckboxHolder || axeptioCheckboxHoldersClicked.get(axeptioCheckboxHolder)) {
 								return;
 							}
 
-							axeptioCheckboxHoldersProcessed.set(axeptioCheckboxHolder, true);
+							axeptioCheckboxHoldersClicked.set(axeptioCheckboxHolder, true);
 
 							tryToClick(axeptioCheckboxHolder, `Axeptio (step ${axeptioCurrStep}) fake checkbox holder`);
 						});
 
+						/* Avoid duplicate clicks on the “Next” button when it is in fact the “Done”
+						 * button and is still available while the dialog is sliding out of view. */
+						const axeptioNextButton = deepQuerySelector(axeptioNextButtonSelector);
+						if (!axeptioNextButton || axeptioNextButtonsClicked.get(axeptioNextButton)) {
+							return;
+						}
+
 						if (
-							tryToClick(axeptioButtonSelector, `Axeptio (step ${axeptioCurrStep})`)
+							tryToClick(axeptioNextButton, `Axeptio (step ${axeptioCurrStep})`)
 						) {
+							axeptioNextButtonsClicked.set(axeptioNextButton, true);
+
 							if (axeptioCurrStep < axeptioMaxSteps) {
 								setTimeout(repeatedlyClickAxeptioButtons, 125);
 							}
