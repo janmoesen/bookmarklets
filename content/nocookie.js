@@ -376,6 +376,7 @@
 		 * Google Funding Choices <https://developers.google.com/funding-choices>
 		 *
 		 * E.g. https://www.nme.com/
+		 * E.g. https://www.foodiesmagazine.nl/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('.fc-cta-do-not-consent', 'Google Funding Choices')) {
 			clickAndWaitOrDoItNow(
