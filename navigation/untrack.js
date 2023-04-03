@@ -226,6 +226,17 @@
 			}
 		},
 
+		/* Branch’s app.link redirector <https://www.branch.io/applink/>
+		* E.g. <https://strava-embeds.com/activity/8802726676> points to
+		* <https://strava.app.link/cLiaUa83sqb?%24fallback_url=https%3A%2F%2Fstrava.com%2Factivities%2F8802726676%2Foverview%3Futm_medium%3Dstrava%26utm_source%3Dactivity_embed&strava_deeplink_url=strava%3A%2F%2Factivities%2F8802726676>
+		* which should be rewritten to
+		* <https://www.strava.com/activities/8802726676/overview>
+		* */
+		'a[href*="app.link"][href*="fallback_url"]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('$fallback_url') ?? a.href;
+		},
+
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
