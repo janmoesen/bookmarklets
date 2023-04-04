@@ -564,4 +564,17 @@
 		tr.title = `shide: Hiding because not interesting: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
 		tr.classList.add('xxxJanStravaHidden');
 	});
+
+	/* Get rid of useless `title` attributes. They hide the tooltips from
+	 * their ancestor elements’ `title` attributes, which are more useful
+	 * (because I added them). */
+	document.querySelectorAll('abbr.unit[title], div[data-testid="achievement_container"]').forEach(element =>
+		element.removeAttribute('title')
+	);
+
+	document.querySelectorAll('a[title]').forEach(a => {
+		if (a.title.trim() === a.textContent.trim()) {
+			a.removeAttribute('title');
+		}
+	});
 })();
