@@ -541,4 +541,27 @@
 		 * tr.querySelector('[data-action="hide"]')?.click();
 		 * But that causes a LOT of network requests, obviously. */
 	});
+
+	/* Hide segments on an athlete’s leaderboard page that are either too
+	 * short or too flat. */
+	document.querySelectorAll('.my-segments tbody tr').forEach(tr => {
+		const distanceElement = tr.cells[3];
+		const elevationElement = tr.cells[4];
+		const distanceInKm = parseDistance(distanceElement.textContent);
+		const elevationInM = parseElevation(elevationElement.textContent);
+		const gradientPercentage = (elevationInM / (distanceInKm * 10)).toFixed(1);
+
+		if (
+			(distanceInKm >= 10)
+			|| (distanceInKm >= 5 && gradientPercentage >= 2)
+			|| (distanceInKm >= 0.75 && gradientPercentage >= 3)
+			|| (distanceInKm >= 0.50 && gradientPercentage >= 6)
+		) {
+			tr.title = `shide: Not hiding because steep and/or long enough: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+			return;
+		}
+
+		tr.title = `shide: Hiding because not interesting: ${distanceInKm} km / ${elevationInM} m / ${gradientPercentage}%`;
+		tr.classList.add('xxxJanStravaHidden');
+	});
 })();
