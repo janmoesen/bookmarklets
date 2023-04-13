@@ -1431,19 +1431,18 @@
 		tryToClick('[data-testid="cookie-policy-banner-accept"]', 'Mapillary cookie consent');
 
 		/* -----------------------------------------------------------------
-		 * Axeptio <https://www.axeptio.eu/>
+		 * Axeptio <https://www.axeptio.eu/> (without Shadow DOM)
 		 *
 		 * Some sites (e.g. PrestaShop) have several steps for the
 		 * configuration, like the Wieni cookie notice.
 		 *
-		 * E.g. https://www.axeptio.eu/
 		 * E.g. https://www.prestashop.com/
 		 * E.g. https://www.ulule.com/
 		 * ----------------------------------------------------------------- */
-		if (!tryToClick('#axeptio_btn_dismiss', 'Axeptio')) {
+		if (!tryToClick('#axeptio_btn_dismiss', 'Axeptio (without Shadow DOM)')) {
 			clickAndWaitOrDoItNow(
 				'#axeptio_btn_configure',
-				'Axeptio',
+				'Axeptio (without Shadow DOM)',
 				_ => {
 					let axeptioCurrStep = 0;
 					let axeptioMaxSteps = 10;
@@ -1478,7 +1477,7 @@
 
 							axeptioCheckboxHoldersClicked.set(axeptioCheckboxHolder, true);
 
-							tryToClick(axeptioCheckboxHolder, `Axeptio (step ${axeptioCurrStep}) fake checkbox holder`);
+							tryToClick(axeptioCheckboxHolder, `Axeptio (without Shadow DOM) (step ${axeptioCurrStep}) fake checkbox holder`);
 						});
 
 						/* Avoid duplicate clicks on the “Next” button when it is in fact the “Done”
@@ -1489,7 +1488,7 @@
 						}
 
 						if (
-							tryToClick(axeptioNextButton, `Axeptio (step ${axeptioCurrStep})`)
+							tryToClick(axeptioNextButton, `Axeptio (without Shadow DOM) (step ${axeptioCurrStep})`)
 						) {
 							axeptioNextButtonsClicked.set(axeptioNextButton, true);
 
@@ -1501,6 +1500,77 @@
 					repeatedlyClickAxeptioButtons();
 				}
 			);
+		}
+
+		/* -----------------------------------------------------------------
+		 * Axeptio <https://www.axeptio.eu/> (with Shadow DOM)
+		 *
+		 * E.g. https://www.axeptio.eu/
+		 * ----------------------------------------------------------------- */
+		const axeptioShadowRoot = deepQuerySelector('#axeptio_overlay > .needsclick')?.shadowRoot;
+		if (axeptioShadowRoot) {
+			if (!tryToClick(axeptioShadowRoot.querySelector('#axeptio_btn_dismiss'), 'Axeptio (with Shadow DOM)')) {
+				clickAndWaitOrDoItNow(
+					axeptioShadowRoot.querySelector('#axeptio_btn_configure'),
+					'Axeptio (with Shadow DOM)',
+					_ => {
+						let axeptioCurrStep = 0;
+						let axeptioMaxSteps = 10;
+						const axeptioNextButtonSelector = '#axeptio_btn_next';
+						const axeptioNextButtonsClicked = new WeakMap();
+
+						const axeptioCheckboxSelector = '[role="checkbox"][aria-checked="true"]';
+						const axeptioCheckboxHoldersClicked = new WeakMap();
+
+						function repeatedlyClickAxeptioButtons() {
+							axeptioCurrStep++;
+
+							/* Not only does Axeptio not use standard `<input * type="checkbox"…>`
+							 * checkboxes, it also does not place the click handler on those fake
+							 * checkbox elements, so we need to travel through the DOM
+							 * a bit. */
+							const axeptioCheckboxes = axeptioShadowRoot.querySelectorAll(axeptioCheckboxSelector);
+							axeptioCheckboxes.forEach(checkbox => {
+								/* We need to check again because there are *two* `[role="checkbox"]`
+								 * elements for every fake “checkbox”, and clicking one toggles the
+								 * other, so clicking twice effectively is a no-op. */
+								if (!checkbox.matches(axeptioCheckboxSelector)) {
+									return;
+								}
+
+								const axeptioCheckboxHolder = checkbox.closest('.ListSwitch__Item')?.querySelector('.ListSwitch__Vendor');
+
+								/* More checks to avoid duplicate clicks. */
+								if (!axeptioCheckboxHolder || axeptioCheckboxHoldersClicked.get(axeptioCheckboxHolder)) {
+									return;
+								}
+
+								axeptioCheckboxHoldersClicked.set(axeptioCheckboxHolder, true);
+
+								tryToClick(axeptioCheckboxHolder, `Axeptio (step ${axeptioCurrStep}) fake checkbox holder`);
+							});
+
+							/* Avoid duplicate clicks on the “Next” button when it is in fact the “Done”
+							 * button and is still available while the dialog is sliding out of view. */
+							const axeptioNextButton = axeptioShadowRoot.querySelector(axeptioNextButtonSelector);
+							if (!axeptioNextButton || axeptioNextButtonsClicked.get(axeptioNextButton)) {
+								return;
+							}
+
+							if (
+								tryToClick(axeptioNextButton, `Axeptio (step ${axeptioCurrStep})`)
+							) {
+								axeptioNextButtonsClicked.set(axeptioNextButton, true);
+
+								if (axeptioCurrStep < axeptioMaxSteps) {
+									setTimeout(repeatedlyClickAxeptioButtons, 125);
+								}
+							}
+						}
+						repeatedlyClickAxeptioButtons();
+					}
+				);
+			}
 		}
 
 		/* -----------------------------------------------------------------
