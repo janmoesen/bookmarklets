@@ -952,12 +952,17 @@
 
 		/* -----------------------------------------------------------------
 		 * Complianz cookie consent <https://complianz.io/>
+		 * Also available as a WordPress plugin <https://wordpress.org/plugins/complianz-gdpr/>
 		 *
 		 * E.g. https://www.pedaleurdeflandres.be/
 		 * E.g. https://wpformation.com/
 		 * E.g. https://thispointer.com/
+		 * E.g. https://kasteel-rivierenhof.be/ (WordPress plugin)
 		 * ----------------------------------------------------------------- */
-		tryToClick('.cmplz-btn.cmplz-deny', 'Complianz cookie consent deny button');
+		if (!tryToClick('.cmplz-btn.cmplz-deny', 'Complianz cookie consent deny button')) {
+			tryToUncheck('.cmplz-consent-checkbox:checked');
+			tryToClick('.cc-btn.cc-save-settings', 'Complianz cookie consent (save & exit)');
+		}
 
 		/* -----------------------------------------------------------------
 		 * Cookie Control by CIVIC <https://www.civicuk.com/cookie-control>
