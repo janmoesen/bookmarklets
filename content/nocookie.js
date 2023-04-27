@@ -1213,9 +1213,11 @@
 		 * Because of CSS class name mangling/minimizing, the selector relies
 		 * heavily on the DOM structure and is therefore pretty fragile.
 		 *
-		 * E.g. https://www.reddit.com/
+		 * E.g. https://www.reddit.com/ (first version)
+		 * E.g. https://www.reddit.com/r/movies/comments/11txeqd/inside_2023_review_and_discussion/ (second version, with Shadow DOM)
 		 * ----------------------------------------------------------------- */
 		tryToClick('section section section + section button[role="button"]', 'Reddit EU Cookie Policy toast');
+		tryToClick(document.querySelector('reddit-cookie-banner')?.shadowRoot?.querySelector('#reject-nonessential-cookies-button button'), 'Reddit cookie banner (with Shadow DOM)');
 
 		/* -----------------------------------------------------------------
 		 * The Verge cookie banner
