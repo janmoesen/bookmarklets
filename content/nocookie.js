@@ -1576,6 +1576,65 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * NPO (Dutch Public Broadcasting) (without Shadow DOM)
+		 *
+		 * E.g. https://www.bnnvara.nl/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'[id^="ccm_"] .ccm_btn.ccm_btn--pre-step-next',
+			'NPO CCM bar (without Shadow DOM)',
+			_ => {
+				/* We can’t use the `tryToUncheck` method, because the NPO CCM bar
+				 * uses radio buttons, not checkboxes. We need to click/check the
+				 * options that disallow cookies, rather than click/uncheck the
+				 * options that allow them. */
+				deepQuerySelectorAll('[id^="ccm_"] input[type="radio"][value="false"]:not(:checked)').forEach(radio => {
+					if (radio.checked) {
+						return;
+					}
+
+					const labelText = radio.getAttribute('aria-label') || `NPO CCM: ${radio.name}`;
+					console.log(`nocookie: checking radio button for “${labelText}”: `, radio);
+					radio.click();
+					radio.checked = true;
+				});
+
+				tryToClick('[id^="ccm_"] .ccm_btn.ccm_btn--save', 'NPO CCM bar (without Shadow DOM)');
+			}
+		);
+
+		/* -----------------------------------------------------------------
+		 * NPO (Dutch Public Broadcasting) (with Shadow DOM)
+		 *
+		 * E.g. https://www.bnnvara.nl/
+		 * ----------------------------------------------------------------- */
+		const npoCcmShadowRoot = deepQuerySelector('#ccm_notification_host')?.shadowRoot;
+		if (npoCcmShadowRoot) {
+			clickAndWaitOrDoItNow(
+				npoCcmShadowRoot.querySelector('[id^="ccm_"] .ccm_btn.ccm_btn--pre-step-next'),
+				'NPO CCM bar (with Shadow DOM)',
+				_ => {
+					/* We can’t use the `tryToUncheck` method, because the NPO CCM bar
+					 * uses radio buttons, not checkboxes. We need to click/check the
+					 * options that disallow cookies, rather than click/uncheck the
+					 * options that allow them. */
+					npoCcmShadowRoot.querySelectorAll('[id^="ccm_"] input[type="radio"][value="false"]:not(:checked)').forEach(radio => {
+						if (radio.checked) {
+							return;
+						}
+
+						const labelText = radio.getAttribute('aria-label') || `NPO CCM: ${radio.name}`;
+						console.log(`nocookie: checking radio button for “${labelText}”: `, radio);
+						radio.click();
+						radio.checked = true;
+					});
+
+					tryToClick(npoCcmShadowRoot.querySelector('[id^="ccm_"] .ccm_btn.ccm_btn--save'), 'NPO CCM bar (with Shadow DOM)');
+				}
+			);
+		}
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
