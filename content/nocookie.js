@@ -1635,6 +1635,14 @@
 		}
 
 		/* -----------------------------------------------------------------
+		 * RCS Media Group cookie dialog
+		 *
+		 * E.g. https://www.giroditalia.it/
+		 * E.g. https://www.ilombardia.it/ (why not “illom…”?)
+		 * ----------------------------------------------------------------- */
+		tryToClick('#_cpmt-reject', 'RCS Media Group cookie dialog');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
