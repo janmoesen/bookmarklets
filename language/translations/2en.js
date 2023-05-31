@@ -117,12 +117,11 @@
 				}
 			}
 
-			/* Special case: if we are on a Wikimedia (e.g. Wikipedia or Wiktionary)
-			 * page that does not exist, there are no interlanguage links. However,
-			 * the page might still exist on a different language instance, so simply
-			 * change the subdomain instead of falling back to Google Translate for
-			 * the current URL.
-			 */
+			/* If we are on a special Wikimedia page (e.g. a 404, search results, a
+			 * user talk page on Wikipedia or Wiktionary), there are no interlanguage
+			 * links. However, the page might still exist on a different language
+			 * instance, so go to that instance, translating the special page name if
+			 * necessary. */
 			const wikimediaDomains = [
 				'wikipedia.org',
 				'wiktionary.org',
@@ -137,12 +136,37 @@
 			const possibleWikimediaDomainMatches = location.host.match(/.*?\.(m\.)?([^.]+\.[^.]+$)/);
 			if (possibleWikimediaDomainMatches) {
 				const possibleWikimediaDomain = possibleWikimediaDomainMatches[2];
-				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('#ca-view')) {
+				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('.interlanguage-link')) {
 					const mobileSubdomain = possibleWikimediaDomainMatches[1];
+					/* ↓ NOTE ↓: `en` gets replaced when generating `2nl`, `2fr`, `2it`, …
+					 * For Chinese, it becomes `zh-CN`, hence the suffix stripping. */
 					const languageSubdomain = 'en'.replace(/-.*/, '');
 					const targetLanguageDomain = `${languageSubdomain}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
-					console.log(`Translate to English: Wikimedia special case: going to the corresponding page on the English domain ${targetLanguageDomain}`);
-					location.host = targetLanguageDomain;
+
+					let urlForOtherLanguage = new URL(location);
+					urlForOtherLanguage.hostname = targetLanguageDomain;
+
+					/* Special pages like search or user talk have localised names,
+					 * so use the canonical (non-localised) name on the other language’s
+					 * wiki. That wiki will then redirect to the localised name. */
+					const allHtml = document.documentElement.outerHTML;
+					let wgCanonicalNamespace = JSON.parse(allHtml.match(/"wgCanonicalNamespace"\s*:\s*(?<jsonValue>"[^"]+")/)?.groups.jsonValue ?? 'null');
+					if (wgCanonicalNamespace) {
+						let wgCanonicalSpecialPageName = JSON.parse(allHtml.match(/"wgCanonicalSpecialPageName"\s*:\s*(?<jsonValue>"[^"]+")/)?.groups.jsonValue ?? 'null');
+						let wgPageName = JSON.parse(allHtml.match(/"wgPageName"\s*:\s*(?<jsonValue>"[^"]+")/)?.groups.jsonValue ?? 'null');
+
+						const newPageName = wgCanonicalSpecialPageName
+							? wgPageName.replace(/^[^:]+:[^\/]+/, `${wgCanonicalNamespace}:${wgCanonicalSpecialPageName}`)
+							: wgPageName.replace(/^[^:/]+/, wgCanonicalNamespace);
+
+						urlForOtherLanguage.pathname = urlForOtherLanguage.pathname.replace(wgPageName, newPageName);
+						if (urlForOtherLanguage.searchParams.has('title')) {
+							urlForOtherLanguage.searchParams.set('title', urlForOtherLanguage.searchParams.get('title').replace(wgPageName, newPageName));
+						}
+					}
+
+					console.log(`Translate to English: Wikimedia special case: going to the corresponding page on the English domain ${targetLanguageDomain}: ${urlForOtherLanguage}`);
+					location = urlForOtherLanguage;
 					return;
 				}
 			}
