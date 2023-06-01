@@ -1643,6 +1643,13 @@
 		tryToClick('#_cpmt-reject', 'RCS Media Group cookie dialog');
 
 		/* -----------------------------------------------------------------
+		 * Delhaize cookie popup
+		 *
+		 * E.g. https://www.delhaize.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('[data-testid="cookie-popup-reject"]', 'Delhaize cookie popup');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
