@@ -57,8 +57,16 @@
 		return doc.getSelection() + '';
 	}
 
+	let sourceWasSelectedText = false;
+
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter your Google Maps flight search (e.g. "from Brussels to NYC"):');
+		s = getActiveSelection();
+
+		if (s !== '') {
+			sourceWasSelectedText = true;
+		} else {
+			s = prompt('Please enter your Google Maps search:');
+		}
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
@@ -237,12 +245,12 @@
 			}
 		}
 
-		/* If we found one or more coordinate pairs in the whole text, only
-		 * search for those. That makes it more user-friendly on sites like
-		 * Wikipedia where it is hard to select only the coordinates and not
-		 * leading text like “Coordinates:” or trailing utility links like
-		 * “[mappa]” or “(GeoHackFoo)”. */
-		if (rewrittenCoordinates.size) {
+		/* If we found one or more coordinate pairs in the text that was
+		 * selected, only search for those. That makes it more user-friendly
+		 * on sites like Wikipedia where it is hard to select only the
+		 * coordinates and not leading text like “Coordinates:” or trailing
+		 * utility links like “[mappa]” or “(GeoHackFoo)”. */
+		if (sourceWasSelectedText && rewrittenCoordinates.size) {
 			s = Array.from(rewrittenCoordinates).join(' to ');
 		}
 
