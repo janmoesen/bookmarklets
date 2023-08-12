@@ -568,7 +568,7 @@
 	/* Get rid of useless `title` attributes. They hide the tooltips from
 	 * their ancestor elements’ `title` attributes, which are more useful
 	 * (because I added them). */
-	document.querySelectorAll('abbr.unit[title], div[data-testid="achievement_container"]').forEach(element =>
+	document.querySelectorAll('button[title], abbr.unit[title], div[data-testid="achievement_container"]').forEach(element =>
 		element.removeAttribute('title')
 	);
 
