@@ -85,6 +85,18 @@
 		}
 	);
 
+	/* Show the original images when their full URL seems to be in the IMG@src path.
+	 *
+	 * Example:
+	 * https://img.standaard.be/IHkuEg6LKexpi2zlGc744w6U2rM=/fit-in/1280x853/https%3A%2F%2Fstatic.standaard.be%2FAssets%2FImages_Upload%2F2023%2F08%2F03%2F979725c5-7a54-44db-8c59-689180ce8d54.jpg
+	 */
+	document.querySelectorAll('img[src*="/https"], img[src*="/http]').forEach(img => {
+		const matches = img.src.match(/[=\/](https?(:|%3A)(%2F|\/){2}[^\/&?]+(\.jpe?g|png|gif))/i);
+		if (matches && matches[1]) {
+			changeSrc(img, decodeURIComponent(matches[1]), 'found image with likely source URL in its path');
+		}
+	});
+
 	/* Try to load the originals for images whose source URLs look like
 	 * thumbnail/resized versions with dimensions.
 	 */
