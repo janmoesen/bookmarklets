@@ -1234,7 +1234,7 @@
 		 *
 		 * E.g. https://www.instagram.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('[style*="--tos-box"] [role="dialog"] button[tabindex]', 'Instagram cookie dialog');
+		tryToClick('[style*="--tos-box"] [role="dialog"] button[tabindex]:last-child', 'Instagram cookie dialog');
 
 		/* -----------------------------------------------------------------
 		 * Happy Socks cookie consent
