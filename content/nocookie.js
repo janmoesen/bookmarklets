@@ -1362,6 +1362,7 @@
 		 * E.g. https://www.wanda.be/
 		 * E.g. https://www.rodekruis.be/
 		 * E.g. https://eurogarant.be/nl
+		 * E.g. https://www.vias.be/nl/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookieconsent-btn.accept-necessary, form[action*="/api/cookies/"] .btn-accept-necessary, #cookieconsent-banner-accept-necessary-button', 'Nine O’Clock Somewhere cookie consent');
 
