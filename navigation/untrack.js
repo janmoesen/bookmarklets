@@ -29,6 +29,7 @@
 
 		 /* Instagram */
 		'igshid',
+		'ig_rid',
 
 		/* Twitter */
 		'twclid',
