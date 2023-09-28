@@ -95,10 +95,10 @@
 				 * https://en.wikipedia.org/wiki/Sydney
 			      ← Before: 33°52′04″S 151°12′36″E
 			      ← After:  33°52′04″ S, 151°12′36″ E */
-				N: 'N',
-				S: 'S',
-				W: 'W',
-				E: 'E',
+				N: ['N'],
+				S: ['S'],
+				W: ['W'],
+				E: ['E'],
 			},
 
 			nl: {
@@ -109,10 +109,10 @@
 				 * https://nl.wikipedia.org/wiki/Sydney
 				 → Before: 33° 52′ ZB, 151° 13′ OL
 				 ← After:  33° 52′ S, 151° 13′ E */
-				N: 'NB',
-				S: 'ZB',
-				W: 'WL',
-				E: 'OL',
+				N: ['NB', 'N'],
+				S: ['ZB', 'Z'],
+				W: ['WL', 'W'],
+				E: ['OL', 'O'],
 			},
 
 			fr: {
@@ -123,10 +123,10 @@
 				 * https://fr.wikipedia.org/wiki/Sydney
 				 → Before: 33° 51′ 22″ sud, 151° 11′ 33″ est
 				 ← After:  33° 51′ 22″ S, 151° 11′ 33″ E */
-				N: 'nord',
-				S: 'sud',
-				W: 'ouest',
-				E: 'est',
+				N: ['N', 'nord'],
+				S: ['S', 'sud'],
+				W: ['O', 'ouest'],
+				E: ['E', 'est'],
 			},
 
 			de: {
@@ -137,10 +137,10 @@
 				 * https://de.wikipedia.org/wiki/Sydney
 				 → Before: 33° 51′ S, 151° 12′ O
 				 ← After:  33° 51′ S, 151° 12′ E */
-				N: 'N',
-				S: 'S',
-				W: 'W',
-				E: 'O',
+				N: ['N'],
+				S: ['S'],
+				W: ['W'],
+				E: ['O'],
 			},
 
 			es: {
@@ -151,10 +151,10 @@
 				 * https://es.wikipedia.org/wiki/S%C3%ADdney
 				 → Before: 33°52′04″S 151°12′36″E
 				 ← After:  33°52′04″ S, 151°12′36″ E */
-				N: 'N',
-				S: 'S',
-				W: 'O',
-				E: 'E',
+				N: ['N'],
+				S: ['S'],
+				W: ['O'],
+				E: ['E'],
 			},
 
 			vi: {
@@ -165,10 +165,10 @@
 				 * https://vi.wikipedia.org/wiki/Sydney
 				 → Before: 33°51′35,9″N 151°12′40″Đ
 				 ← After:  33°51′35.9″S, 151°12′40″E */
-				N: 'B',
-				S: 'N',
-				W: 'T',
-				E: 'Đ',
+				N: ['B'],
+				S: ['N'],
+				W: ['T'],
+				E: ['Đ'],
 			},
 
 			ru: {
@@ -179,10 +179,10 @@
 				 * https://ru.wikipedia.org/wiki/%D0%A1%D0%B8%D0%B4%D0%BD%D0%B5%D0%B9
 				 → Before: 33°52′10″ ю. ш. 151°12′30″ в. д.
 				 ← After:  33°51′35.9″ S, 151°12′40″ E */
-				N: 'с. ш.',
-				S: 'ю. ш.',
-				W: 'з. д.',
-				E: 'в. д.',
+				N: ['с. ш.'],
+				S: ['ю. ш.'],
+				W: ['з. д.'],
+				E: ['в. д.'],
 			},
 		};
 
@@ -210,8 +210,8 @@
 
 			const regexp = new RegExp(
 				stringRegexpWithPlaceholders
-					.replace('XXX_LAT_XXX', `${labels.N}|${labels.S}`)
-					.replace('XXX_LNG_XXX', `${labels.W}|${labels.E}`),
+					.replace('XXX_LAT_XXX', `${labels.N.concat(labels.S).join('|')}`)
+					.replace('XXX_LNG_XXX', `${labels.W.concat(labels.E).join('|')}`),
 				'g'
 			);
 
@@ -224,13 +224,13 @@
 				const rewrittenCoordinate = ''
 					+ matchedGroups.latitude.replace(/,/g, '.')
 					+ ' '
-					+ (matchedGroups.latitudeLabel === labels.N
+					+ (labels.N.indexOf(matchedGroups.latitudeLabel) > -1
 						? 'N'
 						: 'S')
 					+ ', '
 					+ matchedGroups.longitude.replace(/,/g, '.')
 					+ ' '
-					+ (matchedGroups.longitudeLabel === labels.W
+					+ (labels.W.indexOf(matchedGroups.longitudeLabel) > -1
 						? 'W'
 						: 'E');
 
