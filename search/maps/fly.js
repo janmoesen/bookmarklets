@@ -198,7 +198,7 @@
 			possibleReplacements[method]({language, labels});
 		}
 
-		const regexpWithPlaceholders = /(?<latitude>\d+\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<latitudeLabel>XXX_LAT_XXX)\s*,?\s*(?<longitude>\d+\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<longitudeLabel>XXX_LNG_XXX)/;
+		const regexpWithPlaceholders = /(?<latitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<latitudeLabel>XXX_LAT_XXX)\s*,?\s*(?<longitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<longitudeLabel>XXX_LNG_XXX)/;
 
 		const stringRegexpWithPlaceholders = regexpWithPlaceholders
 			.toString()
