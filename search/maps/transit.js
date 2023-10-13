@@ -215,6 +215,13 @@
 				'g'
 			);
 
+			/* This fails on Wikimedia Commons (and possibly other MediaWiki
+			 * instances) using LAPI (“Lupo’s API”) from 2009, completely ruining
+			 * `String.prototype` methods like `replaceAll`. “Don’t modify objects you
+			 * don’t own”, anyone?
+			 *
+			 * E.g. https://commons.wikimedia.org/wiki/File:Yl%C3%A4pohjarakenteita.jpg
+			 * */
 			s = s.replaceAll(regexp, (...arguments) => {
 				const matchedGroups = arguments.pop();
 
