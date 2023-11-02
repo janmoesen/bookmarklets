@@ -1651,11 +1651,18 @@
 		tryToClick('[data-testid="cookie-popup-reject"]', 'Delhaize cookie popup');
 
 		/* -----------------------------------------------------------------
-		 * Flanders government cookie consent
+		 * Flanders government cookie consent (1)
 		 *
 		 * E.g. https://www.vlaanderen.be/
 		 * ----------------------------------------------------------------- */
-		tryToClick('.wp-pt-cookie-consent__cta.vl-button:not(#cookie-conosent-modal-accept)', 'Flanders cookie consent');
+		tryToClick('.wp-pt-cookie-consent__cta.vl-button:not(#cookie-conosent-modal-accept)', 'Flanders cookie consent (1)');
+
+		/* -----------------------------------------------------------------
+		 * Flanders government cookie consent (2)
+		 *
+		 * E.g. https://www.vlaanderen.be/inbo/
+		 * ----------------------------------------------------------------- */
+		tryToClick('button.minimal-cookies', 'Flanders cookie consent (2)');
 
 		/* -----------------------------------------------------------------
 		 * Mobile Vikings cookie wall
