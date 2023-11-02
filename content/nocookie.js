@@ -1651,6 +1651,13 @@
 		tryToClick('[data-testid="cookie-popup-reject"]', 'Delhaize cookie popup');
 
 		/* -----------------------------------------------------------------
+		 * Flanders government cookie consent
+		 *
+		 * E.g. https://www.vlaanderen.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.wp-pt-cookie-consent__cta.vl-button:not(#cookie-conosent-modal-accept)', 'Flanders cookie consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
