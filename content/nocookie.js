@@ -1673,7 +1673,7 @@
 			'#btn-cookie-settings',
 			'Mobile Vikings cookie wall',
 			_ => {
-				tryToUncheck('input[type="checkbox"][name$="-cookies"]');
+				tryToUncheck('input[type="checkbox"][name$="-cookies"]:checked');
 				tryToClick('#btn-accept-custom-cookies', 'Mobile Vikings cookie wall');
 			}
 		);
