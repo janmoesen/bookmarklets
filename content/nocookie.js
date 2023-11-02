@@ -1658,6 +1658,20 @@
 		tryToClick('.wp-pt-cookie-consent__cta.vl-button:not(#cookie-conosent-modal-accept)', 'Flanders cookie consent');
 
 		/* -----------------------------------------------------------------
+		 * Mobile Vikings cookie wall
+		 *
+		 * E.g. https://mobilevikings.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'#btn-cookie-settings',
+			'Mobile Vikings cookie wall',
+			_ => {
+				tryToUncheck('input[type="checkbox"][name$="-cookies"]');
+				tryToClick('#btn-accept-custom-cookies', 'Mobile Vikings cookie wall');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
