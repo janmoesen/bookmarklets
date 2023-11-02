@@ -1679,6 +1679,20 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Canyon cookies modal
+		 *
+		 * E.g. https://www.canyon.com/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'.js-manage-modalCookiesTrigger, a.privacyCookieSwitch',
+			'Canyon cookies modal',
+			_ => {
+				tryToUncheck('input[type="checkbox"][class*="js-dataPrivacyCheckbox"]:checked');
+				retryToClick('#js-manage-data-privacy-save-button', 'Canyon cookies modal');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
