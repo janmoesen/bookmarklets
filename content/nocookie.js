@@ -941,7 +941,7 @@
 		 *
 		 * E.g. https://www.nytimes.com/
 		 * ----------------------------------------------------------------- */
-		tryToClick('button[data-testid="GDPR-reject"]', 'NYT cookie notice opt-out button');
+		tryToClick('button[data-testid="GDPR-reject"], [data-testid="onsite-messaging-unit-complianceGDPR"] button + button', 'NYT cookie notice opt-out button');
 
 		/* -----------------------------------------------------------------
 		 * New York Times cookie notice (as used in the Games section)
