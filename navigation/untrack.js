@@ -264,6 +264,24 @@
 			}
 		},
 
+		/* Proofpoint URL Defense
+		 * E.g. https://time.com/6161239/return-to-office-white-men/
+		 * */
+		'a[href^="https://urldefense.proofpoint.com/v2/url?"][href*="u="]': a => {
+			try {
+				const originalUrl = decodeURIComponent(new URL(a.href).searchParams.get('u').replaceAll('_', '/').replaceAll('-', '%'));
+				if (originalUrl) {
+					if (a.textContent.trim() === a.href) {
+						a.textContent = originalUrl;
+					}
+
+					a.href = originalUrl;
+				}
+			} catch (e) {
+				console.log('untrack: error while decoding URL for link: ', a, e);
+			}
+		},
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
