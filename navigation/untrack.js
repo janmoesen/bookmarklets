@@ -246,6 +246,24 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('url') ?? a.href;
 		},
 
+		/* Feature.fm (music marketing platform)
+		 * E.g. https://autechre.ffm.to/plus.owe
+		 * */
+		'a[href^="https://api.ffm.to/sl/e/c/"][href*="cd="]': a => {
+			try {
+				const originalUrl = JSON.parse(atob(new URL(a.href).searchParams.get('cd').replaceAll('_', '/').replaceAll('-', '+'))).destUrl;
+				if (originalUrl) {
+					if (a.textContent.trim() === a.href) {
+						a.textContent = originalUrl;
+					}
+
+					a.href = originalUrl;
+				}
+			} catch (e) {
+				console.log('untrack: error while decoding URL for link: ', a, e);
+			}
+		},
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
