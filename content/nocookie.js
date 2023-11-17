@@ -433,19 +433,34 @@
 		/* -----------------------------------------------------------------
 		 * Didomi
 		 *
+		 * There are several variants:
+		 * - a “Deny all” link in the opening screen of the pop-up, instantly
+		 *   closing the pop-up
+		 * - a “Deny all” button in the configure/more info screen next to
+		 *   the “Save” button, instantly closing the pop-up
+		 * - a “Deny all” button above the different types of consent, after
+		 *   which the choices still need to be saved with the (sibling-less)
+		 *   “Save” button.
+		 *
 		 * E.g. https://www.didomi.io/
 		 * E.g. https://www.oui.sncf/
 		 * E.g. https://www.jobat.be/ (2023-03-20: still without “Deny all”)
 		 * E.g. https://www.zimmo.be/ (2023-03-20: still without “Deny all”)
-		 * E.g. https://www.rtbf.be/ (2023-03-20: still without “Deny all”)
+		 * E.g. https://www.rtbf.be/
 		 * ----------------------------------------------------------------- */
 		if (!tryToClick('#didomi-notice-disagree-button, .didomi-continue-without-agreeing', 'Didomi')) {
 			clickAndWaitOrDoItNow(
 				'#didomi-notice-learn-more-button',
 				'Didomi',
 				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi');
+					/* First try the “Deny all” button above the different types of
+					 * consent. If there is none, try the “Deny all” button at the bottom
+					 * of the pop-up. If there is only one button, it is not the “Deny
+					 * all” button, but the “Save” button.  */
+					if (!tryToClick('#didomi-radio-option-disagree-to-all', 'Didomi')) {
+						/* Reject all possible cookies / object to all possible interests and personalization. */
+						retryToClick('.didomi-consent-popup-actions button:first-of-type:not(:only-child)', 'Didomi');
+					}
 
 					/* Save & exit. We need to wait a bit for the new first button to become available. */
 					setTimeout(_ => retryToClick('.didomi-consent-popup-actions button:first-of-type', 'Didomi'), 250);
