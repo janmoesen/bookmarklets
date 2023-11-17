@@ -21,7 +21,7 @@
 
 		html {
 			background: rgb(245, 245, 225);
-			color: rgb(0, 0, 30);
+			color: rgb(30, 30, 30);
 		}
 
 		body {
