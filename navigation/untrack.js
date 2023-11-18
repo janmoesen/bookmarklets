@@ -238,7 +238,7 @@
 		},
 
 		/* Reddit
-		 * E.g. * <https://www.reuters.com/legal/elon-musk-seeks-end-258-billion-dogecoin-lawsuit-2023-04-01/>
+		 * E.g. <https://www.reuters.com/legal/elon-musk-seeks-end-258-billion-dogecoin-lawsuit-2023-04-01/>
 		 * gets rewritten (onclick etc.) to
 		 * <https://out.reddit.com/t3_XXX?url=https%3A%2F%2Fwww.reuters.com%2Flegal%2Felon-musk-seeks-end-258-billion-dogecoin-lawsuit-2023-04-01%2F&token=XXXX&app_name=web2x&web_redirect=true>
 		 */
@@ -279,6 +279,19 @@
 				}
 			} catch (e) {
 				console.log('untrack: error while decoding URL for link: ', a, e);
+			}
+		},
+
+		/* Disqus
+		 * E.g. <https://disqus.com/embed/comments/?base=default&f=antirezweblog&t_i=antirez_weblog_new_138&t_u=http%3A%2F%2Fantirez.com%2Fnews%2F138&t_d=In%20defense%20of%20linked%20lists%20-%20%3Cantirez%3E&t_t=In%20defense%20of%20linked%20lists%20-%20%3Cantirez%3E&s_o=default#version=95c5f54d652b3a9f59f3cb30d7904a9e>
+		 * has a link to <https://disq.us/url?url=https%3A%2F%2Faphyr.com%2Fposts%2F341-hexing-the-technical-interview%3Aj_d-KTB2pBbDnmt69TBt0Se-Um8&cuid=804356> which redirects to
+		 * <https://aphyr.com/posts/341-hexing-the-technical-interview>
+		 */
+		'a[href^="https://disq.us/url?"][href*="url="], a[href^="http://disq.us/url?"][href*="url="]': a => {
+			let originalUrl = new URLSearchParams(new URL(a.href).search)?.get('url');
+			if (originalUrl) {
+				originalUrl = originalUrl.replace(/:[^:\/]+$/, '');
+				a.href = originalUrl;
 			}
 		},
 
