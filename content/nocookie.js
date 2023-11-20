@@ -1291,6 +1291,7 @@
 		 *
 		 * E.g. https://www.cera.coop/
 		 * E.g. https://www.kbcancora.be/ (not kbc.be, though)
+		 * E.g. https://www.brs.coop/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'[data-component-class="Dlw.ScBase.Features.CookieConsentModule.CookieConsentModal"] .cookie-settings-open',
