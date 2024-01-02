@@ -161,7 +161,7 @@
 	}
 
 	/* Check for a date in the URL. */
-	var uri = location.pathname + location.search + location.hash;
+	var uri = decodeURIComponent(location.pathname + location.search + location.hash);
 	var yearPattern = '20[0-9][0-9]';
 	var monthPattern = monthNames.concat(['(?:0?[1-9])', '(?:1[012])']).join('|');
 	var dayPattern = '(?:' + ['3[01]', '[12][0-9]', '0?[1-9]'].join(')|(?:') + ')';
