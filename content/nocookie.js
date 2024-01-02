@@ -7,6 +7,9 @@
 (function nocookie() {
 	'use strict';
 
+	/* Did we find any known element to click? */
+	let hasFoundSomethingToClick = false;
+
 	/* Keep track of out-of-origin IFRAMEs that this bookmarklet cannot access
 	 * but are likely to contain an external consent manager. */
 	const externalConsentManagerIframeSelectors = [
@@ -132,6 +135,7 @@
 			 * because the `click()` submits a form. */
 			setTimeout(_ => elem.click(), 50);
 
+			hasFoundSomethingToClick = true;
 			return true;
 		}
 	}
@@ -1717,6 +1721,54 @@
 				probableExternalConsentManagerIframes.push(iframe);
 			}
 		);
+	}
+
+	/* -----------------------------------------------------------------
+	/* Generic “Deny all”/“Reject all” fallback when we did not find any known cookie
+	 * consent buttons to click.
+	 * ----------------------------------------------------------------- */
+	if (!hasFoundSomethingToClick && !probableExternalConsentManagerIframes.length) {
+		const denyAllTexts = [
+			/* English */
+			'deny',
+			'disallow',
+			'decline',
+			'refuse',
+			'reject',
+			'necessary',
+			'minimal',
+
+			/* Dutch */
+			'weigeren',
+			'weiger alle',
+			'noodzakelijk',
+			'essentiële',
+			'enkel ',
+		];
+		const xPathTextSelector = denyAllTexts
+			.map(text => `contains(translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский"), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
+			.join(' or ');
+		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or @onclick][${xPathTextSelector}]`;
+		const xPathResult = document.evaluate(xPathSelector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+
+		const cssConsentDescendantSelector =
+			[
+				'consent',
+				'cookie',
+				'gdpr',
+				'tcf',
+			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *`)
+			.join(', ');
+
+		for (let i = 0; i < xPathResult.snapshotLength; i++) {
+			const node = xPathResult.snapshotItem(i);
+			if (!node.textContent.match(/cooki/i) && !node.matches(cssConsentDescendantSelector)) {
+				continue;
+			}
+
+			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.trim()}”): `, node);
+			node.click();
+		}
 	}
 
 	/* Show out-of-origin IFRAMEs of external consent managers. First, flash
