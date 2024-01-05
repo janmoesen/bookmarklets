@@ -1736,6 +1736,7 @@
 			'refuse',
 			'reject',
 			'necessary',
+			'essential',
 			'minimal',
 
 			/* Dutch */
