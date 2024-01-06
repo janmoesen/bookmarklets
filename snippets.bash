@@ -82,6 +82,12 @@ copy_2en_parameters=(
 	'Russian'
 	'русский'
 	'эта страница на русском языке'
+
+	2no
+	no
+	Norwegian
+	norsk
+	'denne siden på norsk'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
@@ -114,6 +120,7 @@ COPY_ENWIKT=; copy-enwikt \
 	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
 	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
 	ruwikt 'Russian Wiktionary' 'in the Russian Wiktionary' 'https://ru.wiktionary.org/wiki/' \
+	nowikt 'Norwegian Wiktionary' 'in the Norwegian Wiktionary' 'https://no.wiktionary.org/wiki/' \
 	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/' \
 	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'https://www.vlaamswoordenboek.be/definities/search?definition[q]=' \
 	oed 'O.E.D.' 'in the Oxford English dictionary' 'https://en.oxforddictionaries.com/definition/' \
@@ -148,6 +155,7 @@ COPY_ENW=; copy-enw \
 	zh 'Mandarin Chinese' \
 	vi 'Vietnamese' \
 	ru 'Russian' \
+	no 'Norwegian' \
 ;
 
 # Typing is hard; let's go shopping.
