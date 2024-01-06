@@ -71,21 +71,31 @@
 			var interLanguageSelectors = [
 				/* Wikipedia/Mediawiki */
 				'.interlanguage-link a[href][hreflang="no"]',
+				'.interlanguage-link a[href][hreflang="nb"]',
 
 				/* CatenaCycling.com */
 				'#language a[href][hreflang="no"]',
+				'#language a[href][hreflang="nb"]',
 
 				/* Generic */
 				'link[rel="alternate"][hreflang="no"]',
+				'link[rel="alternate"][hreflang="nb"]',
 				'link[rel="alternate"][hreflang^="no-"]',
+				'link[rel="alternate"][hreflang^="nb-"]',
 				'[id*="lang"][id*="elect"] a[hreflang="no"]',
+				'[id*="lang"][id*="elect"] a[hreflang="nb"]',
 				'[id*="lang"][id*="elect"] a[hreflang^="no-"]',
+				'[id*="lang"][id*="elect"] a[hreflang^="nb-"]',
 				'[class*="lang"][class*="elect"] a[hreflang="no"]',
+				'[class*="lang"][class*="elect"] a[hreflang="nb"]',
 				'[class*="lang"][class*="elect"] a[hreflang^="no-"]',
+				'[class*="lang"][class*="elect"] a[hreflang^="nb-"]',
 				'a.language[href*="/no/"]',
+				'a.language[href*="/nb/"]',
 				'a[class*="choose"][class*="lang"][href^="/no/"]',
+				'a[class*="choose"][class*="lang"][href^="/nb/"]',
 				'a[href][title$="this page in Norwegian"]',
-				'a[href][title$="denne siden på norsk"]'
+				'a[href][title$="siden på norsk"]'
 			];
 
 			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
@@ -102,7 +112,11 @@
 
 			var interLanguageXPathSelectors = [
 				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "no"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "nb"]',
 				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "norsk"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "nynorsk"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "bokmål"]',
+				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "norsk bokmål"]',
 				'//a[@href][contains(., "page in Norwegian")]',
 			];
 

@@ -87,7 +87,7 @@ copy_2en_parameters=(
 	no
 	Norwegian
 	norsk
-	'denne siden på norsk'
+	'siden på norsk'
 );
 COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
 
