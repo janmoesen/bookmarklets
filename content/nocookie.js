@@ -1745,6 +1745,9 @@
 			'noodzakelijk',
 			'essentiële',
 			'enkel ',
+
+			/* Norwegian */
+			'nødvendige',
 		];
 		const xPathTextSelector = denyAllTexts
 			.map(text => `contains(translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский"), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
