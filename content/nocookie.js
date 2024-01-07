@@ -1760,6 +1760,7 @@
 				'consent',
 				'cookie',
 				'gdpr',
+				'privacy',
 				'tcf',
 			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *`)
 			.join(', ');
