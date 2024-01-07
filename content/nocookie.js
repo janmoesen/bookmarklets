@@ -1748,6 +1748,7 @@
 
 			/* Norwegian */
 			'nødvendige',
+			'avvis alle',
 		];
 		const xPathTextSelector = denyAllTexts
 			.map(text => `contains(translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский"), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
@@ -1761,6 +1762,7 @@
 				'cookie',
 				'gdpr',
 				'privacy',
+				'terms',
 				'tcf',
 			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *`)
 			.join(', ');
