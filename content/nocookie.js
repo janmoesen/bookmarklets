@@ -1730,28 +1730,72 @@
 	if (!hasFoundSomethingToClick && !probableExternalConsentManagerIframes.length) {
 		const denyAllTexts = [
 			/* English */
-			'deny',
-			'disallow',
-			'decline',
-			'refuse',
-			'reject',
-			'necessary',
-			'essential',
-			'minimal',
+			' deny ',
+			' disallow ',
+			' decline ',
+			' refuse ',
+			' reject ',
+			' necessary ',
+			' essential ',
+			' minimal ',
+			' only ',
 
 			/* Dutch */
-			'weigeren',
-			'weiger alle',
-			'noodzakelijk',
-			'essentiële',
-			'enkel ',
+			' weigeren ',
+			' weiger alle ',
+			' afwijzen ',
+			' noodzakelijk',
+			' essentiële ',
+			' essentieel ',
+			' minimale ',
+			' enkel ',
+			' alleen ',
+
+			/* French */
+			' refuse',
+			' rejete',
+			' rejette',
+			' nécessaire',
+			' essentiel',
+			' minimum ',
+			' minimal',
+			' seulement ',
+			' seul ',
+
+			/* German */
+			' ablehnen ',
+			' lehne ',
+			' notwendig',
+			' erforderlich',
+			' minimale ',
+			' nur ',
+
+			/* Italian */
+			' rifiut',
+			' rifiùt',
+			' necessari',
+			' essenziali',
+			' minimi',
+			' solo ',
+
+			/* Spanish */
+			' rechaz',
+			' necesari',
+			' esencial',
+			' mínim',
+			' solo ',
 
 			/* Norwegian */
-			'nødvendige',
-			'avvis alle',
+			' nekte al',
+			' avvis al',
+			' avslå',
+			' nødvendig',
+			' viktig',
+			' minimal',
+			' kun ',
 		];
 		const xPathTextSelector = denyAllTexts
-			.map(text => `contains(translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский"), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
+			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский"), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
 		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or @onclick][${xPathTextSelector}]`;
 		const xPathResult = document.evaluate(xPathSelector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
@@ -1767,9 +1811,11 @@
 			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *`)
 			.join(', ');
 
+		const cookieTextRegexp = /cooki|informasjonskaps/i;
+
 		for (let i = 0; i < xPathResult.snapshotLength; i++) {
 			const node = xPathResult.snapshotItem(i);
-			if (!node.textContent.match(/cooki/i) && !node.matches(cssConsentDescendantSelector)) {
+			if (!(node.offsetParent || node).textContent.match(cookieTextRegexp) && !node.matches(cssConsentDescendantSelector)) {
 				continue;
 			}
 
