@@ -8,12 +8,10 @@
  */
 (function read() {
 	/* The style sheet for more readable content. */
-	var css = (function () { /*@charset "utf-8";
+	const css = `
 		@namespace svg "http://www.w3.org/2000/svg";
 
-		-jancss-comment { content:
-			"General styles -------------------------------------------";
-		}
+		/* --- General styles ------------------------------------------- */
 
 		* {
 			line-height: 1.5;
@@ -77,9 +75,7 @@
 			font: inherit;
 		}
 
-		-jancss-comment { content:
-			"Headers --------------------------------------------------";
-		}
+		/* --- Headers -------------------------------------------------- */
 
 		h1:not(.jancss-probably-layout),
 		h2:not(.jancss-probably-layout),
@@ -111,9 +107,7 @@
 			font-size: 1rem;
 		}
 
-		-jancss-comment { content:
-			"Links in headers (probably permalinks) -------------------";
-		}
+		/* --- Links in headers (probably permalinks) ------------------- */
 
 		h1 a[href]:not(:hover),
 		h2 a[href]:not(:hover),
@@ -128,9 +122,7 @@
 			content: " #";
 		}
 
-		-jancss-comment { content:
-			"Pre-formatted text and source code -----------------------";
-		}
+		/* --- Pre-formatted text and source code ----------------------- */
 
 		pre {
 			padding: 1ex;
@@ -150,18 +142,14 @@
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Forms ----------------------------------------------------";
-		}
+		/* --- Forms ---------------------------------------------------- */
 
 		textarea {
 			width: 100%;
 			height: 32ex;
 		}
 
-		-jancss-comment { content:
-			"Tables ---------------------------------------------------";
-		}
+		/* --- Tables --------------------------------------------------- */
 
 		table.jancss-probably-for-data th,
 		table.jancss-probably-for-data td {
@@ -198,9 +186,7 @@
 			background: inherit;
 		}
 
-		-jancss-comment { content:
-			"Make images use the full page width ----------------------";
-		}
+		/* --- Make images use the full page width ---------------------- */
 
 		img,
 		input[type="image"],
@@ -226,9 +212,7 @@
 			min-height: 15em;
 		}
 
-		-jancss-comment { content:
-			"Dim images and media until :hover ------------------------";
-		}
+		/* --- Dim images and media until :hover ------------------------ */
 
 		body:not(:hover) img,
 		body:not(:hover) input[type="image"],
@@ -242,9 +226,7 @@
 			opacity: 0.25;
 		}
 
-		-jancss-comment { content:
-			"Limit icon dimensions --------------------------------";
-		}
+		/* --- Limit icon dimensions -------------------------------- */
 
 		svg,
 		img[class*="icon"][src*=".svg"],
@@ -259,18 +241,14 @@
 			max-height: 1.4em;
 		}
 
-		-jancss-comment { content:
-			"Make everything scrollable -------------------------------";
-		}
+		/* --- Make everything scrollable ------------------------------- */
 
 		[style*="position: fixed"],
 		[style*="position:fixed"] {
 			position: static !important;
 		}
 
-		-jancss-comment { content:
-			"Make side notes and pull quotes less conspicuous ---------";
-		}
+		/* --- Make side notes and pull quotes less conspicuous --------- */
 
 		aside:not(:hover),
 		[data-expander-id],
@@ -286,9 +264,7 @@
 			opacity: 0.25;
 		}
 
-		-jancss-comment { content:
-			"Decrease common forum and metadata font size -------------";
-		}
+		/* --- Decrease common forum and metadata font size ------------- */
 
 		.postprofile,
 		.signature {
@@ -297,9 +273,7 @@
 			opacity: 0.5;
 		}
 
-		-jancss-comment { content:
-			"Hide common social media elements ------------------------";
-		}
+		/* --- Hide common social media elements ------------------------ */
 
 		iframe[src*=".facebook.com/"],
 		iframe[src*=".twitter.com/widgets/"],
@@ -444,25 +418,19 @@
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Hide ad elements that slipped through my ad blocker ------";
-		}
+		/* --- Hide ad elements that slipped through my ad blocker ------ */
 
 		iframe[id^="google_ads_"] {
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Hide empty list items ------------------------------------";
-		}
+		/* --- Hide empty list items ------------------------------------ */
 
 		li:empty, li.jancss-emptyish {
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Make common navigation elements more compact -------------";
-		}
+		/* --- Make common navigation elements more compact ------------- */
 
 		:-moz-any(
 			nav,
@@ -569,17 +537,13 @@
 			border-right: 1px dotted;
 		}
 
-		-jancss-comment { content:
-			"Hide old cufón text replacement --------------------------";
-		}
+		/* --- Hide old cufón text replacement -------------------------- */
 
 		.cufon-canvas canvas {
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Make notes on decorrespondent.nl less conspicuous --------";
-		}
+		/* --- Make notes on decorrespondent.nl less conspicuous -------- */
 
 		.contentitem-sidenote:not(:hover) > :not(.contentitem-sidenote-snippet),
 		.contentitem-infocard-toggle-container + .contentitem-infocard-contents:not(:hover) {
@@ -591,33 +555,25 @@
 			background: #ffc;
 		}
 
-		-jancss-comment { content:
-			"Hide the source text on Google Translate-d pages ---------";
-		}
+		/* --- Hide the source text on Google Translate-d pages --------- */
 
 		.google-src-text {
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Hide big ScrollMagic spacers, e.g. on Co.Design ----------";
-		}
+		/* --- Hide big ScrollMagic spacers, e.g. on Co.Design ---------- */
 
 		.scrollmagic-pin-spacer {
 			display: none;
 		}
 
-		-jancss-comment { content:
-			"Always hide our IFRAME used to restore console.log -------";
-		}
+		/* --- Always hide our IFRAME used to restore console.log ------- */
 
 		#xxxJanConsole {
 			display: none;
 		}
 
-	*/; }).toString()
-		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
-		.replace(/\*\/\s*\;?\s*\}\s*$/, '');
+	`;
 
 	/* The attributes to disable. */
 	var attrs = [
