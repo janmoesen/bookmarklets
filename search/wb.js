@@ -69,7 +69,7 @@
 	 * function body (see above). As a workaround, use “wb * example.com”
 	 * or “wb 2010* example.com”.
 	 */
-	s = s.replace(/^\s*(\S+)\s*/, '$1/');
+	s = s.replace(/^\s*([0-9]+\*?|\*)\s+/, '$1/');
 
 	if (s) {
 		location = 'https://web.archive.org/web/' + s;
