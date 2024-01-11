@@ -85,6 +85,23 @@
 		}
 	);
 
+	/* Show the original image for Simpleview CMS resized assets.
+	 *
+	 * Example:
+	 * https://assets.simpleviewcms.com/simpleview/image/upload/c_fill,g_xy_center,h_640,w_640,x_1697,y_1559/f_jpg/q_65/v1/clients/norway/Tungeneset_Norway_1116ab05-08a0-463e-a41d-42d5b8c549eb.jpg?_a=BATCtdAA0
+	 * https://assets.simpleviewcms.com/simpleview/image/upload/clients/norway/Tungeneset_Norway_1116ab05-08a0-463e-a41d-42d5b8c549eb.jpg?_a=BATCtdAA0
+	 */
+	[].forEach.call(
+		document.querySelectorAll('img[src^="https://assets.simpleviewcms.com/simpleview/image/upload"][src*="/clients/"]'),
+		function (img) {
+			const oldSrc = img.src;
+			newSrc = oldSrc.replace(/^(https:\/\/assets\.simpleviewcms\.com\/simpleview\/image\/upload\/)(.*\/)(clients\/)/, '$1/$3');
+			if (newSrc !== oldSrc) {
+				changeSrc(img, newSrc, 'found image with Simpleview CMS resized asset URL');
+			}
+		}
+	);
+
 	/* Show the original images when their full URL seems to be in the IMG@src path.
 	 *
 	 * Example:
