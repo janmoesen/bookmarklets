@@ -207,6 +207,26 @@
 		}
 	);
 
+	/* Get rid of parameters whose value corresponds to the current image’s
+	 * with or height, e.g. `foo.jpg?dim_w=123&dim_h=456` when the image’s
+	 * `naturalWidth` is 123 and/or its `naturalHeight` is 456.
+	 */
+	document.querySelectorAll('img[src*="?"]').forEach(img => {
+		const oldSrc = img.src;
+		const imgUrl = new URL(oldSrc);
+		imgUrl.searchParams.forEach((value, key) => {
+			if (value == img.naturalWidth || value === img.naturalHeight) {
+				imgUrl.searchParams.delete(key);
+			}
+		});
+
+		const newSrc = imgUrl.toString();
+
+		if (newSrc !== oldSrc) {
+			changeSrc(img, newSrc, 'found image with query string parameter matching its width/height');
+		}
+	});
+
 	/* Change all Blogspot images that have not been changed yet. */
 	Array.from(
 		document.querySelectorAll('img[src*="bp.blogspot.com/"]')
