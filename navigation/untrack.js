@@ -13,7 +13,7 @@
 	* expanded, primarily with the code from https://privacytests.org/
 	* <https://github.com/arthuredelstein/privacytests.org/blob/master/testing/index.js>.
 	* */
-	const parameterPatterns =[
+	const parameterPatterns = [
 		/* Google (Analytics, Ads, DoubleClick) */
 		'utm_[^=]*',
 		'gclid',
@@ -67,6 +67,9 @@
 		/* Outbrain */
 		'obOrigUrl',
 		'outbrainclickid',
+
+		/* Matomo (formerly Piwik) */
+		'piwik_[^=]*',
 
 		/* Cloudflare DDOS challenge tokens */
 		'__cf_chl_jschl_tk__',
