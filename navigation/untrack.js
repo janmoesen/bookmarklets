@@ -295,6 +295,14 @@
 			}
 		},
 
+		/* TripAdvisor
+		 * E.g. https://www.tripadvisor.com/ExternalLinkInterstitial?redirectTo=http%3A%2F%2Fwww.billigvask.no%2Fself-service-laundromat.html
+		 */
+		'a[href*="/ExternalLinkInterstitial?"][href*="redirectTo="]': a => {
+			const usp = new URLSearchParams(new URL(a.href).search);
+			a.href = usp.get('redirectTo') ?? a.href;
+		},
+
 		/* Links that were processed by this bookmarklet to restore their
 		 * original `A@href` after it was changed on the fly because of user
 		 * interaction, e.g. by clicking on Google Ads text links or
