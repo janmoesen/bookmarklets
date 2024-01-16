@@ -1808,7 +1808,7 @@
 				'privacy',
 				'terms',
 				'tcf',
-			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *`)
+			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *, form[action*="${text}"] *`)
 			.join(', ');
 
 		const cookieTextRegexp = /cooki|informasjonskaps/i;
