@@ -28,6 +28,7 @@
 		'__eep__',
 
 		 /* Instagram */
+		'igsh',
 		'igshid',
 		'ig_rid',
 
