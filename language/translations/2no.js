@@ -12,7 +12,9 @@
  * @title Translate to Norwegian
  * @keyword 2no
  */
-(function () {
+(function (config) {
+	const {keyword, languageCodes, languageNamesInEnglish, languageNativeNames, thisPageInNativeNameTexts} = config;
+
 	/* Try to get the parameter string from the bookmarklet/search query. */
 	var s = (function () { /*%s*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
@@ -68,41 +70,42 @@
 
 		if (!s) {
 			/* If there is no selection, look for translation links. */
-			var interLanguageSelectors = [
+			const interLanguageSelectors = [];
+
+			languageCodes.forEach(languageCode => interLanguageSelectors.push(
 				/* Wikipedia/Mediawiki */
-				'.interlanguage-link a[href][hreflang="no"]',
-				'.interlanguage-link a[href][hreflang="nb"]',
+				`.interlanguage-link a[href][hreflang="${languageCode}"]`,
 
 				/* CatenaCycling.com */
-				'#language a[href][hreflang="no"]',
-				'#language a[href][hreflang="nb"]',
+				`#language a[href][hreflang="${languageCode}"]`,
 
 				/* Generic */
-				'link[rel="alternate"][hreflang="no"]',
-				'link[rel="alternate"][hreflang="nb"]',
-				'link[rel="alternate"][hreflang^="no-"]',
-				'link[rel="alternate"][hreflang^="nb-"]',
-				'[id*="lang"][id*="elect"] a[hreflang="no"]',
-				'[id*="lang"][id*="elect"] a[hreflang="nb"]',
-				'[id*="lang"][id*="elect"] a[hreflang^="no-"]',
-				'[id*="lang"][id*="elect"] a[hreflang^="nb-"]',
-				'[class*="lang"][class*="elect"] a[hreflang="no"]',
-				'[class*="lang"][class*="elect"] a[hreflang="nb"]',
-				'[class*="lang"][class*="elect"] a[hreflang^="no-"]',
-				'[class*="lang"][class*="elect"] a[hreflang^="nb-"]',
-				'a.language[href*="/no/"]',
-				'a.language[href*="/nb/"]',
-				'a[class*="choose"][class*="lang"][href^="/no/"]',
-				'a[class*="choose"][class*="lang"][href^="/nb/"]',
-				'a[href][title$="this page in Norwegian"]',
-				'a[href][title$="siden på norsk"]'
-			];
+				`link[rel="alternate"][hreflang="${languageCode}"]`,
+				`link[rel="alternate"][hreflang^="${languageCode}-"]`,
+				`[id*="lang"][id*="elect"] a[hreflang="${languageCode}"]`,
+				`[id*="lang"][id*="elect"] a[hreflang^="${languageCode}-"]`,
+				`[class*="lang"][class*="elect"] a[hreflang="${languageCode}"]`,
+				`[class*="lang"][class*="elect"] a[hreflang^="${languageCode}-"]`,
+				`a.language[href*="/${languageCode}/"]`,
+				`a.language[href*="/${languageCode.toLowerCase()}/"]`,
+				`a[class*="choose"][class*="lang"][href^="/${languageCode}/"]`,
+				`a[class*="choose"][class*="lang"][href^="/${languageCode.toLowerCase()}/"]`,
+			));
+
+			languageNamesInEnglish.forEach(languageNameInEnglish => interLanguageSelectors.push(
+				`a[href][title$="this page in ${languageNameInEnglish}"]`,
+				`a[href][title$="current page in ${languageNameInEnglish}"]`
+			));
+
+			thisPageInNativeNameTexts.forEach(thisPageInNativeNameText => interLanguageSelectors.push(
+				`a[href][title$="${thisPageInNativeNameText}"]`,
+			));
 
 			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
-					console.log('Translate to Norwegian: found link for selector ', interLanguageSelectors[i], ': ', link);
+					console.log(`${keyword}: found link for selector ${interLanguageSelectors[i]}: `, link);
 
 					location = link.href;
 
@@ -110,20 +113,28 @@
 				}
 			}
 
-			var interLanguageXPathSelectors = [
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "no"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "nb"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "norsk"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "nynorsk"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "bokmål"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "norsk bokmål"]',
-				'//a[@href][contains(., "page in Norwegian")]',
-			];
+			const interLanguageXPathSelectors = [];
+
+			languageCodes.forEach(languageCode => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageCode}"]`,
+			));
+
+			languageNamesInEnglish.forEach(languageNameInEnglish => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageNameInEnglish.toLowerCase()}"]`,
+			));
+
+			languageNativeNames.forEach(languageNativeName => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageNativeName.toLowerCase()}"]`,
+			));
+
+			thisPageInNativeNameTexts.forEach(thisPageInNativeNameText => interLanguageSelectors.push(
+				`//a[@href][contains(., "${thisPageInNativeNameText}")]`,
+			));
 
 			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
 				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				if (xPathResult.snapshotLength) {
-					console.log('Translate to Norwegian: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
+					console.log(`${keyword}: found link for selector ${interLanguageXPathSelectors[i]}: `, xPathResult.snapshotItem(0));
 
 					location = xPathResult.snapshotItem(0).href;
 
@@ -152,10 +163,7 @@
 				const possibleWikimediaDomain = possibleWikimediaDomainMatches[2];
 				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('.interlanguage-link')) {
 					const mobileSubdomain = possibleWikimediaDomainMatches[1];
-					/* ↓ NOTE ↓: `no` gets replaced when generating `2nl`, `2fr`, `2it`, …
-					 * For Chinese, it becomes `zh-CN`, hence the suffix stripping. */
-					const languageSubdomain = 'no'.replace(/-.*/, '');
-					const targetLanguageDomain = `${languageSubdomain}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
+					const targetLanguageDomain = `${languageCodes[0]}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
 
 					let urlForOtherLanguage = new URL(location);
 					urlForOtherLanguage.hostname = targetLanguageDomain;
@@ -179,7 +187,7 @@
 						}
 					}
 
-					console.log(`Translate to Norwegian: Wikimedia special case: going to the corresponding page on the Norwegian domain ${targetLanguageDomain}: ${urlForOtherLanguage}`);
+					console.log(`${keyword}: Wikimedia special case: going to the corresponding page on the ${languageNamesInEnglish.join('/')} domain ${targetLanguageDomain}: ${urlForOtherLanguage}`);
 					location = urlForOtherLanguage;
 					return;
 				}
@@ -192,7 +200,7 @@
 
 			/* If all else fails, prompt the user for the text to translate. */
 			if (!s) {
-				s = prompt('Please enter your text to translate to Norwegian:');
+				s = prompt(`Please enter your text to translate to ${languageNamesInEnglish.join('/')}:`);
 			}
 		}
 	} else {
@@ -213,11 +221,19 @@
 			}
 
 			googleTranslateUrl.searchParams.set('_x_tr_sl', 'auto');
-			googleTranslateUrl.searchParams.set('_x_tr_tl', 'no');
+			googleTranslateUrl.searchParams.set('_x_tr_tl', languageCodes[0]);
 
 			location = googleTranslateUrl;
 		} else {
-			location = 'https://translate.google.com/?op=translate&sl=auto&tl=no&text=' + encodeURIComponent(s);
+			location = `https://translate.google.com/?op=translate&sl=auto&tl=${languageCodes[0]}&text=${encodeURIComponent(s)}`;
 		}
 	}
-})();
+})({
+
+	keyword: '2no',
+	languageCodes: ['no', 'no-NO', 'nb', 'nb-NO', 'nn', 'nn-NO'],
+	languageNamesInEnglish: ['Norwegian'],
+	languageNativeNames: ['Norsk'],
+	thisPageInNativeNameTexts: ['denne siden på norsk', 'denne siden på bokmål', 'denne siden på nynorsk', 'norsk versjon', 'bokmålsversjon', 'nynorsk versjon', 'versjon på norsk', 'versjon på nynorsk', 'versjon på bokmål'],
+
+});

@@ -12,7 +12,9 @@
  * @title Translate to German
  * @keyword 2de
  */
-(function () {
+(function (config) {
+	const {keyword, languageCodes, languageNamesInEnglish, languageNativeNames, thisPageInNativeNameTexts} = config;
+
 	/* Try to get the parameter string from the bookmarklet/search query. */
 	var s = (function () { /*%s*/; }).toString()
 		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
@@ -68,31 +70,42 @@
 
 		if (!s) {
 			/* If there is no selection, look for translation links. */
-			var interLanguageSelectors = [
+			const interLanguageSelectors = [];
+
+			languageCodes.forEach(languageCode => interLanguageSelectors.push(
 				/* Wikipedia/Mediawiki */
-				'.interlanguage-link a[href][hreflang="de"]',
+				`.interlanguage-link a[href][hreflang="${languageCode}"]`,
 
 				/* CatenaCycling.com */
-				'#language a[href][hreflang="de"]',
+				`#language a[href][hreflang="${languageCode}"]`,
 
 				/* Generic */
-				'link[rel="alternate"][hreflang="de"]',
-				'link[rel="alternate"][hreflang^="de-"]',
-				'[id*="lang"][id*="elect"] a[hreflang="de"]',
-				'[id*="lang"][id*="elect"] a[hreflang^="de-"]',
-				'[class*="lang"][class*="elect"] a[hreflang="de"]',
-				'[class*="lang"][class*="elect"] a[hreflang^="de-"]',
-				'a.language[href*="/de/"]',
-				'a[class*="choose"][class*="lang"][href^="/de/"]',
-				'a[href][title$="this page in German"]',
-				'a[href][title$="diese Seite auf Deutsch"]'
-			];
+				`link[rel="alternate"][hreflang="${languageCode}"]`,
+				`link[rel="alternate"][hreflang^="${languageCode}-"]`,
+				`[id*="lang"][id*="elect"] a[hreflang="${languageCode}"]`,
+				`[id*="lang"][id*="elect"] a[hreflang^="${languageCode}-"]`,
+				`[class*="lang"][class*="elect"] a[hreflang="${languageCode}"]`,
+				`[class*="lang"][class*="elect"] a[hreflang^="${languageCode}-"]`,
+				`a.language[href*="/${languageCode}/"]`,
+				`a.language[href*="/${languageCode.toLowerCase()}/"]`,
+				`a[class*="choose"][class*="lang"][href^="/${languageCode}/"]`,
+				`a[class*="choose"][class*="lang"][href^="/${languageCode.toLowerCase()}/"]`,
+			));
+
+			languageNamesInEnglish.forEach(languageNameInEnglish => interLanguageSelectors.push(
+				`a[href][title$="this page in ${languageNameInEnglish}"]`,
+				`a[href][title$="current page in ${languageNameInEnglish}"]`
+			));
+
+			thisPageInNativeNameTexts.forEach(thisPageInNativeNameText => interLanguageSelectors.push(
+				`a[href][title$="${thisPageInNativeNameText}"]`,
+			));
 
 			for (var link, i = 0; i < interLanguageSelectors.length; i++) {
 				link = document.querySelector(interLanguageSelectors[i]);
 
 				if (link) {
-					console.log('Translate to German: found link for selector ', interLanguageSelectors[i], ': ', link);
+					console.log(`${keyword}: found link for selector ${interLanguageSelectors[i]}: `, link);
 
 					location = link.href;
 
@@ -100,16 +113,28 @@
 				}
 			}
 
-			var interLanguageXPathSelectors = [
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "de"]',
-				'//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "deutsch"]',
-				'//a[@href][contains(., "page in German")]',
-			];
+			const interLanguageXPathSelectors = [];
+
+			languageCodes.forEach(languageCode => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageCode}"]`,
+			));
+
+			languageNamesInEnglish.forEach(languageNameInEnglish => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageNameInEnglish.toLowerCase()}"]`,
+			));
+
+			languageNativeNames.forEach(languageNativeName => interLanguageSelectors.push(
+				`//a[@href][translate(., "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ", "abcçdefghijklmnñopqrstuvwxyzруский") = "${languageNativeName.toLowerCase()}"]`,
+			));
+
+			thisPageInNativeNameTexts.forEach(thisPageInNativeNameText => interLanguageSelectors.push(
+				`//a[@href][contains(., "${thisPageInNativeNameText}")]`,
+			));
 
 			for (i = 0; i < interLanguageXPathSelectors.length; i++) {
 				var xPathResult = document.evaluate(interLanguageXPathSelectors[i], document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 				if (xPathResult.snapshotLength) {
-					console.log('Translate to German: found link for selector ', interLanguageXPathSelectors[i], ': ', xPathResult.snapshotItem(0));
+					console.log(`${keyword}: found link for selector ${interLanguageXPathSelectors[i]}: `, xPathResult.snapshotItem(0));
 
 					location = xPathResult.snapshotItem(0).href;
 
@@ -138,10 +163,7 @@
 				const possibleWikimediaDomain = possibleWikimediaDomainMatches[2];
 				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('.interlanguage-link')) {
 					const mobileSubdomain = possibleWikimediaDomainMatches[1];
-					/* ↓ NOTE ↓: `de` gets replaced when generating `2nl`, `2fr`, `2it`, …
-					 * For Chinese, it becomes `zh-CN`, hence the suffix stripping. */
-					const languageSubdomain = 'de'.replace(/-.*/, '');
-					const targetLanguageDomain = `${languageSubdomain}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
+					const targetLanguageDomain = `${languageCodes[0]}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
 
 					let urlForOtherLanguage = new URL(location);
 					urlForOtherLanguage.hostname = targetLanguageDomain;
@@ -165,7 +187,7 @@
 						}
 					}
 
-					console.log(`Translate to German: Wikimedia special case: going to the corresponding page on the German domain ${targetLanguageDomain}: ${urlForOtherLanguage}`);
+					console.log(`${keyword}: Wikimedia special case: going to the corresponding page on the ${languageNamesInEnglish.join('/')} domain ${targetLanguageDomain}: ${urlForOtherLanguage}`);
 					location = urlForOtherLanguage;
 					return;
 				}
@@ -178,7 +200,7 @@
 
 			/* If all else fails, prompt the user for the text to translate. */
 			if (!s) {
-				s = prompt('Please enter your text to translate to German:');
+				s = prompt(`Please enter your text to translate to ${languageNamesInEnglish.join('/')}:`);
 			}
 		}
 	} else {
@@ -199,11 +221,19 @@
 			}
 
 			googleTranslateUrl.searchParams.set('_x_tr_sl', 'auto');
-			googleTranslateUrl.searchParams.set('_x_tr_tl', 'de');
+			googleTranslateUrl.searchParams.set('_x_tr_tl', languageCodes[0]);
 
 			location = googleTranslateUrl;
 		} else {
-			location = 'https://translate.google.com/?op=translate&sl=auto&tl=de&text=' + encodeURIComponent(s);
+			location = `https://translate.google.com/?op=translate&sl=auto&tl=${languageCodes[0]}&text=${encodeURIComponent(s)}`;
 		}
 	}
-})();
+})({
+
+	keyword: '2de',
+	languageCodes: ['de', 'de-DE', 'de-AT', 'de-CH', 'de-LU'],
+	languageNamesInEnglish: ['German'],
+	languageNativeNames: ['Deutsch'],
+	thisPageInNativeNameTexts: ['diese Seite auf Deutsch', 'Version auf Deutsch', 'Deutsche Version'],
+
+});

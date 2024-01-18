@@ -2,94 +2,172 @@
 echo 'This is not meant to be run as a stand-alone script. Copy and paste.';
 exit 1;
 
-# Copy the last modified bookmarklet to the clipboard.
-# Cygwin/Linux users might want to use "putclip"/"xclip" or something similar.
-PUTCLIP=; pbcopy < <(file="$(find . -name '*.js' -exec ls -1rt {} + | tail -n 1)" && echo "Copied $file to the clipboard." 1>&2 && perl -p -e 's/\\$//g; s/\n/ /g' "$file");
-
 # Copy the Google Translate bookmarklet from English to some other languages.
 copy-2en () {
 	source='language/translations/2en.js';
-	while [ $# -ge 4 ]; do
-		local bookmarklet_name="$1";
-		shift;
-		local lang_code="$1";
-		shift;
-		local lang_name_in_english="$1";
-		shift;
-		local lang_name_in_other_lowercase="$1";
-		shift;
-		local this_page_in_xxx_text="$1";
-		shift;
-		target="${source/2en/$bookmarklet_name}";
+	local bookmarklet_name="$1";
+	local lang_name_in_english="$2";
+	local js_config_body="$3";
+	target="${source/2en/$bookmarklet_name}";
 
-		perl -p -e "
-				s/\b2en\b/$bookmarklet_name/g;
-				s/\ben\b/$lang_code/g;
-				s/\bcurrent page in English\b/$this_page_in_xxx_text/g;
-				s/\bEnglish\b/$lang_name_in_english/g;
-				s/\benglish\b/$lang_name_in_other_lowercase/g;
-			" "$source" > "$target" \
-			&& echo "Copied to $target ($name)" \
-			|| echo "Failed to copy to $target ($name)";
-	done;
+	local is_in_header=true;
+	local is_in_function_body=false;
+	local is_in_js_config_body=false;
+	local is_in_footer=false;
+	while IFS=$'\n' read -r line; do
+		#echo "LINE: >$line<" 1>&2;
+		if $is_in_header; then
+			line="${line//2en/$bookmarklet_name}";
+			line="${line//English/$lang_name_in_english}";
+			if [ "$line" = ' */' ]; then
+				is_in_header=false;
+				is_in_function_body=true;
+			fi;
+			echo "$line";
+		elif $is_in_function_body; then
+			if [[ "$line" =~ Begin\ JS\ config\ object ]]; then
+				is_in_function_body=false;
+				is_in_js_config_body=true;
+				echo "$js_config_body";
+			else
+				echo "$line";
+			fi;
+		elif $is_in_js_config_body; then
+			if [[ "$line" =~ End\ JS\ config\ object ]]; then
+				is_in_js_config_body=false;
+				is_in_footer=true;
+			fi;
+		elif $is_in_footer; then
+			echo "$line";
+		else
+			echo "WTF am I? $line" 1>&2;
+		fi;
+	done < "$source" >| "$target" \
+		&& echo "Copied to $target ($name)" \
+		|| echo "Failed to copy to $target ($name)";
 }
 
 copy_2en_parameters=(
+	# ↓ Keyword/bookmarklet name (and filename)
 	2nl
-	nl
+
+	# ↓ s/English/XXX/g in the docblock
 	Dutch
-	nederlands
-	'deze pagina in het Nederlands'
 
-	2fr
-	fr
-	French
-	français
-	'cette page en français'
+	# ↓ JavaScript `config` object body
+"
+	keyword: '2nl',
+	languageCodes: ['nl', 'nl-BE', 'nl-NL'],
+	languageNamesInEnglish: ['Dutch'],
+	languageNativeNames: ['Nederlands'],
+	thisPageInNativeNameTexts: ['deze pagina in het Nederlands', 'versie in het Nederlands', 'Nederlandse versie', 'Nederlandstalige versie'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
+copy_2en_parameters=(
 	2de
-	de
 	German
-	deutsch
-	'diese Seite auf Deutsch'
+"
+	keyword: '2de',
+	languageCodes: ['de', 'de-DE', 'de-AT', 'de-CH', 'de-LU'],
+	languageNamesInEnglish: ['German'],
+	languageNativeNames: ['Deutsch'],
+	thisPageInNativeNameTexts: ['diese Seite auf Deutsch', 'Version auf Deutsch', 'Deutsche Version'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
-	2it
-	it
-	Italian
-	italiano
-	'questa pagina in italiano'
-
+copy_2en_parameters=(
 	2es
-	es
 	Spanish
-	español
-	'esta página en español'
+"
+	keyword: '2es',
+	languageCodes: ['es', 'es-ES'],
+	languageNamesInEnglish: ['Spanish'],
+	languageNativeNames: ['español'],
+	thisPageInNativeNameTexts: ['esta página en español', 'versión en español'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
-	2zh
-	zh-CN
-	'Mandarin Chinese'
-	中文
-	'this page in Chinese'
+copy_2en_parameters=(
+	2fr
+	French
+"
+	keyword: '2fr',
+	languageCodes: ['fr', 'fr-FR', 'fr-BE'],
+	languageNamesInEnglish: ['French'],
+	languageNativeNames: ['français'],
+	thisPageInNativeNameTexts: ['cette page en français', 'version en français', 'version française', 'version francophone'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
-	2vi
-	vi
-	'Vietnamese'
-	'tiếng Việt'
-	'sang tiếng việt'
+copy_2en_parameters=(
+	2it
+	Italian
+"
+	keyword: '2it',
+	languageCodes: ['it', 'it-IT', 'it-CH'],
+	languageNamesInEnglish: ['Italian'],
+	languageNativeNames: ['italiano'],
+	thisPageInNativeNameTexts: ['questa pagina in italiano', 'questo sito in italiano', 'versione in italiano'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
-	2ru
-	ru
-	'Russian'
-	'русский'
-	'эта страница на русском языке'
-
+copy_2en_parameters=(
 	2no
-	no
 	Norwegian
-	norsk
-	'siden på norsk'
-);
-COPY_2EN=; copy-2en "${copy_2en_parameters[@]}";
+"
+	keyword: '2no',
+	languageCodes: ['no', 'no-NO', 'nb', 'nb-NO', 'nn', 'nn-NO'],
+	languageNamesInEnglish: ['Norwegian'],
+	languageNativeNames: ['Norsk'],
+	thisPageInNativeNameTexts: ['denne siden på norsk', 'denne siden på bokmål', 'denne siden på nynorsk', 'norsk versjon', 'bokmålsversjon', 'nynorsk versjon', 'versjon på norsk', 'versjon på nynorsk', 'versjon på bokmål'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
+	2ru
+	Russian
+"
+	keyword: '2ru',
+	languageCodes: ['ru', 'ru-RU'],
+	languageNamesInEnglish: ['Russian'],
+	languageNativeNames: ['русский'],
+	thisPageInNativeNameTexts: ['эта страница на русском языке', 'этот сайт на русском языке', 'русская версия'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
+	2vi
+	Vietnamese
+"
+	keyword: '2vi',
+	languageCodes: ['vi', 'vi-VN'],
+	languageNamesInEnglish: ['Vietnamese'],
+	languageNativeNames: ['tiếng Việt'],
+	thisPageInNativeNameTexts: ['trang này bằng tiếng Việt', 'phiên bản tiếng Việt', 'sang tiếng việt'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
+	2zh
+	'(Mandarin) Chinese'
+"
+	keyword: '2zh',
+	languageCodes: ['zh', 'zh-CN', 'zh-Hans', 'zh-TW', 'zh-Hant', 'cmn-TW'],
+	languageNamesInEnglish: ['Chinese'],
+	languageNativeNames: ['汉语', '漢語', '國語', '華語'],
+	thisPageInNativeNameTexts: ['为中文', '中文版', '為中文'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
 
 # Copy the English Wiktionary bookmarklet for some other dictionaries.
 copy-enwikt () {
