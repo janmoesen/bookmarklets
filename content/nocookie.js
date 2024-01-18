@@ -1742,6 +1742,7 @@
 
 			/* Dutch */
 			' weigeren ',
+			' ik weiger ',
 			' weiger alle ',
 			' afwijzen ',
 			' noodzakelijk',
