@@ -1,9 +1,9 @@
 /**
- * Look up the specified or selected text in the (Mandarin) Chinese Wiktionary.
+ * Look up the specified or selected text in the Swedish Wiktionary.
  *
- * @title (Mandarin) Chinese Wiktionary
+ * @title Swedish Wiktionary
  */
-(function zhwikt() {
+(function svwikt() {
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
@@ -58,12 +58,12 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter the word(s) to look up in the (Mandarin) Chinese Wiktionary:');
+		s = getActiveSelection() || prompt('Please enter the word(s) to look up in the Swedish Wiktionary:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
 
 	if (s) {
-		location = 'https://zh.wiktionary.org/wiki/' + encodeURIComponent(s);
+		location = 'https://sv.wiktionary.org/wiki/' + encodeURIComponent(s);
 	}
 })();

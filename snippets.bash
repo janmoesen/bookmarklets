@@ -43,8 +43,8 @@ copy-2en () {
 			echo "WTF am I? $line" 1>&2;
 		fi;
 	done < "$source" >| "$target" \
-		&& echo "Copied to $target ($name)" \
-		|| echo "Failed to copy to $target ($name)";
+		&& echo "Copied to $target ($lang_name_in_english)" \
+		|| echo "Failed to copy to $target ($lang_name_in_english)";
 }
 
 copy_2en_parameters=(
@@ -131,6 +131,19 @@ copy_2en_parameters=(
 copy-2en "${copy_2en_parameters[@]}";
 
 copy_2en_parameters=(
+	2pt
+	Portuguese
+"
+	keyword: '2pt',
+	languageCodes: ['pt', 'pt-PT', 'pt-BR'],
+	languageNamesInEnglish: ['Portuguese'],
+	languageNativeNames: ['português'],
+	thisPageInNativeNameTexts: ['esta página em português', 'este site em português', 'versão em português'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
 	2ru
 	Russian
 "
@@ -139,6 +152,19 @@ copy_2en_parameters=(
 	languageNamesInEnglish: ['Russian'],
 	languageNativeNames: ['русский'],
 	thisPageInNativeNameTexts: ['эта страница на русском языке', 'этот сайт на русском языке', 'русская версия'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
+	2sv
+	Swedish
+"
+	keyword: '2sv',
+	languageCodes: ['sv', 'sv-SE'],
+	languageNamesInEnglish: ['Swedish'],
+	languageNativeNames: ['svenska'],
+	thisPageInNativeNameTexts: ['denna sida på svenska', 'svensk version', 'version på svenska'],
 "
 )
 copy-2en "${copy_2en_parameters[@]}";
@@ -191,14 +217,16 @@ copy-enwikt () {
 
 COPY_ENWIKT=; copy-enwikt \
 	nlwikt 'Dutch Wiktionary' 'in the Dutch Wiktionary' 'https://nl.wiktionary.org/wiki/' \
-	frwikt 'French Wiktionary' 'in the French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
 	dewikt 'German Wiktionary' 'in the German Wiktionary' 'https://de.wiktionary.org/wiki/' \
-	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
 	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
-	zhwikt 'Mandarin Chinese Wiktionary' 'in the Mandarin Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
-	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
-	ruwikt 'Russian Wiktionary' 'in the Russian Wiktionary' 'https://ru.wiktionary.org/wiki/' \
+	frwikt 'French Wiktionary' 'in the French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
+	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
 	nowikt 'Norwegian Wiktionary' 'in the Norwegian Wiktionary' 'https://no.wiktionary.org/wiki/' \
+	ptwikt 'Portuguese Wiktionary' 'in the Portuguese Wiktionary' 'https://pt.wiktionary.org/wiki/' \
+	ruwikt 'Russian Wiktionary' 'in the Russian Wiktionary' 'https://ru.wiktionary.org/wiki/' \
+	svwikt 'Swedish Wiktionary' 'in the Swedish Wiktionary' 'https://sv.wiktionary.org/wiki/' \
+	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
+	zhwikt '(Mandarin) Chinese Wiktionary' 'in the (Mandarin) Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
 	vd 'Van Dale' 'in the Dutch Van Dale dictionary' 'https://www.vandale.nl/gratis-woordenboek/nederlands/betekenis/' \
 	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'https://www.vlaamswoordenboek.be/definities/search?definition[q]=' \
 	oed 'O.E.D.' 'in the Oxford English dictionary' 'https://en.oxforddictionaries.com/definition/' \
@@ -226,14 +254,16 @@ copy-enw () {
 }
 COPY_ENW=; copy-enw \
 	nl Dutch \
-	fr French \
 	de German \
-	it Italian \
 	es Spanish \
-	zh 'Mandarin Chinese' \
-	vi 'Vietnamese' \
-	ru 'Russian' \
+	fr French \
+	it Italian \
 	no 'Norwegian' \
+	pt 'Portuguese' \
+	ru 'Russian' \
+	sv 'Swedish' \
+	vi 'Vietnamese' \
+	zh '(Mandarin) Chinese' \
 ;
 
 # Typing is hard; let's go shopping.

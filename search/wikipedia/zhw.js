@@ -1,7 +1,7 @@
 /**
- * Look up the specified or selected text in the Mandarin Chinese Wikipedia.
+ * Look up the specified or selected text in the (Mandarin) Chinese Wikipedia.
  *
- * @title Mandarin Chinese Wikipedia
+ * @title (Mandarin) Chinese Wikipedia
  */
 (function zhw() {
 	/* Try to get the parameter string from the bookmarklet/search query.
@@ -58,7 +58,7 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter the subject to look up in the Mandarin Chinese Wikipedia:');
+		s = getActiveSelection() || prompt('Please enter the subject to look up in the (Mandarin) Chinese Wikipedia:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}

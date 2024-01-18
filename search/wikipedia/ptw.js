@@ -1,9 +1,9 @@
 /**
- * Look up the specified or selected text in the (Mandarin) Chinese Wiktionary.
+ * Look up the specified or selected text in the Portuguese Wikipedia.
  *
- * @title (Mandarin) Chinese Wiktionary
+ * @title Portuguese Wikipedia
  */
-(function zhwikt() {
+(function ptw() {
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
@@ -58,12 +58,13 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter the word(s) to look up in the (Mandarin) Chinese Wiktionary:');
+		s = getActiveSelection() || prompt('Please enter the subject to look up in the Portuguese Wikipedia:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
 
 	if (s) {
-		location = 'https://zh.wiktionary.org/wiki/' + encodeURIComponent(s);
+		/* The Wikipedia search works like "I'm feeling lucky" on most Wikipedia instances. If there is a complete match, it will redirect us there. */
+		location = 'https://pt.wikipedia.org/w/index.php?searchToken=.&title=Special%3ASearch&ns0=1&search=' + encodeURIComponent(s);
 	}
 })();
