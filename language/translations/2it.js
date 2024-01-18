@@ -161,7 +161,7 @@
 			const possibleWikimediaDomainMatches = location.host.match(/.*?\.(m\.)?([^.]+\.[^.]+$)/);
 			if (possibleWikimediaDomainMatches) {
 				const possibleWikimediaDomain = possibleWikimediaDomainMatches[2];
-				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1 && !document.querySelector('.interlanguage-link')) {
+				if (wikimediaDomains.indexOf(possibleWikimediaDomain) > -1) {
 					const mobileSubdomain = possibleWikimediaDomainMatches[1];
 					const targetLanguageDomain = `${languageCodes[0]}.${mobileSubdomain ?? ''}${possibleWikimediaDomain}`;
 
