@@ -1713,6 +1713,14 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * FreePrivacyPolicy.com Free Cookie Consent
+		 * <https://www.freeprivacypolicy.com/free-cookie-consent/>
+		 *
+		 * E.g. https://www.immo-zone.be/
+		 * ----------------------------------------------------------------- */
+		tryToClick('.cc-nb-reject', 'FreePrivacyPolicy.com Free Cookie Consent');
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
