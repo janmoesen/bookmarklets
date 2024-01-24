@@ -63,7 +63,7 @@
 				rect = visibleMediaContainer.getBoundingClientRect();
 			}
 
-			const indicator = document.createElement('div');
+			const indicator = document.createElementNS('http://www.w3.org/1999/xhtml', 'div');
 			indicator.textContent = media.playbackRate + '×';
 			indicator.setAttribute('style', `
 				display: flex;

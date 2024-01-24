@@ -131,10 +131,10 @@
 		const elevationGainFormatter = new Intl.NumberFormat(document.documentElement.lang, {maximumFractionDigits: 0});
 
 		/* Add the average distance per activity. */
-		const avgDistanceRow = tbody.ownerDocument.createElement('tr');
-		avgDistanceRow.appendChild(tbody.ownerDocument.createElement('td')).textContent = 'Avg Distance / Activity';
+		const avgDistanceRow = tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'tr');
+		avgDistanceRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td')).textContent = 'Avg Distance / Activity';
 		data.distance.forEach((distance, i) => {
-			const td = avgDistanceRow.appendChild(tbody.ownerDocument.createElement('td'));
+			const td = avgDistanceRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td'));
 			td.textContent = data.numActivities[i] && data.distance[i]
 				? `${distanceFormatter.format(data.distance[i] / data.numActivities[i])} ${data.distance.unit}`
 				: 'n/a';
@@ -143,10 +143,10 @@
 		data.distance.row.after(avgDistanceRow);
 
 		/* Add the average elevation gain per activity. */
-		const avgElevationGainPerActivityRow = tbody.ownerDocument.createElement('tr');
-		avgElevationGainPerActivityRow.appendChild(tbody.ownerDocument.createElement('td')).textContent = 'Avg Elev Gain / Activity';
+		const avgElevationGainPerActivityRow = tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'tr');
+		avgElevationGainPerActivityRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td')).textContent = 'Avg Elev Gain / Activity';
 		data.elevationGain.forEach((elevationGain, i) => {
-			const td = avgElevationGainPerActivityRow.appendChild(tbody.ownerDocument.createElement('td'));
+			const td = avgElevationGainPerActivityRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td'));
 			td.textContent = data.numActivities[i] && data.elevationGain[i]
 				? `${elevationGainFormatter.format(Math.round(data.elevationGain[i] / data.numActivities[i]))} ${data.elevationGain.unit}`
 				: 'n/a';
@@ -156,10 +156,10 @@
 
 		/* Add the average elevation gain per 100 km or miles. */
 		const distanceForAvgElevationGain = 100;
-		const avgElevationGainPerDistanceRow = tbody.ownerDocument.createElement('tr');
-		avgElevationGainPerDistanceRow.appendChild(tbody.ownerDocument.createElement('td')).textContent = `Avg Elev Gain / ${distanceForAvgElevationGain} ${data.distance.unit}`;
+		const avgElevationGainPerDistanceRow = tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'tr');
+		avgElevationGainPerDistanceRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td')).textContent = `Avg Elev Gain / ${distanceForAvgElevationGain} ${data.distance.unit}`;
 		data.elevationGain.forEach((elevationGain, i) => {
-			const td = avgElevationGainPerDistanceRow.appendChild(tbody.ownerDocument.createElement('td'));
+			const td = avgElevationGainPerDistanceRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td'));
 			td.textContent = data.numActivities[i] && data.elevationGain[i]
 				? `${elevationGainFormatter.format(Math.round(data.elevationGain[i] / (data.distance[i] / distanceForAvgElevationGain)))} ${data.elevationGain.unit}`
 				: 'n/a';
@@ -168,10 +168,10 @@
 		avgElevationGainPerActivityRow.after(avgElevationGainPerDistanceRow);
 
 		/* Add the average speed per activity. */
-		const avgSpeedRow = tbody.ownerDocument.createElement('tr');
-		avgSpeedRow.appendChild(tbody.ownerDocument.createElement('td')).textContent = 'Avg Speed / Activity';
+		const avgSpeedRow = tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'tr');
+		avgSpeedRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td')).textContent = 'Avg Speed / Activity';
 		data.time.forEach((time, i) => {
-			const td = avgSpeedRow.appendChild(tbody.ownerDocument.createElement('td'));
+			const td = avgSpeedRow.appendChild(tbody.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'td'));
 			td.textContent = data.distance[i] && data.time[i]
 				? `${distanceFormatter.format(data.distance[i] / data.time[i] * 3600)} ${data.distance.unit}/h`
 				: 'n/a';
@@ -182,7 +182,7 @@
 
 	/* Add a style sheet that improves the stats’ readability. */
 	if (needsToAddCss) {
-		document.head.appendChild(document.createElement('style')).textContent = `
+		document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = `
 			.sidebar tbody td {
 				white-space: pre;
 			}

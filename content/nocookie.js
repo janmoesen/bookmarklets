@@ -1875,7 +1875,7 @@
 
 		const iframeBounds = iframe.getBoundingClientRect();
 
-		const div = iframe.parentNode.insertBefore(iframe.ownerDocument.createElement('div'), iframe.nextSibling);
+		const div = iframe.parentNode.insertBefore(iframe.ownerDocument.createElementNS('http://www.w3.org/1999/xhtml', 'div'), iframe.nextSibling);
 		div.classList.add('xxxJanProbableExternalConsentManagerAttentionGrabber');
 		div.style.width = `${iframe.offsetWidth - (outlineWidth * 2)}px`;
 		div.style.height = `${iframe.offsetHeight - (outlineWidth * 2)}px`;
@@ -1884,7 +1884,7 @@
 		div.style.zIndex = iframe.ownerDocument?.defaultView?.getComputedStyle(iframe)?.zIndex ?? 1969 /* in the sunshine */;
 		div.addEventListener('animationend', _ => div.remove());
 
-		const style = document.createElement('style');
+		const style = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 		style.media = 'screen and (prefers-reduced-motion: no-preference)';
 		style.textContent = `
 			.xxxJanProbableExternalConsentManagerAttentionGrabber {
