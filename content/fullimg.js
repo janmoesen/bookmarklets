@@ -162,6 +162,7 @@
 		'source',
 		'normal',
 		'xlarge',
+		'',
 	];
 
 	[].forEach.call(
@@ -173,7 +174,11 @@
 				var newSources = [];
 
 				fullSizePathParts.forEach(function (part) {
-					newSources.push(matches[1] + part + matches[3]);
+					if (part === '') {
+						newSources.push(matches[1].replace(/\/$/, '') + part + matches[3]);
+					} else {
+						newSources.push(matches[1] + part + matches[3]);
+					}
 				});
 
 				changeSrc(img, newSources, 'found image whose URL looks like a thumbnail/resized version');
