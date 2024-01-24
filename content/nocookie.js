@@ -1747,6 +1747,7 @@
 			' essential ',
 			' minimal ',
 			' only ',
+			' no cookies ',
 
 			/* Dutch */
 			' weigeren ',
@@ -1759,6 +1760,7 @@
 			' minimale ',
 			' enkel ',
 			' alleen ',
+			' geen cookies ',
 
 			/* French */
 			' refuse',
@@ -1770,6 +1772,8 @@
 			' minimal',
 			' seulement ',
 			' seul ',
+			' pas de cookies ',
+			' aucun ',
 
 			/* German */
 			' ablehnen ',
@@ -1778,6 +1782,7 @@
 			' erforderlich',
 			' minimale ',
 			' nur ',
+			' kein cookies ',
 
 			/* Italian */
 			' rifiut',
