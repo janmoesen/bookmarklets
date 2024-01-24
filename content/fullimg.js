@@ -517,6 +517,15 @@
 			if (img.src !== img.originalSrc) {
 				console.log('[' + basename + '] → Success:     ' + img.src);
 				img.hasNewSource = true;
+
+				/* For images that are viewed stand-alone, also update the address bar and title. */
+				if (location.href === img.originalSrc) {
+					history.replaceState({}, '', img.src);
+					if (document.title.indexOf(basename) > -1) {
+						const newBasename = img.src.replace(/[?#].*/, '').replace(/.*?([^\/]*)\/*$/, '$1');
+						document.title = `${newBasename} (${img.naturalWidth} × ${img.naturalHeight} pixels)`;
+					}
+				}
 			}
 		});
 
