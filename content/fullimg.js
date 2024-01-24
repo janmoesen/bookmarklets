@@ -153,11 +153,12 @@
 	 * https://www.crazyguyonabike.com/pics/docs/00/01/27/84/small/DSCF3555.JPG
 	 * https://www.crazyguyonabike.com/pics/docs/00/01/27/84/large/DSCF3555.JPG
 	 */
-	var thumbnailPathRegexp = /(.*[/.-])(small|thumb|thumbnail|resized|preview|medium)([/.-].*)/;
+	var thumbnailPathRegexp = /(.*[/.-])(small|thumbs?|thumbnails?|resized|previews?|medium)([/.-].*)/;
 
 	var fullSizePathParts = [
 		'large',
 		'original',
+		'originals',
 		'source',
 		'normal',
 		'xlarge',
