@@ -72,13 +72,13 @@
 
 	if (s) {
 		const possibleVatNumbers = [];
-		const regexp = /\b(?<bePrefix>BE)?\s?(?<leadingZero>0)?(?<p1>\d{3})([ .-]?)(?<p2>\d{3})\4(?<p3>\d{3})\b/gi;
+		const regexp = /\b(?<bePrefix>BE)?\s?(?<leadingDigit>[01])?(?<p1>\d{3})([ .-]?)(?<p2>\d{3})\4(?<p3>\d{3})\b/gi;
 		for (const matches of s.matchAll(regexp)) {
 			/* This looks like a Belgian company number. */
 			possibleVatNumbers.push({
 				hasBePrefix: !!matches.groups.bePrefix,
-				hasLeadingZero: matches.groups.leadingZero === '0',
-				vatNumber: (matches.groups.leadingZero || '') + matches.groups.p1 + matches.groups.p2 + matches.groups.p3,
+				hasLeadingZero: matches.groups.leadingDigit === '0',
+				vatNumber: (matches.groups.leadingDigit || '') + matches.groups.p1 + matches.groups.p2 + matches.groups.p3,
 				matches
 			});
 		}
