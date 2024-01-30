@@ -1811,7 +1811,7 @@
 		const xPathTextSelector = denyAllTexts
 			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ\t\n", "abcçdefghijklmnñopqrstuvwxyzруский  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
-		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or @onclick][${xPathTextSelector}]`;
+		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or contains(@class, "button") or @onclick][${xPathTextSelector}]`;
 		const xPathResult = document.evaluate(xPathSelector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
 
 		const cssConsentDescendantSelector =
