@@ -88,6 +88,8 @@
 				`[class*="lang"][class*="elect"] a[hreflang^="${languageCode}-"]`,
 				`a.language[href*="/${languageCode}/"]`,
 				`a.language[href*="/${languageCode.toLowerCase()}/"]`,
+				`a[class*="language"][href^="/${languageCode}/"]`,
+				`a[class*="language"][href^="/${languageCode.toLowerCase()}/"]`,
 				`a[class*="choose"][class*="lang"][href^="/${languageCode}/"]`,
 				`a[class*="choose"][class*="lang"][href^="/${languageCode.toLowerCase()}/"]`,
 			));
