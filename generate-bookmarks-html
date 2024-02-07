@@ -63,8 +63,8 @@ process_dir () {
 			add_date="$timestamp";
 		done < <(git log --follow --pretty='tformat:%at %s' "$file");
 
-		# Get the bookmarklet's description, title and keyword.
-		unset description title keyword;
+		# Get the bookmarklet's metadata.
+		unset description title keyword transclude;
 		is_in_docblock=0;
 		while read -r line; do
 			if [ "$line" = '/**' ]; then
@@ -84,6 +84,8 @@ process_dir () {
 						title="$content";;
 					'keyword')
 						keyword="$content";;
+					'transclude')
+						transclude="$content";;
 				esac;
 				continue;
 			fi;
@@ -108,6 +110,19 @@ process_dir () {
 			fi;
 		done;
 		description="$(IFS=$'\n'; echo "${description[*]}")";
+
+		# Transclude files, similar to `/etc/alternatives` and symlinking
+		# `/usr/bin/foo` to `/usr/bin/gfoo` to allow running `gfoo` as `foo`.
+		# (This is not a very advanced system, but Good Enough™.)
+		if [ -n "$transclude" ]; then
+			transclude="$(dirname "$file")/$transclude";
+			if ! [ -e "$transclude" ]; then
+				echo "WARNING! Cannot transclude “${transclude}” from “${file}”. Skipping." 1>&2;
+				continue;
+			fi;
+
+			file="$transclude";
+		fi;
 
 		# Output the current bookmarklet.
 		cat <<-EOD
