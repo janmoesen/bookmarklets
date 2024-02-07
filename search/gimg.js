@@ -7,7 +7,7 @@
  *
  * @title Google Images
  */
-(function img() {
+(function gimg() {
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
