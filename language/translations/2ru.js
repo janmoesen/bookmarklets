@@ -79,17 +79,26 @@
 				/* CatenaCycling.com */
 				`#language a[href][hreflang="${languageCode}"]`,
 
+				/* NMBS.be/SNCB.be, possibly generic enough */
+				`[class*="lang"][class*="switch"] a[href^="/${languageCode}/"]`,
+				`[class*="lang"][class*="switch"] a[href^="/${languageCode}-"]`,
+
 				/* Generic */
 				`link[rel="alternate"][hreflang="${languageCode}"]`,
 				`link[rel="alternate"][hreflang^="${languageCode}-"]`,
+
 				`[id*="lang"][id*="elect"] a[hreflang="${languageCode}"]`,
 				`[id*="lang"][id*="elect"] a[hreflang^="${languageCode}-"]`,
+
 				`[class*="lang"][class*="elect"] a[hreflang="${languageCode}"]`,
 				`[class*="lang"][class*="elect"] a[hreflang^="${languageCode}-"]`,
+
 				`a.language[href*="/${languageCode}/"]`,
 				`a.language[href*="/${languageCode.toLowerCase()}/"]`,
+
 				`a[class*="language"][href^="/${languageCode}/"]`,
 				`a[class*="language"][href^="/${languageCode.toLowerCase()}/"]`,
+
 				`a[class*="choose"][class*="lang"][href^="/${languageCode}/"]`,
 				`a[class*="choose"][class*="lang"][href^="/${languageCode.toLowerCase()}/"]`,
 			));
