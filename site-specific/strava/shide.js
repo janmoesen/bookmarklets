@@ -155,9 +155,9 @@
 		/* Tags/special properties. */
 		const isOwnActivity = !!entry.querySelector('[class*="Owner"]')?.querySelector(`a[href="${ownProfileHref}"]`);
 
-		const isCommute = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Commute")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+		const isCommute = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Commute") or contains(., "Woon-werkverkeer")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
-		const isVirtual = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Virtual")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+		const isVirtual = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Virtu")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
 		const activityName = entry.querySelector('[data-testid="activity_name"]')?.textContent;
 
