@@ -1748,6 +1748,8 @@
 			' minimal ',
 			' only ',
 			' no cookies ',
+			' without cookies ',
+			' without accepting ',
 
 			/* Dutch */
 			' weigeren ',
@@ -1761,6 +1763,8 @@
 			' enkel ',
 			' alleen ',
 			' geen cookies ',
+			' zonder cookies ',
+			' zonder aanvaarden ',
 
 			/* French */
 			' refuse',
@@ -1774,6 +1778,8 @@
 			' seul ',
 			' pas de cookies ',
 			' aucun ',
+			' sans cookies ',
+			' sans accepter ',
 
 			/* German */
 			' ablehnen ',
@@ -1783,6 +1789,8 @@
 			' minimale ',
 			' nur ',
 			' kein cookies ',
+			' ohne cookies ',
+			' ohne zu akzeptieren ',
 
 			/* Italian */
 			' rifiut',
@@ -1791,6 +1799,8 @@
 			' essenziali',
 			' minimi',
 			' solo ',
+			' senza cookie ',
+			' senza accettare ',
 
 			/* Spanish */
 			' rechaz',
@@ -1798,6 +1808,8 @@
 			' esencial',
 			' mínim',
 			' solo ',
+			' sin cookies ',
+			' sin aceptar ',
 
 			/* Norwegian */
 			' nekte al',
@@ -1807,6 +1819,9 @@
 			' viktig',
 			' minimal',
 			' kun ',
+			' uten informasjonskapsler ',
+			' uten å godta ',
+			' uten å akseptere ',
 		];
 		const xPathTextSelector = denyAllTexts
 			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ\t\n", "abcçdefghijklmnñopqrstuvwxyzруский  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
