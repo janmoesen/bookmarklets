@@ -56,6 +56,8 @@ process_dir () {
 			continue;
 		fi;
 
+		original_file="$file";
+
 		# Use git log to find the timestamps for the initial and last commits.
 		unset add_date last_modified;
 		while read timestamp subject; do
@@ -142,7 +144,7 @@ process_dir () {
 				# restore "%s" for the bookmarklet parameter.
 				url_encode |
 				sed 's/%25s/%s/g'
-			)" ADD_DATE="$(escape_html "$add_date")" LAST_MODIFIED="$(escape_html "$last_modified")" SHORTCUTURL="$(escape_html "$keyword")">$(escape_html "$title")</A>
+			)$(escape_html "/* $original_file */")" ADD_DATE="$(escape_html "$add_date")" LAST_MODIFIED="$(escape_html "$last_modified")" SHORTCUTURL="$(escape_html "$keyword")">$(escape_html "$title")</A>
 			<DD><P>$(escape_html "$description")</P></DD>
 		EOD
 	done;
