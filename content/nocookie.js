@@ -1261,7 +1261,7 @@
 		 * E.g. https://www.happysocks.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
-			'.cookies-consent-banner button.manage-settings',
+			'.cookies-consent-banner [data-test="basic-consent-required-only-btn"]',
 			'Happy Socks',
 			_ => {
 				/* Try the newly appeared “Only required cookies” button. */
