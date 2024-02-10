@@ -772,14 +772,16 @@
 		 *
 		 * E.g. https://www.nature.com/
 		 * ----------------------------------------------------------------- */
-		clickAndWaitOrDoItNow(
-			'.cc-banner button[data-cc-action="preferences"]',
-			'CookiePro',
-			_ => {
-				/* Reject all possible cookies / object to all possible interests and personalization. */
-				tryToClick('.cc-preferences button[data-cc-action="reject"]', 'CookiePro');
-			}
-		);
+		if (!tryToClick('.cc-banner button[data-cc-action="reject"]', 'CookiePro')) {
+			clickAndWaitOrDoItNow(
+				'.cc-banner button[data-cc-action="preferences"]',
+				'CookiePro',
+				_ => {
+					/* Reject all possible cookies / object to all possible interests and personalization. */
+					tryToClick('.cc-preferences button[data-cc-action="reject"]', 'CookiePro');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * SBFX CMP <https://sfbx.io/en/produits/>
