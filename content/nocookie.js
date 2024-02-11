@@ -1755,8 +1755,7 @@
 
 			/* Dutch */
 			' weigeren ',
-			' ik weiger ',
-			' weiger alle ',
+			' weiger ',
 			' afwijzen ',
 			' noodzakelijk',
 			' essentiële ',
