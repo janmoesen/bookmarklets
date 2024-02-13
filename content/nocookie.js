@@ -1752,6 +1752,8 @@
 			' no cookies ',
 			' without cookies ',
 			' without accepting ',
+			' do not accept ',
+			" don't accept ",
 
 			/* Dutch */
 			' weigeren ',
@@ -1766,6 +1768,10 @@
 			' geen cookies ',
 			' zonder cookies ',
 			' zonder aanvaarden ',
+			' niet toestaan ',
+			' niet toelaten ',
+			' niets toestaan ',
+			' niets toelaten ',
 
 			/* French */
 			' refuse',
@@ -1781,6 +1787,8 @@
 			' aucun ',
 			' sans cookies ',
 			' sans accepter ',
+			' pas accepter ',
+			' rien accepter ',
 
 			/* German */
 			' ablehnen ',
@@ -1792,6 +1800,8 @@
 			' kein cookies ',
 			' ohne cookies ',
 			' ohne zu akzeptieren ',
+			' nicht akzeptieren ',
+			' nichts akzeptieren ',
 
 			/* Italian */
 			' rifiut',
@@ -1802,6 +1812,8 @@
 			' solo ',
 			' senza cookie ',
 			' senza accettare ',
+			' non accettare ',
+			' non permettere ',
 
 			/* Spanish */
 			' rechaz',
@@ -1811,6 +1823,8 @@
 			' solo ',
 			' sin cookies ',
 			' sin aceptar ',
+			' no aceptar ',
+			' no permitir ',
 
 			/* Norwegian */
 			' nekte al',
@@ -1823,9 +1837,11 @@
 			' uten informasjonskapsler ',
 			' uten å godta ',
 			' uten å akseptere ',
+			' ikke akseptere ',
+			' ikke tillate ',
 		];
 		const xPathTextSelector = denyAllTexts
-			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ\t\n", "abcçdefghijklmnñopqrstuvwxyzруский  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
+			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
 		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or contains(@class, "button") or @onclick][${xPathTextSelector}]`;
 		const xPathResult = document.evaluate(xPathSelector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
