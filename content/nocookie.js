@@ -1759,6 +1759,7 @@
 			' weigeren ',
 			' weiger ',
 			' afwijzen ',
+			' verwerpen ',
 			' noodzakelijk',
 			' essentiële ',
 			' essentieel ',
