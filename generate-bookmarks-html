@@ -18,7 +18,7 @@ url_encode () {
 		cat;
 	else
 		echo "$@";
-	fi | php -r 'echo rawurlencode(file_get_contents("php://stdin"));';
+	fi | perl -pe "s/([^A-Za-z0-9\-_~.])/ sprintf '%%%02X', ord \$1 /eg";
 }
 
 # Loop through *.js in the given directory and recurse for its subdirectories.
