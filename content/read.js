@@ -200,6 +200,12 @@
 			max-width: 100%;
 		}
 
+		iframe[src^="https://player.vimeo.com/"],
+		iframe[src^="https://www.youtube.com/embed/"],
+		iframe[src^="https://www.youtube-nocookie.com/embed/"] {
+			height: 80vh;
+		}
+
 		figure {
 			margin: 0;
 		}
