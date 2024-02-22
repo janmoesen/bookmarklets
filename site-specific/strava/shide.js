@@ -93,6 +93,7 @@
 		'11af222ad81529': 'IceSkate',
 		'9c7194036d140': 'BackcountrySki',
 		'2fa4642aece0d': 'AlpineSki',
+		'1da96fa7c832ef': 'IceSkate',
 
 		'bff242f16fcb0': 'Wheelchair',
 
