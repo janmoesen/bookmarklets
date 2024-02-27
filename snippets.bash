@@ -188,6 +188,7 @@ copy_2en_parameters=(
 "
 	keyword: '2zh',
 	languageCodes: ['zh', 'zh-CN', 'zh-Hans', 'zh-TW', 'zh-Hant', 'cmn-TW'],
+	languageCodeForGoogleTranslate: 'zh-CN',
 	languageNamesInEnglish: ['Chinese'],
 	languageNativeNames: ['汉语', '漢語', '國語', '華語'],
 	thisPageInNativeNameTexts: ['为中文', '中文版', '為中文'],

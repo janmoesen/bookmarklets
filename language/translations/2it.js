@@ -219,6 +219,8 @@
 	}
 
 	if (s) {
+		const languageCodeForGoogleTranslate = config.languageCodeForGoogleTranslate ?? languageCodes[0];
+
 		if (s.match(/^(https?:\/\/)([^\s.]+\.)+[^\s.]+\.?(\/\S*)?$/)) {
 			const googleTranslateUrl = new URL(s);
 
@@ -232,11 +234,11 @@
 			}
 
 			googleTranslateUrl.searchParams.set('_x_tr_sl', 'auto');
-			googleTranslateUrl.searchParams.set('_x_tr_tl', languageCodes[0]);
+			googleTranslateUrl.searchParams.set('_x_tr_tl', languageCodeForGoogleTranslate);
 
 			location = googleTranslateUrl;
 		} else {
-			location = `https://translate.google.com/?op=translate&sl=auto&tl=${languageCodes[0]}&text=${encodeURIComponent(s)}`;
+			location = `https://translate.google.com/?op=translate&sl=auto&tl=${languageCodeForGoogleTranslate}&text=${encodeURIComponent(s)}`;
 		}
 	}
 })({
