@@ -1754,6 +1754,8 @@
 			' without accepting ',
 			' do not accept ',
 			" don't accept ",
+			' no thank',
+			' no, thank',
 
 			/* Dutch */
 			' weigeren ',
@@ -1773,6 +1775,10 @@
 			' niet toelaten ',
 			' niets toestaan ',
 			' niets toelaten ',
+			' nee, bedankt ',
+			' nee bedankt ',
+			' nee, dank',
+			' nee dank',
 
 			/* French */
 			' refuse',
@@ -1790,6 +1796,8 @@
 			' sans accepter ',
 			' pas accepter ',
 			' rien accepter ',
+			' non merci ',
+			' non, merci ',
 
 			/* German */
 			' ablehnen ',
@@ -1803,6 +1811,8 @@
 			' ohne zu akzeptieren ',
 			' nicht akzeptieren ',
 			' nichts akzeptieren ',
+			' nein danke ',
+			' nein, danke ',
 
 			/* Italian */
 			' rifiut',
@@ -1815,6 +1825,8 @@
 			' senza accettare ',
 			' non accettare ',
 			' non permettere ',
+			' no, grazie ',
+			' no grazie ',
 
 			/* Spanish */
 			' rechaz',
@@ -1826,6 +1838,8 @@
 			' sin aceptar ',
 			' no aceptar ',
 			' no permitir ',
+			' no, gracias ',
+			' no gracias ',
 
 			/* Norwegian */
 			' nekte al',
@@ -1840,6 +1854,8 @@
 			' uten å akseptere ',
 			' ikke akseptere ',
 			' ikke tillate ',
+			' nei takk ',
+			' nei, takk ',
 		];
 		const xPathTextSelector = denyAllTexts
 			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
