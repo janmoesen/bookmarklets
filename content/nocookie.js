@@ -1745,6 +1745,7 @@
 			' decline ',
 			' refuse ',
 			' reject ',
+			' dismiss ',
 			' necessary ',
 			' essential ',
 			' minimal ',
