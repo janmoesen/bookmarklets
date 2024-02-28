@@ -99,6 +99,14 @@
 			}
 		);
 
+		/* Re-enable pointer-events disabled by inline styles. */
+		[].forEach.call(
+			document.querySelectorAll('[style*="pointer-events"][style*="none"]'),
+			function (elem) {
+				elem.setAttribute('style', elem.getAttribute('style').replace(/pointer-events\s*:\s*none\s*;?/, ''));
+			}
+		);
+
 		/* Recurse for (i)frames. */
 		try {
 			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
