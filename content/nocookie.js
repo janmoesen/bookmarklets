@@ -72,18 +72,67 @@
 		return documents;
 	}
 
-	/* Call querySelector on the top document and its sub-documents. */
-	function deepQuerySelector(selector) {
-		const allDocuments = getAllDocuments();
-		for (let i = 0; i < allDocuments.length; i++) {
-			const elem = allDocuments[i].querySelector(selector);
-			if (elem) {
-				return elem;
+	/**
+	 * Call querySelector on the given roots. By default, it searches the top
+	 * document and its sub-documents, ignoring the shadow roots. It returns
+	 * the first match it finds.
+	 *
+	 * When you tell it to recurse into shadow roots, the first match might
+	 * not be the first node in document order: it first looks at the regular
+	 * DOM, and only when it does not find a match does it recurse into the
+	 * shadow roots.
+	 *
+	 * Properties of the options object:
+	 * - `roots`: HTMLElement(s), one element or an array of elements to use
+	 *   as the root for the search, i.e. where `querySelector` will be
+	 *   called.
+	 * - `maxShadowRootDepth`: int, the maximum level of shadow roots to search
+	 *   (e.g.`1` means search shadow roots directly inside the document, but
+	 *   not inside another shadow root. `2` means search shadow roots within
+	 *   the first-level shadow roots too, etc.)
+	 */
+	function deepQuerySelector(selector, options) {
+		let {roots, maxShadowRootDepth} = options || {};
+
+		if (!roots) {
+			roots = getAllDocuments();
+		} else if (!Array.isArray(roots)) {
+			roots = [roots];
+		}
+
+		if (Number.isNaN(maxShadowRootDepth)) {
+			maxShadowRootDepth = 0;
+		}
+
+		for (let i = 0; i < roots.length; i++) {
+			const normalQuerySelectorResult = roots[i].querySelector(selector);
+			if (normalQuerySelectorResult) {
+				return normalQuerySelectorResult;
+			}
+
+			/* If we got here, there were no matches in the current DOM (which can be a shadow DOM already). Recurse into the nested shadow DOM, if any. */
+			if (maxShadowRootDepth > 0) {
+				const shadowRoots = getShadowRoots(roots[i]);
+				if (shadowRoots.length) {
+					const deepQuerySelectorResult = deepQuerySelector(selector, {
+						roots: shadowRoots,
+						maxShadowRootDepth: maxShadowRootDepth - 1
+					});
+
+					if (deepQuerySelectorResult) {
+						return deepQuerySelectorResult;
+					}
+				}
 			}
 		}
 	}
 
-	/* Call querySelectorAll on the top document and its sub-documents. */
+	/**
+	 * Call querySelectorAll on the top document and its sub-documents.
+	 *
+	 * Contrary to `deepQuerySelector`, this does not support recursing into
+	 * shadow roots, because that can get real expensive real quick.
+	 * */
 	function deepQuerySelectorAll(selector) {
 		let allElements = [];
 
@@ -93,6 +142,46 @@
 		}
 
 		return allElements;
+	}
+
+	/* Shadow roots can only be attached to a subset of *regular* HTML
+	 * elements, but also to all *custom* elements. Because the latter can
+	 * have pretty much any name, we need to negate the list of known regular
+	 * elements that cannot be shadow hosts.
+	 * See https://developer.mozilla.org/en-US/docs/Web/API/Element/attachShadow#elements_you_can_attach_a_shadow_to
+	 * */
+	const regularElementsThatCannotBeShadowHostsSelector = 'a,abbr,address,area,audio,b,base,bdi,bdo,br,button,canvas,caption,cite,code,col,colgroup,data,datalist,dd,del,details,dfn,dialog,dl,dt,em,embed,fieldset,figcaption,figure,form,head,hgroup,hr,html,i,iframe,img,input,ins,kbd,label,legend,li,link,map,mark,math,math *,menu,meta,meter,noscript,object,ol,optgroup,option,output,param,picture,pre,progress,q,rp,rt,ruby,s,samp,script,select,slot,small,source,strong,style,sub,summary,sup,svg,svg *,table,tbody,td,template,textarea,tfoot,th,thead,time,title,tr,track,u,ul,var,video,wbr';
+	const possibleShadowHostsSelector = regularElementsThatCannotBeShadowHostsSelector
+			.split(',')
+			.map(s => `:not(${s})`)
+			.join('');
+
+	/*
+	 * Get all shadow roots inside the given starting root(s), which can be
+	 * documents, elements, or shadow roots.
+	 *
+	 * This function does not recurse into the found shadow roots.
+	 *
+	 * If no starting root is given, the document and its sub-documents
+	 * (IFRAMEs, etc.) will be used.
+	 */
+	function getShadowRoots(roots) {
+		if (!roots) {
+			roots = getAllDocuments();
+		} else if (roots.length) {
+			roots = Array.from(roots);
+		} else if (!Array.isArray(roots)) {
+			roots = [roots];
+		}
+
+		const shadowRoots = [];
+		roots.forEach(root => shadowRoots.push(...
+			Array.from(root.querySelectorAll(possibleShadowHostsSelector))
+				.filter(element => element.shadowRoot)
+				.map(shadowHost => shadowHost.shadowRoot)
+		));
+
+		return shadowRoots;
 	}
 
 	/**
@@ -115,9 +204,9 @@
 	 * given selector. Alternatively, you can specify an element
 	 * directly.
 	 */
-	function tryToClick(selectorOrElement, provider) {
+	function tryToClick(selectorOrElement, provider, deepQuerySelectorOptions) {
 		const elem = typeof selectorOrElement === 'string'
-			? deepQuerySelector(selectorOrElement)
+			? deepQuerySelector(selectorOrElement, deepQuerySelectorOptions)
 			: selectorOrElement;
 
 		if (elem) {
@@ -146,7 +235,7 @@
 	 * was found), keep looking for a matching element until the maximum
 	 * time has been exceeded.
 	 */
-	function retryToClick(selectorOrElement, provider, maxNumMilliseconds) {
+	function retryToClick(selectorOrElement, provider, maxNumMilliseconds, deepQuerySelectorOptions) {
 		if (typeof maxNumMilliseconds === 'undefined') {
 			maxNumMilliseconds = 5000;
 		}
@@ -156,7 +245,7 @@
 		const retrier = _ => {
 			const currTimestamp = +new Date();
 
-			if (tryToClick(selectorOrElement, provider)) {
+			if (tryToClick(selectorOrElement, provider, deepQuerySelectorOptions)) {
 				const numMillisecondsElapsed = currTimestamp - startTimestamp;
 				if (numMillisecondsElapsed >= numMillisecondsBetweenTries) {
 					console.log(`nocookie: ↑ found that button to click after ${numMillisecondsElapsed} milliseconds. ↑`);
@@ -1081,16 +1170,18 @@
 		 * E.g. https://www.bahn.com/
 		 * E.g. https://reiseauskunft.bahn.de/
 		 * ----------------------------------------------------------------- */
-		const bahnShadowRoot = deepQuerySelector('body > div:first-child')?.shadowRoot;
-		if (bahnShadowRoot && !tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-essential-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM)')) {
-			clickAndWaitOrDoItNow(
-				bahnShadowRoot.querySelector('#consent-layer .js-show-cookie-settings'),
-				'Deutsche Bahn cookie consent dialog (with Shadow DOM)',
-				_ => {
-					tryToUncheck(bahnShadowRoot.querySelectorAll('#consent-layer input[type="checkbox"]:checked'));
-					tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-selected-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM) (save & exit)');
-				}
-			);
+		if (!tryToClick('#consent-layer .js-accept-essential-cookies', 'Deutsche Bahn cookie consent dialog (with Shadow DOM)', {maxShadowRootDepth: 3})) {
+			const bahnShadowRoot = deepQuerySelector('body > div:first-child')?.shadowRoot;
+			if (bahnShadowRoot && !tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-essential-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM)')) {
+				clickAndWaitOrDoItNow(
+					bahnShadowRoot.querySelector('#consent-layer .js-show-cookie-settings'),
+					'Deutsche Bahn cookie consent dialog (with Shadow DOM)',
+					_ => {
+						tryToUncheck(bahnShadowRoot.querySelectorAll('#consent-layer input[type="checkbox"]:checked'));
+						tryToClick(bahnShadowRoot.querySelector('#consent-layer .js-accept-selected-cookies'), 'Deutsche Bahn cookie consent dialog (with Shadow DOM) (save & exit)');
+					}
+				);
+			}
 		}
 
 		/* -----------------------------------------------------------------
@@ -1156,10 +1247,7 @@
 		 *
 		 * E.g. https://www.tiktok.com/
 		 * ----------------------------------------------------------------- */
-		const tikTokShadowRoot = deepQuerySelector('tiktok-cookie-banner')?.shadowRoot;
-		if (tikTokShadowRoot) {
-			tryToClick(tikTokShadowRoot.querySelector('.tiktok-cookie-banner button'), 'TikTok cookie banner (with Shadow DOM)');
-		}
+		tryToClick('.tiktok-cookie-banner button', 'TikTok cookie banner (with Shadow DOM)', {maxShadowRootDepth: 1});
 
 		/* -----------------------------------------------------------------
 		 * GRRR Cookie Consent dialog <https://github.com/grrr-amsterdam/cookie-consent>
@@ -1238,7 +1326,7 @@
 		 * E.g. https://www.reddit.com/r/movies/comments/11txeqd/inside_2023_review_and_discussion/ (second version, with Shadow DOM)
 		 * ----------------------------------------------------------------- */
 		tryToClick('section section section + section button[role="button"]', 'Reddit EU Cookie Policy toast');
-		tryToClick(document.querySelector('reddit-cookie-banner')?.shadowRoot?.querySelector('#reject-nonessential-cookies-button button'), 'Reddit cookie banner (with Shadow DOM)');
+		tryToClick('#reject-nonessential-cookies-button button', 'Reddit cookie banner (with Shadow DOM)', {maxShadowRootDepth: 1});
 
 		/* -----------------------------------------------------------------
 		 * The Verge cookie banner
@@ -1857,11 +1945,62 @@
 			' nei takk ',
 			' nei, takk ',
 		];
-		const xPathTextSelector = denyAllTexts
+
+		const xPathButtonishExpression = [
+			'local-name() = "button"',
+			'local-name() = "a"',
+			'@role = "button"',
+			'contains(@class, "button")',
+			'contains(@class, "btn")',
+			'@onclick',
+		].join(' or ');
+
+		const xPathTextExpression = denyAllTexts
 			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
-		const xPathSelector = `/html/body//*[local-name() = "button" or local-name() = "a" or @role = "button" or contains(@class, "button") or contains(@class, "btn") or @onclick][${xPathTextSelector}]`;
-		const xPathResult = document.evaluate(xPathSelector, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+
+		const xPathExpression = `//*[${xPathButtonishExpression}][${xPathTextExpression}]`;
+
+		/**
+		 * Get an array of results for the XPath expression on the given
+		 * root(s).
+		 *
+		 * If no root is given, the document and its sub-documents will
+		 * be used.
+		 *
+		 * This function does not recurse into shadow roots.
+		 */
+		function getXPathResults(xPathExpression, roots) {
+			if (!roots) {
+				roots = getAllDocuments();
+			} else if (!Array.isArray(roots)) {
+				roots = [roots];
+			}
+
+			const xPathResults = [];
+			roots.forEach((root, i) => {
+				let xPathResult = root.ownerDocument.evaluate(xPathExpression, root, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+
+				for (let i = 0; i < xPathResult.snapshotLength; i++) {
+					xPathResults.push(xPathResult.snapshotItem(i));
+				}
+			});
+
+			return xPathResults;
+		}
+
+		const xPathResults = getXPathResults(xPathExpression, document.body);
+
+		/* If there were no generic buttons in the regular document(s),
+		 * search the first-level shadow DOMs. */
+		if (!xPathResults.length) {
+			getShadowRoots().forEach(
+				/* No need to look through each child separately because our
+				 * XPath expression starts with `//*`, which looks in all of the
+				 * shadow root’s children. */
+				shadowRoot => shadowRoot.childElementCount && xPathResults.push(...getXPathResults(xPathExpression, shadowRoot.children[shadowRoot.childElementCount - 1]))
+			);
+		}
 
 		const cssConsentDescendantSelector =
 			[
