@@ -1876,15 +1876,26 @@
 
 		const cookieTextRegexp = /cooki|informasjonskaps/i;
 
-		for (let i = 0; i < xPathResult.snapshotLength; i++) {
-			const node = xPathResult.snapshotItem(i);
+		let genericDenyButtons = [];
+		for (let i = 0; i < xPathResults.length; i++) {
+			const node = xPathResults[i];
 			if (!(node.offsetParent || node).textContent.match(cookieTextRegexp) && !node.matches(cssConsentDescendantSelector)) {
 				continue;
 			}
 
+			genericDenyButtons.push(node);
+		}
+
+		/* Only consider the deepest nodes. For example:
+		 * `<div class="buttons"><button>Reject</button></div>`
+		 * Only keep the `button` and not the `div` even though both match
+		 * the selectors. */
+		genericDenyButtons = genericDenyButtons.filter(node => !genericDenyButtons.some(otherNode => node !== otherNode && node.contains(otherNode)));
+
+		genericDenyButtons.forEach(node => {
 			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.trim()}”): `, node);
 			node.click();
-		}
+		});
 	}
 
 	/* Show out-of-origin IFRAMEs of external consent managers. First, flash
