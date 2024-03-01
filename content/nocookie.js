@@ -1749,7 +1749,6 @@
 			' necessary ',
 			' essential ',
 			' minimal ',
-			' only ',
 			' no cookies ',
 			' without cookies ',
 			' without accepting ',
