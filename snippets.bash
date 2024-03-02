@@ -253,8 +253,8 @@ copy-enw () {
 	while IFS=$'\n' read -r line; do
 		#echo "LINE: >$line<" 1>&2;
 		if $is_in_header; then
-			line="${line//enw/$bookmarklet_name}";
-			line="${line//English/$lang_name_in_english}";
+			line="${line//@keyword enw/@keyword $bookmarklet_name}";
+			line="${line// English / $lang_name_in_english }";
 			if [ "$line" = ' */' ]; then
 				is_in_header=false;
 				is_in_function_body=true;

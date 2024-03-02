@@ -1,6 +1,12 @@
 /**
  * Look up the specified or selected text in the Italian Wikipedia.
  *
+ * Use `--dis` as the first parameter to show the disambiguation page, if any.
+ *
+ * E.g. `enw --dis 1` would open `1 (disambiguation)`, which is a lot faster to
+ * type then `enw 1 (disambiguation)`, and also works for the non-English
+ * Wikipedia instances, which use other words for “disambiguation”.
+ *
  * @title Italian Wikipedia
  * @keyword itw
  */
@@ -66,6 +72,12 @@
 	}
 
 	if (s) {
+		/* Open the disambigation page for queries like `enw --dis Foo`. */
+		let matches = s.match(/^\s*--dis\s*(.+)/);
+		if (matches) {
+			s = matches[1] + disambigationPageSuffix;
+		}
+
 		/* The Wikipedia search works like "I'm feeling lucky" on most Wikipedia instances. If there is a complete match, it will redirect us there. */
 		location = `https://${languageCode}.wikipedia.org/w/index.php?searchToken=.&title=Special%3ASearch&ns0=1&search=${encodeURIComponent(s)}`;
 	}
