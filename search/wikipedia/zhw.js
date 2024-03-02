@@ -1,9 +1,11 @@
 /**
- * Look up the specified or selected text in the (Mandarin) Chinese Wikipedia.
+ * Look up the specified or selected text in the Chinese Wikipedia.
  *
- * @title (Mandarin) Chinese Wikipedia
+ * @title Chinese Wikipedia
+ * @keyword zhw
  */
-(function zhw() {
+(function (config) {
+	const {languageCode, languageNamesInEnglish, disambigationPageSuffix} = config;
 	/* Try to get the parameter string from the bookmarklet/search query.
 	   Fall back to the current text selection, if any. If those options
 	   both fail, prompt the user.
@@ -58,13 +60,19 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter the subject to look up in the (Mandarin) Chinese Wikipedia:');
+		s = getActiveSelection() || prompt(`Please enter the subject to look up in the ${languageNamesInEnglish.join('/')} Wikipedia:`);
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
 
 	if (s) {
 		/* The Wikipedia search works like "I'm feeling lucky" on most Wikipedia instances. If there is a complete match, it will redirect us there. */
-		location = 'https://zh.wikipedia.org/w/index.php?searchToken=.&title=Special%3ASearch&ns0=1&search=' + encodeURIComponent(s);
+		location = `https://${languageCode}.wikipedia.org/w/index.php?searchToken=.&title=Special%3ASearch&ns0=1&search=${encodeURIComponent(s)}`;
 	}
-})();
+})({
+
+	languageCode: 'zh',
+	languageNamesInEnglish: ['Chinese'],
+	disambigationPageSuffix: ' (消歧义)',
+
+});
