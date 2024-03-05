@@ -37,6 +37,22 @@
 	[].forEach.call(document.querySelectorAll('input, textarea, select'), function (element) {
 		var tooltipLines = [];
 
+		/* Make sure it is visible. */
+		let elementToShow = element;
+		while (elementToShow && (!elementToShow.offsetWidth || elementToShow.offsetHeight)) {
+			const elementStyle = elementToShow.ownerDocument.defaultView.getComputedStyle(element);
+
+			if (elementStyle.display === 'none') {
+				elementToShow.style.display = 'unset';
+			}
+
+			if (elementStyle.visibility === 'hidden') {
+				elementToShow.style.visibility = 'visible';
+			}
+
+			elementToShow = elementToShow.parentElement;
+		}
+
 		/* Put the original attribute values in the tooltip. */
 		Object.keys(originalAttributesToPutInTooltip).forEach(function (attrName) {
 			if (element.hasAttribute(attrName) || element[attrName]) {
