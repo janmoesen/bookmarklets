@@ -2050,7 +2050,7 @@
 		genericDenyButtons = genericDenyButtons.filter(node => !genericDenyButtons.some(otherNode => node !== otherNode && node.contains(otherNode)));
 
 		genericDenyButtons.forEach(node => {
-			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.trim()}”): `, node);
+			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.replace(/\s+/g, ' ').trim()}”): `, node);
 			node.click();
 		});
 	}
