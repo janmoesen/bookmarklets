@@ -2068,7 +2068,12 @@
 				}
 			}
 
-			if (hasTextMatch && hasCssConsentDescendantMatch) {
+			/* It’s enough if either one of the text or CSS selectors matches,
+			 * because sometimes the text is present but the CSS class names etc.
+			 * are mangled/minified, and sometimes the text is not present but
+			 * the CSS class names etc. make it obvious what purpose the buttons
+			 * serve. */
+			if (hasTextMatch || hasCssConsentDescendantMatch) {
 				genericDenyButtons.push(node);
 			}
 		}
