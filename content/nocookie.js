@@ -1877,6 +1877,7 @@
 			' nee bedankt ',
 			' nee, dank',
 			' nee dank',
+			' niet akkoord ',
 
 			/* French */
 			' refuse',
