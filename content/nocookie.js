@@ -187,7 +187,7 @@
 		const shadowRoots = [];
 		roots.forEach(root => shadowRoots.push(...
 			Array.from(root.querySelectorAll(possibleShadowHostsSelector))
-				.filter(element => element.shadowRoot)
+				.filter(possibleShadowHost => possibleShadowHost.shadowRoot)
 				.map(shadowHost => shadowHost.shadowRoot)
 		));
 
