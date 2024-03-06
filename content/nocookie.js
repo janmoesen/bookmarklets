@@ -2036,11 +2036,41 @@
 		let genericDenyButtons = [];
 		for (let i = 0; i < xPathResults.length; i++) {
 			const node = xPathResults[i];
-			if (!(node.offsetParent || node).textContent.match(cookieTextRegexp) && !node.matches(cssConsentDescendantSelector)) {
-				continue;
+
+			/* Check the text content of the offset parent. Because cookie bars and
+			 * overlays are pretty much always positioned (e.g. with `position:
+			 * fixed`), the buttons found using the XPath expression should have an
+			 * offset parent.
+			 *
+			 * However, for elements inside a shadow DOM, it can happen that the
+			 * button found using the XPath expression is offset relative to an element
+			 * outside of the shadow root, so checking `offsetParent.textContent`
+			 * would not include the text inside the shadow root. To get around this,
+			 * check the shadow root’s text content.
+			 *
+			 * Similarly, the CSS descendant selector might not match on the node
+			 * inside the shadow DOM, but could still match the offset parent or the
+			 * shadow host (which can be the same node, too).
+			 */
+			let offsetParentIsOutsideOfShadowDom = node.offsetParent && !node.offsetParent.contains(node);
+
+			let hasTextMatch = (node.offsetParent || node).textContent.match(cookieTextRegexp);
+			if (!hasTextMatch && offsetParentIsOutsideOfShadowDom) {
+				hasTextMatch = node.getRootNode().textContent.match(cookieTextRegexp);
 			}
 
-			genericDenyButtons.push(node);
+			let hasCssConsentDescendantMatch = node.matches(cssConsentDescendantSelector);
+			if (!hasCssConsentDescendantMatch && offsetParentIsOutsideOfShadowDom) {
+				hasCssConsentDescendantMatch = node.offsetParent.matches(cssConsentDescendantSelector);
+
+				if (!hasCssConsentDescendantMatch) {
+					hasCssConsentDescendantMatch = node.getRootNode()?.host?.matches(cssConsentDescendantSelector);
+				}
+			}
+
+			if (hasTextMatch && hasCssConsentDescendantMatch) {
+				genericDenyButtons.push(node);
+			}
 		}
 
 		/* Only consider the deepest nodes. For example:
