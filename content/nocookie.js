@@ -56,18 +56,28 @@
 
 	/* Get the top document and all of its sub-documents, recursively. */
 	function getAllDocuments(currDocument) {
+		if (!getAllDocuments.cache) {
+			getAllDocuments.cache = new WeakMap();
+		}
+
 		if (!currDocument) {
 			currDocument = document;
 		}
 
-		let documents = [currDocument];
+		if (getAllDocuments.cache[currDocument]) {
+			return getAllDocuments.cache[currDocument];
+		}
+
+		const documents = [currDocument];
 
 		/* Recurse for (i)frames. */
 		currDocument.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]').forEach(elem => {
 			if (elem.contentDocument) {
-				documents = documents.concat(getAllDocuments(elem.contentDocument))
+				documents.push(...getAllDocuments(elem.contentDocument));
 			}
 		});
+
+		getAllDocuments.cache[currDocument] = documents;
 
 		return documents;
 	}
