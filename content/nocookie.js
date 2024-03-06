@@ -2020,8 +2020,15 @@
 				'privacy',
 				'terms',
 				'tcf',
-			].map(text => `[class*="${text}"], [class*="${text}"] *, [id*="${text}"], [id*="${text}"] *, form[action*="${text}"] *`)
-			.join(', ');
+			].map(
+				text => [
+					`:not(body)[class*="${text}"]`,
+					`:not(body)[class*="${text}"] *`,
+					`:not(body)[id*="${text}"]`,
+					`:not(body)[id*="${text}"] *`,
+					`form[action*="${text}"] *`
+				].join(', ')
+			).join(', ');
 
 		const cookieTextRegexp = /cooki|informasjonskaps/i;
 
