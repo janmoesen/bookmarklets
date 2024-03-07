@@ -365,13 +365,6 @@
 		tryToClick('#truste-consent-required', 'TrustArc');
 
 		/* -----------------------------------------------------------------
-		 * Bol.com cookie dialog
-		 *
-		 * E.g. https://www.bol.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('button[data-test="consent-modal-ofc-reject-btn"]#js-reject-all-button', 'Bol.com');
-
-		/* -----------------------------------------------------------------
 		 * Cookie-Script <https://cookie-script.com/>
 		 * ----------------------------------------------------------------- */
 		tryToClick('#cookiescript_reject', 'Cookie-Script');
@@ -380,21 +373,6 @@
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
 		 * ----------------------------------------------------------------- */
 		tryToClick('#cookie_action_close_header_reject, [data-cky-tag="reject-button"], .cky-btn-reject', 'CookieYes/Cookie-Law-Info');
-
-		/* -----------------------------------------------------------------
-		 * PayPal.com cookie dialog
-		 *
-		 * E.g. https://www.paypal.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('#gdprCookieBanner #bannerDeclineButton', 'PayPal');
-
-		/* -----------------------------------------------------------------
-		 * CookieCuttr jQuery/WordPress plug-in <http://cookiecuttr.com/>
-		 *
-		 * E.g. http://cookiecuttr.com/
-		 * E.g. https://www.findcrowdfunding.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cc-cookies .cc_cookie_decline, .cc-cookies .cc-cookie-decline', 'CookieCuttr');
 
 		/* -----------------------------------------------------------------
 		 * GDPR Legal Cookie App for Shopify <https://gdpr-legal-cookie.myshopify.com/>
@@ -413,13 +391,6 @@
 		if (tryToClick('.cck-actions-button[href="#refuse"], .wt-cck-btn-refuse', 'NextEuropa')) {
 			tryToClick('.cck-actions [href="#close"]', 'NextEuropa');
 		}
-
-		/* -----------------------------------------------------------------
-		 * Toerisme Oost-Vlaanderen’s cookie banner
-		 *
-		 * E.g. https://www.routen.be/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie--accept-necessary, .js--cookie--accept-necessary', 'Toerisme Oost-Vlaanderen');
 
 		/* -----------------------------------------------------------------
 		 * HubSpot’s cookie banner <https://www.hubspot.com/data-privacy/gdpr>
@@ -617,14 +588,6 @@
 		);
 
 		/* -----------------------------------------------------------------
-		 * Coolblue cookie dialog
-		 *
-		 * E.g. https://www.coolblue.nl/
-		 * E.g. https://www.coolblue.be/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[class*="cookie"] button[name="decline_cookie"]', 'Coolblue');
-
-		/* -----------------------------------------------------------------
 		 * Kunstmaan Cookie Bar <https://github.com/Kunstmaan/KunstmaanCookieBundle>
 		 *
 		 * E.g. https://www.meteo.be/nl/gent
@@ -676,13 +639,6 @@
 				tryToClick('.cookie_tool_submit', 'AdResults');
 			}
 		);
-
-		/* -----------------------------------------------------------------
-		 * Ekoplaza.nl Vue.js thing (no further info)
-		 *
-		 * E.g. https://www.ekoplaza.nl/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie-box a.btn-plain[href="javascript:;"]', 'Ekoplaza.nl Vue.js thing');
 
 		/* -----------------------------------------------------------------
 		 * Free Privacy Policy’s Cookie Consent <https://www.freeprivacypolicy.com/free-cookie-consent/>
@@ -824,21 +780,11 @@
 		);
 
 		/* -----------------------------------------------------------------
-		 * Stack Exchange consent banner
-		 * It seems that it is just a re-wrap/re-arrangement of the Onetrust dialog.
-		 *
-		 * E.g. https://stackoverflow.com/questions
-		 * ----------------------------------------------------------------- */
-		tryToClick('.js-consent-banner .js-reject-cookies', 'Stack Exchange');
-
-		/* -----------------------------------------------------------------
 		 * Pon Bike (“Pee on bike”? Triathletes, tsss…) Group cookie pop-up
 		 * (Possibly a generic Magento 2 module.)
 		 *
-		 * E.g. https://bbbcycling.com/
 		 * E.g. https://www.union.nl/
 		 * E.g. https://www.focus-bikes.com/
-		 * E.g. https://www.kalkhoff-bikes.com/
 		 * ----------------------------------------------------------------- */
 		clickAndWaitOrDoItNow(
 			'#notice-cookie-block #btn-cookie-settings',
@@ -850,7 +796,7 @@
 					/* Ugh. This appears to be some ass-backwards React “app” that
 					 * keeps state based on click events instead of, y’know, looking
 					 * at the actual state of an actual checkbox. */
-					tryToClick(`#cookie-manager-popup label[for="${check.id}"]`);
+					tryToClick(`#cookie-manager-popup label[for="${check.id}"]`, 'Pon Bike Group');
 					check.checked = false;
 				});
 
@@ -862,25 +808,9 @@
 				});
 
 				/* Save & exit. */
-				tryToClick('#cookie-manager-popup .modal-footer button, .cookie-manager-popup .modal-footer button');
+				tryToClick('#cookie-manager-popup .modal-footer button, .cookie-manager-popup .modal-footer button', 'Pon Bike Group');
 			}
 		);
-
-		/* -----------------------------------------------------------------
-		 * CookiePro (old version, from before they were acquired by Onetrust)
-		 *
-		 * E.g. https://www.nature.com/
-		 * ----------------------------------------------------------------- */
-		if (!tryToClick('.cc-banner button[data-cc-action="reject"]', 'CookiePro')) {
-			clickAndWaitOrDoItNow(
-				'.cc-banner button[data-cc-action="preferences"]',
-				'CookiePro',
-				_ => {
-					/* Reject all possible cookies / object to all possible interests and personalization. */
-					tryToClick('.cc-preferences button[data-cc-action="reject"]', 'CookiePro');
-				}
-			);
-		}
 
 		/* -----------------------------------------------------------------
 		 * SBFX CMP <https://sfbx.io/en/produits/>
@@ -950,13 +880,6 @@
 				tryToClick('[data-hook="consent-banner-settings-container"] [data-hook="consent-banner-settings-save-button"]', 'Wix cookie consent banner');
 			}
 		);
-
-		/* -----------------------------------------------------------------
-		 * Wix cookie consent banner (only used on Wix.com?)
-		 *
-		 * E.g. https://www.wix.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[data-hook="ccsu-banner-decline-all"]', 'Wix.com cookie consent');
 
 		/* -----------------------------------------------------------------
 		 * NitroPay CMP <https://nitropay.com/>
@@ -1031,46 +954,6 @@
 		);
 
 		/* -----------------------------------------------------------------
-		 * Brompton cookie opt-out
-		 *
-		 * E.g. https://www.brompton.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie-panel .optOut', 'Brompton opt-out button');
-
-		/* -----------------------------------------------------------------
-		 * Twitter cookie notice
-		 *
-		 * We can’t use class names or other “obvious” indicators because
-		 * they are all mangled by minifiers. :-( Our best bet is to look at
-		 * the button texts and hope that they don’t change too much (or the
-		 * translations are not too different).
-		 *
-		 * E.g. https://twitter.com/
-		 * E.g. https://mobile.twitter.com/
-		 * ----------------------------------------------------------------- */
-		if (document.domain === 'twitter.com' || document.domain === 'mobile.twitter.com') {
-			const twitterCookieButtons = [];
-			deepQuerySelectorAll('[role="button"]').forEach(button => button.textContent.match(/\bcooki/i) && twitterCookieButtons.push(button));
-			if (twitterCookieButtons.length === 2) {
-				tryToClick(twitterCookieButtons[1], 'Twitter coookie notice (refuse)');
-			}
-		}
-
-		/* -----------------------------------------------------------------
-		 * New York Times cookie notice
-		 *
-		 * E.g. https://www.nytimes.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('button[data-testid="GDPR-reject"], [data-testid="onsite-messaging-unit-complianceGDPR"] button + button', 'NYT cookie notice opt-out button');
-
-		/* -----------------------------------------------------------------
-		 * New York Times cookie notice (as used in the Games section)
-		 *
-		 * E.g. https://www.nytimes.com/games/wordle/index.html
-		 * ----------------------------------------------------------------- */
-		tryToClick('#pz-gdpr-btn-reject', 'NYT cookie notice opt-out button (games version)');
-
-		/* -----------------------------------------------------------------
 		 * Complianz cookie consent <https://complianz.io/>
 		 * Also available as a WordPress plugin <https://wordpress.org/plugins/complianz-gdpr/>
 		 *
@@ -1103,21 +986,6 @@
 				}
 			);
 		}
-
-		/* -----------------------------------------------------------------
-		 * Le Monde GDPR consent
-		 *
-		 * E.g. https://www.lemonde.fr/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[data-gdpr-expression="denyAll"]', 'Le Monde GDPR consent (“Deny all” button)');
-
-		/* -----------------------------------------------------------------
-		 * Inventis cookie consent dialog
-		 *
-		 * E.g. https://www.inventis.be/
-		 * E.g. https://www.arenberg.be/
-		 * ----------------------------------------------------------------- */
-		tryToClick('dialog.cookie-consent button[value="no"]', 'Inventis cookie consent dialog (“Deny” button)');
 
 		/* -----------------------------------------------------------------
 		 * Stripe (using a separate page to manage cookies)
@@ -1253,107 +1121,11 @@
 		tryToClick('#cookie-information-template-wrapper #declineButton', 'Cookie Information CMP deny button');
 
 		/* -----------------------------------------------------------------
-		 * TikTok’s cookie banner
-		 *
-		 * E.g. https://www.tiktok.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.tiktok-cookie-banner button', 'TikTok cookie banner (with Shadow DOM)', {maxShadowRootDepth: 1});
-
-		/* -----------------------------------------------------------------
-		 * GRRR Cookie Consent dialog <https://github.com/grrr-amsterdam/cookie-consent>
-		 *
-		 * E.g. https://www.horstartsandmusic.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cookie-consent__btnSome', 'GRRR Cookie Consent');
-
-		/* -----------------------------------------------------------------
-		 * WPEka GDPR Cookie Consent (“WP Cookie Notice for GDPR, CCPA & ePrivacy Consent”) <https://club.wpeka.com/product/wp-gdpr-cookie-consent/>
-		 *
-		 * E.g. https://demo.wpeka.com/wp-gdpr-cookie-consent/
-		 * E.g. https://innoventum.se/
-		 * ----------------------------------------------------------------- */
-		if (!tryToClick('[data-gdpr_action="reject"]', 'WPEka GDPR Cookie Consent')) {
-			clickAndWaitOrDoItNow(
-				'[data-gdpr_action="settings"]',
-				'WPEka GDPR Cookie Consent',
-				_ => {
-					tryToUncheck('input[type="checkbox"][name^="gdpr_messagebar_"]:checked, input[type="checkbox"][id^="gdpr_messagebar_"]:checked');
-					tryToClick('#cookie_action_save[data-gdpr_action="accept"]', 'WPEka GDPR Cookie Consent (save & exit)');
-				}
-			);
-		}
-
-		/* -----------------------------------------------------------------
-		 * Strava Cookie Banner
-		 *
-		 * E.g. https://www.strava.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.btn-deny-cookie-banner', 'Strava Cookie Banner');
-
-		/* -----------------------------------------------------------------
-		 * OVH (hosting provider), using an old version of tagContainer
-		 * Privacy by Tag Commander (now Commanders Act).
-		 *
-		 * E.g. https://www.ovhtelecom.fr/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[data-tc-privacy="cookie-banner::decline"]', 'OVH cookie consent dialog');
-
-		/* -----------------------------------------------------------------
-		 * OVH (hosting provider), using an in-house solution.
-		 *
-		 * E.g. https://www.ovh.com/manager/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.oui-button.deny', 'OVH cookie consent dialog (2)');
-
-		/* -----------------------------------------------------------------
-		 * Bing cookie bar
-		 *
-		 * E.g. https://www.bing.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('#bnp_btn_reject, .bnp_btn_reject', 'Bing');
-
-		/* -----------------------------------------------------------------
 		 * Cookie Plus WordPress plugin <https://wpcookieplus.com/>
 		 *
 		 * E.g. https://www.minieurope.com/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.cookieplus-btn-decline-cookies', 'Cookie Plus');
-
-		/* -----------------------------------------------------------------
-		 * 2dehands.be (and possibly other eBay properties, but not marktplaats.nl) GDPR consent.
-		 *
-		 * E.g. https://www.2dehands.be/
-		 * ----------------------------------------------------------------- */
-		tryToClick('#gdpr-consent-banner-refuse-button, .gdpr-consent-button-refuse', '2dehands.be GDPR consent');
-
-		/* -----------------------------------------------------------------
-		 * Reddit EU Cookie Policy toast
-		 *
-		 * Because of CSS class name mangling/minimizing, the selector relies
-		 * heavily on the DOM structure and is therefore pretty fragile.
-		 *
-		 * E.g. https://www.reddit.com/ (first version)
-		 * E.g. https://www.reddit.com/r/movies/comments/11txeqd/inside_2023_review_and_discussion/ (second version, with Shadow DOM)
-		 * ----------------------------------------------------------------- */
-		tryToClick('section section section + section button[role="button"]', 'Reddit EU Cookie Policy toast');
-		tryToClick('#reject-nonessential-cookies-button button', 'Reddit cookie banner (with Shadow DOM)', {maxShadowRootDepth: 1});
-
-		/* -----------------------------------------------------------------
-		 * The Verge cookie banner
-		 *
-		 * This selector ass-u-mes the “Reject all” button is meant *not* to
-		 * stand out with a different background color.
-		 *
-		 * E.g. https://www.theverge.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.duet--cta--cookie-banner * button:not([class*=" bg-"])', 'The Verge cookie banner');
-
-		/* -----------------------------------------------------------------
-		 * Instagram cookie dialog
-		 *
-		 * E.g. https://www.instagram.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[style*="--tos-box"] [role="dialog"] button[tabindex]:last-child', 'Instagram cookie dialog');
 
 		/* -----------------------------------------------------------------
 		 * Happy Socks cookie consent
@@ -1489,7 +1261,7 @@
 		/* -----------------------------------------------------------------
 		 * Futurumshop.nl cookie dialog
 		 *
-		 * E.g. https://www.bol.com/
+		 * E.g. https://futurumshop.nl/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.js_cookie-bar__decline', 'Futurumshop.nl');
 
