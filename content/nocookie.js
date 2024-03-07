@@ -1967,6 +1967,24 @@
 			' ikke tillate ',
 			' nei takk ',
 			' nei, takk ',
+
+			/* Catalan */
+			' refusar ',
+			' rebutjar ',
+			' necessari',
+			' essencial',
+			' obligatori',
+			' mínim',
+			' només ',
+			' solament ',
+			' unicament ',
+			' sense galetes ',
+			' sense cookies ',
+			' sense acceptar ',
+			' no permès ',
+			' no permetre ',
+			' no gràcies ',
+			" no d'acord ",
 		];
 
 		const xPathButtonishExpression = [
