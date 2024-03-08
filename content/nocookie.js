@@ -1792,7 +1792,10 @@
 
 			const xPathResults = [];
 			roots.forEach((root, i) => {
-				let xPathResult = root.ownerDocument.evaluate(xPathExpression, root, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+				const document = root.documentElement && typeof root.evaluate === 'function'
+					? root
+					: root.ownerDocument;
+				let xPathResult = document.evaluate(xPathExpression, root, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
 
 				for (let i = 0; i < xPathResult.snapshotLength; i++) {
 					xPathResults.push(xPathResult.snapshotItem(i));
@@ -1802,7 +1805,7 @@
 			return xPathResults;
 		}
 
-		const xPathResults = getXPathResults(xPathExpression, document.body);
+		const xPathResults = getXPathResults(xPathExpression);
 
 		/* If there were no generic buttons in the regular document(s),
 		 * search the first-level shadow DOMs. */
