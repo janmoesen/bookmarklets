@@ -821,25 +821,21 @@
 			|| tryToClick('.frame-content button[aria-roledescription="link"]:only-child', 'SBFX AppConsent (brittle selector!)');
 
 		/* -----------------------------------------------------------------
-		 * Traffective Open CMP <https://opencmp.net/> (site not working 2022-01-16)
+		 * Traffective Open CMP <https://traffective.com/solutions/#traffective-consent-management>
 		 *
 		 * E.g. https://traffective.com/
 		 * E.g. https://www.mactechnews.de/
 		 * E.g. https://www.fliegermagazin.de/
 		 * ----------------------------------------------------------------- */
-		const openCmpShadowHost = document.querySelector('body > div.needsclick');
-		const openCmpShadowRoot = openCmpShadowHost?.shadowRoot;
-		if (openCmpShadowHost && !openCmpShadowRoot) {
-			let alreadyHasShadowRoot = false;
-			try {
-				openCmpShadowHost.attachShadow({mode: 'open'});
-			} catch (e) {
-				alreadyHasShadowRoot = true;
-			}
+		const openCmpShadowRoot = document.querySelector('body > div.needsclick')?.shadowRoot;
+		if (openCmpShadowRoot) {
+			/* Reject all possible cookies / object to all possible interests and personalization. */
+			tryToUncheck(openCmpShadowRoot.querySelectorAll('.cmp_switch.cmp_checked'));
+			tryToClick(openCmpShadowRoot.querySelector('.cmp_activateAll a:nth-child(2):last-child'), 'Traffective Open CMP “Deactivate all”');
 
-			if (alreadyHasShadowRoot) {
-				console.log('nocookie: found Open CMP with closed shadow DOM; can’t access the options using JavaScript, so simply removing the shadow host (which is not remembered across page loads, unfortunately):', openCmpShadowHost);
-				openCmpShadowHost.remove();
+			/* Save & exit. */
+			if (!tryToClick(openCmpShadowRoot.querySelector('.cmp_page .cmp_saveLink a[href="#"]:only-child'), 'Traffective Open CMP “Confirm selection”')) {
+				tryToClick(openCmpShadowRoot.querySelector('.cmp_navi .cmp_saveLink a[href="#"]:only-child'), 'Traffective Open CMP “Confirm selection”')
 			}
 		}
 
