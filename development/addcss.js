@@ -59,7 +59,12 @@
 
 	if (s === '') {
 		s = getActiveSelection() || prompt('Please enter your CSS code:');
-	} else {
+	} else if (s.includes('~') && !s.includes('{')) {
+		/* Only replace `~` with the active selection if the entire parameter
+		 * string does not look like a CSS rule. For this bookmarklet, `~` is
+		 * more likely to refer to the sibling combinator, e.g. `p ~ ul` than
+		 * to the “replace this with the selection” magic like in the other
+		 * bookmarklets. */
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
 
