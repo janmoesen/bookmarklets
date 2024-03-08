@@ -64,8 +64,8 @@
 			currDocument = document;
 		}
 
-		if (getAllDocuments.cache[currDocument]) {
-			return getAllDocuments.cache[currDocument];
+		if (getAllDocuments.cache.get(currDocument)) {
+			return getAllDocuments.cache.get(currDocument);
 		}
 
 		const documents = [currDocument];
@@ -77,7 +77,7 @@
 			}
 		});
 
-		getAllDocuments.cache[currDocument] = documents;
+		getAllDocuments.cache.set(currDocument, documents);
 
 		return documents;
 	}
