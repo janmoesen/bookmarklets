@@ -1763,7 +1763,9 @@
 			'local-name() = "a"',
 			'@role = "button"',
 			'contains(@class, "button")',
+			'contains(@class, "Button")',
 			'contains(@class, "btn")',
+			'contains(@class, "Btn")',
 			'@onclick',
 		].join(' or ');
 
