@@ -1540,14 +1540,6 @@
 		}
 
 		/* -----------------------------------------------------------------
-		 * RCS Media Group cookie dialog
-		 *
-		 * E.g. https://www.giroditalia.it/
-		 * E.g. https://www.ilombardia.it/ (why not “illom…”?)
-		 * ----------------------------------------------------------------- */
-		tryToClick('#_cpmt-reject', 'RCS Media Group cookie dialog');
-
-		/* -----------------------------------------------------------------
 		 * Delhaize cookie popup
 		 *
 		 * E.g. https://www.delhaize.be/
@@ -1636,6 +1628,7 @@
 			' no cookies ',
 			' without cookies ',
 			' without accepting ',
+			' without agreeing ',
 			' do not accept ',
 			" don't accept ",
 			' no thank',
