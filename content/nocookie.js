@@ -1260,31 +1260,11 @@
 		tryToClick('.pd-cp-ui-rejectAll', 'Pandectes (another version)');
 
 		/* -----------------------------------------------------------------
-		 * Nine O’Clock Somewhere cookie consent
-		 *
-		 * E.g. https://www.nineoclocksomewhe.re/
-		 * E.g. https://www.wanda.be/
-		 * E.g. https://www.rodekruis.be/
-		 * E.g. https://eurogarant.be/nl
-		 * E.g. https://www.vias.be/nl/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.cookieconsent-btn.accept-necessary, form[action*="/api/cookies/"] .btn-accept-necessary, #cookieconsent-banner-accept-necessary-button', 'Nine O’Clock Somewhere cookie consent');
-
-		/* -----------------------------------------------------------------
 		 * Futurumshop.nl cookie dialog
 		 *
 		 * E.g. https://futurumshop.nl/
 		 * ----------------------------------------------------------------- */
 		tryToClick('.js_cookie-bar__decline', 'Futurumshop.nl');
-
-		/* -----------------------------------------------------------------
-		 * The Nation consent dialog
-		 *
-		 * Something custom based on IAB TCF? (It’s using consensu.org.)
-		 *
-		 * E.g. https://www.thenation.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('.st-cmp-permanent-footer-nav-buttons .st-button:nth-of-type(2) span', 'The Nation');
 
 		/* -----------------------------------------------------------------
 		 * Consent Manager Provider <https://www.consentmanager.net/>
@@ -1327,15 +1307,6 @@
 				}
 			);
 		}
-
-		/* -----------------------------------------------------------------
-		 * Mapillary cookie consent
-		 *
-		 * A Facebook property since 2013, and it seems to use some Facebook JS (Falco), too.
-		 *
-		 * E.g. https://www.mapillary.com/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[data-testid="cookie-policy-banner-accept"]', 'Mapillary cookie consent');
 
 		/* -----------------------------------------------------------------
 		 * Axeptio <https://www.axeptio.eu/> (without Shadow DOM)
@@ -1538,13 +1509,6 @@
 				}
 			);
 		}
-
-		/* -----------------------------------------------------------------
-		 * Delhaize cookie popup
-		 *
-		 * E.g. https://www.delhaize.be/
-		 * ----------------------------------------------------------------- */
-		tryToClick('[data-testid="cookie-popup-reject"]', 'Delhaize cookie popup');
 
 		/* -----------------------------------------------------------------
 		 * Flanders government cookie consent (1)
