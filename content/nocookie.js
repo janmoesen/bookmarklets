@@ -829,14 +829,30 @@
 		 * ----------------------------------------------------------------- */
 		const openCmpShadowRoot = document.querySelector('body > div.needsclick')?.shadowRoot;
 		if (openCmpShadowRoot) {
-			/* Reject all possible cookies / object to all possible interests and personalization. */
-			tryToUncheck(openCmpShadowRoot.querySelectorAll('.cmp_switch.cmp_checked'));
-			tryToClick(openCmpShadowRoot.querySelector('.cmp_activateAll a:nth-child(2):last-child'), 'Traffective Open CMP “Deactivate all”');
-
-			/* Save & exit. */
-			if (!tryToClick(openCmpShadowRoot.querySelector('.cmp_page .cmp_saveLink a[href="#"]:only-child'), 'Traffective Open CMP “Confirm selection”')) {
-				tryToClick(openCmpShadowRoot.querySelector('.cmp_navi .cmp_saveLink a[href="#"]:only-child'), 'Traffective Open CMP “Confirm selection”')
-			}
+			clickAndWaitOrDoItNow(
+				openCmpShadowRoot.querySelector('.cmp_navi a[page="settings"]'),
+				'Traffective Open CMP “Settings”',
+				_ => clickAndWaitOrDoItNow(
+					openCmpShadowRoot.querySelector('.cmp_level0Container .cmp_levelItem:first-child'),
+					'Traffective Open CMP “Processing purposes”',
+					_ => clickAndWaitOrDoItNow(
+						openCmpShadowRoot.querySelector('.cmp_activateAll a:nth-child(2):last-child'),
+						'Traffective Open CMP “Deactivate all”',
+						_ => clickAndWaitOrDoItNow(
+							openCmpShadowRoot.querySelector('.cmp_level1Container .cmp_levelItem:not(.cmp_active) > *'),
+							'Traffective Open CMP “Legitimate interest”',
+							_ => clickAndWaitOrDoItNow(
+								openCmpShadowRoot.querySelector('.cmp_activateAll a:nth-child(2):last-child'),
+								'Traffective Open CMP “Deactivate all”',
+								_ => tryToClick(
+									openCmpShadowRoot.querySelector('.cmp_navi .cmp_saveLink a[href="#"]:only-child'),
+									'Traffective Open CMP “Confirm selection”'
+								)
+							)
+						)
+					)
+				)
+			);
 		}
 
 		/* -----------------------------------------------------------------
