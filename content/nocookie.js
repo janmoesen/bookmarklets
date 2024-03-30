@@ -1762,6 +1762,8 @@
 			'local-name() = "button"',
 			'local-name() = "a"',
 			'@role = "button"',
+			'@type = "button"',
+			'@type = "submit"',
 			'contains(@class, "button")',
 			'contains(@class, "Button")',
 			'contains(@class, "btn")',
@@ -1770,7 +1772,7 @@
 		].join(' or ');
 
 		const xPathTextExpression = denyAllTexts
-			.map(text => `contains(translate(concat(" ", ., " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
+			.map(text => `contains(translate(concat(" ", ., " ", @value, " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
 
 		const xPathExpression = `//*[${xPathButtonishExpression}][${xPathTextExpression}]`;
