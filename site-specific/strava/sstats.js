@@ -65,7 +65,7 @@
 
 	let needsToAddCss = true;
 
-	document.querySelectorAll('.sidebar tbody:nth-child(2n):not(#all-time-prs) + tbody').forEach(tbody => {
+	document.querySelectorAll('.sidebar tbody:nth-child(2n):not(:empty) + tbody').forEach(tbody => {
 		const rowFields = ['numActivities', 'distance', 'elevationGain', 'time'];
 
 		if (!tbody.rows[rowFields.length - 1]) {
