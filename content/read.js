@@ -234,7 +234,7 @@
 
 		/* --- Limit icon dimensions -------------------------------- */
 
-		svg,
+		svg:not(:root),
 		img[class*="icon"][src*=".svg"],
 		img[class*="Icon"][src*=".svg"],
 		.svg-icon,
