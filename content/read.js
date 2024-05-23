@@ -263,6 +263,8 @@
 		q[class*="pull"]:not(:hover),
 		blockquote[class*="pull"]:not(:hover),
 		.quote-box:not(:hover),
+		article [class*="quote"]:not(:hover),
+		[class*="article"] [class*="quote"]:not(:hover),
 		.su-pullquote:not(:hover),
 		.pullquote:not(:hover),
 		.pullQuote:not(:hover),
