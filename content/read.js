@@ -1111,19 +1111,19 @@
 			if (document.querySelector('.prettyprint')) {
 				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prettify.css)';
-				document.head.appendChild(prettyPrintStyleSheet);
+				(document.head || document.body || document.documentElement).appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.syntaxhighlighter')) {
 				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/syntaxhighlighter.css)';
-				document.head.appendChild(prettyPrintStyleSheet);
+				(document.head || document.body || document.documentElement).appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('.highlight .c, .highlight .k, .highlight .m, .highlight .s, .highlight .w')) {
 				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/pygments.css)';
-				document.head.appendChild(prettyPrintStyleSheet);
+				(document.head || document.body || document.documentElement).appendChild(prettyPrintStyleSheet);
 			} else if (document.querySelector('code[class*="language-"] .token.punctuation')) {
 				prettyPrintStyleSheet = document.createElementNS('http://www.w3.org/1999/xhtml', 'style');
 				prettyPrintStyleSheet.textContent = '@import url(https://janmoesen.github.io/bookmarklets/css/prism.css)';
-				document.head.appendChild(prettyPrintStyleSheet);
+				(document.head || document.body || document.documentElement).appendChild(prettyPrintStyleSheet);
 			}
 
 			/* Add some classes to structure elements that have been used for layout. */

@@ -107,7 +107,7 @@
 	if (document.documentElement.nodeName.toUpperCase() === 'HTML' && !document.querySelector('base[href]')) {
 		baseHref = document.createElementNS('http://www.w3.org/1999/xhtml', 'base');
 		baseHref.href = document.location;
-		document.head.appendChild(baseHref);
+		(document.head || document.body || document.documentElement).appendChild(baseHref);
 	}
 
 	/* Go! */

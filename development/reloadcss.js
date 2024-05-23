@@ -38,7 +38,7 @@
 		newStyleSheet.rel = 'StyleSheet';
 		newStyleSheet.media = allMedia.join(', ');
 		newStyleSheet.href = newHref;
-		document.head.appendChild(newStyleSheet);
+		(document.head || document.body || document.documentElement).appendChild(newStyleSheet);
 		item.disabled = true;
 	}
 

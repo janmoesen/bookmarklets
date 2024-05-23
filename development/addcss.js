@@ -69,7 +69,7 @@
 	}
 
 	if (s) {
-		document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = s;
+		(document.head || document.body || document.documentElement).appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = s;
 
 		/* Recurse for frames and iframes. */
 		try {
