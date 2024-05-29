@@ -17,9 +17,13 @@
 		/* Google (Analytics, Ads, DoubleClick) */
 		'utm_[^=]*',
 		'gclid',
+		'gclsrc',
 		'dclid',
 		'_ga',
 		'_gl',
+		'gad_source',
+		'gbraid',
+		'wbraid',
 
 		 /* Facebook */
 		'fbclid',
