@@ -120,7 +120,7 @@
 
 		/* Embedded Twitter profiles and tweets */
 		/* E.g. https://twitter.com/Twitter/status/1509951255388504066?ref_src=twsrc%5Etfw */
-		/https?:\/\/(www\.)?twitter\.com\/.*/,
+		/https?:\/\/(www\.)?(twitter|x)\.com\/.*/,
 	];
 
 	const hrefRegexpForWhichToDeleteAllParameters = new RegExp('(?:'
