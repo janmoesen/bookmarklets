@@ -303,6 +303,24 @@
 			}
 		},
 
+		/* SoundCloud
+		 * E.g. <https://soundcloud.com/dekoergent/jurgen-de-blonde-hometaping-is-killing-music>
+		 * has a link to <https://gate.sc/?url=http%3A%2F%2Fwww.dekoer.be%2Fjurgen-de-blonde-hometaping-is-killing-music%2F&token=46b2b3-1-1718098426443> which redirects to
+		 * <http://www.dekoer.be/jurgen-de-blonde-hometaping-is-killing-music>
+		 */
+		'a[href^="https://gate.sc/?"][href*="url="], a[href^="https://gate.sc?"][href*="url="]': a => {
+			let originalUrl = new URLSearchParams(new URL(a.href).search)?.get('url');
+			if (!originalUrl) {
+				return;
+			}
+
+			if (a.textContent.trim() === a.href || (a.textContent.includes('…') && originalUrl.includes(a.textContent.split('…')[0]))) {
+				a.textContent = originalUrl;
+			}
+
+			a.href = originalUrl;
+		},
+
 		/* TripAdvisor
 		 * E.g. https://www.tripadvisor.com/ExternalLinkInterstitial?redirectTo=http%3A%2F%2Fwww.billigvask.no%2Fself-service-laundromat.html
 		 */
