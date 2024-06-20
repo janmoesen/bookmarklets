@@ -65,7 +65,7 @@
 
 	let needsToAddCss = true;
 
-	document.querySelectorAll('.sidebar tbody:nth-child(2n):not(:empty) + tbody').forEach(tbody => {
+	document.querySelectorAll('.sidebar tbody:nth-child(2n):not(:empty) + tbody:not(:has([data-glossary-term="definition-best-efforts"]))').forEach(tbody => {
 		const rowFields = ['numActivities', 'distance', 'elevationGain', 'time'];
 
 		if (!tbody.rows[rowFields.length - 1]) {
@@ -180,6 +180,13 @@
 		data.time.row.after(avgSpeedRow);
 	});
 
+	/* Hide the best efforts for short distances. */
+	document.querySelectorAll('[data-glossary-term="definition-best-efforts"]').forEach(bestEffortsLabel => {
+		Array.from(bestEffortsLabel.closest('tbody')?.querySelectorAll('td:first-child')).filter(
+			td => td.textContent.trim().match(/^\d/) && !td.textContent.trim().match(/^\d\d\d+\s*[Kk]/)
+		).forEach(td => td.closest('tr').classList.add('notInteresting'));
+	});
+
 	/* Add a style sheet that improves the stats’ readability. */
 	if (needsToAddCss) {
 		document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = `
@@ -190,6 +197,11 @@
 			.sidebar tbody td:not(:first-child) {
 				text-align: end;
 			}
+
+			.sidebar tbody tr.notInteresting {
+				display: none;
+			}
+
 		`;
 	}
 })();
