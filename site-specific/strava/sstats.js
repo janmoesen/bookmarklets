@@ -184,7 +184,7 @@
 	if (needsToAddCss) {
 		document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = `
 			.sidebar tbody td {
-				white-space: pre;
+				white-space: nowrap;
 			}
 
 			.sidebar tbody td:not(:first-child) {
