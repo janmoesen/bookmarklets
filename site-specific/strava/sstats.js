@@ -187,6 +187,12 @@
 		).forEach(td => td.closest('tr').classList.add('notInteresting'));
 	});
 
+	/* Link to the activity’s overview, not its “Best Efforts” table. */
+	document.querySelectorAll('a[href$="/best-efforts"]').forEach(a => {
+		const pseudoFragmentId = `${a.closest('tr').querySelector('td')?.textContent}=${a.textContent}`.trim().replace(/\s+/g, '');
+		a.href = a.href.replace(/\/best-efforts$/, '/overview#' + pseudoFragmentId);
+	});
+
 	/* Add a style sheet that improves the stats’ readability. */
 	if (needsToAddCss) {
 		document.head.appendChild(document.createElementNS('http://www.w3.org/1999/xhtml', 'style')).textContent = `
