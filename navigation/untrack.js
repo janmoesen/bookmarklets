@@ -73,8 +73,29 @@
 		'obOrigUrl',
 		'outbrainclickid',
 
-		/* Matomo (formerly Piwik) */
-		'piwik_[^=]*',
+		/* Matomo (formerly Piwik).
+		 * See https://matomo.org/faq/how-to/faq_120/ and
+		 * https://help.piwik.pro/support/collecting-data/piwik-pro-url-builder/ */
+		'matomo_campaign'
+		'mtm_campaign',
+		'mtm_cid',
+		'mtm_content',
+		'mtm_group',
+		'mtm_keyword',
+		'mtm_kwd',
+		'mtm_medium',
+		'mtm_placement',
+		'mtm_source',
+		'piwik_campaign',
+		'piwik_kwd',
+		'pk_campaign',
+		'pk_cid',
+		'pk_content',
+		'pk_cpn',
+		'pk_keyword',
+		'pk_kwd',
+		'pk_medium',
+		'pk_source',
 
 		/* Cloudflare DDOS challenge tokens */
 		'__cf_chl_jschl_tk__',
