@@ -76,7 +76,7 @@
 		/* Matomo (formerly Piwik).
 		 * See https://matomo.org/faq/how-to/faq_120/ and
 		 * https://help.piwik.pro/support/collecting-data/piwik-pro-url-builder/ */
-		'matomo_campaign'
+		'matomo_campaign',
 		'mtm_campaign',
 		'mtm_cid',
 		'mtm_content',
@@ -201,6 +201,30 @@
 			}
 
 			a.href = targetUri;
+		},
+
+		/* Use Invidious (“an alternative front-end to YouTube”) instead of
+		 * the original YouTube for videos. This is not technically a
+		 * redirector, but I need to restructure this bookmarklet anyway. */
+		'a[href^="https://www.youtube.com/watch?"][href*="v="]': a => {
+			const url = new URL(a.href);
+			const usp = new URLSearchParams(url.search);
+			let videoId = usp?.get('v');
+			if (!videoId) {
+				return;
+			}
+
+			const newUsp = new URLSearchParams();
+			usp.forEach((value, key) => {
+				if (key === 'v' || key === 't') {
+					newUsp.set(key, value);
+				}
+			});
+
+			url.host = 'yewtu.be';
+			url.search = newUsp.toString();
+
+			a.href = url;
 		},
 
 		/* Twitter */
