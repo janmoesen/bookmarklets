@@ -1,5 +1,6 @@
 /**
- * Search YouTube for the specified or selected text inside “topic” videos.
+ * Search YouTube for the specified or selected text inside “topic” videos,
+ * using Invidious (“an alternative front-end to YouTube”).
  *
  * “Topic” videos are the official channels for artists/bands/musicians and can
  * be recognized by either “ - Topic” or “🎵” suffixed to the name. However, it
@@ -71,6 +72,6 @@
 	if (s) {
 		s = s.replace(/\uFEFF/g, '');
 
-		location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s + ' "Provided to YouTube by"');
+		location = 'https://yewtu.be/search?q=' + encodeURIComponent(s + ' "Provided to YouTube by"');
 	}
 })();

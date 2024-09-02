@@ -1,5 +1,6 @@
 /**
- * Search YouTube for the specified or selected text.
+ * Search YouTube for the specified or selected text, using Invidious (“an
+ * alternative front-end to YouTube”).
  *
  * If the text looks like a video ID, you are taken directly to the video.
  *
@@ -75,41 +76,90 @@
 		var matches;
 		if ((matches = s.match(/^([-_a-zA-Z0-9]{11})( *!)?$/)) && !s.match(/^(([A-Z]?[a-z-]+)|([A-Z-]+))$/)) {
 			if (matches[2]) {
-				var html = '<iframe width="854" height="510" src="https://www.youtube.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
+				var html = '<iframe width="854" height="510" src="https://yewtu.be/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
 
 				/* Replace the original document's HTML with our generated HTML. */
 				HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
 				HTMLDocument.prototype.write.call(document, html);
 				HTMLDocument.prototype.close.call(document);
 			} else {
-				location = 'https://www.youtube.com/watch?v=' + encodeURIComponent(s);
+				location = 'https://yewtu.be/watch?v=' + encodeURIComponent(s);
 			}
 		} else {
 			/* See if the search should filter (e.g. only videos, only playlists,
 			 * only live streams, …).
 			 *
-			 * You can only specify one filter, e.g. “yt --long autechre”.
+			 * You can specify more than one filter, e.g. “yt --long --hd autechre”.
 			 *
 			 * See the source code below this comment for supported filters.
 			 */
 			var filters = {
-				'video': 'EgIQAQ==',
-				'channel': 'EgIQAg==',
-				'playlist': 'EgIQAw==',
+				video: {
+					type: 'video',
+				},
 
-				'short': 'EgIYAQ==',
-				'long': 'EgIYAg==',
+				channel: {
+					type: 'channel',
+				},
 
-				'live': 'EgJAAQ=='
+				playlist: {
+					type: 'playlist',
+				},
+
+				short: {
+					duration: 'short',
+				},
+
+				medium: {
+					duration: 'medium',
+				},
+
+				long: {
+					duration: 'long',
+				},
+
+				live: {
+					features: 'live',
+				},
+
+				hd: {
+					features: 'hd',
+				},
+
+				'4k': {
+					features: 'four_k',
+				},
+
+				views: {
+					sort: 'views',
+				},
+
+				popular: {
+					sort: 'views',
+				},
+
+				date: {
+					sort: 'date',
+				},
+
+				recent: {
+					sort: 'date',
+				},
 			};
 
-			if ((matches = s.match(new RegExp('^\\s*--(' + Object.keys(filters).join('|') + ')\\s+(.*)$')))) {
-				var filterName = matches[1];
+			let url = new URL('https://yewtu.be/search');
+
+			const filterRegexp = new RegExp('^\\s*--(' + Object.keys(filters).join('|') + ')\\s+(.*)$');
+			while ((matches = s.match(filterRegexp))) {
+				const filterName = matches[1];
 				s = matches[2];
-				location = 'https://www.youtube.com/results?sp=' + filters[filterName] + '&search_query=' + encodeURIComponent(s);
-			} else {
-				location = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s);
+				Object.entries(filters[filterName]).forEach(([key, value]) => {
+					url.searchParams.append(key, value);
+				});
 			}
+
+			url.searchParams.set('q', s);
+			location = url;
 		}
 	}
 })();
