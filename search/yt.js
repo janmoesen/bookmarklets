@@ -76,14 +76,14 @@
 		var matches;
 		if ((matches = s.match(/^([-_a-zA-Z0-9]{11})( *!)?$/)) && !s.match(/^(([A-Z]?[a-z-]+)|([A-Z-]+))$/)) {
 			if (matches[2]) {
-				var html = '<iframe width="854" height="510" src="https://yewtu.be/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
+				var html = '<iframe width="854" height="510" src="https://invidious.privacyredirect.com/embed/' + encodeURIComponent(matches[1]) + '"></iframe>';
 
 				/* Replace the original document's HTML with our generated HTML. */
 				HTMLDocument.prototype.open.call(document, 'text/html; charset=UTF-8');
 				HTMLDocument.prototype.write.call(document, html);
 				HTMLDocument.prototype.close.call(document);
 			} else {
-				location = 'https://yewtu.be/watch?v=' + encodeURIComponent(s);
+				location = 'https://invidious.privacyredirect.com/watch?v=' + encodeURIComponent(s);
 			}
 		} else {
 			/* See if the search should filter (e.g. only videos, only playlists,
@@ -147,7 +147,7 @@
 				},
 			};
 
-			let url = new URL('https://yewtu.be/search');
+			let url = new URL('https://invidious.privacyredirect.com/search');
 
 			const filterRegexp = new RegExp('^\\s*--(' + Object.keys(filters).join('|') + ')\\s+(.*)$');
 			while ((matches = s.match(filterRegexp))) {

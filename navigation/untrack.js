@@ -221,7 +221,7 @@
 				}
 			});
 
-			url.host = 'yewtu.be';
+			url.host = 'invidious.privacyredirect.com';
 			url.search = newUsp.toString();
 
 			a.href = url;
