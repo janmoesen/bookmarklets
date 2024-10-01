@@ -93,8 +93,11 @@
 				`[class*="lang"][class*="elect"] a[hreflang="${languageCode}"]`,
 				`[class*="lang"][class*="elect"] a[hreflang^="${languageCode}-"]`,
 
-				`a.lang[href*="/${languageCode}/"]`,
-				`a.lang[href*="/${languageCode.toLowerCase()}/"]`,
+				`a[class^="lang"][href*="/${languageCode}/"]`,
+				`a[class^="lang"][href*="/${languageCode.toLowerCase()}/"]`,
+
+				`a[class*=" lang"][href*="/${languageCode}/"]`,
+				`a[class*=" lang"][href*="/${languageCode.toLowerCase()}/"]`,
 
 				`a.language[href*="/${languageCode}/"]`,
 				`a.language[href*="/${languageCode.toLowerCase()}/"]`,
