@@ -72,6 +72,6 @@
 	if (s) {
 		s = s.replace(/\uFEFF/g, '');
 
-		location = 'https://invidious.privacyredirect.com/search?q=' + encodeURIComponent(s + ' "Provided to YouTube by"');
+		location = 'https://yt.drgnz.club/search?q=' + encodeURIComponent(s + ' "Provided to YouTube by"');
 	}
 })();

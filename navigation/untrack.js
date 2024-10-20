@@ -221,7 +221,7 @@
 				}
 			});
 
-			url.host = 'invidious.privacyredirect.com';
+			url.host = 'yt.drgnz.club';
 			url.search = newUsp.toString();
 
 			a.href = url;
