@@ -1745,7 +1745,7 @@
 		].join(' or ');
 
 		const xPathTextExpression = denyAllTexts
-			.map(text => `contains(translate(concat(" ", ., " ", @value, " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’\t\n", "abcçdefghijklmnñopqrstuvwxyzруский'  "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
+			.map(text => `contains(translate(concat(" ", ., " ", @value, " "), "ABCÇDEFGHIJKLMNÑOPQRSTUVWXYZРУСКИЙ’ \t\n", "abcçdefghijklmnñopqrstuvwxyzруский'   "), "${text.toLowerCase().replaceAll('"', '\\"')}")`)
 			.join(' or ');
 
 		const xPathExpression = `//*[${xPathButtonishExpression}][${xPathTextExpression}]`;
