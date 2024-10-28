@@ -64,6 +64,30 @@
 	}
 
 	if (s === '') {
+		/* See if we are on on Invidious instance and should switch back to the original YouTube. */
+		const invidiousDetectorSelector = [
+			'head link[title="Invidious"]',
+			'script[id="video_data"][type="application/json"]',
+			'a[href="https://github.com/iv-org/invidious"]',
+		].join(', ');
+
+		if (location.host !== 'www.youtube.com' && document.querySelector(invidiousDetectorSelector)) {
+			if (location.pathname === '/watch' || location.pathname.startsWith('/embed/')) {
+				location.host = 'www.youtube.com';
+				return;
+			} else if (location.pathname === '/search') {
+				let newUrl = new URL(location);
+				newUrl.host = 'www.youtube.com';
+				newUrl.pathname = '/results';
+				const query = newUrl.searchParams.get('q');
+				newUrl.search = '';
+				newUrl.searchParams.set('search_query', query);
+				location = newUrl;
+				return;
+			}
+		}
+
+		/* If we are not on Invidious, and no arguments were specified, prompt the user. */
 		s = getActiveSelection() || prompt('Please enter your YouTube search query (or jump directly to a 11-character video ID, optionally followed by " !"):');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
