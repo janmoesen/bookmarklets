@@ -221,7 +221,7 @@
 				}
 			});
 
-			url.host = 'yt.drgnz.club';
+			url.host = 'yewtu.be';
 			url.search = newUsp.toString();
 
 			a.href = url;
