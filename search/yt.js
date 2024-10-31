@@ -72,7 +72,7 @@
 		].join(', ');
 
 		if (location.host !== 'www.youtube.com' && document.querySelector(invidiousDetectorSelector)) {
-			if (location.pathname === '/watch' || location.pathname.startsWith('/embed/')) {
+			if (location.pathname.match(/^\/(embed|watch|playlist|channel)($|\/)/)) {
 				location.host = 'www.youtube.com';
 				return;
 			} else if (location.pathname === '/search') {
