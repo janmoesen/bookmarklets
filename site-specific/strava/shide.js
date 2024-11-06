@@ -149,6 +149,7 @@
 		const isClubJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ClubJoin"]'));
 		const isChallengeJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
 		const isPromo = !!entry.querySelector('[class*="PromoEntry"]');
+		const isPost = !!entry.querySelector('a[href*="/posts/"]');
 
 		const firstActivityFromGroup = isGroupActivity && entry.querySelector('[class*="GroupActivityEntry"]');
 
@@ -237,7 +238,8 @@
 			&& !isWalk
 			&& !isSwim
 			&& !isWaterSport
-			&& !isWinterSport;
+			&& !isWinterSport
+			&& !isPost;
 
 		/* Media. */
 		const hasPhotos = !!entry.querySelector('[data-testid="photo"]');
@@ -319,18 +321,18 @@
 		let shouldHide = false;
 		let reasonForHiding = null;
 
-		if (!isActivity && !isGroupActivity) {
+		if (!isActivity && !isGroupActivity && !isPost) {
 			shouldHide = true;
-			reasonForHiding = 'Not an activity';
+			reasonForHiding = 'Not an activity or post';
 		} else if (isEBikeRide && !hasPhotos) {
 			shouldHide = true;
 			reasonForHiding = 'E-bike ride without photos';
 		} else if (isVirtual) {
 			shouldHide = true;
 			reasonForHiding = 'Virtual ride';
-		} else if (!hasMap && !isGroupActivity) {
+		} else if (!hasMap && !isGroupActivity && !isPost) {
 			shouldHide = true;
-			reasonForHiding = 'No map/GPS data (and not a group activity)';
+			reasonForHiding = 'No map/GPS data (and not a group activity or post)';
 		} else if (isRide && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30) && (!hasElevationInM || elevationInM < 400)) {
 			shouldHide = true;
 			reasonForHiding = 'Short ride without photos and without noteworthy elevation gain';
@@ -389,6 +391,9 @@
 				: null,
 			isPromo
 				? `isPromo = ${isPromo}`
+				: null,
+			isPost
+				? `isPost = ${isPost}`
 				: null,
 
 			'Tags/special properties:',
