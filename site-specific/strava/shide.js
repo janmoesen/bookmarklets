@@ -75,29 +75,28 @@
 	}
 
 	const svgHashesToActivityTypes = {
-		'5ef512b3a637f': 'Ride',
+		'11aee5c6a05c68': 'Ride',
 
-		'1395e4030abfa9': 'MountainBikeRide',
+		'7bff3f2fc88c': 'MountainBikeRide',
 
-		'1210c3d6670189': 'GravelRide',
+		'7a2bf999b4f3b': 'GravelRide',
 
-		'b845af03f9439': 'EBikeRide',
+		'931d5cb9192ef': 'EBikeRide',
 
-		'22beeefea3b6f': 'Run',
-		'1d3a490877e643': 'TrailRun',
-		'c5b848e0a0e23': 'Hike',
-		'cca03104f75a0': 'Walk',
+		'1b2b11443451d8': 'Run',
+		'f2bdf771a3337': 'TrailRun',
+		'1eb790ca0d49e3': 'Hike',
+		'f4f09ecc49e9d': 'Walk',
 
-		'3d190f23f662a': 'Swim',
+		'b75670032154d': 'Swim',
 
-		'11af222ad81529': 'IceSkate',
-		'9c7194036d140': 'BackcountrySki',
-		'2fa4642aece0d': 'AlpineSki',
-		'1da96fa7c832ef': 'IceSkate',
+		'1ce1f590343417': 'IceSkate',
+		'12a38b7f5edc98': 'BackcountrySki',
+		/* '12a38b7f5edc98': 'AlpineSki', Same as `BackcountrySki` in Strava’s fall 2024 restyling. */
 
 		'bff242f16fcb0': 'Wheelchair',
 
-		'6c893c99a1688': 'WeightTraining',
+		'b34dc55e98b69': 'WeightTraining',
 
 		'1877faad59afe8': 'Windsurf',
 	};
