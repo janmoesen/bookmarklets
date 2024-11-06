@@ -173,7 +173,7 @@
 		/* Log unknown activity types so we can update our svgHashesToActivityTypes table. */
 		if (isActivity) {
 			const svg = svgIcon?.closest('svg');
-			const svgTitle = svg?.getAttribute('title')?.replace(/[ -]/g, '');
+			const svgTitle = (svg?.getAttribute('title') || svg?.querySelector('title')?.textContent)?.replace(/[ -]/g, '');
 
 			if (typeof activityType === 'undefined') {
 				if (typeof svgTitle === 'undefined') {
@@ -181,12 +181,11 @@
 				} else {
 					svgHashesToActivityTypes[svgHash] = svgTitle;
 					console.info(`🆕 Activity “${activityName}”: Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
-					console.log(`const svgHashesToActivityTypes = ${JSON.stringify(svgHashesToActivityTypes)};\n\n`, svgHashesToActivityTypes);
+					console.log(`const svgHashesToActivityTypes = ${JSON.stringify(svgHashesToActivityTypes, null, '    ')};\n\n`, svgHashesToActivityTypes);
 				}
 			} else if (typeof svgTitle !== 'undefined' && svgHashesToActivityTypes[svgHash] !== svgTitle && !isVirtual) {
 				console.error(`⚠️ ⚠️ ⚠️  Activity “${activityName}”: SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
 			}
-			window.svgHashesToActivityTypes = svgHashesToActivityTypes;
 		}
 
 		const isRide = activityType === 'Ride';
