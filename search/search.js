@@ -129,12 +129,13 @@
 
 						if (currInput) {
 							if (!currInput.offsetHeight) {
-								console.log('Search site: found invisible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+								console.log('Search site: found invisible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', currInput);
 								invisibleInputs.push(currInput);
 								continue;
 							}
 
-							console.log('Search site: found visible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+							console.log('Search site: found visible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', currInput);
+							input = currInput;
 							break;
 						}
 					}
