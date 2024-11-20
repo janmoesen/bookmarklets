@@ -191,11 +191,11 @@
 			/* Prefer the N/S/W/E labels for the selected element’s language. For
 			* instance, don’t assume “N” always means “North”; in Vietnamese it
 			* stands for “Nam”, meaning “South”. */
-			const method = language === selectedLanguage
-				? 'unshift'
-				: 'push';
-
-			possibleReplacements[method]({language, labels});
+			if (language === selectedLanguage) {
+				possibleReplacements.unshift({language, labels});
+			} else {
+				possibleReplacements.push({language, labels});
+			}
 		}
 
 		const regexpWithPlaceholders = /(?<latitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<latitudeLabel>XXX_LAT_XXX)\s*,?\s*(?<longitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<longitudeLabel>XXX_LNG_XXX)/;
