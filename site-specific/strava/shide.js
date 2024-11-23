@@ -470,7 +470,7 @@
 	}
 
 	/* Process all existing feed entries. */
-	const entrySelector = '[class*="FeedEntry__entry-container"]';
+	const entrySelector = '[class*="FeedEntry"][class*="entryContainer"]';
 	Array.from(document.querySelectorAll(entrySelector)).forEach(processEntry);
 
 	/* Process feed entries that are dynamically loaded (when scrolling to the
