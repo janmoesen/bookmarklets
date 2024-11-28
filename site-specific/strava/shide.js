@@ -163,7 +163,7 @@
 		const activityName = entry.querySelector('[data-testid="activity_name"]')?.textContent;
 
 		/* Activity types, based on the activity icon’s SVG. (Super robust, yeah.) */
-		const svgIcon = entry.querySelector('[class*="activity-icon"] path');
+		const svgIcon = entry.querySelector('[class*="activityIcon"] path');
 		const svgHash = svgIcon
 			? calculateHash(svgIcon.outerHTML)
 			: '';
