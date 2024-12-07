@@ -107,6 +107,10 @@
 			}
 		);
 
+		/* Remove the `inert` attribute on all elements. Might get rid of too
+		 * many, but it is necessary on sites like NYTimes.com. */
+		document.querySelectorAll('[inert]').forEach(elem => elem.removeAttribute('inert'));
+
 		/* Recurse for (i)frames. */
 		try {
 			Array.from(document.querySelectorAll('frame, iframe, object[type^="text/html"], object[type^="application/xhtml+xml"]')).forEach(
