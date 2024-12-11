@@ -1585,7 +1585,7 @@
 			' reject ',
 			' dismiss ',
 			' necessary ',
-			' essential ',
+			' essential',
 			' mandatory ',
 			' required ',
 			' minimal ',
