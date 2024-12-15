@@ -24,6 +24,7 @@
 		'gad_source',
 		'gbraid',
 		'wbraid',
+		'srsltid',
 
 		 /* Facebook */
 		'fbclid',
