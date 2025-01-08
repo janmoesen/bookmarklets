@@ -1594,6 +1594,7 @@
 			' without accepting ',
 			' without agreeing ',
 			' do not accept ',
+			' do not agree ',
 			" don't accept ",
 			' no thank',
 			' no, thank',
