@@ -198,7 +198,7 @@
 							? wgPageName.replace(/^[^:]+:[^\/]+/, `${wgCanonicalNamespace}:${wgCanonicalSpecialPageName}`)
 							: wgPageName.replace(/^[^:/]+/, wgCanonicalNamespace);
 
-						urlForOtherLanguage.pathname = urlForOtherLanguage.pathname.replace(wgPageName, newPageName);
+						urlForOtherLanguage.pathname = decodeURIComponent(urlForOtherLanguage.pathname).replace(wgPageName, newPageName);
 						if (urlForOtherLanguage.searchParams.has('title')) {
 							urlForOtherLanguage.searchParams.set('title', urlForOtherLanguage.searchParams.get('title').replace(wgPageName, newPageName));
 						}
