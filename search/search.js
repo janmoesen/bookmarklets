@@ -18,7 +18,7 @@
 	var allSearchInputs = document.querySelectorAll('input[type="search"]');
 	for (var i = 0; i < allSearchInputs.length; i++) {
 		if (!allSearchInputs[i].offsetHeight) {
-			console.log('Search site: found invisible dedicated search input: ', input);
+			console.log('search: found invisible dedicated search input: ', input);
 			invisibleInputs.push(allSearchInputs[i]);
 			continue;
 		}
@@ -28,7 +28,7 @@
 	}
 
 	if (input) {
-		console.log('Search site: found visible dedicated search input: ', input);
+		console.log('search: found visible dedicated search input: ', input);
 	}
 
 	/* Look for common search field names. */
@@ -47,12 +47,12 @@
 
 			if (input) {
 				if (!input.offsetHeight) {
-					console.log('Search site: found invisible search input with name "' + controlNames[i] + '": ', input);
+					console.log(`search: found invisible search input with name="${controlNames[i]}": `, input);
 					invisibleInputs.push(currInput);
 					continue;
 				}
 
-				console.log('Search site: found visible search input with name "' + controlNames[i] + '": ', input);
+				console.log(`search: found visible search input with name="${controlNames[i]}": `, input);
 				break;
 			}
 		}
@@ -88,14 +88,14 @@
 
 					if (attributeValue.match(regexp)) {
 						if (!currInput.offsetHeight) {
-							console.log('Search site: found invisible input with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+							console.log(`search: found invisible input with attribute ${attributeToCheck}="${attributeValue}" matching ${regexp}: `, input);
 							invisibleInputs.push(currInput);
 							continue;
 						}
 
 						input = currInput;
 
-						console.log('Search site: found visible input with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', input);
+						console.log(`search: found visible input with attribute ${attributeToCheck}="${attributeValue}" matching ${regexp}: `, input);
 						break;
 					}
 				}
@@ -129,12 +129,12 @@
 
 						if (currInput) {
 							if (!currInput.offsetHeight) {
-								console.log('Search site: found invisible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', currInput);
+								console.log(`search: found invisible input in search form with attribute ${attributeToCheck}="${attributeValue}" matching ${regexp}: `, currInput);
 								invisibleInputs.push(currInput);
 								continue;
 							}
 
-							console.log('Search site: found visible input in search form with attribute ' + attributeToCheck + '="' + attributeValue + '" matching ' + regexp + ': ', currInput);
+							console.log(`search: found visible input in search form with attribute ${attributeToCheck}="${attributeValue}" matching ${regexp}: `, currInput);
 							input = currInput;
 							break;
 						}
@@ -147,7 +147,7 @@
 	/* If no visible search field was found, settle for an invisible one. */
 	if (!input && invisibleInputs.length) {
 		input = invisibleInputs[0];
-		console.log('Search site: defaulting to first invisible input found: ', input);
+		console.log('search: defaulting to first invisible input found: ', input);
 	}
 
 	/* Bail out if no search field was found. */
@@ -233,7 +233,7 @@
 		 * to be in progress. */
 		var isUnloading = false;
 		window.addEventListener('unload', function (event) {
-			console.log('Caught unload event!');
+			console.log('search: caught unload event; not dispatching any more synthetic events on the search input!');
 			isUnloading = true;
 		});
 
@@ -264,11 +264,11 @@
 
 			/* Make certain Angular sites like Wikiwand update their
 			 * internal copy of the search string. */
-			console.log('Search site: dispatching synthetic input event');
+			console.log('search: dispatching synthetic input event');
 			input.dispatchEvent(new Event('input', {}));
 
 			/* Simulate pressing the Enter key. */
-			console.log('Search site: dispatching synthetic ' + eventType + ' event');
+			console.log(`search: dispatching synthetic ${eventType} event`);
 			input.dispatchEvent(new KeyboardEvent(eventType, {
 				keyCode: 13,
 				charCode: 13,
