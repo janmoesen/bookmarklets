@@ -2,16 +2,114 @@
  * Search the current site for the given text using the site's own search form,
  * if any.
  *
- * It first looks for an INPUT[type="search"]. If not found, it looks for
- * typical values in the INPUT attributes like "name", "id", "class", … If it
- * still could not find anything, it looks for those values in FORM attributes
- * like "id", "class", "action", …
+ * This bookmarklet first looks for an OpenSearch description (an XML file with
+ * a URL template): https://developer.mozilla.org/en-US/docs/Web/OpenSearch
  *
- * If no search inputs were found, it quietly logs a message to the console.
+ * If that does not exist, it looks foe `INPUT[type="search"]`. If not found,
+ * it looks for typical values in the `INPUT` attributes like `name`, `id`,
+ * `class`, … If it still could not find anything, it looks for those values in
+ * `FORM` attributes like `id`, `class`, `action`, …
+ *
+ * If no search inputs were found, it alerts the user.
  *
  * @title Search site
  */
 (function search() {
+	/* Try to get the parameter string from the bookmarklet/search query.
+	 * Fall back to the current text selection, if any. If those options
+	 * both fail, prompt the user. */
+	let s = (function () { /*%s*/; }).toString()
+		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
+		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
+		.replace(/\u0025s/, '');
+
+	/**
+	 * Get the active text selection, diving into frames and
+	 * text controls when necessary and possible.
+	 */
+	function getActiveSelection(document) {
+		if (!document || typeof document.getSelection !== 'function') {
+			return '';
+		}
+
+		if (!document.activeElement) {
+			return document.getSelection() + '';
+		}
+
+		const activeElement = document.activeElement;
+
+		/* Recurse for FRAMEs and IFRAMEs. */
+		try {
+			if (
+				typeof activeElement.contentDocument === 'object'
+				&& activeElement.contentDocument !== null
+			) {
+				return getActiveSelection(activeElement.contentDocument);
+			}
+		} catch (e) {
+			return document.getSelection() + '';
+		}
+
+		/* Get the selection from inside a text control. */
+		if (typeof activeElement.value === 'string') {
+			if (activeElement.selectionStart !== activeElement.selectionEnd) {
+				return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
+			}
+
+			return activeElement.value;
+		}
+
+		/* Get the normal selection. */
+		return document.getSelection() + '';
+	}
+
+	/* Look for an OpenSearch description. */
+	const openSearchLink = document.querySelector(`
+		link[rel="search"][type="application/opensearchdescription+xml"],
+		link[rel="search"]:not([type])`
+	);
+
+	if (openSearchLink?.href) {
+		console.log(`search: found OpenSearch description at ${openSearchLink.href}`);
+
+		if (s === '') {
+			s = getActiveSelection(document) || prompt('Please enter your site search query:');
+		} else {
+			s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection(document) + '$2');
+		}
+
+		fetch(openSearchLink.href)
+			.then(response => response.text())
+			.then(xmlString => {
+				try {
+					const xml = new DOMParser().parseFromString(xmlString, 'application/xml');
+					const templateUrl = xml.querySelector('Url:not([type]), Url[type*="html"]')
+						?.getAttribute('template');
+
+					if (!templateUrl) {
+						console.log('search: could not find `template` for `Url` element in OpenSearch description XML:\n', xmlString);
+						return;
+					}
+
+					const searchUrl = templateUrl
+						.replaceAll('{searchTerms}', encodeURIComponent(s))
+						.replaceAll('{count?}', '')
+						.replaceAll('{startIndex?}', '')
+						.replaceAll('{startPage?}', '')
+						.replaceAll('{language?}', '')
+						.replaceAll('{count}', 100)
+						.replaceAll('{startIndex}', 0)
+						.replaceAll('{startPage}', 0)
+						.replaceAll('{language}', '*');
+					location = searchUrl;
+				} catch (e) {
+					console.log('search: exception when trying to process OpenSearch description XML: ', e);
+				}
+			});
+
+		return;
+	}
+
 	/* Look for a dedicated search field. */
 	var input;
 	var invisibleInputs = [];
@@ -152,60 +250,8 @@
 
 	/* Bail out if no search field was found. */
 	if (!input) {
-		alert('Search site: could not find search form on the current page.');
+		alert('search: could not find search form on the current page.');
 		return;
-	}
-
-	/* Try to get the parameter string from the bookmarklet/search query.
-	 * Fall back to the current text selection, if any. If those options
-	 * both fail, prompt the user. */
-	var s = (function () { /*%s*/; }).toString()
-		.replace(/^function\s*\(\s*\)\s*\{\s*\/\*/, '')
-		.replace(/\*\/\s*\;?\s*\}\s*$/, '')
-		.replace(/\u0025s/, '');
-
-	/**
-	 * Get the active text selection, diving into frames and
-	 * text controls when necessary and possible.
-	 */
-	function getActiveSelection(doc) {
-		if (arguments.length === 0) {
-			doc = document;
-		}
-
-		if (!doc || typeof doc.getSelection !== 'function') {
-			return '';
-		}
-
-		if (!doc.activeElement) {
-			return doc.getSelection() + '';
-		}
-
-		var activeElement = doc.activeElement;
-
-		/* Recurse for FRAMEs and IFRAMEs. */
-		try {
-			if (
-				typeof activeElement.contentDocument === 'object'
-				&& activeElement.contentDocument !== null
-			) {
-				return getActiveSelection(activeElement.contentDocument);
-			}
-		} catch (e) {
-			return doc.getSelection() + '';
-		}
-
-		/* Get the selection from inside a text control. */
-		if (typeof activeElement.value === 'string') {
-			if (activeElement.selectionStart !== activeElement.selectionEnd) {
-				return activeElement.value.substring(activeElement.selectionStart, activeElement.selectionEnd);
-			}
-
-			return activeElement.value;
-		}
-
-		/* Get the normal selection. */
-		return doc.getSelection() + '';
 	}
 
 	if (s === '') {
