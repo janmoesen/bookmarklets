@@ -255,9 +255,9 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() + '' || prompt('Please enter your site search query:');
+		s = getActiveSelection(document) + '' || prompt('Please enter your site search query:');
 	} else {
-		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
+		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection(document) + '$2');
 	}
 
 	/* Fill the search field and submit the form, if a search term was given. */
