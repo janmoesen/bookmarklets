@@ -118,8 +118,17 @@
 				return;
 			}
 
-			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&ondNP=true&ondRP=true&rechtsvormFonetic=ALL&vest=true&filterEnkelActieve=false&sort=SORT_BY_ENTERPRISE_NUMBER&dir=asc&searchWord='
-				+ encodeURIComponent(s);
+			location = `https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?${new URLSearchParams({
+				oudeBenaming: 'true',
+				ondNP: 'true',
+				ondRP: 'true',
+				rechtsvormFonetic: 'ALL',
+				vest: 'true',
+				filterEnkelActieve: 'false',
+				sort: 'SORT_BY_ENTERPRISE_NUMBER',
+				dir: 'asc',
+				searchWord: s,
+			})}`;
 		}
 	}
 })(document);
