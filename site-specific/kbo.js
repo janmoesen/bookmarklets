@@ -103,6 +103,8 @@
 				location = `https://kbopub.economie.fgov.be/kbopub/zoekadresform.html?${new URLSearchParams({
 					filterEnkelActieve: false,
 					actionLU: 'Zoek',
+					sort: 'SORT_BY_ENTERPRISE_NUMBER',
+					dir: 'asc',
 					postcod1: matches.groups.postalCode,
 					postgemeente1: '',
 					straatgemeente1: matches.groups.street,
@@ -116,7 +118,7 @@
 				return;
 			}
 
-			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&ondNP=true&ondRP=true&rechtsvormFonetic=ALL&vest=true&filterEnkelActieve=false&searchWord='
+			location = 'https://kbopub.economie.fgov.be/kbopub/zoeknaamfonetischform.html?oudeBenaming=true&ondNP=true&ondRP=true&rechtsvormFonetic=ALL&vest=true&filterEnkelActieve=false&sort=SORT_BY_ENTERPRISE_NUMBER&dir=asc&searchWord='
 				+ encodeURIComponent(s);
 		}
 	}
