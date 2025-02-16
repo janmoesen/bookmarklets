@@ -1568,6 +1568,21 @@
 		tryToClick('.cc-nb-reject', 'FreePrivacyPolicy.com Free Cookie Consent');
 
 		/* -----------------------------------------------------------------
+		 * RecreateX cookies modal
+		 *
+		 * E.g. https://elisabethcenter.kmda.org/
+		 * E.g. https://webshopriemst.recreatex.be/
+		 * ----------------------------------------------------------------- */
+		clickAndWaitOrDoItNow(
+			'#btnDeactivateOptionalCookies',
+			'RecreateX cookies modal',
+			_ => {
+				tryToUncheck('button[id^="ctl00_"][id*="Cookies"].k-switch-on');
+				retryToClick('#btnConfirmCookieChoices', 'RecreateX cookies modal');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
