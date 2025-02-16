@@ -371,8 +371,19 @@
 
 		/* -----------------------------------------------------------------
 		 * CookieYes/Cookie-Law-Info <https://wordpress.org/plugins/cookie-law-info/>
+		 *
+		 * E.g. https://unisim.net/
 		 * ----------------------------------------------------------------- */
-		tryToClick('#cookie_action_close_header_reject, [data-cky-tag="reject-button"], .cky-btn-reject', 'CookieYes/Cookie-Law-Info');
+		if (!tryToClick('#cookie_action_close_header_reject, [data-cky-tag="reject-button"], .cky-btn-reject', 'CookieYes/Cookie-Law-Info')) {
+			clickAndWaitOrDoItNow(
+				'[data-cky-tag="settings-button"]',
+				'CookieYes/Cookie-Law-Info',
+				_ => {
+					tryToUncheck('.cky-switch input[type="checkbox"]:checked');
+					tryToClick('[data-cky-tag="detail-save-button"]', 'CookieYes/Cookie-Law-Info');
+				}
+			);
+		}
 
 		/* -----------------------------------------------------------------
 		 * GDPR Legal Cookie App for Shopify <https://gdpr-legal-cookie.myshopify.com/>
