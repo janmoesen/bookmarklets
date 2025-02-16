@@ -733,7 +733,7 @@
 		const userCentricsShadowRoot = deepQuerySelector('#usercentrics-root')?.shadowRoot;
 		if (userCentricsShadowRoot) {
 			clickAndWaitOrDoItNow(
-				userCentricsShadowRoot.querySelector('button[data-testid="uc-more-button"]'),
+				userCentricsShadowRoot.querySelector('button[data-testid="uc-more-button"], button[data-testid="uc-customize-button"]'),
 				'UserCentrics (with Shadow DOM)',
 				/* Use `setTimeout` because `retryToClick` would be useless: we
 				 * cannot specify a selector string because of the shadow root,
@@ -746,6 +746,13 @@
 				 */
 				_ => setTimeout(_ => {
 					tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM)');
+					setTimeout(_ => {
+						/* Hey, look: a workaround inside the workaround. Maybe
+						 * reworking `{re,}tryToClick` is not looking so bad now, eh?
+						 * Anyway, this extra `setTimeout` is because the customize
+						 * screen sometimes takes longer than I’d wish. */
+						tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM) [extra time-out]');
+					}, 500);
 				}, 250)
 			);
 		}
