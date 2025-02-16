@@ -732,6 +732,7 @@
 		 * ----------------------------------------------------------------- */
 		const userCentricsShadowRoot = deepQuerySelector('#usercentrics-root')?.shadowRoot;
 		if (userCentricsShadowRoot) {
+			tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM)') ||
 			clickAndWaitOrDoItNow(
 				userCentricsShadowRoot.querySelector('button[data-testid="uc-more-button"], button[data-testid="uc-customize-button"]'),
 				'UserCentrics (with Shadow DOM)',
