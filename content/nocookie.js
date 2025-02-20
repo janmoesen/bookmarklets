@@ -763,8 +763,17 @@
 						 * reworking `{re,}tryToClick` is not looking so bad now, eh?
 						 * Anyway, this extra `setTimeout` is because the customize
 						 * screen sometimes takes longer than I’d wish. */
-						tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]'), 'UserCentrics (with Shadow DOM) [extra time-out]');
+						const denyAllButton = userCentricsShadowRoot.querySelector('button[data-testid="uc-deny-all-button"]');
+						if (!tryToClick(denyAllButton, 'UserCentrics (with Shadow DOM) [after extra time-out]')) {
+							/* In case there is no “Deny all” button, uncheck all toggles. */
+							userCentricsShadowRoot.querySelectorAll('button[data-testid^="uc-tab-"]').forEach(tabButton => {
+								tabButton.click();
+								tryToUncheck(userCentricsShadowRoot.querySelectorAll('button[data-testid^="uc-toggle"][aria-checked="true"]'), 'UserCentrics (with Shadow DOM) [after extra time-out]');
+							});
+							tryToClick(userCentricsShadowRoot.querySelector('button[data-testid="uc-save-button"]'), 'UserCentrics (with Shadow DOM) [after extra time-out]');
+						}
 					}, 500);
+
 				}, 250)
 			);
 		}
