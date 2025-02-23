@@ -154,6 +154,35 @@
 		return allElements;
 	}
 
+	/**
+	 * Get an array of results for the XPath expression on the given root(s).
+	 *
+	 * If no root is given, the document and its sub-documents will be used.
+	 *
+	 * This function does not recurse into shadow roots.
+	 */
+	function getXPathResults(xPathExpression, roots) {
+		if (!roots) {
+			roots = getAllDocuments();
+		} else if (!Array.isArray(roots)) {
+			roots = [roots];
+		}
+
+		const xPathResults = [];
+		roots.forEach((root, i) => {
+			const document = root.documentElement && typeof root.evaluate === 'function'
+				? root
+				: root.ownerDocument;
+			let xPathResult = document.evaluate(xPathExpression, root, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
+
+			for (let i = 0; i < xPathResult.snapshotLength; i++) {
+				xPathResults.push(xPathResult.snapshotItem(i));
+			}
+		});
+
+		return xPathResults;
+	}
+
 	/* Shadow roots can only be attached to a subset of *regular* HTML
 	 * elements, but also to all *custom* elements. Because the latter can
 	 * have pretty much any name, we need to negate the list of known regular
@@ -1794,38 +1823,6 @@
 			.join(' or ');
 
 		const xPathExpression = `//*[${xPathButtonishExpression}][${xPathTextExpression}]`;
-
-		/**
-		 * Get an array of results for the XPath expression on the given
-		 * root(s).
-		 *
-		 * If no root is given, the document and its sub-documents will
-		 * be used.
-		 *
-		 * This function does not recurse into shadow roots.
-		 */
-		function getXPathResults(xPathExpression, roots) {
-			if (!roots) {
-				roots = getAllDocuments();
-			} else if (!Array.isArray(roots)) {
-				roots = [roots];
-			}
-
-			const xPathResults = [];
-			roots.forEach((root, i) => {
-				const document = root.documentElement && typeof root.evaluate === 'function'
-					? root
-					: root.ownerDocument;
-				let xPathResult = document.evaluate(xPathExpression, root, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
-
-				for (let i = 0; i < xPathResult.snapshotLength; i++) {
-					xPathResults.push(xPathResult.snapshotItem(i));
-				}
-			});
-
-			return xPathResults;
-		}
-
 		const xPathResults = getXPathResults(xPathExpression);
 
 		/* If there were no generic buttons in the regular document(s),
@@ -1910,18 +1907,23 @@
 		 * the selectors. */
 		genericDenyButtons = genericDenyButtons.filter(node => !genericDenyButtons.some(otherNode => node !== otherNode && node.contains(otherNode)));
 
-		/* Treat “looks like you’re using an ad blocker” (possibly because of
-		 * blocked cookies) pop-ups as cookie notices, too.
-		 *
-		 * XXX TODO: Needs localizing.
-		 */
-		genericDenyButtons.push(...getXPathResults('//*[not(local-name() = "script") and contains(., "Continue without ") and not(*)]'));
-
 		genericDenyButtons.forEach(node => {
 			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.replace(/\s+/g, ' ').trim()}”): `, node);
 			node.click();
 		});
 	}
+
+	/* Treat “looks like you’re using an ad blocker” (possibly because of
+	 * blocked cookies) pop-ups as cookie notices, too.
+	 *
+	 * XXX TODO: Needs localizing.
+	 */
+	const genericContinueButtons = getXPathResults('//*[not(local-name() = "script") and contains(., "Continue without ") and not(*)]');
+	genericContinueButtons.forEach(node => {
+		console.log(`nocookie: looking for generic “Continue without …” button/link text, I found this to click (“${node.textContent.replace(/\s+/g, ' ').trim()}”): `, node);
+		node.click();
+	});
+
 
 	/* Show out-of-origin IFRAMEs of external consent managers. First, flash
 	 * their borders (well, outline). Only show the alert when the bookmarklet
