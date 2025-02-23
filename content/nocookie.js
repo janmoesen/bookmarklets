@@ -1910,6 +1910,13 @@
 		 * the selectors. */
 		genericDenyButtons = genericDenyButtons.filter(node => !genericDenyButtons.some(otherNode => node !== otherNode && node.contains(otherNode)));
 
+		/* Treat “looks like you’re using an ad blocker” (possibly because of
+		 * blocked cookies) pop-ups as cookie notices, too.
+		 *
+		 * XXX TODO: Needs localizing.
+		 */
+		genericDenyButtons.push(...getXPathResults('//*[not(local-name() = "script") and contains(., "Continue without ") and not(*)]'));
+
 		genericDenyButtons.forEach(node => {
 			console.log(`nocookie: there was no known cookie dialog, but looking for generic button/link text, I did find this to click (“${node.textContent.replace(/\s+/g, ' ').trim()}”): `, node);
 			node.click();
