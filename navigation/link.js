@@ -145,6 +145,10 @@
 		</script>
 	`;
 
+	/* TODO: This does not quite work on error pages in Firefox (e.g. when
+	 * there is no Internet connection). The DocumentFragment gets created
+	 * just fine, but `querySelector('title')` or `'link'` and other non-body
+	 * elements returns null. */
 	var title = root.querySelector('title');
 	var iconLink = root.querySelector('link');
 	var styleSheet = root.querySelector('style');
