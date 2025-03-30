@@ -501,13 +501,6 @@
 		element => element.classList.add('xxxJanStravaHidden')
 	);
 
-	/* Hide kudos notifications on <https://www.strava.com/notifications>. */
-	Array.from(document.querySelectorAll('#notifications-list-view tr')).forEach(notification => {
-		if (notification.textContent.trim().match(/\bkudos\b/i)) {
-			notification.classList.add('xxxJanStravaHidden');
-		}
-	});
-
 	/* Hide segments on individual activity pages that are either too short or
 	* too flat. */
 	document.querySelectorAll('tr[data-segment-effort-id]').forEach(tr => {
