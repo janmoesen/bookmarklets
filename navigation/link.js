@@ -128,7 +128,7 @@
 
 		<p class="xxxJanExcludeFromDataUri">
 			Data URI for this link page:<br/>
-			<input type="url"/ onfocus="select()" readonly>
+			<input type="url" onfocus="select()" readonly="readonly"/>
 		</p>
 
 		<p class="xxxJanExcludeFromDataUri">
