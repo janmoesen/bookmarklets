@@ -126,10 +126,14 @@
 				media.currentTime += numSecondsToJump;
 			}
 
-			/* Indicate the new playback rate (speed) for the media element. */
+			/* Show the jump(ed) time on the media element. */
 			let visibleMediaContainer = media;
 			let rect = visibleMediaContainer.getBoundingClientRect();
-			while ((rect.height <= 0 || rect.width <= 0) && (visibleMediaContainer = visibleMediaContainer.parentNode)) {
+			while (
+				(rect.height <= 0 || rect.width <= 0)
+				&& (visibleMediaContainer = visibleMediaContainer.parentNode)
+				&& (typeof visibleMediaContainer.getBoundingClientRect === 'function')
+			) {
 				rect = visibleMediaContainer.getBoundingClientRect();
 			}
 
