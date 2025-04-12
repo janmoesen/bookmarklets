@@ -13,6 +13,11 @@
  * @title Hide Strava pollution
  */
 (function shide() {
+	/* Enable more logging. Mainly used when Strava changes their markup (it
+	 * happens quite often) and I need to update the selectors. Such is the
+	 * life of a scraper. */
+	const isDebug = true;
+
 	/* ↓ The following `cyrb53` function is used for hashing the SVG activity
 	 * ↓ icons in order to determine the activity type. I don’t care about
 	 * ↓ cryptographic properties all that, so I have not checked the source.
@@ -139,10 +144,13 @@
 	const ownProfileHref = ownProfileLink?.getAttribute('href');
 	const ownProfileUrl = ownProfileLink?.href;
 
+	isDebug && console.log('shide: own profile link: ', ownProfileLink, `; URL: ${ownProfileUrl}`);
+
 	/**
 	 * Process a feed entry.
 	 */
 	function processEntry(entry) {
+		isDebug && console.log('shide: processing entry: ', entry);
 		/* Feed entry types. */
 		const isActivity = !!entry.querySelector('[class*="ActivityEntry"]');
 		const isGroupActivity = !!entry.querySelector('[class*="GroupActivity"]');
@@ -471,7 +479,9 @@
 
 	/* Process all existing feed entries. */
 	const entrySelector = '[class*="FeedEntry"][class*="entryContainer"]';
-	Array.from(document.querySelectorAll(entrySelector)).forEach(processEntry);
+	const entries = Array.from(document.querySelectorAll(entrySelector));
+	isDebug && console.log(`shide: found ${entries.length} entries: `, entries);
+	entries.forEach(processEntry);
 
 	/* Process feed entries that are dynamically loaded (when scrolling to the
 	 * end of the feed or clicking the “Load more…” button).
@@ -481,6 +491,8 @@
 			if (!mutation?.addedNodes?.length) {
 				return;
 			}
+
+			isDebug && console.log(`shide: DOM changed; looking for entries inside ${mutation?.addedNodes?.length} added nodes`);
 
 			Array.from(mutation.addedNodes)
 				.forEach(node => {
@@ -498,7 +510,10 @@
 
 	/* Hide unwanted stuff outside of the feed. */
 	Array.from(document.querySelectorAll('.upsell, [id*="upsell"]')).forEach(
-		element => element.classList.add('xxxJanStravaHidden')
+		element => {
+			isDebug && console.log('shide: hiding unwanted element (e.g. upsells): ', element);
+			element.classList.add('xxxJanStravaHidden');
+		}
 	);
 
 	/* Fix titles starting with “The one with” (as done by one person in my
@@ -516,6 +531,7 @@
 	document.querySelectorAll('[data-testid="activity_name"], .activity-name').forEach(titleElement => {
 		let matches = titleElement.textContent.trim().match(/^The one with\s+(.*)/i);
 		if (matches) {
+			isDebug && console.log(`shide: “substracting 1” from activity title “${matches[0]}”`);
 			titleElement.textContent = matches[1].slice(0, 1).toLocaleUpperCase() + matches[1].slice(1);
 		}
 	});
@@ -523,6 +539,7 @@
 	/* Hide segments on individual activity pages that are either too short or
 	* too flat. */
 	document.querySelectorAll('tr[data-segment-effort-id]').forEach(tr => {
+		isDebug && console.log('shide: checking if segment effort should be hidden: ', tr);
 		const [distanceElement, elevationElement, averageGradientElement] = tr.querySelectorAll('.stats > span');
 		const distanceInKm = parseDistance(distanceElement.textContent);
 		const elevationInM = parseElevation(elevationElement.textContent);
@@ -561,6 +578,7 @@
 	/* Hide segments on an athlete’s leaderboard page that are either too
 	 * short or too flat. */
 	document.querySelectorAll('.my-segments tbody tr').forEach(tr => {
+		isDebug && console.log('shide: checking if athlete segment should be hidden: ', tr);
 		const distanceElement = tr.cells[3];
 		const elevationElement = tr.cells[4];
 		const distanceInKm = parseDistance(distanceElement.textContent);
