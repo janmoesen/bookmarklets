@@ -16,7 +16,7 @@
 	/* Enable more logging. Mainly used when Strava changes their markup (it
 	 * happens quite often) and I need to update the selectors. Such is the
 	 * life of a scraper. */
-	const isDebug = true;
+	const isDebug = false;
 
 	/* ↓ The following `cyrb53` function is used for hashing the SVG activity
 	 * ↓ icons in order to determine the activity type. I don’t care about
@@ -76,7 +76,6 @@
 		if (matches) {
 			return parseFloat(matches[1].replace(',', '.'));
 		}
-		else console.log({str, matches});
 	}
 
 	const svgHashesToActivityTypes = {
@@ -152,17 +151,14 @@
 	function processEntry(entry) {
 		isDebug && console.log('shide: processing entry: ', entry);
 		/* Feed entry types. */
-		const isActivity = !!entry.querySelector('[class*="ActivityEntry"]');
-		const isGroupActivity = !!entry.querySelector('[class*="GroupActivity"]');
-		const isClubJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ClubJoin"]'));
-		const isChallengeJoin = !!(entry.querySelector('[class*="AthleteJoinEntry"]') && entry.querySelector('[class*="ChallengeJoin"]'));
-		const isPromo = !!entry.querySelector('[class*="PromoEntry"]');
-		const isPost = !!entry.querySelector('a[href*="/posts/"]');
-
-		const firstActivityFromGroup = isGroupActivity && entry.querySelector('[class*="GroupActivityEntry"]');
+		const isActivity = !!entry.querySelector('[data-testid="activity_name"]');
+		const isGroupActivity = entry.querySelectorAll('[data-testid="activity_name"]').length > 1;
+		const isClubJoin = !!entry.querySelector('[data-testid="member-count-label"]');
+		const isChallengeJoin = entry.querySelector('[data-testid="group-header"]') && !entry.querySelector('[data-testid="member-count-label"]');
+		const isPost = !!entry.querySelector('[data-testid="post-details-url"]');
 
 		/* Tags/special properties. */
-		const isOwnActivity = !!entry.querySelector('[class*="Owner"]')?.querySelector(`a[href="${ownProfileHref}"]`);
+		const isOwnActivity = !!entry.querySelector(`[data-testid="owner-avatar"][href="${ownProfileHref}"]`);
 
 		const isCommute = !!document.evaluate('.//*[@data-testid="tag"][contains(., "Commute") or contains(., "Woon-werkverkeer")]', entry, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 
@@ -171,7 +167,7 @@
 		const activityName = entry.querySelector('[data-testid="activity_name"]')?.textContent;
 
 		/* Activity types, based on the activity icon’s SVG. (Super robust, yeah.) */
-		const svgIcon = entry.querySelector('[class*="activityIcon"] path');
+		const svgIcon = entry.querySelector('[data-testid="activity_icon"] path, [data-testid="activity-icon"] path');
 		const svgHash = svgIcon
 			? calculateHash(svgIcon.outerHTML)
 			: '';
@@ -182,17 +178,18 @@
 		if (isActivity) {
 			const svg = svgIcon?.closest('svg');
 			const svgTitle = (svg?.getAttribute('title') || svg?.querySelector('title')?.textContent)?.replace(/[ -]/g, '');
+			isDebug && console.log('shide: this entry is an activity; checking the activity type based on the SVG: ', svg);
 
 			if (typeof activityType === 'undefined') {
 				if (typeof svgTitle === 'undefined') {
-					console.warn(`⚠️  Activity “${activityName}”: Unknown activity type for SVG with checksum “${svgHash}” but without SVG title; svg: `, svg, '; entry: ', entry);
+					console.warn(`shide: ⚠️  Activity “${activityName}”: Unknown activity type for SVG with checksum “${svgHash}” but without SVG title; svg: `, svg, '; entry: ', entry);
 				} else {
 					svgHashesToActivityTypes[svgHash] = svgTitle;
-					console.info(`🆕 Activity “${activityName}”: Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
+					console.info(`shide: 🆕 Activity “${activityName}”: Updated svgHashesToActivityTypes with checksum “${svgHash}” for title “${svgTitle}”`);
 					console.log(`const svgHashesToActivityTypes = ${JSON.stringify(svgHashesToActivityTypes, null, '    ')};\n\n`, svgHashesToActivityTypes);
 				}
 			} else if (typeof svgTitle !== 'undefined' && svgHashesToActivityTypes[svgHash] !== svgTitle && !isVirtual) {
-				console.error(`⚠️ ⚠️ ⚠️  Activity “${activityName}”: SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
+				console.error(`shide: ⚠️ ⚠️ ⚠️  Activity “${activityName}”: SVG CHECKSUM COLLISION?! “${svgHash}” already is “${svgHashesToActivityTypes[svgHash]}”, not “${svgTitle}”! ⚠️ ⚠️ ⚠️ ; svg: `, svg, '; entry: ', entry)
 			}
 		}
 
@@ -255,10 +252,10 @@
 		const hasMap = !!entry.querySelector('[data-testid="map"]');
 
 		/* Kudos and comments. */
-		const numKudos = parseInt((firstActivityFromGroup || entry).querySelector('[data-testid="kudos_count"]')?.textContent, 10);
+		const numKudos = parseInt(entry.querySelector('[data-testid="kudos_count"]')?.textContent, 10);
 		const hasKudos = numKudos > 0;
 
-		const numComments = parseInt((firstActivityFromGroup || entry).querySelector('[data-testid="comments_count"]')?.textContent, 10);
+		const numComments = parseInt(entry.querySelector('[data-testid="comments_count"]')?.textContent, 10);
 		const hasComments = numComments > 0;
 
 		/* Statistics. */
@@ -273,14 +270,13 @@
 
 		const stats = [];
 
-		(firstActivityFromGroup || entry).querySelectorAll('[class*="list-stats"] > li, [class*="listStats"] > li').forEach(statContainer => {
-			const statLabelContainer = statContainer.querySelector('[class*="stat-label"], [class*="statLabel"]');
-			const statValueContainer = statContainer.querySelector('[class*="stat-value"], [class*="statValue"]');
+		entry.querySelectorAll('[data-testid="activity_entry_container"] li > div > span:first-child + div:last-child').forEach(statValueContainer => {
+			const statLabelContainer = statValueContainer.previousElementSibling;
 
-			if (statLabelContainer && statValueContainer) {
-				stats.push({label: statLabelContainer.textContent, value: statValueContainer.textContent});
-			}
+			stats.push({label: statLabelContainer.textContent.trim(), value: statValueContainer.textContent.trim()});
 		});
+
+		isDebug && console.log('shide: found stats: ', stats);
 
 		stats.forEach(stat => {
 			const label = stat.label;
@@ -313,7 +309,7 @@
 					} else if ((matches = durationPart.match(/^\s*([0-9]+)[hu]/))) {
 						tmpDurationInS += parseInt(matches[1], 10) * 3600;
 					} else {
-						console.log(`“${value}”: did not understand duration part “${durationPart}” for entry `, entry);
+						console.log(`shide: “${value}”: did not understand duration part “${durationPart}” for entry `, entry);
 						hasParsedDuration = false;
 					}
 				});
@@ -397,9 +393,6 @@
 			isChallengeJoin
 				? `isChallengeJoin = ${isChallengeJoin}`
 				: null,
-			isPromo
-				? `isPromo = ${isPromo}`
-				: null,
 			isPost
 				? `isPost = ${isPost}`
 				: null,
@@ -478,7 +471,7 @@
 	}
 
 	/* Process all existing feed entries. */
-	const entrySelector = '[class*="FeedEntry"][class*="entryContainer"]';
+	const entrySelector = '[data-testid="web-feed-entry"]';
 	const entries = Array.from(document.querySelectorAll(entrySelector));
 	isDebug && console.log(`shide: found ${entries.length} entries: `, entries);
 	entries.forEach(processEntry);
