@@ -268,56 +268,112 @@
 		let durationInS;
 		let hasDurationInS = false;
 
-		const stats = [];
+		const activityEntryContainers = entry.querySelectorAll('[data-testid="activity_entry_container"]');
+		activityEntryContainers.forEach((activityEntryContainer, activityEntryIndex) => {
+			const isFirstActivityInsideEntry = activityEntryIndex === 0;
 
-		entry.querySelectorAll('[data-testid="activity_entry_container"] li > div > span:first-child + div:last-child').forEach(statValueContainer => {
-			const statLabelContainer = statValueContainer.previousElementSibling;
+			/* Statistics. */
+			let thisDistanceInKm;
+			let thisHasDistanceInKm = false;
 
-			stats.push({label: statLabelContainer.textContent.trim(), value: statValueContainer.textContent.trim()});
-		});
+			let thisElevationInM;
+			let thisHasElevationInM = false;
 
-		isDebug && console.log('shide: found stats: ', stats);
+			let thisDurationInS;
+			let thisHasDurationInS = false;
 
-		stats.forEach(stat => {
-			const label = stat.label;
-			const value = stat.value;
+			let statsContainer;
+			const stats = [];
 
-			/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
-			if (label.match(/^(distan|afstand|distância)/i)) {
-				const parsedValue = parseDistance(value);
-				if (Number.isFinite(parsedValue)) {
-					hasDistanceInKm = true;
-					distanceInKm = parsedValue;
+			activityEntryContainer.querySelectorAll('li > div > span:first-child + div:last-child').forEach(statValueContainer => {
+				if (!statsContainer) {
+					statsContainer = statValueContainer.closest('ul');
 				}
-			} else if (label.match(/^(elev\S* gain|hoogteverschil|höhenmeter|desnivel|dislivello|ganho de elevação)/i)) {
-				const parsedValue = parseElevation(value);
-				if (Number.isFinite(parsedValue)) {
-					hasElevationInM = true;
-					elevationInM = parsedValue;
-				}
-			} else if (label.match(/^(time|tijd|zeit|tiempo|tempo)/i)) {
-				let tmpDurationInS = 0;
-				let hasParsedDuration = true;
 
-				value.split(/\s([0-9]+\s*[^0-9]+)\s*/).forEach(durationPart => {
-					let matches;
-					if (durationPart.trim() === '') {
-					} else if ((matches = durationPart.match(/^\s*([0-9]+)s/))) {
-						tmpDurationInS += parseInt(matches[1], 10);
-					} else if ((matches = durationPart.match(/^\s*([0-9]+)m/))) {
-						tmpDurationInS += parseInt(matches[1], 10) * 60;
-					} else if ((matches = durationPart.match(/^\s*([0-9]+)[hu]/))) {
-						tmpDurationInS += parseInt(matches[1], 10) * 3600;
-					} else {
-						console.log(`shide: “${value}”: did not understand duration part “${durationPart}” for entry `, entry);
-						hasParsedDuration = false;
+				const statLabelContainer = statValueContainer.previousElementSibling;
+
+				stats.push({label: statLabelContainer.textContent.trim(), value: statValueContainer.textContent.trim()});
+			});
+
+			isDebug && console.log('shide: found stats for activity entry container ', activityEntryContainer, ': ', stats);
+
+			stats.forEach(stat => {
+				const label = stat.label;
+				const value = stat.value;
+
+				/* TODO: add support/conversion for backwards non-SI units <https://i.redd.it/o093x6j57dk41.jpg> */
+				if (label.match(/^(distan|afstand|distância)/i)) {
+					const parsedValue = parseDistance(value);
+					if (Number.isFinite(parsedValue)) {
+						thisHasDistanceInKm = true;
+						thisDistanceInKm = parsedValue;
 					}
-				});
+				} else if (label.match(/^(elev\S* gain|hoogteverschil|höhenmeter|desnivel|dislivello|ganho de elevação)/i)) {
+					const parsedValue = parseElevation(value);
+					if (Number.isFinite(parsedValue)) {
+						thisHasElevationInM = true;
+						thisElevationInM = parsedValue;
+					}
+				} else if (label.match(/^(time|tijd|zeit|tiempo|tempo)/i)) {
+					let tmpDurationInS = 0;
+					let hasParsedDuration = true;
 
-				if (hasParsedDuration) {
-					hasDurationInS = true;
-					durationInS = tmpDurationInS;
+					value.split(/\s([0-9]+\s*[^0-9]+)\s*/).forEach(durationPart => {
+						let matches;
+						if (durationPart.trim() === '') {
+						} else if ((matches = durationPart.match(/^\s*([0-9]+)s/))) {
+							tmpDurationInS += parseInt(matches[1], 10);
+						} else if ((matches = durationPart.match(/^\s*([0-9]+)m/))) {
+							tmpDurationInS += parseInt(matches[1], 10) * 60;
+						} else if ((matches = durationPart.match(/^\s*([0-9]+)[hu]/))) {
+							tmpDurationInS += parseInt(matches[1], 10) * 3600;
+						} else {
+							console.log(`shide: “${value}”: did not understand duration part “${durationPart}” for entry `, entry);
+							hasParsedDuration = false;
+						}
+					});
+
+					if (hasParsedDuration) {
+						thisHasDurationInS = true;
+						thisDurationInS = tmpDurationInS;
+					}
 				}
+			});
+
+			/* Add a per-activity tooltip with just the stats (useful for group
+			 * activities to show the statistics per separate activity inside the
+			 * group). */
+			if (statsContainer) {
+				statsContainer.title = [
+					thisHasDistanceInKm
+						? `thisDistanceInKm = ${thisDistanceInKm}`
+						: `thisHasDistanceInKm = ${thisHasDistanceInKm}`,
+					thisHasElevationInM
+						? `thisElevationInM = ${thisElevationInM}`
+						: null,
+					thisHasDurationInS
+						? `thisDurationInS = ${thisDurationInS}`
+						: null,
+					thisHasDistanceInKm && thisHasDurationInS
+						? `thisCalculatedAverageSpeed = ${(thisDistanceInKm / thisDurationInS * 3600).toFixed(1)} km/h`
+						: null,
+
+					statsContainer.title
+						? '\n======\n' + statsContainer.title
+						: null,
+				].filter(_ => _).join('\n').replace(/^([A-Z])/gm, '\n$1').trim();
+			}
+
+			/* Use the first activity’s stats as representative for the group activity. */
+			if (isFirstActivityInsideEntry) {
+				distanceInKm = thisDistanceInKm;
+				hasDistanceInKm = thisHasDistanceInKm;
+
+				elevationInM = thisElevationInM;
+				hasElevationInM = thisHasElevationInM;
+
+				durationInS = thisDurationInS;
+				hasDurationInS = thisHasDurationInS;
 			}
 		});
 
