@@ -103,6 +103,8 @@
 		'b34dc55e98b69': 'WeightTraining',
 
 		'1877faad59afe8': 'Windsurf',
+
+		'3c3c12793970e': 'Golf',
 	};
 
 	const css = `@charset "utf-8";
@@ -420,7 +422,7 @@
 		} else if (isWinterSport && !hasPhotos) {
 			shouldHide = true;
 			reasonForHiding = 'Winter sports without photos';
-		} else if (isOther && !hasPhotos && (!hasDurationInS || durationInS < 3600)) {
+		} else if (isOther && !hasPhotos && (activityType === 'Golf' || !hasDurationInS || durationInS < 3600)) {
 			shouldHide = true;
 			reasonForHiding = 'Other short activity without photos';
 		} else if (isCommute && !hasPhotos && (!hasDistanceInKm || distanceInKm < 30)) {
@@ -441,7 +443,7 @@
 				: null,
 
 			'Feed entry types:',
-			`isActivity = ${isActivity}`,
+			`isActivity = ${isActivity}` + (isActivity ? ` (type: ${activityType})` : ''),
 			`isGroupActivity = ${isGroupActivity}`,
 			isClubJoin
 				? `isClubJoin = ${isClubJoin}`
