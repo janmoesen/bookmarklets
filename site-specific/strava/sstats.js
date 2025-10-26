@@ -66,6 +66,11 @@
 	let needsToAddCss = true;
 
 	document.querySelectorAll('.sidebar tbody:nth-child(2n):not(:empty) + tbody:not(:has([data-glossary-term="definition-best-efforts"]))').forEach(tbody => {
+		/* This is the order of the rows for the bike activity statistics.
+		 * Other sports like running use a different order, but I don’t care
+		 * about those, anyway. If you do, you could check the corresponding
+		 * button (e.g. `button[class="button btn-xs sport-0-tab ridelike"]`)
+		 * and determine the sports type and corresponding row order. */
 		const rowFields = ['numActivities', 'distance', 'elevationGain', 'time'];
 
 		if (!tbody.rows[rowFields.length - 1]) {
@@ -109,8 +114,11 @@
 							tmpDurationInS += parseInt(matches[1], 10);
 						} else if ((matches = durationPart.match(/^\s*([0-9]+)m/))) {
 							tmpDurationInS += parseInt(matches[1], 10) * 60;
-						} else if ((matches = durationPart.match(/^\s*([0-9]+)[hu]/))) {
-							tmpDurationInS += parseInt(matches[1], 10) * 3600;
+						} else if ((matches = durationPart.match(/^\s*([0-9,.]+)[hu]/))) {
+							/* Hours in the statistics tables are always integers, so
+							 * any `,` or `.` are thousands separators and can be
+							 * safely removed. */
+							tmpDurationInS += parseInt(matches[1].replaceAll(/[,.]/g, ''), 10) * 3600;
 						} else {
 							console.log(`sstats: “${td.textContent}”: did not understand duration part “${durationPart}” for td `, td);
 							hasParsedDuration = false;
