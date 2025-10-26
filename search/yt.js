@@ -158,7 +158,15 @@
 					sort: 'views',
 				},
 
+				'sort=views': {
+					sort: 'views',
+				},
+
 				popular: {
+					sort: 'views',
+				},
+
+				'sort=popular': {
 					sort: 'views',
 				},
 
@@ -166,7 +174,15 @@
 					sort: 'date',
 				},
 
+				'sort=date': {
+					sort: 'date',
+				},
+
 				recent: {
+					sort: 'date',
+				},
+
+				'sort=recent': {
 					sort: 'date',
 				},
 			};
