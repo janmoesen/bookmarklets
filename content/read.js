@@ -935,6 +935,7 @@
 		 * addEventListener. Some sites listen for the "resize" event and
 		 * then reposition elements by setting their style directly. To
 		 * counteract this, simply delete all "style" attributes that get set
+		 * and delete all STYLE elements that get added to the document
 		 * while our style sheet is enabled. That'll show 'em!
 		 */
 		if (typeof MutationObserver === 'function' && !document.jancssHasMutationObserver) {
@@ -945,6 +946,15 @@
 				}
 
 				mutations.forEach(function(mutation) {
+					/* Delete `STYLE` elements. */
+					if (mutation.target.tagName?.toLowerCase() === 'style') {
+						console.log('Readable++: removing STYLE element added while in Readable++ mode: ', mutation.target);
+						mutation.target.remove();
+
+						return;
+					}
+
+					/* Delete `style` attributes. */
 					if (!mutation.target.hasAttribute('style') || mutation.target.id === 'xxxJanConsole' || mutation.target.xxxJanReadableAllowStyle) {
 						return;
 					}
@@ -957,7 +967,8 @@
 			observer.observe(document, {
 				attributes: true,
 				attributeFilter: ['style'],
-				subtree: true
+				subtree: true,
+				childList: true
 			});
 		}
 
