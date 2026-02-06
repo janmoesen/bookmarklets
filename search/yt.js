@@ -7,6 +7,34 @@
  * If you append a "!" to the video ID, it will be opened in an IFRAME, so you
  * do not need to sign in for "restricted" videos.
  *
+ * There are several options you can use (and combine) to filter the results:
+ *
+ * --video
+ * --channel
+ * --playlist
+ *       Search for videos/channels/playlists (default: all types)
+ *
+ * --short
+ * --medium
+ * --long
+ *       Search for < 4 min / 4–20 min / > 20 min (default: all durations)
+ *
+ * --live
+ * --hd
+ * --4k
+ *       Search for live video / HD video / 4K video
+ *
+ * --views (alias: --popular)
+ * --date (alias: --recent)
+ *       Order by view count / upload date (default: relevance)
+ *
+ * --topic (alias: --official)
+ *       “Topic” videos are posted by the official channels for
+ *       artists/bands/musicians and can be recognized by either “ - Topic” or
+ *       “🎵” suffixed to the name. However, it is easier to search for the
+ *       text “Provided to YouTube by”, which is at the start of the
+ *       auto-generated description for music “videos”.
+ *
  * @title YouTube search
  */
 (function yt() {
@@ -185,6 +213,12 @@
 				'sort=recent': {
 					sort: 'date',
 				},
+
+				'topic': {
+				},
+
+				'official': {
+				},
 			};
 
 			let url = new URL('https://yewtu.be/search');
@@ -196,6 +230,10 @@
 				Object.entries(filters[filterName]).forEach(([key, value]) => {
 					url.searchParams.append(key, value);
 				});
+
+				if (filterName === 'topic' || filterName === 'official') {
+					s += ' "Provided to YouTube by"';
+				}
 			}
 
 			url.searchParams.set('q', s);
