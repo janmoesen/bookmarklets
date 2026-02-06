@@ -202,11 +202,11 @@
 			/* Latitude. */
 			/(?<latitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)/,
 			/* Latitude label, e.g. `N` or `S` (language-dependent). */
-			/\s*(?<latitudeLabel>XXX_LAT_XXX)\s*/,
+			/\s*(?<latitudeLabel>XXX_LAT_XXX)/,
 
-			/* Separator between latitude and longitude: either a comma and zero or more spaces, or at least one space. */
-			/* XXX TODO make the regexp match the comment, because now it can also be a zero-length string, i.e. nothing XXX */
-			/,?\s*/,
+			/* Separator between latitude and longitude: either a comma and zero
+			 * or more spaces, or at least one space. */
+			/(,\s*|\s+)/,
 
 			/* Longitude. */
 			/(?<longitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)/,

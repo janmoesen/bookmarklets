@@ -198,11 +198,21 @@
 			}
 		}
 
-		const regexpWithPlaceholders = /(?<latitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<latitudeLabel>XXX_LAT_XXX)\s*,?\s*(?<longitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)\s*(?<longitudeLabel>XXX_LNG_XXX)/;
+		const stringRegexpWithPlaceholders = [
+			/* Latitude. */
+			/(?<latitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)/,
+			/* Latitude label, e.g. `N` or `S` (language-dependent). */
+			/\s*(?<latitudeLabel>XXX_LAT_XXX)/,
 
-		const stringRegexpWithPlaceholders = regexpWithPlaceholders
-			.toString()
-			.replace(/(^\/)|(\/$)/g, '');
+			/* Separator between latitude and longitude: either a comma and zero
+			 * or more spaces, or at least one space. */
+			/(,\s*|\s+)/,
+
+			/* Longitude. */
+			/(?<longitude>\d+(?:\.\d+)?\s*°(?:\s*\d+\s*′(?:\s*\d+(?:[.,]\d+)?\s*(?:′′|″))?)?)/,
+			/* Longitude label, e.g. `W` or `E` (language-dependent). */
+			/\s*(?<longitudeLabel>XXX_LNG_XXX)/,
+		].map(partialRegexp => partialRegexp.source).join('');
 
 		const rewrittenCoordinates = new Set();
 		for (let {language, labels} of possibleReplacements) {
