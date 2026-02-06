@@ -222,7 +222,7 @@
 				}
 			});
 
-			url.host = 'yewtu.be';
+			url.host = 'inv.nadeko.net';
 			url.search = newUsp.toString();
 
 			a.href = url;
