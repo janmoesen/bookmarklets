@@ -1668,6 +1668,7 @@
 			' without supporting ',
 			' do not accept ',
 			' do not agree ',
+			' do not consent ',
 			" don't accept ",
 			' no thank',
 			' no, thank',
