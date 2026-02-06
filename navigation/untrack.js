@@ -228,6 +228,17 @@
 			a.href = url;
 		},
 
+		/* Also use Invidious for the youtu.be short URLs. */
+		'a[href^="https://youtu.be/"], a[href^="http://youtu.be/"]': a => {
+			let matches;
+			if ((matches = a.pathname.match(/^\/([-_a-zA-Z0-9]{11})( *!)?$/)) && !a.pathname.match(/^\/(([A-Z]?[a-z-]+)|([A-Z-]+))$/)) {
+				const videoId = matches[1];
+				a.href = `https://inv.nadeko.net/watch?v=${videoId}`;
+			} else {
+				a.href = a.href.replace(/^https?:\/\/youtu\.be\//, 'https://inv.nadeko.net/');
+			}
+		},
+
 		/* Twitter */
 		'a[href^="https://t.co/"], a[href^="http://t.co/"]': a => {
 			/* See if we are able to extract a URI from the link text. For
