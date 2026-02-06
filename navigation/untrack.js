@@ -217,7 +217,7 @@
 
 			const newUsp = new URLSearchParams();
 			usp.forEach((value, key) => {
-				if (key === 'v' || key === 't') {
+				if (['v', 't', 'q', 'list', 'index'].includes(key)) {
 					newUsp.set(key, value);
 				}
 			});
