@@ -207,7 +207,7 @@
 		/* Use Invidious (“an alternative front-end to YouTube”) instead of
 		 * the original YouTube for videos. This is not technically a
 		 * redirector, but I need to restructure this bookmarklet anyway. */
-		'a[href^="https://www.youtube.com/watch?"][href*="v="]': a => {
+		'a[href^="https://www.youtube.com/watch?"][href*="v="], a[href^="https://m.youtube.com/watch?"][href*="v="]': a => {
 			const url = new URL(a.href);
 			const usp = new URLSearchParams(url.search);
 			let videoId = usp?.get('v');
