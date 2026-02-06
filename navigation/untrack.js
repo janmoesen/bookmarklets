@@ -386,6 +386,19 @@
 		}
 	};
 
+	/* Make the `a[href]` selectors work with domain-less paths, too.
+	 * E.g. on the official YouTube domain, the following selector:
+	 *   `a[href^="https://www.youtube.com/watch?"][href*="v="]`
+	 * should also be written as:
+	 *   `a[href^="/watch?"][href*="v="]`
+	 */
+	Object.keys(linkRedirectors).forEach(selector => {
+		const newSelector = selector.replaceAll(`[href^="https://${document.domain}/`, '[href^="/');
+		if (newSelector !== selector) {
+			linkRedirectors[newSelector] = linkRedirectors[selector];
+		}
+	});
+
 	/**
 	 * Return the given query string without the known tracking parameters.
 	 */
