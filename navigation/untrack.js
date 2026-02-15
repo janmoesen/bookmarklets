@@ -9,10 +9,10 @@
 	'use strict';
 
 	/* The following list was based on
-	* <https://en.wikipedia.org/wiki/UTM_parameters#See_also> and has since been
-	* expanded, primarily with the code from https://privacytests.org/
-	* <https://github.com/arthuredelstein/privacytests.org/blob/master/testing/index.js>.
-	* */
+	 * <https://en.wikipedia.org/wiki/UTM_parameters#See_also> and has since been
+	 * expanded, primarily with the code from https://privacytests.org/
+	 * <https://github.com/arthuredelstein/privacytests.org/blob/master/testing/index.js>.
+	 */
 	const parameterPatterns = [
 		/* Google (Analytics, Ads, DoubleClick) */
 		'utm_[^=]*',
@@ -122,7 +122,11 @@
 		'_openstat',
 
 		/* Zanox/Awin */
-		'zanpid'
+		'zanpid',
+
+		/* go-away: Self-hosted abuse detection and rule enforcement against low-effort
+		 * mass AI scraping and bots <https://git.gammaspectra.live/git/go-away> */
+		'__goaway_[^=]*',
 	];
 
 	const hrefRegexp = new RegExp('[?&](' + parameterPatterns.join('|') + ')=');
