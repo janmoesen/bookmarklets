@@ -428,9 +428,11 @@
 
 		/* --- Hide ad elements that slipped through my ad blocker ------ */
 
+		aside.marketing-banner,
 		iframe[id^="google_ads_"] {
 			display: none;
 		}
+
 
 		/* --- Hide empty list items ------------------------------------ */
 
