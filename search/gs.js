@@ -59,7 +59,7 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter your Google search query for ' + location.host + 't:');
+		s = getActiveSelection() || prompt(`Please enter your Google search query for ${location.host}:`);
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
