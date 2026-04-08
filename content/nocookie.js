@@ -1725,6 +1725,10 @@
 
 			/* German */
 			' ablehnen ',
+			' verweigern ',
+			' verweiger ',
+			' weigern ',
+			' weiger ',
 			' lehne ',
 			' notwendig',
 			' erforderlich',
