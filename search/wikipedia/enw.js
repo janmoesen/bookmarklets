@@ -66,7 +66,9 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt(`Please enter the subject to look up in the ${languageNamesInEnglish.join('/')} Wikipedia:`);
+		s = getActiveSelection()
+			|| location.href.match(/^https:\/\/[^\/]+.(wiktionary|wikipedia)\.org\/wiki\/(?<slug>[^/#?]+)/)?.groups.slug
+			|| prompt(`Please enter the subject to look up in the ${languageNamesInEnglish.join('/')} Wikipedia:`);
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}

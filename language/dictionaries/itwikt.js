@@ -58,7 +58,9 @@
 	}
 
 	if (s === '') {
-		s = getActiveSelection() || prompt('Please enter the word(s) to look up in the Italian Wiktionary:');
+		s = getActiveSelection()
+			|| location.href.match(/^https:\/\/[^\/]+.(wiktionary|wikipedia)\.org\/wiki\/(?<slug>[^/#?]+)/)?.groups.slug
+			|| prompt('Please enter the word(s) to look up in the Italian Wiktionary:');
 	} else {
 		s = s.replace(/(^|\s|")~("|\s|$)/g, '$1' + getActiveSelection() + '$2');
 	}
