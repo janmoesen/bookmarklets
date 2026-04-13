@@ -64,6 +64,6 @@
 	}
 
 	if (s) {
-		location = 'https://en.oxforddictionaries.com/definition/' + encodeURIComponent(s);
+		location = 'https://www.oed.com/search/dictionary/?q=' + encodeURIComponent(s);
 	}
 })();
