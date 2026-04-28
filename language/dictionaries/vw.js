@@ -66,6 +66,6 @@
 	}
 
 	if (s) {
-		location = 'https://www.vlaamswoordenboek.be/definities/search?definition[q]=' + encodeURIComponent(s);
+		location = 'https://www.vlaamswoordenboek.be/resultaten?zoekterm=' + encodeURIComponent(s);
 	}
 })();

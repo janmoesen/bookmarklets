@@ -228,7 +228,7 @@ COPY_ENWIKT=; copy-enwikt \
 	svwikt 'Swedish Wiktionary' 'in the Swedish Wiktionary' 'https://sv.wiktionary.org/wiki/' \
 	viwikt 'Vietnamese Wiktionary' 'in the Vietnamese Wiktionary' 'https://vi.wiktionary.org/wiki/' \
 	zhwikt '(Mandarin) Chinese Wiktionary' 'in the (Mandarin) Chinese Wiktionary' 'https://zh.wiktionary.org/wiki/' \
-	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'https://www.vlaamswoordenboek.be/definities/search?definition[q]=' \
+	vw 'Vlaams Woordenboek' 'in the “Flemish” dictionary' 'https://www.vlaamswoordenboek.be/resultaten?zoekterm=' \
 	oed 'O.E.D.' 'in the Oxford English dictionary' 'https://www.oed.com/search/dictionary/?q=' \
 	mw 'Merriam-Webster' 'using Merriam-Webster' 'https://www.merriam-webster.com/dictionary/' \
 	dict 'Dictionary.com' 'on Dictionary.com' 'https://www.dictionary.com/browse/' \
