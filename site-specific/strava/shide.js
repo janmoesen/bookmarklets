@@ -526,26 +526,6 @@
 
 			`${entry.title ? '\n\n======\n\n' + entry.title : ''}`
 		].filter(_ => _).join('\n').replace(/^([A-Z])/gm, '\n$1').trim();
-
-		/* Fix titles starting with “The one with” (as done by one person in my
-		 * feed, and not even in a way that makes sense, grammatically or
-		 * otherwise). Yes, I am one of /those/ people.
-		 *
-		 * Was: “The one with snelste nevenbonden koers van het jaar??”
-		 * Now: “Snelste nevenbonden koers van het jaar??”
-		 *
-		 * Was: “The one with vitesse heb ik nooit gevonden. Mijn petekindje gelukkig wel 🐶”
-		 * Now: “Vitesse heb ik nooit gevonden. Mijn petekindje gelukkig wel 🐶”
-		 *
-		 * Zen.
-		 */
-		entry.querySelectorAll('[data-testid="activity_name"], .activity-name').forEach(titleElement => {
-			let matches = titleElement.textContent.trim().match(/^The one with\s+(.*)/i);
-			if (matches) {
-				isDebug && console.log(`shide: “substracting 1” from activity title “${matches[0]}”`);
-				titleElement.textContent = matches[1].slice(0, 1).toLocaleUpperCase() + matches[1].slice(1);
-			}
-		});
 	}
 
 	/* Process all existing feed entries. */
