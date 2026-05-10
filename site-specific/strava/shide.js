@@ -103,6 +103,8 @@
 		'b34dc55e98b69': 'WeightTraining',
 
 		'1877faad59afe8': 'Windsurf',
+		'382337c01acca': 'Kitesurf',
+		'73e7bb2b9f698': 'Kayaking',
 
 		'3c3c12793970e': 'Golf',
 	};
@@ -214,13 +216,9 @@
 		const isSwim = activityType === 'Swim';
 
 		const isWaterSport = activityType === 'WaterSport'
-			|| activityType === 'Surfing'
 			|| activityType === 'Kitesurf'
 			|| activityType === 'Windsurf'
-			|| activityType === 'Canoeing'
-			|| activityType === 'Kayaking'
-			|| activityType === 'Rowing'
-			|| activityType === 'StandUpPaddling';
+			|| activityType === 'Kayaking';
 
 		const isWinterSport = activityType === 'WinterSport'
 			|| activityType === 'AlpineSki'
@@ -419,6 +417,9 @@
 		} else if (isSwim && !hasPhotos && (!hasDurationInS || durationInS < 3600)) {
 			shouldHide = true;
 			reasonForHiding = 'Short swim without photos';
+		} else if (isWaterSport && !hasPhotos) {
+			shouldHide = true;
+			reasonForHiding = 'Water sports without photos';
 		} else if (isWinterSport && !hasPhotos) {
 			shouldHide = true;
 			reasonForHiding = 'Winter sports without photos';
