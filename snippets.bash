@@ -118,6 +118,19 @@ copy_2en_parameters=(
 copy-2en "${copy_2en_parameters[@]}";
 
 copy_2en_parameters=(
+	2ja
+	Japan:se
+"
+	keyword: '2ja',
+	languageCodes: ['ja', 'ja-JP'],
+	languageNamesInEnglish: ['Japanese'],
+	languageNativeNames: ['日本語', 'ジャパニーズ'],
+	thisPageInNativeNameTexts: ['このページを日本語で表示', '日本語版', '日本語バージョン'],
+"
+)
+copy-2en "${copy_2en_parameters[@]}";
+
+copy_2en_parameters=(
 	2no
 	Norwegian
 "
@@ -222,6 +235,7 @@ COPY_ENWIKT=; copy-enwikt \
 	eswikt 'Spanish Wiktionary' 'in the Spanish Wiktionary' 'https://es.wiktionary.org/wiki/' \
 	frwikt 'French Wiktionary' 'in the French Wiktionary' 'https://fr.wiktionary.org/wiki/' \
 	itwikt 'Italian Wiktionary' 'in the Italian Wiktionary' 'https://it.wiktionary.org/wiki/' \
+	jawikt 'Japanese Wiktionary' 'in the Japanese Wiktionary' 'https://ja.wiktionary.org/wiki/' \
 	nowikt 'Norwegian Wiktionary' 'in the Norwegian Wiktionary' 'https://no.wiktionary.org/wiki/' \
 	ptwikt 'Portuguese Wiktionary' 'in the Portuguese Wiktionary' 'https://pt.wiktionary.org/wiki/' \
 	ruwikt 'Russian Wiktionary' 'in the Russian Wiktionary' 'https://ru.wiktionary.org/wiki/' \
@@ -338,6 +352,17 @@ copy_enw_parameters=(
 	languageCode: 'it',
 	languageNamesInEnglish: ['Italian'],
 	disambigationPageSuffix: ' (disambigua)',
+"
+)
+copy-enw "${copy_enw_parameters[@]}";
+
+copy_enw_parameters=(
+	jaw
+	Japanese
+"
+	languageCode: 'ja',
+	languageNamesInEnglish: ['Japanese'],
+	disambigationPageSuffix: ' (曖昧さ回避)',
 "
 )
 copy-enw "${copy_enw_parameters[@]}";
