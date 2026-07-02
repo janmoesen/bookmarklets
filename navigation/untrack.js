@@ -99,8 +99,7 @@
 		'pk_source',
 
 		/* Cloudflare DDOS challenge tokens */
-		'__cf_chl_jschl_tk__',
-		'__cf_chl_captcha_tk__',
+		'__cf_chl_[^=]*',
 
 		/* Unknown Russian tracker */
 		'rb_clickid',
