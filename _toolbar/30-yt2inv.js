@@ -1,1 +1,0 @@
-../search/yt2inv.js
