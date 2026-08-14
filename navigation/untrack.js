@@ -53,6 +53,9 @@
 		'_hsenc',
 		'hsCtaTracking',
 
+		 /* Shopify */
+		 '_su_rec[^=]*',
+
 		 /* Drip.com */
 		'__s',
 
