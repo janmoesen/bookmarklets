@@ -170,6 +170,11 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
 		},
 
+		/* Threads */
+		'a[href^="https://l.threads.com/?"]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
+		},
+
 		/* Google */
 		'a[href^="https://www.google."][href*="/url?"], a[href^="http://www.google."][href*="/url?"], a[href^="/url?"]': a => {
 			/* Make sure we only process Google’s redirects. It seems the
