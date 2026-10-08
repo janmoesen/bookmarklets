@@ -1830,14 +1830,16 @@
 		const xPathExpression = `//*[${xPathButtonishExpression}][${xPathTextExpression}]`;
 		const xPathResults = getXPathResults(xPathExpression);
 
-		/* If there were no generic buttons in the regular document(s),
-		 * search the first-level shadow DOMs. */
-		if (!xPathResults.length) {
+		/* Always search the first-level shadow DOMs, too. The `if (true)` is
+		 * a tautological statement to prevent diff noise. */
+		if (true) {
 			getShadowRoots().forEach(
 				/* No need to look through each child separately because our
 				 * XPath expression starts with `//*`, which looks in all of the
 				 * shadow root’s children. */
-				shadowRoot => shadowRoot.childElementCount && xPathResults.push(...getXPathResults(xPathExpression, shadowRoot.children[shadowRoot.childElementCount - 1]))
+				shadowRoot => {
+					shadowRoot.childElementCount && xPathResults.push(...getXPathResults(xPathExpression, shadowRoot.children[shadowRoot.childElementCount - 1]))
+				}
 			);
 		}
 
