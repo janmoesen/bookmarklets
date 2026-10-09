@@ -170,6 +170,23 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
 		},
 
+		/* Instagram: rewrite reels URLs to normal URLS. Part 1: post permalinks.
+		 * (I HATE THE ENTIRE REELS “EXPERIENCE”!)
+		 * E.g. https://www.instagram.com/reels/DePb6WLuVae/
+		 *    → https://www.instagram.com/p/DePb6WLuVae/
+		 */
+		'a[href^="https://www.instagram.com/reels/"]:not([href="https://www.instagram.com/reels/"]):not([href^="https://www.instagram.com/reels/audio/"])': a => {
+			a.pathname = a.pathname.replace(/^\/reels\//, '/p/');
+		},
+
+		/* Instagram: rewrite reels URLs to normal URLS. Part 2: profile links.
+		 * E.g. https://www.instagram.com/instagram/reels/
+		 *    → https://www.instagram.com/instagram/
+		 */
+		'a[href^="https://www.instagram.com/"][href$="/reels/"]:not([href="https://www.instagram.com/reels/"])': a => {
+			a.pathname = a.pathname.replace(/\/reels\/$/, '/');
+		},
+
 		/* Threads */
 		'a[href^="https://l.threads.com/?"]': a => {
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('u') ?? a.href;
