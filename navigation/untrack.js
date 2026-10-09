@@ -414,7 +414,7 @@
 	 *   `a[href^="/watch?"][href*="v="]`
 	 */
 	Object.keys(linkRedirectors).forEach(selector => {
-		const newSelector = selector.replaceAll(`[href^="https://${document.domain}/`, '[href^="/');
+		const newSelector = selector.replaceAll(`"https://${document.domain}/`, '"/');
 		if (newSelector !== selector) {
 			linkRedirectors[newSelector] = linkRedirectors[selector];
 		}
