@@ -22,6 +22,7 @@
 		'_ga',
 		'_gl',
 		'gad_source',
+		'gad_camp[^=]*',
 		'gbraid',
 		'wbraid',
 		'srsltid',
