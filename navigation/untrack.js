@@ -299,7 +299,7 @@
 		},
 
 		/* LinkedIn */
-		'a[href^="https://www.linkedin.com/redir/redirect?"]': a => {
+		'a[href^="https://www.linkedin.com/redir/redirect?"], a[href^="https://www.linkedin.com/safety/go/?"]': a => {
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('url') ?? a.href;
 		},
 
