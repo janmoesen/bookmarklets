@@ -307,6 +307,16 @@
 			a.href = new URLSearchParams(new URL(a.href).search)?.get('session_redirect') ?? a.href;
 		},
 
+		'a[href^="https://"][href*=".linkedin.com/posts/"][href*="?"][href*="rcm="]': a => {
+			/* This is not a link redirector, but has a LinkedIn-specific query string parameter.
+			 * TODO: generalize domain-specific parameter handling. (See also: the Invidious comment.) */
+			const url = new URL(a.href);
+			if (url.host.match(/^(.+\.)?linkedin\.com$/) && url.searchParams.has('rcm')) {
+				url.searchParams.delete('rcm');
+				a.href = url;
+			}
+		},
+
 		/* Beehiiv (newsletter platform) */
 		'a[href^="https://flight.beehiiv.net/v2/clicks/eyJ"]': a => {
 			const parts = a.pathname.split('.');
