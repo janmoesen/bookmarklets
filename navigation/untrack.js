@@ -317,6 +317,11 @@
 			}
 		},
 
+		/* Skimlinks */
+		'a[href^="https://go.redirectingat.com/"][href*="url="]': a => {
+			a.href = new URLSearchParams(new URL(a.href).search)?.get('url') ?? a.href;
+		},
+
 		/* Beehiiv (newsletter platform) */
 		'a[href^="https://flight.beehiiv.net/v2/clicks/eyJ"]': a => {
 			const parts = a.pathname.split('.');
