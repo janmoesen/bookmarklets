@@ -1633,6 +1633,21 @@
 		);
 
 		/* -----------------------------------------------------------------
+		 * Fides
+		 * <https://www.ethyca.com/fides>
+		 *
+		 * E.g. https://www.gq.com/ (as of 2026-10-24)
+		 * ----------------------------------------------------------------- */
+		tryToClick('#fides-reject-all-button', 'Fides Privacy Framework');
+		clickAndWaitOrDoItNow(
+			'#fides-manage-preferences-button',
+			'Fides Privacy Framework',
+			_ => {
+				tryToClick('#fides-reject-all-button', 'Fides Privacy Framework');
+			}
+		);
+
+		/* -----------------------------------------------------------------
 		 * Out-of-origin IFRAMEs.
 		 * ----------------------------------------------------------------- */
 		deepQuerySelectorAll(externalConsentManagerIframeSelectors.join(',')).forEach(
