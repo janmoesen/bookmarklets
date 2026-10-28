@@ -112,6 +112,9 @@
 		's_cid',
 		'ss_[^=]*',
 
+		/* TikTok */
+		'ttclid',
+
 		/* Vero */
 		'vero_conv',
 		'vero_id',
@@ -122,6 +125,7 @@
 		/* Yandex */
 		'yclid',
 		'ymclid',
+		'ysclid',
 		'_openstat',
 
 		/* Zanox/Awin */
