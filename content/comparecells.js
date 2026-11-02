@@ -108,21 +108,24 @@
 
 	/* The main function. */
 	(function execute(document) {
-		Array.from(document.querySelectorAll('table')).forEach(table => {
-			Array.from(table.tBodies).forEach(tBody => {
-				if (tBody.rows.length < 3) {
-					console.log('Compare cells: skipping table body ', tBody, ' because it only has ', tBody.rows.length, ' rows');
+		document.querySelectorAll('table, [role~="table"]').forEach(table => {
+			table.querySelectorAll('tbody, [role~="rowgroup"]').forEach(tBody => {
+				const rows = tBody.querySelectorAll('tr, [role~="row"]');
+
+				if (rows.length < 3) {
+					console.log('Compare cells: skipping table body ', tBody, ` because it only has ${rows.length} rows`);
 					return;
 				}
 
-				Array.from(tBody.rows).forEach(tr => {
+				rows.forEach(tr => {
 					/* Determine the values. */
 					let cellValues = [];
 					let uniqueCellValues = new Set();
+					const cells = tr.querySelectorAll('td, [role~="cell"]');
 
-					Array.from(tr.cells).forEach((cell, i) => {
+					cells.forEach((cell, i) => {
 						/* Don't take the header cells into account. */
-						if (cell.tagName.toUpperCase() === 'TH') {
+						if (cell.matches('th, [role="columnheader"], [role="rowheader"]')) {
 							return;
 						}
 
@@ -163,9 +166,9 @@
 							textShadow = (await getColorsForValue(cellValue)).textShadow;
 						}
 
-						tr.cells[i].style.setProperty('background-color', backgroundColor, 'important');
-						tr.cells[i].style.setProperty('color', color, 'important');
-						tr.cells[i].style.setProperty('text-shadow', textShadow, 'important');
+						cells[i].style.setProperty('background-color', backgroundColor, 'important');
+						cells[i].style.setProperty('color', color, 'important');
+						cells[i].style.setProperty('text-shadow', textShadow, 'important');
 					});
 				});
 			});
