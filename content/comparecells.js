@@ -130,7 +130,11 @@
 						}
 
 						/* Assume the first cell is a header cell, even if it is not a TH. */
-						if (i === 0) {
+						if (
+							i === 0
+							/* Exception: apple.com comparison tables: https://www.apple.com/mac/compare/?modelList=MacBook-Air-M5,MacBook-Pro-14-M5-Max,MacBook-Pro-proled-xdr-m5max-14 */
+							&& !(document.domain === 'www.apple.com' && document.location.pathname.indexOf('/compare/') > -1)
+						) {
 							return;
 						}
 
