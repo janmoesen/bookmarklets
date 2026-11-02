@@ -4,15 +4,16 @@
  * @title Compare cells
  */
 (function comparecells() {
-	const CHAR_SOFT_HYPHEN = String.fromCharCode(173);
+	const REGEXP_CHARS_TO_REMOVE = /[\p{Separator}\p{Other}]/gv;
+	const REGEXP_HYPHENS_TO_NORMALIZE = /[‐‑‒–—―]/g;
 
 	/**
 	 * Get the text content for the given element.
 	 */
 	function getTextFromElement(element) {
 		return element.textContent
-			.replaceAll(CHAR_SOFT_HYPHEN, '')
-			.replaceAll(/\s+/g, '')
+			.replaceAll(REGEXP_HYPHENS_TO_NORMALIZE, '-')
+			.replaceAll(REGEXP_CHARS_TO_REMOVE, '')
 			.trim()
 			.toLowerCase();
 	}
