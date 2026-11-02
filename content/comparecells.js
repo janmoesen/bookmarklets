@@ -5,7 +5,6 @@
  */
 (function comparecells() {
 	const CHAR_SOFT_HYPHEN = String.fromCharCode(173);
-	const CHAR_NON_BREAKING_SPACE = String.fromCharCode(160);
 
 	/**
 	 * Get the text content for the given element.
@@ -13,7 +12,7 @@
 	function getTextFromElement(element) {
 		return element.textContent
 			.replaceAll(CHAR_SOFT_HYPHEN, '')
-			.replaceAll(CHAR_NON_BREAKING_SPACE, ' ')
+			.replaceAll(/\s+/g, '')
 			.trim()
 			.toLowerCase();
 	}
