@@ -112,11 +112,6 @@
 			table.querySelectorAll('tbody, [role~="rowgroup"]').forEach(tBody => {
 				const rows = tBody.querySelectorAll('tr, [role~="row"]');
 
-				if (rows.length < 3) {
-					console.log('Compare cells: skipping table body ', tBody, ` because it only has ${rows.length} rows`);
-					return;
-				}
-
 				rows.forEach(tr => {
 					/* Determine the values. */
 					let cellValues = [];
