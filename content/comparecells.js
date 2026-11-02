@@ -96,13 +96,8 @@
 		);
 
 		return {
-			backgroundColor: 'rgb(' + getColorsForValue.cellValuesToRgb[value].join(', ') + ')',
-			color: isLight
-				? 'black'
-				: 'white',
-			textShadow: isLight
-				? '1px 1px 3px white'
-				: '1px 1px 3px black'
+			backgroundColor: 'rgba(' + getColorsForValue.cellValuesToRgb[value].join(', ') + ', 0.15)',
+			outlineColor: 'rgb(' + getColorsForValue.cellValuesToRgb[value].join(', ') + ')',
 		};
 	}
 
@@ -148,8 +143,7 @@
 						}
 
 						let backgroundColor;
-						let color;
-						let textShadow;
+						let outlineColor;
 
 						if (
 							uniqueCellValues.size == 1 ||
@@ -157,17 +151,15 @@
 							cellValue.trim() === ''
 						) {
 							backgroundColor = 'inherit';
-							color = 'inherit';
-							textShadow = 'inherit';
+							outlineColor = 'inherit';
 						} else {
 							backgroundColor = (await getColorsForValue(cellValue)).backgroundColor;
-							color = (await getColorsForValue(cellValue)).color;
-							textShadow = (await getColorsForValue(cellValue)).textShadow;
+							outlineColor = (await getColorsForValue(cellValue)).outlineColor;
 						}
 
 						cells[i].style.setProperty('background-color', backgroundColor, 'important');
-						cells[i].style.setProperty('color', color, 'important');
-						cells[i].style.setProperty('text-shadow', textShadow, 'important');
+						cells[i].style.setProperty('outline', `3px solid ${outlineColor}`, 'important');
+						cells[i].style.setProperty('box-shadow', `3px ${outlineColor}`, 'important');
 					});
 				});
 			});
