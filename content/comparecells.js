@@ -104,7 +104,12 @@
 	/* The main function. */
 	(function execute(document) {
 		document.querySelectorAll('table, [role~="table"]').forEach(table => {
-			table.querySelectorAll('tbody, [role~="rowgroup"]').forEach(tBody => {
+			let tBodies = table.querySelectorAll('tbody, [role~="rowgroup"]');
+			if (!tBodies.length) {
+				tBodies = [table];
+			}
+
+			tBodies.forEach(tBody => {
 				const rows = tBody.querySelectorAll('tr, [role~="row"]');
 
 				rows.forEach(tr => {
